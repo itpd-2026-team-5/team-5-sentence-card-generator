@@ -1,0 +1,30 @@
+# Editor state
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Build output and dependencies
+node_modules/
+dist/
+build/
+out/
+coverage/
+__pycache__/
+*.pyc
+.venv/
+
+# Logs
+*.log
