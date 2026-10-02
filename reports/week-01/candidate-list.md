@@ -7,7 +7,7 @@
 | Anki Miner | https://github.com/0xzerolight/anki_miner | Automates creating Anki vocabulary cards from language-learning content. | Not yet researched |
 | Language Reactor | https://www.languagereactor.com/ | Lets learners save vocabulary from videos and export learning material to Anki. | Not yet researched |
 | Yomitan | https://yomitan.wiki/ | Lets learners look up words while reading and create Anki cards from them. | Not yet researched |
-| LinguaCafe | https://github.com/simjanos-dev/LinguaCafe | Lets learners read texts, save vocabulary, review it with spaced repetition, and export it to Anki. | Not yet researched |
+| LinguaCafe | https://github.com/simjanos-dev/LinguaCafe | Lets learners read texts, save vocabulary, review it with spaced repetition, and export it to Anki. | ALT-03, researched 2026-10-02 (see `docs/research/alternatives.md`) |
 | Lector | https://github.com/heuwels/lector | Lets learners import texts, save words while reading, practise them, and send vocabulary to Anki. | Not yet researched |
 | Mochi | https://mochi.cards/ | Provides spaced-repetition flashcards and language-learning features such as translation and text-to-speech. | Not yet researched |
 | Sentence Mining | https://github.com/maxploter/sentence-mining | Uses selected words to generate language-learning material and create Anki cards. | Not yet researched |
