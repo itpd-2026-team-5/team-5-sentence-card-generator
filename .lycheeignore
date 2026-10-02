@@ -1,3 +1,7 @@
 # Links excluded from the link check, one pattern per line.
 # Every entry needs a comment saying why it cannot be checked mechanically,
 # and the date it was verified manually in a browser.
+
+# Figma research board: returns 403 to automated requests, so it cannot be checked mechanically.
+# Opened manually in a private browser window on 2026-10-02: loads without login.
+^https://www\.figma\.com/board/BNB6VIlMsWQBvprl1BtgjX/
