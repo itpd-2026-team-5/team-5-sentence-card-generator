@@ -3,12 +3,12 @@
 **Date:** 2026-10-01  
 **Participants:** Instructor, saleemasekrea000, Byakko-san, KaramKhaddour, Horokk1  
 
-[00:00:00] KaramKhaddourr: Start the meeting.    
-[00:00:02] KaramKhaddourr: Uh, so, hello, um, so we are working on the sentence, uh, generated, uh, generating, uh, project.  
-[00:00:11] KaramKhaddourr: Can you tell us more about why?    
-[00:00:14] KaramKhaddourr: Why do you want to build this project, and...  
-[00:00:17] KaramKhaddourr: Uh, what benefit do you think this project will provide that your original project didn't provide?    
-[00:00:26] KaramKhaddourr:  Songs, uh... project, the Songs Anki project.  
+[00:00:00] KaramKhaddour: Start the meeting.    
+[00:00:02] KaramKhaddour: Uh, so, hello, um, so we are working on the sentence, uh, generated, uh, generating, uh, project.  
+[00:00:11] KaramKhaddour: Can you tell us more about why?    
+[00:00:14] KaramKhaddour: Why do you want to build this project, and...  
+[00:00:17] KaramKhaddour: Uh, what benefit do you think this project will provide that your original project didn't provide?    
+[00:00:26] KaramKhaddour:  Songs, uh... project, the Songs Anki project.  
 [00:00:33] Instructor: Okey, so?    
 [00:00:36] Instructor: I'm learning German and my goal is to learn new words like regularly.  
 [00:00:49] Instructor: And ideally I should learn words that I want to learn, not from some generic list of words.  
@@ -35,8 +35,8 @@
 [00:03:48] Instructor: Like, I had to run parts of the script, like, in different steps, extract words from texts then, filter out the words that I don't want to learn manually in CSV, then run a script to map them to a normal form, then move the this new words to another CSV, where the sentences will be generated and, like, written.  
 [00:04:22] Instructor: I expect that the new service, new app, will simplify some of the steps and automate them for me.   
 [00:04:30] Instructor: It will provide a better interface for filtering out the words that I don't want to learn, and the card editing will be also simplified.  
-[00:04:50] KaramKhaddourr: Uh, do you also want the new service to be focused on music, like, uh, like, similar to Songs2Anki, or do you want it more of, uh, general purpose, uh, how do you see this fitting?  
-[00:05:01] KaramKhaddourr: Do you want us only to focus on like music and songs and getting sentences for songs?  
+[00:04:50] KaramKhaddour: Uh, do you also want the new service to be focused on music, like, uh, like, similar to Songs2Anki, or do you want it more of, uh, general purpose, uh, how do you see this fitting?  
+[00:05:01] KaramKhaddour: Do you want us only to focus on like music and songs and getting sentences for songs?  
 [00:05:10] Instructor: Uh-huh.  
 [00:05:12] Instructor: uh...  
 [00:05:14] Instructor: I don't want to focus on song, uh...  
@@ -46,10 +46,10 @@
 [00:05:26] Instructor: I listen to songs every day, so I wanted to learn words from those songs, because I could rehearse them every day, in some song.  
 [00:05:37] Instructor: I will... I would hear an unknown word and I will try to recollect what it means from what I learned via Anki.  
 [00:05:48] Instructor: Uh, yeah, in your case, it should be texts in general.  
-[00:05:57] KaramKhaddourr: Okay, but, um...  
-[00:05:59] KaramKhaddourr: Just to be clear, because we, as we were searching about, like, alternatives or competitors, uh, some competitors were focusing on, like, YouTube, on Netflix, on, um, like, video or, uh, videos, basically, and they take the transcripts from these videos and then they put them inside of cards and show them to the user, so that the user is able to eventually see this YouTube video and understand everything in it.  
-[00:06:30] KaramKhaddourr: So, do you want something, like, similar to this?   
-[00:06:35] KaramKhaddourr: Like, uh, we have multiple kinds of media, like videos or songs, that we are using to generate the sentences inside the cards.  
+[00:05:57] KaramKhaddour: Okay, but, um...  
+[00:05:59] KaramKhaddour: Just to be clear, because we, as we were searching about, like, alternatives or competitors, uh, some competitors were focusing on, like, YouTube, on Netflix, on, um, like, video or, uh, videos, basically, and they take the transcripts from these videos and then they put them inside of cards and show them to the user, so that the user is able to eventually see this YouTube video and understand everything in it.  
+[00:06:30] KaramKhaddour: So, do you want something, like, similar to this?   
+[00:06:35] KaramKhaddour: Like, uh, we have multiple kinds of media, like videos or songs, that we are using to generate the sentences inside the cards.  
 [00:06:45] Instructor: Um...  
 [00:06:48] Instructor: I think, uh, it's up to the user where to... search for texts.  
 [00:06:56] Instructor: Uh, so, uh...  
@@ -73,27 +73,27 @@
 [00:08:30] Instructor: So the user can upload several texts, they are separate.  
 [00:08:36] Instructor: They can rearrange them and change their order depending on, um, which words they want to learn first, like from which text.  
 [00:08:51] Instructor: Yeah, we let the user pick the words from the text and prepare the cards for the user that they can learn the words.  
-[00:09:01] KaramKhaddourr: Okay, as I also saw inside the description for the task, we have two different types of users: We have the student and we have the teacher.  
+[00:09:01] KaramKhaddour: Okay, as I also saw inside the description for the task, we have two different types of users: We have the student and we have the teacher.  
 [00:09:14] Instructor: Mm-hmm.  
-[00:09:16] KaramKhaddourr: What functionality you want the picture to do, to be able to do?  
+[00:09:16] KaramKhaddour: What functionality you want the picture to do, to be able to do?  
 [00:09:23] Instructor: Um, so the teacher should... be able to review the student's card decks that the student allows to review the teacher.  
 [00:09:37] Instructor: Um...  
 [00:09:40] Instructor: I made songs to Anki in 2024 2025 and then and at that time, LLMs produced, um... good sentences in only two shorts of cases.  
 [00:10:03] Instructor: One short was bad sentences, and I wanted them, like, I had to remove them, like, manually.  
 [00:10:06] Instructor: And so, the teacher should... will connect to a student's account or somehow view the text, sorry, not the text or probably the text, too.    
-[00:10:18] But primarily the text with generated sentences.    
+[00:10:18] Instructor: But primarily the text with generated sentences.    
 [00:10:30] Instructor: And they will, like... mark the bad sentences that should be removed, um, from that deck or edit some sentences so that they sound more naturally.    
 [00:10:40] Instructor: So the teacher will be, like, the ultimate oracle for this system.    
 [00:10:46] Instructor: They will decide... what stays in the deck and what does not.    
-[00:10:52] KaramKhaddourr: Okay.    
-[00:10:53] KaramKhaddourr: So, and, um... and where do you want this app, uh, to run?    
-[00:10:58] KaramKhaddourr: For example, where do you see this app, uh, being used: On laptop, on desktop, on mobile application, web application?    
+[00:10:52] KaramKhaddour: Okay.    
+[00:10:53] KaramKhaddour: So, and, um... and where do you want this app, uh, to run?    
+[00:10:58] KaramKhaddour: For example, where do you see this app, uh, being used: On laptop, on desktop, on mobile application, web application?    
 [00:11:11] Instructor: Um, for now, it's enough if it's a web app.    
 [00:11:16] Instructor: Like, for future, uh... probably it should be a mobile application so that students can rehearse offline, but for now we can keep [inaudible] web app.    
-[00:11:37] KaramKhaddourr: Okay, this is maybe...    
+[00:11:37] KaramKhaddour: Okay, this is maybe...    
 [00:11:37] Instructor: [inaudible] Firefox and Chrome should be supported,  Safari not necessary.    
-[00:11:50] KaramKhaddourr: Mm-hmm.    
-[00:11:53] KaramKhaddourr: saleemasekrea000, do you have a question?    
+[00:11:50] KaramKhaddour: Mm-hmm.    
+[00:11:53] KaramKhaddour: saleemasekrea000, do you have a question?    
 [00:11:56] saleemasekrea000: Yes, uh, just one thing to clarify.    
 [00:12:02] saleemasekrea000: So, user will... input the text and then highlight the word that you want to learn, right?    
 [00:12:08] Instructor: Right.    
@@ -134,10 +134,10 @@
 [00:16:43] Instructor: And the right context may be, for now, just a single sentence.  
 [00:16:49] Instructor: So if we see the word in a sentence, we provide the sentence as a context for the narration.  
 [00:16:59] saleemasekrea000: Okay, okay, thank you.  
-[00:17:01] KaramKhaddourr: Okay, I have, like, a following question on saleemasekrea000 question: When we are building this context?  
-[00:17:09] KaramKhaddourr: Should we take into consideration, uh, for example, what words already the user know, what level the user is in, um, what they want to achieve, for example, if they are an IT student, then maybe we can focus our sentences in this specific domain.  
-[00:17:33] KaramKhaddourr: Should we take, like, multiple sites for the for the student into consideration when we are generating sentence.  
-[00:17:40] KaramKhaddourr: Like, what level they are on, what their preferences are.  
+[00:17:01] KaramKhaddour: Okay, I have, like, a following question on saleemasekrea000 question: When we are building this context?  
+[00:17:09] KaramKhaddour: Should we take into consideration, uh, for example, what words already the user know, what level the user is in, um, what they want to achieve, for example, if they are an IT student, then maybe we can focus our sentences in this specific domain.  
+[00:17:33] KaramKhaddour: Should we take, like, multiple sites for the for the student into consideration when we are generating sentence.  
+[00:17:40] KaramKhaddour: Like, what level they are on, what their preferences are.  
 [00:17:49] Instructor: Um, yeah, good question.  
 [00:17:57] Instructor: So we can assume that if a student marks some words in the text that they want to learn.  
 [00:18:06] Instructor: Uh, they know all other words.  
@@ -150,22 +150,22 @@
 [00:18:43] Instructor: That will also be used for generating sentences for a topic, like for informatics, for data science.  
 [00:18:53] Instructor: And then probably LLM will use more vocabulary for that topic.  
 [00:19:01] Instructor: What do you think?  
-[00:19:05] KaramKhaddourr: I think, um, we can distinguish two kinds of clients for our application.  
-[00:19:08] KaramKhaddourr: Some of them are technical.   
-[00:19:10] KaramKhaddourr: They can provide the prompt.   
-[00:19:12] KaramKhaddourr: It will not be a strange idea to provide the prompt.  
-[00:19:22] KaramKhaddourr: But the other kind which are not technical people.  
-[00:19:25] KaramKhaddourr: I think it will be a good idea for them to just fill up some questions, and then we will generate the prompt that we will use in the future.  
-[00:19:34] KaramKhaddourr: For example, the question is, why are you learning [inaudible]?  
-[00:19:38] KaramKhaddourr: What is your profession? What are you studying? Etc.  
+[00:19:05] KaramKhaddour: I think, um, we can distinguish two kinds of clients for our application.  
+[00:19:08] KaramKhaddour: Some of them are technical.   
+[00:19:10] KaramKhaddour: They can provide the prompt.   
+[00:19:12] KaramKhaddour: It will not be a strange idea to provide the prompt.  
+[00:19:22] KaramKhaddour: But the other kind which are not technical people.  
+[00:19:25] KaramKhaddour: I think it will be a good idea for them to just fill up some questions, and then we will generate the prompt that we will use in the future.  
+[00:19:34] KaramKhaddour: For example, the question is, why are you learning [inaudible]?  
+[00:19:38] KaramKhaddour: What is your profession? What are you studying? Etc.  
 [00:19:43] Instructor: Mm-hmm, mm-hmm.  
 [00:19:45] Instructor: Um, yeah, pretty good idea.  
 [00:19:50] Instructor: Yeah, and how do you decide the proficiency of the user?   
 [00:19:58] Instructor: Like, at which language level they are.  
-[00:20:02] KaramKhaddourr: Mm-hmm, that's a good question.  
-[00:20:07] KaramKhaddourr: Maybe we can either ask them if they know what levels they are on.  
-[00:20:13] KaramKhaddourr: Or if they don't know, we can, like, direct them to an online test that they can do and after this online test, we can, uh, like, start from this point.  
-[00:20:25] KaramKhaddourr: And then we... after some... some time that the user is using this application, we will build some knowledge base about what words they know, what words they don't know, for example.  
+[00:20:02] KaramKhaddour: Mm-hmm, that's a good question.  
+[00:20:07] KaramKhaddour: Maybe we can either ask them if they know what levels they are on.  
+[00:20:13] KaramKhaddour: Or if they don't know, we can, like, direct them to an online test that they can do and after this online test, we can, uh, like, start from this point.  
+[00:20:25] KaramKhaddour: And then we... after some... some time that the user is using this application, we will build some knowledge base about what words they know, what words they don't know, for example.  
 [00:20:40] Instructor: Yeah, sounds good.  
 [00:20:42] Instructor: Uh, maybe...  
 [00:20:44] Instructor: Uh, we can also...  
@@ -178,33 +178,33 @@
 [00:21:27] Instructor: What was in that card, too hard?  
 [00:21:30] Instructor: Uh, maybe some too long German words were used, or maybe rare words were used.  
 [00:21:38] Instructor: And we can probably automatically add such words to block list of words so that we don't use them in later generations.  
-[00:21:53] KaramKhaddourr: Okay, and for the recommendation, like, of the cards, uh, we should use an online, uh, algorithm, right?   
-[00:21:59] KaramKhaddourr: It's an online, already known algorithm.  
-[00:22:05] KaramKhaddourr: That when we recommend this card, or when we show this card correct.  
+[00:21:53] KaramKhaddour: Okay, and for the recommendation, like, of the cards, uh, we should use an online, uh, algorithm, right?   
+[00:21:59] KaramKhaddour: It's an online, already known algorithm.  
+[00:22:05] KaramKhaddour: That when we recommend this card, or when we show this card correct.  
 [00:22:12] Instructor: Sorry, I didn't get what online?  
-[00:22:18] KaramKhaddourr: So for example, we have a collection of cards.  
+[00:22:18] KaramKhaddour: So for example, we have a collection of cards.  
 [00:22:21] Instructor: Right.  
-[00:22:22] KaramKhaddourr: And the user will mark the skirts easy, medium, hard, or very hard.  
-[00:22:27] KaramKhaddourr: And if they, for example, mark this card hard, then we need to show it more often than we show this easy one, correct?  
+[00:22:22] KaramKhaddour: And the user will mark the skirts easy, medium, hard, or very hard.  
+[00:22:27] KaramKhaddour: And if they, for example, mark this card hard, then we need to show it more often than we show this easy one, correct?  
 [00:22:38] Instructor: Yes.  
-[00:22:41] KaramKhaddourr: And when we do...  
+[00:22:41] KaramKhaddour: And when we do...  
 [00:22:42] Instructor: Mm-hmm.  
 [00:22:44] Instructor: Yeah, please continue.  
-[00:22:46] KaramKhaddourr: And when we do this, like, algorithm, how we determine which card we show now.  
-[00:22:55] KaramKhaddourr: It's an already like published algorithm, correct?  
+[00:22:46] KaramKhaddour: And when we do this, like, algorithm, how we determine which card we show now.  
+[00:22:55] KaramKhaddour: It's an already like published algorithm, correct?  
 [00:22:58] Instructor: Uh, yes.  
 [00:23:00] Instructor: It's quite a repetition system.  
 [00:23:06] Instructor: I don't quite remember, maybe FSRS, basically something that Anki uses right now.  
-[00:23:19] KaramKhaddourr: Okay.  
-[00:23:21] KaramKhaddourr: Um...  
-[00:23:28] KaramKhaddourr: Okay, as maybe a final summary of this meeting, what is the most important features that you want us to provide?  
-[00:23:39] KaramKhaddourr: Like, this is most important thing we need to provide for the end of the course.  
+[00:23:19] KaramKhaddour: Okay.  
+[00:23:21] KaramKhaddour: Um...  
+[00:23:28] KaramKhaddour: Okay, as maybe a final summary of this meeting, what is the most important features that you want us to provide?  
+[00:23:39] KaramKhaddour: Like, this is most important thing we need to provide for the end of the course.  
 [00:23:46] saleemasekrea000: In top of the POC.  
 [00:23:50] Instructor: Sorry, sorry.  
 [00:23:52] Instructor: Didn't get your clarification.  
-[00:23:56] KaramKhaddourr: I also didn't get it.  
-[00:24:01] KaramKhaddourr: I think it's saleemasekrea000, saleemasekrea000, can you repeat?  
-[00:24:11] KaramKhaddourr: saleemasekrea000.  
+[00:23:56] KaramKhaddour: I also didn't get it.  
+[00:24:01] KaramKhaddour: I think it's saleemasekrea000, saleemasekrea000, can you repeat?  
+[00:24:11] KaramKhaddour: saleemasekrea000.  
 [00:24:14] Instructor: Anyway...  
 [00:24:17] Instructor: The most important feature is this editor, uh, where I can mark the cards as, like, bad, subject to removal regeneration.  
 [00:24:30] Instructor: Uh, or where I can edit the sentences directly, where I can, uh, request generating audio for cars, and listen to it.  
@@ -216,31 +216,31 @@
 [00:25:32] Instructor: Mark words that they don't want to learn.  
 [00:25:39] Instructor: This results, this list will be used later for generating the cards.  
 [00:25:46] Instructor: Those are top two features.  
-[00:25:50] KaramKhaddourr: Okay.  
-[00:25:52] KaramKhaddourr: I think maybe the last question, do you have any preference on what technology we should use, like, what frameworks or something similar?  
+[00:25:50] KaramKhaddour: Okay.  
+[00:25:52] KaramKhaddour: I think maybe the last question, do you have any preference on what technology we should use, like, what frameworks or something similar?  
 [00:26:03] Instructor: No strict preferences.  
 [00:26:07] Instructor: But you should account for limitations of technology that you plan to use?  
 [00:26:15] Instructor: So, in my case...  
 [00:26:19] Instructor: I used lemmatization libraries, uh, and they were available in Python, not sure if they are available for other languages.  
 [00:26:30] Instructor: Uh, so maybe you should use Python too.  
-[00:26:36] KaramKhaddourr: Okay.  
+[00:26:36] KaramKhaddour: Okay.  
 [00:26:37] Instructor: Like this part of the task.  
-[00:26:43] KaramKhaddourr: I think that's all from my side of questions.   
-[00:26:48] KaramKhaddourr: Guys, does anyone have any other questions?  
+[00:26:43] KaramKhaddour: I think that's all from my side of questions.   
+[00:26:48] KaramKhaddour: Guys, does anyone have any other questions?  
 [00:26:51] Horokk1: No.  
-[00:26:55] KaramKhaddourr: Uh, Instructor, do you have any questions for us?  
+[00:26:55] KaramKhaddour: Uh, Instructor, do you have any questions for us?  
 [00:27:01] Instructor: Yeah, what are your preferences, like, which stack did you consider using?  
-[00:27:11] KaramKhaddourr: I think, in general, we have, uh, like, very different types of, uh, knowledge in the team, so we can use a wide, uh, wide range of, uh, technologies. For front-end, probably React as we are doing web application, and also we have inside the team people who works with Python in the backend, so we can also use Python for the backend.  
-[00:27:34] KaramKhaddourr: I think probably this will be like, uh, just a react and, uh, fast, uh, fast, um, API for Python.  
+[00:27:11] KaramKhaddour: I think, in general, we have, uh, like, very different types of, uh, knowledge in the team, so we can use a wide, uh, wide range of, uh, technologies. For front-end, probably React as we are doing web application, and also we have inside the team people who works with Python in the backend, so we can also use Python for the backend.  
+[00:27:34] KaramKhaddour: I think probably this will be like, uh, just a react and, uh, fast, uh, fast, um, API for Python.  
 [00:27:49] Instructor: Um, okay, sounds good.  
-[00:27:53] KaramKhaddourr: Okay.  
-[00:27:54] KaramKhaddourr: I think that's all for our meeting today.    
-[00:27:56] KaramKhaddourr: Thank you very much for your [inaudible].  
+[00:27:53] KaramKhaddour: Okay.  
+[00:27:54] KaramKhaddour: I think that's all for our meeting today.    
+[00:27:56] KaramKhaddour: Thank you very much for your [inaudible].  
 [00:28:00] Instructor: Um, yeah, thank you too.  
 [00:28:03] Instructor: Um, have a nice day, and...  
 [00:28:07] Instructor: If you can, please create a Telegram group and send me an invite.   
 [00:28:12] Instructor: I'll join.  
-[00:28:16] KaramKhaddourr: Okay, we will today. Thank you very much. Have a nice day. Bye-bye.  
+[00:28:16] KaramKhaddour: Okay, we will today. Thank you very much. Have a nice day. Bye-bye.  
 [00:28:19] saleemasekrea000: Thank you.  
 [00:28:19] Instructor: Thank you. Goodbye.  
 [00:28:21] Horokk1: Thank you. Bye.  
