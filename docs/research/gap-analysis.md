@@ -3,8 +3,8 @@
 ## Identified Gaps
 
 ### GAP-01: LLM-Generated Bilingual Sentences for Context
-* **Somebody needs it:** Language learners need comprehensible input when studying. Having a sentence dynamically generated in both the target language and their known language provides exact context for a word, removing the tedious manual work of writing or translating example sentences by hand.
-* **The alternatives do not serve it:** LinguaCafe (ALT-03) relies on static dictionaries (like DeepL) and only captures the original text sentence without translating it. Migaku (ALT-01) provides AI explanations of words, and Language Reactor (ALT-02) provides example sentences, but none offer explicitly LLM-generated bilingual sentence pairs mapped directly to flashcard fields for the user.
+* **Somebody needs it:** Language learners need comprehensible input when studying. Having a sentence dynamically generated in both the target language and their known language provides exact context for a word, removing the tedious manual work of writing or translating example sentences by hand. The sentence should also fit the learner: at their level, built from words they already know, and on topics they care about, which the Customer raised at the kickoff (custom prompts for a topic, excluding words the learner does not want).
+* **The alternatives do not serve it:** LinguaCafe (ALT-03) relies on static dictionaries (like DeepL) and only captures the original text sentence without translating it. Migaku (ALT-01) provides AI explanations of words, and Language Reactor (ALT-02) provides example sentences, but none offer explicitly LLM-generated bilingual sentence pairs mapped directly to flashcard fields for the user. None personalises the sentence either: Migaku and Language Reactor track which words a learner knows, and LinguaCafe tracks word levels, but none uses that, or the learner's level and interests, to choose the sentences the learner studies.
 * **It is reachable:** Utilizing modern LLM APIs (like OpenAI or Anthropic) with strict system prompts can reliably generate a target sentence and its translation based on a selected word.
 * **A team of 3 or 4 could build it in this course:** Integrating an external LLM API call into a word-selection workflow is a well-scoped data-fetching task suitable for a single semester.
 
@@ -26,9 +26,10 @@
 
 This is the list of gaps we considered but explicitly rejected, along with the rationale. This aligns expectations with the customer on what the product will *not* do.
 
-### Rejected 1: Built-in Spaced Repetition System (SRS)
-* **The Concept:** Building our own review interface and algorithmic spaced-repetition scheduler (like the Leitner system or SM-2) directly into the app so users don't need Anki.
-* **Why it was rejected (Fails the "Team of 3 or 4" test):** Our problem space is centered on *card generation* and *teacher review*. Building a robust, bug-free SRS review platform with offline sync takes massive engineering effort. A small student team cannot build a high-quality SRS while also building LLM generation and teacher portals in one course. Furthermore, LinguaCafe (ALT-03) and Language Reactor (ALT-02) already attempt this. We will focus purely on generating the data and exporting it to Anki.
+### Rejected 1 (reversed at the kickoff): Built-in Spaced Repetition System (SRS)
+* **The Concept:** Building our own review interface and algorithmic spaced-repetition scheduler directly into the app so users don't need Anki.
+* **Why we first rejected it:** we expected that a small team could not build a reliable SRS alongside LLM generation and teacher review, and LinguaCafe (ALT-03) and Language Reactor (ALT-02) already have one.
+* **Why it is no longer rejected:** at the kickoff on 2026-10-01 the Customer decided that the app schedules reviews itself with an established algorithm such as FSRS, the one Anki uses (see the Decisions in the kickoff meeting report, `reports/week-01/meeting-report.md`). Using an existing FSRS implementation instead of writing our own scheduler keeps it within a team of four, and it lets the learner's priorities (GAP-03) and "too hard" feedback reach the review order.
 
 ### Rejected 2: Video Subtitle and Audio Mining (YouTube/Netflix)
 * **The Concept:** A tool that extracts vocabulary, screenshots, and native audio directly from streaming video platforms to create multimedia flashcards.
