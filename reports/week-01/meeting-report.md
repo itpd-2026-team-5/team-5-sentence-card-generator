@@ -40,8 +40,8 @@
 
 | Question                                                                              | What it would change                                                                                                                                                  | Follow-up |
 | ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
-| How do we determine the user's language proficiency level?                            | It will allow the system to adapt the vocabulary and complexity of the generated sentences to the student's knowledge                                                 |           |
-| Should we use a questionnaire to generate custom LLM prompts for non-technical users? | It would allow the system to tailor sentence topics (e.g., IT or Data Science) based on the user's profession without requiring them to write custom prompts manually |           |
+| How do we determine the user's language proficiency level?                            | It will allow the system to adapt the vocabulary and complexity of the generated sentences to the student's knowledge                                                 |      KaramKhaddour     |
+| Should we use a questionnaire to generate custom LLM prompts for non-technical users? | It would allow the system to tailor sentence topics (e.g., IT or Data Science) based on the user's profession without requiring them to write custom prompts manually |     KaramKhaddour      |
 
 ## Disagreements
 
