@@ -13,7 +13,7 @@ The same set is used for every alternative.
 | P3 | Can the learner change which words get learned first without editing cards one by one? | Problem: re-prioritizing cards. |
 | P4 | Does the product schedule reviews itself with spaced repetition? | Solution: spaced repetition. |
 | P5 | Does it work for Russian, English and German, both for card content and for the interface? | Solution: supported languages. |
-| P6 | Can a teacher connect to a learner and review their cards? | Solution: teacher support. |
+| P6 | Not found. Checked: the reading, saved-words and practice screens. Not checked: the FAQ and help pages. | [`p1-2-word-marked-to-learn.png`](../../reports/week-01/images/alt-02-language-reactor-p1-2-word-marked-to-learn.png), [`p3-1-saved-words-list.png`](../../reports/week-01/images/alt-02-language-reactor-p3-1-saved-words-list.png), [`p4-1-phrasepump-practice.png`](../../reports/week-01/images/alt-02-language-reactor-p4-1-phrasepump-practice.png) |
 | P7 | Can the user run it on their own machine or server? | Deployment: VPS, local host. |
 
 ## Research board
@@ -53,3 +53,40 @@ Screenshots and working notes: [Figma board (view-only)](https://www.figma.com/b
 - **The AI explanation can be wrong on a misspelled word** (P2). Given "Russi" (a typo of "Russie"), it described it as a past participle of "ruser" ([`p2-3-ai-word-explanation.jpg`](../../reports/week-01/images/alt-01-migaku-p2-3-ai-word-explanation.jpg)). This is one example, so it shows a risk, not a rate.
 - **No teacher or sharing feature found** (P6). This matters because our project must let a teacher review cards.
 - **Paid** (a free 10-day trial and a subscription model, per the home page). Prices were not seen.
+
+## ALT-02: Language Reactor
+
+- **Link:** <https://www.languagereactor.com/>
+- **Looked at:** 2026-10-02, web app in the browser. Version not shown.
+- **Type:** adjacent substitute.
+- **Problem and users:** a toolbox for learners to "discover, understand, and learn from native materials", with a browser extension that turns shows into language lessons. Source: its home page, visible in [`p5-2-translation-language.png`](../../reports/week-01/images/alt-02-language-reactor-p5-2-translation-language.png). A feature called PhrasePump, used for practice, appears in its own panel (see P4).
+- **How deep:** hands-on use of the web app with study language Arabic and translation language English, using a pasted Arabic text. Not tried: German, English or Russian as the study language, the browser extension on video sites, and the FAQ and help pages (not read).
+- **Screenshots:** [board](https://www.figma.com/board/BNB6VIlMsWQBvprl1BtgjX/Untitled?node-id=0-1&t=hbcZ6d4ggpXsBFHJ-1), copies in `reports/week-01/images/`.
+
+### Observations per property
+
+| Property | Observation | Evidence |
+|---|---|---|
+| P1 | A learner can paste their own text (a title field, a text box, a "Start reading" button). Clicking a word in the text shows its translation and marks it "Marked to Learn". The saved word appears in a Saved Words list with its translation and the sentence it came from. **Not observed:** a finished flashcard, or an export to Anki. | [`p1-1-add-own-text.png`](../../reports/week-01/images/alt-02-language-reactor-p1-1-add-own-text.png), [`p1-2-word-marked-to-learn.png`](../../reports/week-01/images/alt-02-language-reactor-p1-2-word-marked-to-learn.png), [`p3-1-saved-words-list.png`](../../reports/week-01/images/alt-02-language-reactor-p3-1-saved-words-list.png) |
+| P2 | The sentence has an English translation shown beside it. The dictionary panel has Explain, Examples and Grammar tabs, and a Lexa AI Chat (beta) tab. The Grammar tab explains the word's structure in prose. The Examples tab lists five sentences with English translations. **Not confirmed:** whether an LLM writes those example sentences, because the screenshot does not label their source. | [`p1-2-word-marked-to-learn.png`](../../reports/week-01/images/alt-02-language-reactor-p1-2-word-marked-to-learn.png), [`p2-1-examples-tab.png`](../../reports/week-01/images/alt-02-language-reactor-p2-1-examples-tab.png) |
+| P3 | Saved words can be filtered by status (Marked as Known, Marked to Learn, Don't learn) and colour tags, selected in bulk, and changed together. The list can be sorted by due date. Practice settings have New Items and Session Size sliders; by their names they set amounts, not which words come first (our reading). **Not observed:** any control that sets which words are learned first. | [`p3-1-saved-words-list.png`](../../reports/week-01/images/alt-02-language-reactor-p3-1-saved-words-list.png), [`p4-2-sort-by-due-date.png`](../../reports/week-01/images/alt-02-language-reactor-p4-2-sort-by-due-date.png), [`p4-1-phrasepump-practice.png`](../../reports/week-01/images/alt-02-language-reactor-p4-1-phrasepump-practice.png) |
+| P4 | Practice happens inside the product. The PhrasePump panel has a "Start practice" button, "Today's practice: 66", "0 items due for urgent review", and counts of Marked to Learn, Learning Now and Learned. Saved words carry due dates ("Tomorrow", "No due date"). A team member reported that Start practice suggested words (no screenshot of this step). The scheduling method is not stated. | [`p4-1-phrasepump-practice.png`](../../reports/week-01/images/alt-02-language-reactor-p4-1-phrasepump-practice.png), [`p4-2-sort-by-due-date.png`](../../reports/week-01/images/alt-02-language-reactor-p4-2-sort-by-due-date.png) |
+| P5 | The language dialog has separate "Study language" (Arabic) and "Translation language" (English) settings. **Not yet evidenced by a screenshot:** Russian, German and English as study languages, and an interface-language setting. | [`p5-2-translation-language.png`](../../reports/week-01/images/alt-02-language-reactor-p5-2-translation-language.png) |
+| P6 | Not found. Checked: the saved-words, practice and reading screens, and the side menu (Media, Chatbot, PhrasePump, Saved, Help, Settings, Forum). Not checked: the FAQ and help pages. | [`p5-2-translation-language.png`](../../reports/week-01/images/alt-02-language-reactor-p5-2-translation-language.png) (side menu) |
+| P7 | Not found. It is offered as a web app (languagereactor.com) and as a browser extension; both are ways to use the product, not to run it on your own server. No self-hosted or local-server option was seen. Not checked: the FAQ and help pages. | [`p5-2-translation-language.png`](../../reports/week-01/images/alt-02-language-reactor-p5-2-translation-language.png) (extension text) |
+
+### Strengths
+
+- The path from the learner's own text to a saved word is complete in one place: paste text, click a word, see its translation, and find it in the saved list (P1).
+- Practice runs inside the product, and saved words carry due dates that the list can be sorted by (P4).
+- Study language and translation language are separate settings (P5).
+
+### Weaknesses
+
+- **No teacher feature found** (P6). This matters because our project must let a teacher connect and review cards.
+- **No control over which words come first** (P3). The practice sliders (New Items, Session Size) and the filters and sorting do not set a learning priority in anything we saw. This matters because re-prioritizing words is part of the stated problem.
+- **No self-hosted option found** (P7). It runs through a browser extension and in the browser. This matters because our project is deployed on a VPS or local host.
+
+### Not found out
+
+Whether an LLM writes the Examples-tab sentences; how the due dates are calculated; whether a finished card can be exported to Anki; Russian, German and English as study languages; an interface-language setting; the FAQ and help pages.
