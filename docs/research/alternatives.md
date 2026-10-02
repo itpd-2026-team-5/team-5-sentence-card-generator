@@ -18,7 +18,7 @@ The same set is used for every alternative.
 
 ## Research board
 
-Screenshots and working notes: [Figma board (view-only)](https://www.figma.com/board/BNB6VIlMsWQBvprl1BtgjX/Untitled?node-id=0-1&t=hbcZ6d4ggpXsBFHJ-1). Copies of the screenshots are in [`reports/week-01/images/`](../../reports/week-01/images/).
+Screenshots and working notes: [Figma board (view-only)](https://www.figma.com/board/BNB6VIlMsWQBvprl1BtgjX/Untitled?node-id=0-1&t=hbcZ6d4ggpXsBFHJ-1). The ALT-01 screenshots are also copied to [`reports/week-01/images/`](../../reports/week-01/images/).
 
 ## ALT-01: Migaku
 
@@ -53,3 +53,38 @@ Screenshots and working notes: [Figma board (view-only)](https://www.figma.com/b
 - **The AI explanation can be wrong on a misspelled word** (P2). Given "Russi" (a typo of "Russie"), it described it as a past participle of "ruser" ([`p2-3-ai-word-explanation.jpg`](../../reports/week-01/images/alt-01-migaku-p2-3-ai-word-explanation.jpg)). This is one example, so it shows a risk, not a rate.
 - **No teacher or sharing feature found** (P6). This matters because our project must let a teacher review cards.
 - **Paid** (a free 10-day trial and a subscription model, per the home page). Prices were not seen.
+
+## ALT-03: LinguaCafe
+
+- **Link:** <https://github.com/simjanos-dev/LinguaCafe>
+- **Looked at:** 2026-10-02. Latest release v0.15-beta (2025-04-13); `main` at commit `c1ea298` (2025-03-19); user manual wiki at revision `bd39cec` (2025-03-22).
+- **Type:** open-source, self-hosted option (GPL-3.0).
+- **Problem and users:** "helps language learners acquire vocabulary by reading": the learner imports texts, looks up unknown words while reading, and reviews them later. Source: README.
+- **How deep:** read the README, the [overview site](https://simjanos-dev.github.io/LinguaCafeHome/), the user manual wiki (Setup, Usage and features, FAQ) and the Anki export code (`app/Services/AnkiApiService.php`). **Not installed or used hands-on**, so every observation below comes from the project's own documentation, screenshots and code.
+- **Screenshots:** on the [board](https://www.figma.com/board/BNB6VIlMsWQBvprl1BtgjX/Untitled?node-id=0-1&t=hbcZ6d4ggpXsBFHJ-1). They are the vendor's own images, taken from the [overview site](https://simjanos-dev.github.io/LinguaCafeHome/), not captures from our own install.
+
+### Observations per property
+
+| Property | Observation | Evidence |
+|---|---|---|
+| P1 | The learner imports their own content: plain text, text file, e-book, YouTube subtitles, subtitle file, Jellyfin subtitles or a web page. Clicking a word in the reader shows dictionary results; the word starts being learned once the learner saves a translation, picked from the dictionary results or typed by hand. A highlighted word can be sent to Anki as a card with the word, reading, translation and the sentence it appeared in. The sentence is taken from the text, not written for the card. | [Usage and features: Books, Reading](https://github.com/simjanos-dev/LinguaCafe/wiki/3.-Usage-and-features); [`AnkiApiService.php`](https://github.com/simjanos-dev/LinguaCafe/blob/c1ea298ce40c65b9dd33e9b26fd2e52fae66f2c8/app/Services/AnkiApiService.php) |
+| P2 | **No LLM.** Translations come from imported dictionaries (Wiktionary, dict.cc and others), DeepL or LibreTranslate, and they translate the selected word or phrase. The Anki card has one `translation` field for the word; the example sentence is not translated. | [Setup: dictionaries, DeepL, LibreTranslate](https://github.com/simjanos-dev/LinguaCafe/wiki/2.-Setup); [`AnkiApiService.php`](https://github.com/simjanos-dev/LinguaCafe/blob/c1ea298ce40c65b9dd33e9b26fd2e52fae66f2c8/app/Services/AnkiApiService.php) (fields `word`, `reading`, `translation`, `example_sentence`) |
+| P3 | Each word has a level: new, learning 1 to 7, known, or ignored. Ignored words drop out of reviews and statistics, and a review can be limited to one book or chapter. **Not found:** a way to set which of the chosen words come up first. | [Usage and features: Reading, Review](https://github.com/simjanos-dev/LinguaCafe/wiki/3.-Usage-and-features) |
+| P4 | Built-in spaced repetition "similar to the Leitner system", configurable under Admin > Reviews, plus a practice mode that does not change the schedule. Words can also be exported to Anki. | [Usage and features: Review](https://github.com/simjanos-dev/LinguaCafe/wiki/3.-Usage-and-features) |
+| P5 | Russian, English and German are all supported as learning languages, with DeepL and lemma generation for each; German also gets gender tagging. **Interface:** no translation files found in the repository, so the interface appears to be English only (inferred, not confirmed in the running app). Text to speech uses the browser's SpeechSynthesis API, and the author says it only worked for them in Chrome on desktop. | [Setup: Supported Languages](https://github.com/simjanos-dev/LinguaCafe/wiki/2.-Setup#supported-languages); [Usage and features: Text to speech](https://github.com/simjanos-dev/LinguaCafe/wiki/3.-Usage-and-features) |
+| P6 | Not found. Multiple user accounts were "added recently", but some features, including Anki, do not work for more than one user. The README still says "only one user/server is supported". No teacher role or card sharing is documented. | [Setup: Multiple users](https://github.com/simjanos-dev/LinguaCafe/wiki/2.-Setup); [README](https://github.com/simjanos-dev/LinguaCafe#active-development-disclaimer) |
+| P7 | **Yes.** It runs with `docker compose up -d` on x64; Apple silicon needs an extra step, and Raspberry Pi and other Armv8 devices do not work. RAM use can be over 2 GB with every language installed. | [Setup: Installation](https://github.com/simjanos-dev/LinguaCafe/wiki/2.-Setup#installation); [README](https://github.com/simjanos-dev/LinguaCafe#supported-platforms) |
+
+### Strengths
+
+- Free and self-hosted with Docker (P7), which is the deployment our project description asks for.
+- Supports all three of our languages, Russian, English and German (P5), unlike ALT-01, which has no Russian.
+- Starts from the learner's own text, and every saved word keeps the sentence it came from (P1), so the card has real context.
+
+### Weaknesses
+
+- **No LLM-written sentences, and the sentence is not translated** (P2). The card's only sentence is the original one from the text, and the translation is for the word alone. This matters because sentences in both the known and the target language are the core of our project.
+- **The learner still picks or types a translation for every word** (P1), so card creation is easier but not automatic.
+- **No teacher role, and Anki export works for only one user per server** (P6). The Anki export also needs AnkiConnect running on the same machine as the server.
+- **No control over which words come first** (P3). Levels follow the review schedule, not the learner's priority.
+- **Development has slowed:** the last release was 2025-04-13 and the last commit on `main` was 2025-03-19, and the README warns of bugs. This is a risk for anyone depending on it, not a missing feature.
