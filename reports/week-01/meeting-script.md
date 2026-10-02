@@ -45,8 +45,8 @@ Questions marked ★ would change the project most if the answer went against us
 
 ## Roles
 
-TODO-username asks, TODO-username takes notes, TODO-username observes and records what we did not ask and what was not said.
-The fourth member, TODO-username, presents the gaps and value propositions after question 8, so that questions 1 to 8 are answered before the Customer hears our direction.
+KaramKhaddour and saleemasekrea000 ask the questions, Horokk1 takes notes, and Byakko-san observes and records what we did not ask and what was not said.
+The interviewers present the gaps and value propositions only after question 8, so that questions 1 to 8 are answered before the Customer hears our direction.
 
 ## Key improvements
 
