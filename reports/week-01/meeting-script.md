@@ -4,9 +4,9 @@
 
 Our problem-space sentence: language learners who study with Anki, and the teachers who guide them, want to turn the words they pick from texts they chose into sentence cards with a translation and pronunciation, and to learn those words first, without rebuilding their Anki collection by hand.
 
-We believe the core of the product is [GAP-01](../../docs/research/gap-analysis.md#gap-01-from-a-learners-own-text-to-finished-cards-in-one-pass): going from a learner's own text to finished cards in one pass ([VP-01](../../docs/research/value-proposition.md#vp-01-your-text-your-words-finished-cards-in-one-pass)).
-We believe prioritising chosen words ([VP-02](../../docs/research/value-proposition.md#vp-02-the-words-you-chose-come-up-first)) comes next, and that teacher review ([VP-03](../../docs/research/value-proposition.md#vp-03-a-teacher-checks-the-cards-before-they-are-studied)) is the most expensive and the least certain.
-We also propose a readiness score for a YouTube video the learner chose ([VP-04](../../docs/research/value-proposition.md#vp-04-know-when-youre-ready-to-watch-it)), which goes beyond the catalog's uploaded texts.
+We believe the core of the product is GAP-01: going from a learner's own text to finished cards in one pass (VP-01).
+We believe prioritising chosen words (VP-02) comes next, and that teacher review (VP-03) is the most expensive and the least certain.
+We also propose a readiness score for a YouTube video the learner chose (VP-04), which goes beyond the catalog's uploaded texts.
 We have dropped rich media cards from video, our own spaced-repetition system, and video recommendations.
 
 This meeting has to settle which of VP-01 to VP-04 the course version is built around, whether the cards must live in Anki, and whether video is in scope.
