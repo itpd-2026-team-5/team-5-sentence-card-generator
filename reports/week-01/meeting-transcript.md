@@ -246,5 +246,5 @@
 [00:28:19] Instructor: Thank you. Goodbye.  
 [00:28:21] Horokk1: Thank you. Bye.  
 [00:28:21] saleemasekrea000: Bye.  
-[00:28:21] Novakova Valeriia: Thank you.  
-[00:28:22] Novakova Valeriia: Bye bye.  
+[00:28:21] Byakko-san: Thank you.  
+[00:28:22] Byakko-san: Bye bye.  
