@@ -4,11 +4,12 @@
 
 **Date:** 2026-10-01  
 **Duration:** 28 minutes  
-**Attended:** Instructor, saleemasekrea000, Byakko-san, KaramKhaddour, Horokk1  
+**Attended:** saleemasekrea000, Byakko-san, KaramKhaddour, Horokk1, Customer  
 **Presented:** the project choice, our reading of the problem  
 **Recording:** permitted, linked from the Week 01 Moodle submission  
 **Transcript publication:** permitted, see [the transcript](meeting-transcript.md)  
-**Transcript shared privately:** not applicable
+**Transcript shared privately:** not applicable  
+**Script:** [meeting-script.md](meeting-script.md)
 
 ## Summary
 
@@ -22,18 +23,18 @@
 
 | Decision | Made by | Traces to |
 | --- | --- | --- |
-| Accept plain text as the input for now, not transcripts from particular media such as YouTube or Netflix | Instructor | |
-| Build a web app for Firefox and Chrome; Safari is not needed, and a mobile app is a later idea | Instructor | |
-| Always give the LLM the sentence the word appeared in as context, so the generated sentence uses the same meaning | Instructor | |
-| Let technical users write their own prompt, and give other users a short questionnaire (profession, study goals) that produces the prompt for them | KaramKhaddour, Instructor | |
-| Schedule reviews with an established spaced-repetition algorithm, such as FSRS used by Anki | Instructor | |
-| Use React for the frontend and Python with FastAPI for the backend | KaramKhaddour proposed, Instructor agreed | |
+| Accept plain text as the input for now, not transcripts from particular media such as YouTube or Netflix | Customer | [`VP-04`](../../docs/research/value-proposition.md#vp-04-retired) (retired), [rejected video mining](../../docs/research/gap-analysis.md#rejected-2-video-subtitle-and-audio-mining-youtubenetflix) |
+| Build a web app for Firefox and Chrome; Safari is not needed, and a mobile app is a later idea | Customer | None |
+| Always give the LLM the sentence the word appeared in as context, so the generated sentence uses the same meaning | Customer | [`GAP-01`](../../docs/research/gap-analysis.md#gap-01-llm-generated-bilingual-sentences-for-context), [`VP-01`](../../docs/research/value-proposition.md#vp-01-sentences-written-for-this-learner) |
+| Let technical users write their own prompt, and give other users a short questionnaire (profession, study goals) that produces the prompt for them | KaramKhaddour, Customer | [`GAP-01`](../../docs/research/gap-analysis.md#gap-01-llm-generated-bilingual-sentences-for-context), [`VP-01`](../../docs/research/value-proposition.md#vp-01-sentences-written-for-this-learner) |
+| Schedule reviews with an established spaced-repetition algorithm, such as FSRS used by Anki | Customer | [`GAP-03`](../../docs/research/gap-analysis.md#gap-03-bulk-card-prioritization-queue), [`VP-02`](../../docs/research/value-proposition.md#vp-02-the-words-you-chose-come-up-first) |
+| Use React for the frontend and Python with FastAPI for the backend | KaramKhaddour proposed, Customer agreed | None |
 
 ## Action points
 
 | Action                                                                            | Owner         | Due        |
 | --------------------------------------------------------------------------------- | ------------- | ---------- |
-| Create a Telegram group for the project and send an invite link to the Instructor | KaramKhaddour | 2026-10-01 |
+| Create a Telegram group for the project and send an invite link to the Customer | KaramKhaddour | 2026-10-01 |
 
 ## Open questions
 
