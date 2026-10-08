@@ -1,0 +1,46 @@
+name: User Story
+description: Create a new user story for the project
+title: "US-nn: <story title>"
+labels: ["user-story"]
+body:
+  - type: textarea
+    id: statement
+    attributes:
+      label: Story Statement
+    validations:
+      required: true
+  - type: input
+    id: value-proposition
+    attributes:
+      label: Value proposition
+      description: Single-line input for VP-nn.
+    validations:
+      required: true
+  - type: textarea
+    id: traces-to
+    attributes:
+      label: Traces to
+      description: One entry per line.
+    validations:
+      required: false
+  - type: textarea
+    id: rests-on
+    attributes:
+      label: Rests on
+      description: One entry per line.
+    validations:
+      required: false
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Each must start with AC-nn.
+    validations:
+      required: false
+  - type: textarea
+    id: priority-reason
+    attributes:
+      label: Priority reason
+      description: Explain why this priority and not the one above/below. Cite CON-nn if applicable.
+    validations:
+      required: true
