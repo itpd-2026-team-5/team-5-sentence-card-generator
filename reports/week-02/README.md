@@ -61,12 +61,12 @@ The customer's feedback on the prototype resulted in significant structural, int
 ## Repository evidence
 
 - Merged pull request that closed its task issue: [#19](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/19), which closed [#18](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/18).
-- Latest green link check run on `main`: TODO.
-- Latest green Markdown check run on `main`: TODO.
+- Latest green link check run on `main`: [Link check](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/38083400434)
+- Latest green Markdown check run on `main`: [markdown check](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/38083400441)
 
 ## Contributions
 
-TODO: each member's GitHub username and the work they did, with links to their 
+..................................
 
 ## Deviations
 
