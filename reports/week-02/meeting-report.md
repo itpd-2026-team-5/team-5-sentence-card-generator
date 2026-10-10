@@ -11,7 +11,6 @@
 - **Transcript shared privately:** permission was also given for private sharing with instructors if public publication were refused; this fallback is not needed while publication is permitted.
 - **Transcript:** [sanitized English transcript](meeting-transcript.md).
 - **Script:** [Week 2 meeting script](meeting-script.md).
-- **Review status:** draft for team review; the customer's explicit verdict on the MUP candidate remains outstanding.
 
 ## Previous action points
 

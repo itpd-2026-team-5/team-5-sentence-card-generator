@@ -1,6 +1,8 @@
 ## What changed and why
 
-<!-- What does this pull request change, and why is the change needed? Link the issue, if there is one. -->
+<!-- What does this pull request change, and why is the change needed? -->
+
+Closes #<!-- the task issue this pull request closes -->
 
 ## What I checked, and how
 
