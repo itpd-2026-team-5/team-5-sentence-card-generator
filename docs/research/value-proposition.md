@@ -59,6 +59,7 @@ The words you chose come up first
   VP-02 matters because the Customer asked for it, not because it is a moat.
 - **Changed:**
   - Reviews are scheduled in the app with an established algorithm such as FSRS ([DEC-005](../decisions.md#dec-005)).
+  - The learner puts the words they need first into a deck and chooses which decks to study, instead of ordering texts ([DEC-007](../decisions.md#dec-007), [DEC-008](../decisions.md#dec-008)); [ASM-09](../assumptions.md#asm-09) is `Refuted`.
 
 ## VP-03
 

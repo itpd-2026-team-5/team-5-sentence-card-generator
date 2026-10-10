@@ -4,15 +4,18 @@ Sentence Card Generator
 
 ## Goal
 
-Build a web application that takes plain text chosen by a learner of Russian, English, or German and generates LLM-powered sentence flashcards that a teacher can review and correct.
+A learner of Russian, English, or German turns the words they mark in a text they chose into cards whose new sentences they keep without editing, studies the decks they choose first, and has a teacher correct the cards they share.
 
-**Supports:** [VP-01](research/value-proposition.md#vp-01), [VP-03](research/value-proposition.md#vp-03).
+**Supports:** [VP-01](research/value-proposition.md#vp-01), [VP-02](research/value-proposition.md#vp-02), [VP-03](research/value-proposition.md#vp-03).
 
 ## Stakeholders
 
 - **Learner**: people studying Russian, English, or German who want personalized, LLM-generated sentences matched to their level.
 - **Teacher**: language instructors who need full visibility into their students' study materials to review and correct them.
 - **Customer**: decides the scope and wants to eliminate the manual workarounds required by previous tools.
+- **Operator**: our team runs the web application during the course.
+- **Payer**: the learner pays for generation through their own LLM API key, and a teacher who regenerates cards uses their own key, per [`DEC-019`](decisions.md#dec-019).
+- **LLM API provider**: receives the sentence around each marked word, not the whole text, per [`DEC-015`](decisions.md#dec-015).
 
 ## Constraints
 
@@ -92,6 +95,14 @@ Provide a built-in library of graded reading materials, books, or articles.
 - **Status:** Active
 - **Handled by:** The user, by hand
 - **Why:** team reasoning: the core premise is built around learners bringing their own texts.
+
+### BND-05
+
+Take or pass on payments between a learner and their teacher.
+
+- **Status:** Active
+- **Handled by:** The learner and the teacher, outside the product
+- **Why:** [`DEC-020`](decisions.md#dec-020): the Customer decided in the validation meeting that payments stay outside the service.
 
 ## System Context
 

@@ -60,5 +60,7 @@ Learners will study in our app with our FSRS scheduling, rather than export ever
 
 Ordering texts is enough for a learner to say which words come first.
 
-- **Status:** Open
+- **Status:** Refuted
 - **How to check:** Test with the Customer on the first word-picker prototype.
+- **Outcome:** shown the prototype on 2026-10-09, the Customer separated texts from decks: cards are generated into a deck the learner names, and the learner chooses which deck or decks to study, per [`DEC-007`](decisions.md#dec-007) and [`DEC-008`](decisions.md#dec-008).
+  The order of the texts does not decide which words come first; the deck the learner studies does.

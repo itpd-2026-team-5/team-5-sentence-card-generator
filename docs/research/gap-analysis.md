@@ -55,6 +55,7 @@ Bulk Card Prioritization Queue
 - **Rests on:** [ASM-08](../assumptions.md#asm-08), [ASM-09](../assumptions.md#asm-09).
 - **Changed:**
   - The app schedules reviews itself with an established algorithm such as FSRS, so the priority order reaches the review queue ([DEC-005](../decisions.md#dec-005)).
+  - The learner sets the priority by choosing which decks to study, not by ordering texts ([DEC-007](../decisions.md#dec-007), [DEC-008](../decisions.md#dec-008)); [ASM-09](../assumptions.md#asm-09) is `Refuted`.
 
 ---
 
