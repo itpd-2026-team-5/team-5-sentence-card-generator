@@ -33,6 +33,10 @@ LLM sentences can still be wrong, which is why VP-03 exists.
 Both already track which words a learner knows, Migaku uses ChatGPT for explanations, and Language Reactor has an AI chat and example sentences, so either could ship "examples built from your known words" in a release.
 LinguaCafe could plug in an LLM through its custom dictionary API, but it has had no release since April 2025 and translates only words, so it is further away.
 The defensible part is not one LLM call but the whole loop: the learner's own text, their profile, the "too hard" feedback from reviews, and the teacher's corrections (VP-03) all feed the next generation.
+**Changed:**
+
+- Always passes the sentence the word appeared in to the LLM ([DEC-003](../decisions.md#dec-003)).
+- Prompt written by technical learners, or produced from a short questionnaire for the others ([DEC-004](../decisions.md#dec-004)).
 
 ## VP-02: The words you chose come up first
 
@@ -46,6 +50,9 @@ A learner who wants to keep studying in Anki loses the priority, because an expo
 **How a competitor would respond:** this is easy to copy.
 LinguaCafe already lets a learner review one book or chapter at a time, which is close; ordering the books would be a small change.
 VP-02 matters because the Customer asked for it, not because it is a moat.
+**Changed:**
+
+- Reviews are scheduled in the app with an established algorithm such as FSRS ([DEC-005](../decisions.md#dec-005)).
 
 ## VP-03: The teacher sees and corrects the cards the student studies
 
@@ -65,7 +72,7 @@ The teacher's corrections also improve VP-01's sentences for that student, which
 
 Retired on 2026-10-02 after the kickoff meeting.
 It proposed a readiness score for a YouTube video the learner chose.
-The Customer asked us to accept plain text from any source rather than build around one media platform (see the Disagreements in the meeting report), and three value propositions is the limit.
+The Customer asked us to accept plain text from any source rather than build around one media platform ([DEC-001](../decisions.md#dec-001); see also the Disagreements in the meeting report), and three value propositions is the limit.
 The ID is not reused.
 
 ## Assumptions
