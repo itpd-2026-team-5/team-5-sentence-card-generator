@@ -102,5 +102,5 @@ The external system is the LLM API provider.
 
 ## Where The Detail Lives
 
-- [User stories](link)
+- [User stories](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues?q=label%3Auser-story)
 - [Week 2 report](../reports/week-02/README.md)
