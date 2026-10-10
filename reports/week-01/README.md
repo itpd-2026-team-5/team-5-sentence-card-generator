@@ -6,17 +6,17 @@
 
 Alternatives were found, analysed and compared. Gaps and value propositions are defided.
 
- | Deliverable              | Artifact                                                               |
+ | Deliverable | Artifact |
    | ------------------------ | ---------------------------------------------------------------------- |
-   | Candidate list           | `candidate-list.md`                                                    |
-   | Alternatives search      | `docs/research/alternatives.md`                                        |
-   | Compare the alternatives | `docs/research/comparison.md`                                          |
-   | Gap analysis             | `docs/research/gap-analysis.md`                                        |
-   | Value proposition        | `docs/research/value-proposition.md`                                   |
-   | Research board           | [your external board link](https://www.figma.com/board/BNB6VIlMsWQBvprl1BtgjX/Untitled?node-id=0-1&t=hbcZ6d4ggpXsBFHJ-1)                                              |
-   | Meeting script           | `meeting-script.md`                                                    |
-   | Customer kickoff         | `meeting-report.md`, and `meeting-transcript.md` or `meeting-notes.md` |
-   | AI usage                 | `ai-usage.md`                                                          |
+   | Candidate list | `candidate-list.md` |
+   | Alternatives search | `docs/research/alternatives.md` |
+   | Compare the alternatives | `docs/research/comparison.md` |
+   | Gap analysis | `docs/research/gap-analysis.md` |
+   | Value proposition | `docs/research/value-proposition.md` |
+   | Research board | [your external board link](https://www.figma.com/board/BNB6VIlMsWQBvprl1BtgjX/Untitled?node-id=0-1&t=hbcZ6d4ggpXsBFHJ-1) |
+   | Meeting script | `meeting-script.md` |
+   | Customer kickoff | `meeting-report.md`, and `meeting-transcript.md` or `meeting-notes.md` |
+   | AI usage | `ai-usage.md` |
 
    ![image](https://github.com/user-attachments/assets/4e170e30-39bf-4d21-98b7-f10f1ad4b5dc)
 
