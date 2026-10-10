@@ -3,19 +3,19 @@
 **Date:** 2026-10-01  
 **Participants:** Customer, saleemasekrea000, Byakko-san, KaramKhaddour, Horokk1  
 
-[00:00:00] KaramKhaddour: Start the meeting.    
+[00:00:00] KaramKhaddour: Start the meeting.
 [00:00:02] KaramKhaddour: Uh, so, hello, um, so we are working on the sentence, uh, generated, uh, generating, uh, project.  
-[00:00:11] KaramKhaddour: Can you tell us more about why?    
+[00:00:11] KaramKhaddour: Can you tell us more about why?
 [00:00:14] KaramKhaddour: Why do you want to build this project, and...  
-[00:00:17] KaramKhaddour: Uh, what benefit do you think this project will provide that your original project didn't provide?    
+[00:00:17] KaramKhaddour: Uh, what benefit do you think this project will provide that your original project didn't provide?
 [00:00:26] KaramKhaddour:  Songs, uh... project, the Songs Anki project.  
-[00:00:33] Customer: Okey, so?    
+[00:00:33] Customer: Okey, so?
 [00:00:36] Customer: I'm learning German and my goal is to learn new words like regularly.  
 [00:00:49] Customer: And ideally I should learn words that I want to learn, not from some generic list of words.  
 [00:00:58] Customer: So Anki project provided me this opportunity.  
-[00:01:01] Customer: I could upload the song text and then extract the word that I wanted to learn and then I learned these words in a context.    
+[00:01:01] Customer: I could upload the song text and then extract the word that I wanted to learn and then I learned these words in a context.
 [00:01:22] Customer: So each word was put in the context of a sentence and I could learn full sentences  
-[00:01:27] Customer: Um...    
+[00:01:27] Customer: Um...
 [00:01:29] Customer: I was learning not single words because I wanted to learn how to speak German not to just know a bunch of words
 [00:01:38] Customer: Therefore, I was learning in a context.  
 [00:01:45] Customer: The problem with Songs2Anki is that it's quite tedious to use.  
@@ -33,7 +33,7 @@
 [00:03:36] Customer: Okay, so I was talking about that it was a bit tedious to orchestrate the Songs2Anki process.  
 [00:03:46] Customer: uh...  
 [00:03:48] Customer: Like, I had to run parts of the script, like, in different steps, extract words from texts then, filter out the words that I don't want to learn manually in CSV, then run a script to map them to a normal form, then move the this new words to another CSV, where the sentences will be generated and, like, written.  
-[00:04:22] Customer: I expect that the new service, new app, will simplify some of the steps and automate them for me.   
+[00:04:22] Customer: I expect that the new service, new app, will simplify some of the steps and automate them for me.
 [00:04:30] Customer: It will provide a better interface for filtering out the words that I don't want to learn, and the card editing will be also simplified.  
 [00:04:50] KaramKhaddour: Uh, do you also want the new service to be focused on music, like, uh, like, similar to Songs2Anki, or do you want it more of, uh, general purpose, uh, how do you see this fitting?  
 [00:05:01] KaramKhaddour: Do you want us only to focus on like music and songs and getting sentences for songs?  
@@ -48,7 +48,7 @@
 [00:05:48] Customer: Uh, yeah, in your case, it should be texts in general.  
 [00:05:57] KaramKhaddour: Okay, but, um...  
 [00:05:59] KaramKhaddour: Just to be clear, because we, as we were searching about, like, alternatives or competitors, uh, some competitors were focusing on, like, YouTube, on Netflix, on, um, like, video or, uh, videos, basically, and they take the transcripts from these videos and then they put them inside of cards and show them to the user, so that the user is able to eventually see this YouTube video and understand everything in it.  
-[00:06:30] KaramKhaddour: So, do you want something, like, similar to this?   
+[00:06:30] KaramKhaddour: So, do you want something, like, similar to this?
 [00:06:35] KaramKhaddour: Like, uh, we have multiple kinds of media, like videos or songs, that we are using to generate the sentences inside the cards.  
 [00:06:45] Customer: Um...  
 [00:06:48] Customer: I think, uh, it's up to the user where to... search for texts.  
@@ -80,34 +80,34 @@
 [00:09:37] Customer: Um...  
 [00:09:40] Customer: I made songs to Anki in 2024 2025 and then and at that time, LLMs produced, um... good sentences in only two shorts of cases.  
 [00:10:03] Customer: One short was bad sentences, and I wanted them, like, I had to remove them, like, manually.  
-[00:10:06] Customer: And so, the teacher should... will connect to a student's account or somehow view the text, sorry, not the text or probably the text, too.    
-[00:10:18] Customer: But primarily the text with generated sentences.    
-[00:10:30] Customer: And they will, like... mark the bad sentences that should be removed, um, from that deck or edit some sentences so that they sound more naturally.    
-[00:10:40] Customer: So the teacher will be, like, the ultimate oracle for this system.    
-[00:10:46] Customer: They will decide... what stays in the deck and what does not.    
-[00:10:52] KaramKhaddour: Okay.    
-[00:10:53] KaramKhaddour: So, and, um... and where do you want this app, uh, to run?    
-[00:10:58] KaramKhaddour: For example, where do you see this app, uh, being used: On laptop, on desktop, on mobile application, web application?    
-[00:11:11] Customer: Um, for now, it's enough if it's a web app.    
-[00:11:16] Customer: Like, for future, uh... probably it should be a mobile application so that students can rehearse offline, but for now we can keep [inaudible] web app.    
-[00:11:37] KaramKhaddour: Okay, this is maybe...    
-[00:11:37] Customer: [inaudible] Firefox and Chrome should be supported,  Safari not necessary.    
-[00:11:50] KaramKhaddour: Mm-hmm.    
-[00:11:53] KaramKhaddour: saleemasekrea000, do you have a question?    
-[00:11:56] saleemasekrea000: Yes, uh, just one thing to clarify.    
-[00:12:02] saleemasekrea000: So, user will... input the text and then highlight the word that you want to learn, right?    
-[00:12:08] Customer: Right.    
-[00:12:09] saleemasekrea000: Okay, the text is used as a context for the LLM or what?    
-[00:12:16] Customer: Um... it... depends.    
-[00:12:25] Customer: I think it should, um, it should be an option to use the text as a context.    
+[00:10:06] Customer: And so, the teacher should... will connect to a student's account or somehow view the text, sorry, not the text or probably the text, too.
+[00:10:18] Customer: But primarily the text with generated sentences.
+[00:10:30] Customer: And they will, like... mark the bad sentences that should be removed, um, from that deck or edit some sentences so that they sound more naturally.
+[00:10:40] Customer: So the teacher will be, like, the ultimate oracle for this system.
+[00:10:46] Customer: They will decide... what stays in the deck and what does not.
+[00:10:52] KaramKhaddour: Okay.
+[00:10:53] KaramKhaddour: So, and, um... and where do you want this app, uh, to run?
+[00:10:58] KaramKhaddour: For example, where do you see this app, uh, being used: On laptop, on desktop, on mobile application, web application?
+[00:11:11] Customer: Um, for now, it's enough if it's a web app.
+[00:11:16] Customer: Like, for future, uh... probably it should be a mobile application so that students can rehearse offline, but for now we can keep [inaudible] web app.
+[00:11:37] KaramKhaddour: Okay, this is maybe...
+[00:11:37] Customer: [inaudible] Firefox and Chrome should be supported,  Safari not necessary.
+[00:11:50] KaramKhaddour: Mm-hmm.
+[00:11:53] KaramKhaddour: saleemasekrea000, do you have a question?
+[00:11:56] saleemasekrea000: Yes, uh, just one thing to clarify.
+[00:12:02] saleemasekrea000: So, user will... input the text and then highlight the word that you want to learn, right?
+[00:12:08] Customer: Right.
+[00:12:09] saleemasekrea000: Okay, the text is used as a context for the LLM or what?
+[00:12:16] Customer: Um... it... depends.
+[00:12:25] Customer: I think it should, um, it should be an option to use the text as a context.
 [00:12:34] Customer: Yeah, in the context of a text, a word can be used with one meaning.  
 [00:12:41] Customer: But if we... take it out of the context of the text and generate a random sentence with that word, the meaning may change.  
 [00:12:52] Customer: So yeah, good question.  
-[00:12:54] saleemasekrea000: Okay, so do we need to support two paths?   
+[00:12:54] saleemasekrea000: Okay, so do we need to support two paths?
 [00:12:58] saleemasekrea000: User can upload text, then highlight the word that they want to learn, and user can upload directly a word or only the first path.  
-[00:13:13] Customer: Sorry, didn't get the... the options.    
+[00:13:13] Customer: Sorry, didn't get the... the options.
 [00:13:15] Customer: Could you please repeat?  
-[00:13:17] saleemasekrea000: Yeah, okay, so I'm talking about the input from the user.   
+[00:13:17] saleemasekrea000: Yeah, okay, so I'm talking about the input from the user.
 [00:13:21] saleemasekrea000: I see it as a two-way. The first way is what we already discuss that user will input a text and then choose a word and ask us to generate the sentences.  
 [00:13:39] saleemasekrea000: And second way, user directly upload a word.  
 [00:13:45] saleemasekrea000: But here, as you mentioned, it might be, like, uh... can be different meaning.  
@@ -151,8 +151,8 @@
 [00:18:53] Customer: And then probably LLM will use more vocabulary for that topic.  
 [00:19:01] Customer: What do you think?  
 [00:19:05] KaramKhaddour: I think, um, we can distinguish two kinds of clients for our application.  
-[00:19:08] KaramKhaddour: Some of them are technical.   
-[00:19:10] KaramKhaddour: They can provide the prompt.   
+[00:19:08] KaramKhaddour: Some of them are technical.
+[00:19:10] KaramKhaddour: They can provide the prompt.
 [00:19:12] KaramKhaddour: It will not be a strange idea to provide the prompt.  
 [00:19:22] KaramKhaddour: But the other kind which are not technical people.  
 [00:19:25] KaramKhaddour: I think it will be a good idea for them to just fill up some questions, and then we will generate the prompt that we will use in the future.  
@@ -160,7 +160,7 @@
 [00:19:38] KaramKhaddour: What is your profession? What are you studying? Etc.  
 [00:19:43] Customer: Mm-hmm, mm-hmm.  
 [00:19:45] Customer: Um, yeah, pretty good idea.  
-[00:19:50] Customer: Yeah, and how do you decide the proficiency of the user?   
+[00:19:50] Customer: Yeah, and how do you decide the proficiency of the user?
 [00:19:58] Customer: Like, at which language level they are.  
 [00:20:02] KaramKhaddour: Mm-hmm, that's a good question.  
 [00:20:07] KaramKhaddour: Maybe we can either ask them if they know what levels they are on.  
@@ -178,7 +178,7 @@
 [00:21:27] Customer: What was in that card, too hard?  
 [00:21:30] Customer: Uh, maybe some too long German words were used, or maybe rare words were used.  
 [00:21:38] Customer: And we can probably automatically add such words to block list of words so that we don't use them in later generations.  
-[00:21:53] KaramKhaddour: Okay, and for the recommendation, like, of the cards, uh, we should use an online, uh, algorithm, right?   
+[00:21:53] KaramKhaddour: Okay, and for the recommendation, like, of the cards, uh, we should use an online, uh, algorithm, right?
 [00:21:59] KaramKhaddour: It's an online, already known algorithm.  
 [00:22:05] KaramKhaddour: That when we recommend this card, or when we show this card correct.  
 [00:22:12] Customer: Sorry, I didn't get what online?  
@@ -225,7 +225,7 @@
 [00:26:30] Customer: Uh, so maybe you should use Python too.  
 [00:26:36] KaramKhaddour: Okay.  
 [00:26:37] Customer: Like this part of the task.  
-[00:26:43] KaramKhaddour: I think that's all from my side of questions.   
+[00:26:43] KaramKhaddour: I think that's all from my side of questions.
 [00:26:48] KaramKhaddour: Guys, does anyone have any other questions?  
 [00:26:51] Horokk1: No.  
 [00:26:55] KaramKhaddour: Uh, Customer, do you have any questions for us?  
@@ -234,11 +234,11 @@
 [00:27:34] KaramKhaddour: I think probably this will be like, uh, just a react and, uh, fast, uh, fast, um, API for Python.  
 [00:27:49] Customer: Um, okay, sounds good.  
 [00:27:53] KaramKhaddour: Okay.  
-[00:27:54] KaramKhaddour: I think that's all for our meeting today.    
+[00:27:54] KaramKhaddour: I think that's all for our meeting today.
 [00:27:56] KaramKhaddour: Thank you very much for your [inaudible].  
 [00:28:00] Customer: Um, yeah, thank you too.  
 [00:28:03] Customer: Um, have a nice day, and...  
-[00:28:07] Customer: If you can, please create a Telegram group and send me an invite.   
+[00:28:07] Customer: If you can, please create a Telegram group and send me an invite.
 [00:28:12] Customer: I'll join.  
 [00:28:16] KaramKhaddour: Okay, we will today. Thank you very much. Have a nice day. Bye-bye.  
 [00:28:19] saleemasekrea000: Thank you.  
