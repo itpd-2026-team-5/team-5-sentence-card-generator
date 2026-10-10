@@ -26,6 +26,7 @@ For every word the learner picks, the LLM gets:
 
 Measured by: the share of generated sentences the learner keeps without editing, and the share in which every word other than the target is already known to the learner.
 **Closes:** [GAP-01](gap-analysis.md#gap-01-llm-generated-bilingual-sentences-for-context).
+**Rests on:** [ASM-01](../assumptions.md#asm-01), [ASM-02](../assumptions.md#asm-02), [ASM-03](../assumptions.md#asm-03), [ASM-04](../assumptions.md#asm-04), [ASM-05](../assumptions.md#asm-05).
 **What it costs:** an LLM call for every card, and again for every regeneration, so the token cost grows with the number of learners and cards; this is a running cost that LinguaCafe and a hand-made Anki deck do not have.
 Personal data about the learner (level, interests, known words) has to be stored.
 LLM sentences can still be wrong, which is why VP-03 exists.
@@ -41,6 +42,7 @@ The defensible part is not one LLM call but the whole loop: the learner's own te
 **What we do that the alternatives do not:** a word picker in which the learner marks the words to learn and the words to ignore in each text, and orders the texts, so the words from the first text come up first in reviews.
 Measured by: whether the words from the text ranked first appear in the learner's next review session before any others, without manual rescheduling.
 **Closes:** [GAP-03](gap-analysis.md#gap-03-bulk-card-prioritization-queue).
+**Rests on:** [ASM-08](../assumptions.md#asm-08), [ASM-09](../assumptions.md#asm-09).
 **What it costs:** we schedule reviews ourselves, with an established algorithm such as FSRS as decided at the kickoff, so we build and maintain a review screen and scheduling instead of leaving them to Anki.
 A learner who wants to keep studying in Anki loses the priority, because an exported deck can carry it only as new-card order, which the learner can undo by hand.
 **How a competitor would respond:** this is easy to copy.
@@ -56,6 +58,7 @@ None of the alternatives has a teacher view: Migaku has no teacher or sharing fe
 **What we do that the alternatives do not:** a student shares a deck with their teacher, and the teacher sees the same cards in the same editor the student uses, marks bad sentences for removal or regeneration, edits sentences to sound natural, and has the final say on what stays in the deck.
 Measured by: the share of cards a teacher changes or removes, and whether a corrected card reaches the student before their next review.
 **Closes:** [GAP-02](gap-analysis.md#gap-02-teacher-learner-review-connection).
+**Rests on:** [ASM-06](../assumptions.md#asm-06), [ASM-07](../assumptions.md#asm-07).
 **What it costs:** accounts, a teacher and a student role, sharing permissions, and a review flow, which makes this the largest part of the scope.
 A learner without a teacher gets nothing from it.
 **How a competitor would respond:** Migaku and Language Reactor would need accounts that can see each other's data, and LinguaCafe would need a permission model on top of an admin-run server where Anki export already works for only one user, so none of them is a one-release change.
@@ -67,17 +70,3 @@ Retired on 2026-10-02 after the kickoff meeting.
 It proposed a readiness score for a YouTube video the learner chose.
 The Customer asked us to accept plain text from any source rather than build around one media platform (see the Disagreements in the meeting report), and three value propositions is the limit.
 The ID is not reused.
-
-## Assumptions
-
-| Assumption | Supports | How to check |
-| --- | --- | --- |
-| An LLM writes natural sentences in Russian, English, and German at a fixed length while keeping to the learner's known words. | GAP-01, VP-01 | In Week 2, generate 30 sentences per language for a sample learner profile, have a speaker check them, and count the unknown words in each. |
-| The token cost per card is low enough for the course budget and for a learner who generates hundreds of cards. | VP-01 | In Week 2, measure the cost of 100 cards with the model we choose, including regenerations. |
-| A learner's level can be determined well enough, by asking them or by a placement test. | VP-01 | Open question from the kickoff; compare both approaches with two learners in Week 3. |
-| The words a learner did not pick in a text are words they know. | VP-01 | The Customer suggested this at the kickoff; check it against two learners' marked texts in Week 2. |
-| A short questionnaire produces prompts that work as well as a prompt the learner writes. | VP-01 | In Week 3, compare sentences from both kinds of prompt for the same words. |
-| Teachers will review their students' cards often enough for it to be worth building. | GAP-02, VP-03 | Ask the Customer how often they would review, and ask one teacher, in Week 2. |
-| Students are willing to share their decks with a teacher. | VP-03 | Ask two learners in Week 2. |
-| Learners will study in our app with our FSRS scheduling, rather than export everything to Anki. | GAP-03, VP-02 | Ask the Customer in Week 2 whether Anki export is still needed, and watch whether the first test users study in the app. |
-| Ordering texts is enough for a learner to say which words come first. | GAP-03, VP-02 | Test with the Customer on the first word-picker prototype. |

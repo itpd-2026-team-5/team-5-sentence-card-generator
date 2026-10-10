@@ -7,18 +7,21 @@
 * **The alternatives do not serve it:** LinguaCafe (ALT-03) relies on static dictionaries (like DeepL) and only captures the original text sentence without translating it. Migaku (ALT-01) provides AI explanations of words, and Language Reactor (ALT-02) provides example sentences, but none offer explicitly LLM-generated bilingual sentence pairs mapped directly to flashcard fields for the user. None personalises the sentence either: Migaku and Language Reactor track which words a learner knows, and LinguaCafe tracks word levels, but none uses that, or the learner's level and interests, to choose the sentences the learner studies.
 * **It is reachable:** Utilizing modern LLM APIs (like OpenAI or Anthropic) with strict system prompts can reliably generate a target sentence and its translation based on a selected word.
 * **A team of 3 or 4 could build it in this course:** Integrating an external LLM API call into a word-selection workflow is a well-scoped data-fetching task suitable for a single semester.
+* **Rests on:** [ASM-01](../assumptions.md#asm-01).
 
 ### GAP-02: Teacher-Learner Review Connection
 * **Somebody needs it:** Language teachers or tutors need to monitor, review, and correct the custom Anki cards their students are generating to ensure they aren't memorizing incorrect grammar, hallucinations, or poor translations.
 * **The alternatives do not serve it:** Migaku (ALT-01) and Language Reactor (ALT-02) are entirely single-player experiences with no teacher or sharing features. LinguaCafe (ALT-03) has an admin panel, but it is explicitly documented that multiple user features (including Anki export) are broken or unsupported, and there is no way for one user to review another's cards.
 * **It is reachable:** It requires standard Role-Based Access Control (RBAC) associating a "learner" account with a "teacher" account, giving the teacher read/edit access to the learner's generated word queue.
 * **A team of 3 or 4 could build it in this course:** Building basic user roles and a shared database view is a standard CRUD application feature that a small team can easily implement.
+* **Rests on:** [ASM-06](../assumptions.md#asm-06).
 
 ### GAP-03: Bulk Card Prioritization Queue
 * **Somebody needs it:** Learners encounter hundreds of unknown words in a text but want to prioritize high-frequency or highly relevant words first, without having to edit the due dates or priority of cards one by one.
 * **The alternatives do not serve it:** While Migaku allows bulk status changes and Language Reactor allows sorting by due date, neither offers a way to directly prioritize the learning queue. LinguaCafe's levels strictly follow the SRS schedule, not learner priority. None solve the problem of re-prioritizing cards flexibly.
 * **It is reachable:** It requires adding a priority field to the database schema for saved words and building a UI (like drag-and-drop or a bulk numbering system) to update that field.
 * **A team of 3 or 4 could build it in this course:** Implementing a sortable queue and database update endpoints is low-complexity and highly feasible.
+* **Rests on:** [ASM-08](../assumptions.md#asm-08), [ASM-09](../assumptions.md#asm-09).
 
 ---
 
