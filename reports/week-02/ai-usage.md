@@ -4,6 +4,9 @@ Each member lists the tools they used, what for, and what they did with the outp
 
 | Member | Tool | Used for | What we did with the output (accepted, changed, or rejected) |
 | --- | --- | --- | --- |
+| Horokk1 | OpenAI Whisper | Transcribing the customer meeting recording | Changed: used the generated transcript as a draft and passed it to ChatGPT for editing. |
+| Horokk1 | ChatGPT | Editing the Whisper-generated meeting transcript | Accepted: used the edited text for the [meeting transcript](meeting-transcript.md) and as the source for the meeting report. |
+| Horokk1 | OpenAI Codex | Helping draft the meeting report from the transcript according to the course requirements | Accepted: used the suggested structure and wording as a basis for the [meeting report](meeting-report.md). |
 | saleemasekrea000 | Claude (Claude Code) | Cutting the `ALT-nn`, `GAP-nn`, and `VP-nn` headings to their identifiers and turning their fields into bulleted lists ([#26](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/26)) | Changed: checked each field against the research requirements, kept every observation's wording, and fixed the two links the link check failed on. |
 | saleemasekrea000 | Claude (Claude Code) | Drafting the 13 user stories and the story issue form ([#29](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/29)) | Changed: rejected the stories it proposed that no gap, decision, or kickoff point supports, checked every story against the user story requirements, and opened each issue from the form by hand. |
 | saleemasekrea000 | Claude (Claude Code) | Checking the Week 2 work against the Week 1 feedback, and filling the gaps in this report, the product vision, and the assumptions | Changed: kept only the fixes the assignment asks for, and checked each claim against the meeting report and the decisions log. |
