@@ -6,7 +6,7 @@ Sentence Card Generator
 
 Build a web application that takes plain text chosen by a learner of Russian, English, or German and generates LLM-powered sentence flashcards that a teacher can review and correct.
 
-**Supports:** [VP-01](/docs/research/value-proposition.md#vp-01), [VP-03](/docs/research/value-proposition.md#vp-03).
+**Supports:** [VP-01](research/value-proposition.md#vp-01), [VP-03](research/value-proposition.md#vp-03).
 
 ## Stakeholders
 
@@ -95,7 +95,7 @@ Provide a built-in library of graded reading materials, books, or articles.
 
 ## System Context
 
-![System context diagram](/docs/architecture/context.png)
+![System context diagram](architecture/context.png)
 
 The learners, teachers, and the customer are the actors.
 The external system is the LLM API provider.
