@@ -7,34 +7,51 @@ body:
     id: statement
     attributes:
       label: Story Statement
+      description: |
+        A user's need, not a solution: As a <user>, I want <action>, so that <value>.
+        Do not name a screen, a button, a component, or a library.
     validations:
       required: true
   - type: input
     id: value-proposition
     attributes:
       label: Value proposition
-      description: Single-line input for VP-nn.
+      description: |
+        One VP-nn, linked on main:
+        [`VP-01`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/blob/main/docs/research/value-proposition.md#vp-01)
     validations:
       required: true
   - type: textarea
     id: traces-to
     attributes:
       label: Traces to
-      description: One entry per line.
+      description: |
+        One origin per line, linked on main: a GAP-nn the story's VP-nn closes, a DEC-nnn, or an action point.
+        - [`GAP-01`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/blob/main/docs/research/gap-analysis.md#gap-01)
+        - [`DEC-001`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/blob/main/docs/decisions.md#dec-001)
+        Leave empty if the story has no origin.
     validations:
       required: false
   - type: textarea
     id: rests-on
     attributes:
       label: Rests on
-      description: One entry per line.
+      description: |
+        One ASM-nn per line, linked on main:
+        - [`ASM-01`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/blob/main/docs/assumptions.md#asm-01)
+        Leave empty if the story rests on no assumption.
     validations:
       required: false
   - type: textarea
     id: acceptance-criteria
     attributes:
       label: Acceptance Criteria
-      description: Each must start with AC-nn.
+      description: |
+        At least two, each observable and pass/fail, each starting with its AC-nn.
+        A Won't Have story may carry none.
+      value: |
+        1. AC-01:
+        2. AC-02:
     validations:
       required: false
   - type: textarea
@@ -44,3 +61,18 @@ body:
       description: Explain why this priority and not the one above/below. Cite CON-nn if applicable.
     validations:
       required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Optional notes for whoever works on the story.
+    validations:
+      required: false
+  - type: textarea
+    id: tasks
+    attributes:
+      label: Tasks
+      description: |
+        Optional: the task issues that work toward this story, one per line, such as `- #12`.
+    validations:
+      required: false
