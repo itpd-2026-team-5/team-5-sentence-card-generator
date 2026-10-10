@@ -15,29 +15,29 @@ Questions marked ★ would change the project most if the answer went against us
 
 ## Questions
 
-**Business goals**
+### Business goals
 
 1. _(open)_ What made you build songs2anki, and what did you do with the decks it produced?
 2. _(open)_ When this product works, what is different about the way you or your students study?
 
-**End users**
+### End users
 
 3. _(open)_ Who used songs2anki or a similar workflow most recently: you, a student, or a teacher? ★
 4. _(closed)_ Are the learner and the person who prepares the cards usually the same person?
 
-**Current workflow**
+### Current workflow
 
 5. _(open)_ Walk us through the last time you added sentences from a text to an Anki deck, step by step. ★
 6. _(open)_ The last time you wanted particular words to come up first, what did you do in Anki?
 7. _(open)_ The last time you or a student tried to watch a video in the language you were learning, what happened?
 
-**Pain points and constraints**
+### Pain points and constraints
 
 8. _(open)_ What was the most tedious part of that last time?
 9. _(closed)_ Must the cards end up in Anki, or is a separate study app acceptable? ★
 10. _(closed)_ Must it run on a VPS or locally without a paid LLM API?
 
-**Scope**
+### Scope
 
 11. _(open)_ If only one of these four directions shipped by December, which would you keep, and why?
 12. _(closed)_ Is the teacher review in or out for this course?
@@ -50,22 +50,22 @@ The interviewers present the gaps and value propositions only after question 8, 
 
 ## Key improvements
 
-**"Would you like the app to prioritise words for you?" → question 6: "The last time you wanted particular words to come up first, what did you do in Anki?"**
+**"Would you like the app to prioritise words for you?"** → question 6: "The last time you wanted particular words to come up first, what did you do in Anki?"
 
 The original offered our own solution and invited a polite yes.
 The rewrite asks about a past event, so the answer describes what the Customer actually does today, which tells us whether VP-02 solves a real problem.
 
-**"Would teachers use a feature to review student cards?" → question 3: "Who used songs2anki or a similar workflow most recently: you, a student, or a teacher?"**
+**"Would teachers use a feature to review student cards?"** → question 3: "Who used songs2anki or a similar workflow most recently: you, a student, or a teacher?"
 
 The original asked for a prediction about other people's future behaviour, which nobody can answer reliably.
 The rewrite asks who actually used the workflow, so the answer tells us whether teachers are real users of it or an assumption.
 
-**"Is translation quality important to you?" → question 8: "What was the most tedious part of that last time?"**
+**"Is translation quality important to you?"** → question 8: "What was the most tedious part of that last time?"
 
 The original asked about an abstract quality, and everyone says yes to it.
 The rewrite lets the Customer name the pain without us suggesting it, so if translation is the problem, they will say so unprompted.
 
-**"Would you like the app to recommend YouTube videos you are ready for?" → question 7: "The last time you or a student tried to watch a video in the language you were learning, what happened?"**
+**"Would you like the app to recommend YouTube videos you are ready for?"** → question 7: "The last time you or a student tried to watch a video in the language you were learning, what happened?"
 
 The original pitched VP-04 and asked the Customer to approve it.
 The rewrite asks what happened last time, so we hear whether getting lost in a video is a real problem before we present our answer to it.
