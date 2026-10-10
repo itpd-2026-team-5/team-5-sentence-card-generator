@@ -20,10 +20,10 @@ Still open: whether a card's sentence should take one sentence of context or the
 
 | Deliverable | Artifact |
 | --- | --- |
-| Kickoff action points | TODO: `reports/week-02/meeting-report.md#previous-action-points` |
-| Kickoff open questions | TODO: `reports/week-02/meeting-report.md#previous-open-questions` |
-| Product vision | TODO: `docs/product-vision.md` |
-| System context diagram | TODO: `docs/architecture/context.<ext>` and its source, embedded in `docs/product-vision.md` |
+| Kickoff action points | [`reports/week-02/meeting-report.md#previous-action-points`](meeting-report.md#previous-action-points) |
+| Kickoff open questions | [`reports/week-02/meeting-report.md#previous-open-questions`](meeting-report.md#previous-open-questions) |
+| Product vision | [`docs/product-vision.md`](../../docs/product-vision.md) |
+| System context diagram | [`docs/architecture/context.png`](../../docs/architecture/context.png), embedded in [`docs/product-vision.md#system-context`](../../docs/product-vision.md#system-context) |
 | Assumptions | [`docs/assumptions.md`](../../docs/assumptions.md) |
 | Decisions | [`docs/decisions.md`](../../docs/decisions.md) |
 | Story issues | [the `US-nn` issues, filtered by the `user-story` label](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues?q=is%3Aissue%20label%3Auser-story) |
@@ -31,9 +31,9 @@ Still open: whether a card's sentence should take one sentence of context or the
 | Labels | [the repository's labels page](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/labels), with `user-story`, `task`, and the `moscow:*` labels |
 | Pull request template | [`.github/pull_request_template.md`](../../.github/pull_request_template.md) |
 | Prototypes | [`reports/week-02/prototypes.md`](prototypes.md) |
-| Meeting script | TODO: `reports/week-02/meeting-script.md` |
-| Customer validation | TODO: `reports/week-02/meeting-report.md`, and `reports/week-02/meeting-transcript.md` when there is one |
-| AI usage | TODO: `reports/week-02/ai-usage.md` |
+| Meeting script | [`reports/week-02/meeting-script.md`](meeting-script.md) |
+| Customer validation | [`reports/week-02/meeting-report.md`](meeting-report.md), [`reports/week-02/meeting-transcript.md`](meeting-transcript.md) |
+| AI usage | [`reports/week-02/ai-usage.md`](ai-usage.md) |
 
 ## Minimum Usable Product Candidate
 
@@ -43,25 +43,34 @@ Core task: a learner turns a text they chose into cards that carry a new sentenc
 - [`US-02`: Mark the words I want to learn in a text](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/31)
 - [`US-03`: Get a new sentence for each word I marked](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/32)
 
-Customer's verdict: TODO `DEC-nnn`.
-The meeting did not give an explicit verdict on the candidate; the Customer said three stories are enough for a prototype.
+Customer's verdict: not yet given.
+The Customer said three stories are enough for a prototype, but did not accept or reject this candidate; asking for the verdict is an [action point](meeting-report.md#action-points) due in Week 3.
 
 ## What the prototype changed
 
-TODO after the validation meeting: the `US-nn`, boundary item, constraint, or `ASM-nn` that changed because of what the Customer said about the prototype, what changed in it, and the `DEC-nnn` behind the change.
+[`ASM-09`](../../docs/assumptions.md#asm-09) is now `Refuted`: the learner chooses which decks to study instead of ordering texts, per [`DEC-007`](../../docs/decisions.md#dec-007) and [`DEC-008`](../../docs/decisions.md#dec-008).
 
 ## Repository evidence
 
 - Merged pull request that closed its task issue: [#19](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/19), which closed [#18](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/18).
-- Latest green link check run on `main`: TODO.
-- Latest green Markdown check run on `main`: TODO.
+- Latest green link check run on `main`: [run 38080094882](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/38080094882).
+- Latest green Markdown check run on `main`: [run 38080094871](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/38080094871).
+- The link check excludes one link, the Figma research board, because Figma answers automated requests with HTTP 403; we opened it in a private browser window, without signing in, on 2026-10-10.
 
 ## Contributions
 
-TODO: each member's GitHub username and the work they did, with links to their pull requests, commits, or reviews.
+| Member | Work |
+| ------ | ---- |
+| @KaramKhaddour | Decisions and assumptions logs, Markdown check, prototype: [#15](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/15), [#17](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/17), [#19](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/19), [#22](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/22), [#24](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/24), [#25](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/25), [#45](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/45). Reviewed [#13](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/13#pullrequestreview-5462790015), [#26](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/26#pullrequestreview-5479484575), [#29](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/29#pullrequestreview-5479577627). |
+| @saleemasekrea000 | Research identifiers, story form, [user stories](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues?q=label%3Auser-story): [#26](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/26), [#29](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/29). Reviewed [#15](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/15#pullrequestreview-5478719903), [#22](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/22#pullrequestreview-5478746660), [#25](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/25#pullrequestreview-5479209693). |
+| @Byakko-san | Product vision: [#48](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/48). Issue templates: [#13](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/13). Reviewed [#19](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/19#pullrequestreview-5479145800), [#45](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/45#pullrequestreview-5480147518), [#47](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/47#pullrequestreview-5480510850). |
+| @Horokk1 | Week 2 meeting: [#47](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/47). Reviewed [#24](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/24#pullrequestreview-5479034508), [#45](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/45#pullrequestreview-5479989853), [#48](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/48#pullrequestreview-5480430897). |
 
 ## Deviations
 
-TODO: anything we did differently from the assignment, or "None."
+- The Customer has not yet given a verdict on the minimum usable product candidate, so the candidate cites no `DEC-nnn`; we record it in Week 3.
+- [#13](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/13) and [#26](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/26) came from branches without an issue number, and #26 closed no task issue.
+- [#24](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/24) also changed Week 1 files, in commit 17490dd, which belonged in the formatting-only pull request.
+- `US-13` ([#33](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/33)) was opened before `US-04` to `US-12`, so its issue number is lower; story numbers are not issue numbers, so we did not renumber.
 
 No private-only material was committed to the repository.
