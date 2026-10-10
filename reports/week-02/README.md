@@ -5,7 +5,16 @@
 
 ## Summary
 
-TODO after the validation meeting: what we found, built, and decided, what we found out we were wrong about, and what is still open.
+We moved the Week 1 decisions and assumptions into their own logs, added a Markdown check, reformatted the research, wrote the user stories as issues, and built a code spike of the learner flow, which we showed the Customer in the validation meeting on 2026-10-09.
+
+What we were wrong about:
+
+- **Texts are not decks.** We treated each text as the unit the learner studies and orders. The Customer separates them: words are picked in a text, cards are generated into a deck, a card stays independent of its text, and the learner studies one deck or a chosen set of decks, as in Anki. Ordering texts (`ASM-09`) is not how the learner chooses what comes first.
+- **The profile questionnaire.** We expected a questionnaire about the learner's profession and interests to steer the sentences (`DEC-004`). The Customer finds it unnecessary and intrusive, and wants instructions per deck instead.
+- **The card layout.** We flipped the card to show the translation. The Customer wants the sentence to stay in place, the translation added below it, the target word and its translation above it, and the sentence read aloud automatically.
+
+The meeting also settled who pays for the LLM: the learner brings their own API key, kept in their browser if possible, or uses a subscription, and the teacher uses their own key.
+Still open: whether a card's sentence should take one sentence of context or the sentences around it, how long a sentence may be in characters, and when a teacher's regeneration runs.
 
 ## Coverage
 
@@ -34,7 +43,8 @@ Core task: a learner turns a text they chose into cards that carry a new sentenc
 - [`US-02`: Mark the words I want to learn in a text](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/31)
 - [`US-03`: Get a new sentence for each word I marked](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/32)
 
-Customer's verdict: TODO after the validation meeting, `DEC-nnn`.
+Customer's verdict: TODO `DEC-nnn`.
+The meeting did not give an explicit verdict on the candidate; the Customer said three stories are enough for a prototype.
 
 ## What the prototype changed
 
