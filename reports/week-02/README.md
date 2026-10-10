@@ -22,8 +22,8 @@ Still open: whether a card's sentence should take one sentence of context or the
 | --- | --- |
 | Kickoff action points | TODO: `reports/week-02/meeting-report.md#previous-action-points` |
 | Kickoff open questions | TODO: `reports/week-02/meeting-report.md#previous-open-questions` |
-| Product vision | TODO: `docs/product-vision.md` |
-| System context diagram | TODO: `docs/architecture/context.<ext>` and its source, embedded in `docs/product-vision.md` |
+| Product vision | [docs/product-vision.md](../../docs/product-vision.md) |
+| System context diagram | [docs/architecture/context.png](../../docs/architecture/context.png) and its source, embedded in [docs/product-vision.md](../../docs/product-vision.md) |
 | Assumptions | [`docs/assumptions.md`](../../docs/assumptions.md) |
 | Decisions | [`docs/decisions.md`](../../docs/decisions.md) |
 | Story issues | [the `US-nn` issues, filtered by the `user-story` label](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues?q=is%3Aissue%20label%3Auser-story) |
