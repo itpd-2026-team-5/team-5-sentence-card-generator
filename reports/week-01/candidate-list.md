@@ -1,7 +1,7 @@
 # Candidate List
 
 | Candidate | URL | Why it might be relevant | Status |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Migaku | <https://migaku.com/> | Helps language learners create flashcards from content they are studying, including sentences and audio. | ALT-01, researched 2026-10-02 (see `docs/research/alternatives.md`) |
 | VocabSieve | <https://github.com/FreeLanguageTools/vocabsieve> | Helps create Anki vocabulary cards from sentences with definitions and pronunciation. | Not yet researched |
 | Anki Miner | <https://github.com/0xzerolight/anki_miner> | Automates creating Anki vocabulary cards from language-learning content. | Not yet researched |

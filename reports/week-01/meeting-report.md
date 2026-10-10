@@ -32,20 +32,20 @@
 
 ## Action points
 
-| Action                                                                            | Owner         | Due        |
-| --------------------------------------------------------------------------------- | ------------- | ---------- |
+| Action | Owner | Due |
+| --- | --- | --- |
 | Create a Telegram group for the project and send an invite link to the Customer | KaramKhaddour | 2026-10-01 |
 
 ## Open questions
 
-| Question                                                                              | What it would change                                                                                                                                                  | Follow-up |
-| ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
-| How do we determine the user's language proficiency level?                            | It will allow the system to adapt the vocabulary and complexity of the generated sentences to the student's knowledge                                                 |      KaramKhaddour     |
-| Should we use a questionnaire to generate custom LLM prompts for non-technical users? | It would allow the system to tailor sentence topics (e.g., IT or Data Science) based on the user's profession without requiring them to write custom prompts manually |     KaramKhaddour      |
+| Question | What it would change | Follow-up |
+| --- | --- | --- |
+| How do we determine the user's language proficiency level? | It will allow the system to adapt the vocabulary and complexity of the generated sentences to the student's knowledge | KaramKhaddour |
+| Should we use a questionnaire to generate custom LLM prompts for non-technical users? | It would allow the system to tailor sentence topics (e.g., IT or Data Science) based on the user's profession without requiring them to write custom prompts manually | KaramKhaddour |
 
 ## Disagreements
 
-| Your position                                                                                                                               | Customer's position                                                                                                                                                 | What you changed                                                                                                             |
-| ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Your position | Customer's position | What you changed |
+| --- | --- | --- |
 | The application could focus heavily on extracting transcripts from specific media platforms like YouTube or Netflix, similar to competitors | The focus should be on general texts, leaving it up to the user to decide where to search for texts, because there are too many kinds of media to focus on just one | We will accept plain text from any source instead of building around one media platform, and we dropped VP-04 (a readiness score for a YouTube video the learner chose) from the value proposition |
-| The application should support two user input paths: uploading text to choose a word from it, and uploading a single word directly          | Uploading a single word removes the necessary context, which could lead the LLM to generate sentences using the wrong meaning of the word                           | We dropped the single-word path: the learner always uploads a text, so every word comes with the sentence it appeared in |
+| The application should support two user input paths: uploading text to choose a word from it, and uploading a single word directly | Uploading a single word removes the necessary context, which could lead the LLM to generate sentences using the wrong meaning of the word | We dropped the single-word path: the learner always uploads a text, so every word comes with the sentence it appeared in |
