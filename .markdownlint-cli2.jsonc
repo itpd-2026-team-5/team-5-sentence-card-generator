@@ -5,6 +5,9 @@
     "MD024": { "siblings_only": true },
     "MD029": false,
     "MD041": false,
+    // Off: research-requirements.md, Alternatives rule 6, requires the bold labels
+    // **Observations by property**, **Strengths** and **Weaknesses** on lines of their own.
+    "MD036": false,
   },
   "gitignore": true,
   "ignores": ["backlog/**"],

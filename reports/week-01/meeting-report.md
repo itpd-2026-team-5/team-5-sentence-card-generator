@@ -23,11 +23,11 @@
 
 | Decision | Made by | Traces to |
 | --- | --- | --- |
-| Accept plain text as the input for now, not transcripts from particular media such as YouTube or Netflix | Customer | [`VP-04`](../../docs/research/value-proposition.md#vp-04-retired) (retired), [rejected video mining](../../docs/research/gap-analysis.md#rejected-2-video-subtitle-and-audio-mining-youtubenetflix) |
+| Accept plain text as the input for now, not transcripts from particular media such as YouTube or Netflix | Customer | [`VP-04`](../../docs/research/value-proposition.md#vp-04) (retired), [rejected video mining](../../docs/research/gap-analysis.md#rejected-2-video-subtitle-and-audio-mining-youtubenetflix) |
 | Build a web app for Firefox and Chrome; Safari is not needed, and a mobile app is a later idea | Customer | None |
-| Always give the LLM the sentence the word appeared in as context, so the generated sentence uses the same meaning | Customer | [`GAP-01`](../../docs/research/gap-analysis.md#gap-01-llm-generated-bilingual-sentences-for-context), [`VP-01`](../../docs/research/value-proposition.md#vp-01-sentences-written-for-this-learner) |
-| Let technical users write their own prompt, and give other users a short questionnaire (profession, study goals) that produces the prompt for them | KaramKhaddour, Customer | [`GAP-01`](../../docs/research/gap-analysis.md#gap-01-llm-generated-bilingual-sentences-for-context), [`VP-01`](../../docs/research/value-proposition.md#vp-01-sentences-written-for-this-learner) |
-| Schedule reviews with an established spaced-repetition algorithm, such as FSRS used by Anki | Customer | [`GAP-03`](../../docs/research/gap-analysis.md#gap-03-bulk-card-prioritization-queue), [`VP-02`](../../docs/research/value-proposition.md#vp-02-the-words-you-chose-come-up-first) |
+| Always give the LLM the sentence the word appeared in as context, so the generated sentence uses the same meaning | Customer | [`GAP-01`](../../docs/research/gap-analysis.md#gap-01), [`VP-01`](../../docs/research/value-proposition.md#vp-01) |
+| Let technical users write their own prompt, and give other users a short questionnaire (profession, study goals) that produces the prompt for them | KaramKhaddour, Customer | [`GAP-01`](../../docs/research/gap-analysis.md#gap-01), [`VP-01`](../../docs/research/value-proposition.md#vp-01) |
+| Schedule reviews with an established spaced-repetition algorithm, such as FSRS used by Anki | Customer | [`GAP-03`](../../docs/research/gap-analysis.md#gap-03), [`VP-02`](../../docs/research/value-proposition.md#vp-02) |
 | Use React for the frontend and Python with FastAPI for the backend | KaramKhaddour proposed, Customer agreed | None |
 
 ## Action points
