@@ -95,7 +95,7 @@ Provide a built-in library of graded reading materials, books, or articles.
 
 ## System Context
 
-![System context diagram](architecture/context.svg)
+![System context diagram](/docs/architecture/context.png)
 
 The learners, teachers, and the customer are the actors.
 The external system is the LLM API provider.
