@@ -20,10 +20,10 @@ Still open: whether a card's sentence should take one sentence of context or the
 
 | Deliverable | Artifact |
 | --- | --- |
-| Kickoff action points | TODO: `reports/week-02/meeting-report.md#previous-action-points` |
-| Kickoff open questions | TODO: `reports/week-02/meeting-report.md#previous-open-questions` |
-| Product vision | [docs/product-vision.md](../../docs/product-vision.md) |
-| System context diagram | [docs/architecture/context.png](../../docs/architecture/context.png) and its source, embedded in [docs/product-vision.md](../../docs/product-vision.md) |
+| Kickoff action points | [reports/week-02/meeting-report.md](meeting-report.md#previous-action-points) |
+| Kickoff open questions | [reports/week-02/meeting-report.md](meeting-report.md#previous-open-questions) |
+| Product vision | [`docs/product-vision.md`](../../docs/product-vision.md) |
+| System context diagram | [`docs/architecture/context.png`](../../docs/architecture/context.png) and its source, embedded in [`docs/product-vision.md`](../../docs/product-vision.md) |
 | Assumptions | [`docs/assumptions.md`](../../docs/assumptions.md) |
 | Decisions | [`docs/decisions.md`](../../docs/decisions.md) |
 | Story issues | [the `US-nn` issues, filtered by the `user-story` label](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues?q=is%3Aissue%20label%3Auser-story) |
@@ -31,9 +31,9 @@ Still open: whether a card's sentence should take one sentence of context or the
 | Labels | [the repository's labels page](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/labels), with `user-story`, `task`, and the `moscow:*` labels |
 | Pull request template | [`.github/pull_request_template.md`](../../.github/pull_request_template.md) |
 | Prototypes | [`reports/week-02/prototypes.md`](prototypes.md) |
-| Meeting script | TODO: `reports/week-02/meeting-script.md` |
-| Customer validation | TODO: `reports/week-02/meeting-report.md`, and `reports/week-02/meeting-transcript.md` when there is one |
-| AI usage | TODO: `reports/week-02/ai-usage.md` |
+| Meeting script | [`reports/week-02/meeting-script.md`](meeting-script.md) |
+| Customer validation | [`reports/week-02/meeting-report.md`](meeting-report.md), and [`reports/week-02/meeting-transcript.md`](meeting-transcript.md) |
+| AI usage | [`reports/week-02/ai-usage.md`](ai-usage.md) |
 
 ## Minimum Usable Product Candidate
 
@@ -43,12 +43,20 @@ Core task: a learner turns a text they chose into cards that carry a new sentenc
 - [`US-02`: Mark the words I want to learn in a text](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/31)
 - [`US-03`: Get a new sentence for each word I marked](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/32)
 
-Customer's verdict: TODO `DEC-nnn`.
+Customer's verdict: Pending. No decision accepting or rejecting the exact MUP candidate was recorded during the meeting. The verdict is carried forward as an open question to be documented with a new DEC-nnn in Week 3.
 The meeting did not give an explicit verdict on the candidate; the Customer said three stories are enough for a prototype.
 
 ## What the prototype changed
 
-TODO after the validation meeting: the `US-nn`, boundary item, constraint, or `ASM-nn` that changed because of what the Customer said about the prototype, what changed in it, and the `DEC-nnn` behind the change.
+The customer's feedback on the prototype resulted in significant structural, interface, and logic changes to the product requirements:
+
+* **Data Structure & Navigation:** The prototype originally treated source texts effectively as decks. This was corrected so that texts are merely sources for word selection; generated cards are now independent objects that can be assigned to one or more selected decks (DEC-007).
+* **Study Session Flow:** Instead of automatically gathering all ready cards across the application, learners must now explicitly select a deck or a subset of decks before a study session begins (DEC-008).
+* **Card Interface:** The review layout will keep the original-language sentence fixed in place when revealing the translation beneath it (DEC-009). Additionally, sentence audio will play automatically when a card is shown (DEC-010), and the translation displayed will be specific to the contextual meaning of the word in that exact sentence (DEC-011).
+* **Context & Generation Prompting:** The plan to use a global, user-level profile questionnaire for generation context was scrapped. Instead, generation instructions will be optional and configured per deck (DEC-013, reversing DEC-004). To generate cards, the LLM will only receive the specific source sentence and its immediate neighbors, rather than the entire text or a summary (DEC-015).
+* **Generation Constraints:** Sentence length controls must now support character limits, not just word counts, specifically to handle long compound words in German (DEC-014).
+* **Teacher Interface & Access:** The bulky, card-by-card list view for teachers will be replaced with a compact table offering immediate inline regeneration (DEC-017, DEC-018).
+* **Security:** The API key model was adjusted so that learners can use their personal keys without being forced to expose them to reviewing teachers (DEC-019).
 
 ## Repository evidence
 
@@ -58,10 +66,10 @@ TODO after the validation meeting: the `US-nn`, boundary item, constraint, or `A
 
 ## Contributions
 
-TODO: each member's GitHub username and the work they did, with links to their pull requests, commits, or reviews.
+TODO: each member's GitHub username and the work they did, with links to their 
 
 ## Deviations
 
-TODO: anything we did differently from the assignment, or "None."
+None.
 
 No private-only material was committed to the repository.
