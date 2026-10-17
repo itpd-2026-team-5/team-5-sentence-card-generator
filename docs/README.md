@@ -1,13 +1,24 @@
-# Documentation
+# Sentence Cards Generator
 
-Maintained documentation for the Sentence Cards Generator.
+A web app for learners of Russian, English, and German.
+A learner brings in a text they chose, marks the words they want to learn, and gets flashcards whose sentences an LLM wrote for them: at their level, in the meaning the word had in their text, and following the instructions of the deck they are building.
+They study the cards with spaced repetition (FSRS), and can share a deck with a teacher, who corrects the cards in place.
 
-- [Set up and run](setup.md): from a clean checkout to the core task, and how to run the checks and the tests.
+Built by ITPD Team 5 for the IT Product Development course, autumn 2026; a work in progress.
 
-## Research
+## Start here
 
-- [Alternatives](research/alternatives.md): the problem space, properties P1 to P7, and `ALT-01` to `ALT-03`.
-- [Comparison](research/comparison.md): the alternatives side by side, property by property.
-- [Gap analysis](research/gap-analysis.md): `GAP-nn`, and the gaps we chose not to pursue.
-- [Value proposition](research/value-proposition.md): `VP-nn`.
-- [Assumptions](assumptions.md): `ASM-nn`, what we believe and have not yet checked.
+- [Set up and run](setup.md): from a clean checkout to your first cards, and how to run the checks and the tests.
+- [Product vision](product-vision.md): the goal, who the product is for, its constraints and boundary, and the system context.
+
+## How we decided
+
+- [Decisions](decisions.md): every decision that changed what we build, `DEC-nnn`, with who made it and why.
+- [Assumptions](assumptions.md): what we believe and have not yet checked, `ASM-nn`, and how we check it.
+- [Research](research/index.md): the alternatives, the comparison, the gaps, and our value proposition.
+
+## Around the project
+
+- [The repository](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator), with the code in `backend/` and `frontend/`.
+- [User stories](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues?q=label%3Auser-story), each an issue with its acceptance criteria and priority.
+- [Releases](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases).
