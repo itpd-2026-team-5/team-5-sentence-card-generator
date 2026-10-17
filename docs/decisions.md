@@ -223,6 +223,21 @@ Let learners select their language level and offer optional links to external pl
 
 ## DEC-023
 
+Build the product with a React and TypeScript frontend on Vite, a Python FastAPI backend with SQLAlchemy and Alembic on PostgreSQL, Claude through the official Anthropic SDKs, and docker compose to run it all.
+
+- **Status:** Active
+- **Date:** 2026-10-17
+- **Made by:** Team
+- **Source:** team discussion while building the prototype, carried into the product in [#59](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/59), [#60](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/60), and [#61](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/61)
+- **Why:** confirms the direction of [`DEC-006`](#dec-006) and fills in what it left open.
+  TypeScript catches API mismatches before the Customer sees them, and Vite gives a fast development loop.
+  PostgreSQL keeps each learner's cards, decks, and review history with real foreign keys, and Alembic migrates it on start, so a schema change never needs a manual step.
+  The official Anthropic SDKs give structured JSON output, typed errors, and, in the browser, the learner's own key that never reaches our server ([`DEC-019`](#dec-019)).
+  docker compose starts the database, a local mail inbox, the backend, and the frontend with one command, the same on every laptop, which is what makes [the setup page](setup.md) work from a clean checkout.
+  The team already works in Python and React, and the prototype was built and shown to the Customer on this stack.
+
+## DEC-024
+
 Store the learning and translation language pair per deck.
 
 - **Status:** Active
@@ -231,7 +246,7 @@ Store the learning and translation language pair per deck.
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** A learner may study several languages at once, so one account-wide pair prevents different decks from serving different language combinations.
 
-## DEC-024
+## DEC-025
 
 Store proficiency separately for each language and allow a deck to override its default level.
 
@@ -241,7 +256,7 @@ Store proficiency separately for each language and allow a deck to override its 
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** The Customer described studying multiple languages and using different levels within an account; a single global level would obstruct those cases.
 
-## DEC-025
+## DEC-026
 
 Provide both minimum and maximum sentence lengths in characters.
 
@@ -251,7 +266,7 @@ Provide both minimum and maximum sentence lengths in characters.
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** Some generated sentences had been too short and simplistic, while word counts alone do not control the visual length of German sentences.
 
-## DEC-026
+## DEC-027
 
 Make API-key and model selection support LLM providers generically rather than presenting Anthropic as the only provider.
 
@@ -261,7 +276,7 @@ Make API-key and model selection support LLM providers generically rather than p
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** The Customer may use an aggregator such as OpenRouter and asked for a unified provider and model selection interface.
 
-## DEC-027
+## DEC-028
 
 Let the learner explicitly switch between a saved personal API key and the service's key.
 
@@ -271,7 +286,7 @@ Let the learner explicitly switch between a saved personal API key and the servi
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** A learner should be able to keep a personal key saved while choosing a different funding source or a model supplied by the service.
 
-## DEC-028
+## DEC-029
 
 Use the LLM provider's usage statistics for token spending and expose useful card-quality statistics in the application instead of relying on request counts.
 
@@ -281,7 +296,7 @@ Use the LLM provider's usage statistics for token spending and expose useful car
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** A request can generate several cards, making request counts hard to interpret; regenerated and discarded cards can help a learner assess model quality.
 
-## DEC-029
+## DEC-030
 
 Persist the learner's selected study decks between visits to Today.
 
@@ -291,7 +306,7 @@ Persist the learner's selected study decks between visits to Today.
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** Automatically reselecting every deck with due cards makes a learner repeatedly exclude decks they do not want to study.
 
-## DEC-030
+## DEC-031
 
 Present the deck list compactly with readable per-deck statistics.
 
@@ -301,7 +316,7 @@ Present the deck list compactly with readable per-deck statistics.
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** The Customer asked for table-like rows showing the deck name, card and review counts, and teacher access without large blocks or small statistics.
 
-## DEC-031
+## DEC-032
 
 Keep the deck's description separate from its generation instructions.
 
@@ -311,7 +326,7 @@ Keep the deck's description separate from its generation instructions.
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** Instructions can change between generation runs, so displaying the current instructions as a description of every existing card is misleading.
 
-## DEC-032
+## DEC-033
 
 Retain the generation instructions used for each card.
 
@@ -321,7 +336,7 @@ Retain the generation instructions used for each card.
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** The team proposed keeping the instructions with each card, and the Customer agreed that this would preserve control over later generation and regeneration.
 
-## DEC-033
+## DEC-034
 
 Distinguish archiving a card from permanently deleting it and label the archive action accordingly.
 
@@ -331,7 +346,7 @@ Distinguish archiving a card from permanently deleting it and label the archive 
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** The demonstrated bad-card flag stopped study without deleting the card, so the Customer asked for an archive name and icon and a way to hide archived cards.
 
-## DEC-034
+## DEC-035
 
 Provide quick actions to mark cards for batch regeneration and to regenerate an individual card from the deck list or study screen.
 
@@ -341,7 +356,7 @@ Provide quick actions to mark cards for batch regeneration and to regenerate an 
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** Opening the editor and typing feedback for hundreds of cards is inconvenient, and a learner may discover a bad sentence only while studying.
 
-## DEC-035
+## DEC-036
 
 Enable a request for teacher review only when the deck has a teacher assigned.
 
@@ -351,7 +366,7 @@ Enable a request for teacher review only when the deck has a teacher assigned.
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** The demonstration allowed asking a teacher to check a card without an assigned teacher, which the presenter identified as a bug.
 
-## DEC-036
+## DEC-037
 
 Preserve a card's source context and text title, linking back to the text only while that text exists.
 
@@ -361,7 +376,7 @@ Preserve a card's source context and text title, linking back to the text only w
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** The Customer needs the origin to interpret or correct the word, while deleting a source text must not leave a broken link on an independent card.
 
-## DEC-037
+## DEC-038
 
 Highlight the target word and its article where applicable in the original-language sentence without requiring a highlighted equivalent in the translation.
 
@@ -371,7 +386,7 @@ Highlight the target word and its article where applicable in the original-langu
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** German nouns need to be learned with their articles, while idioms and nonliteral translations may have no directly corresponding word to highlight.
 
-## DEC-038
+## DEC-039
 
 Allow the learner to disable automatic sentence audio within the application.
 
@@ -381,7 +396,7 @@ Allow the learner to disable automatic sentence audio within the application.
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** Muting the whole device to avoid review audio also suppresses other applications' notifications.
 
-## DEC-039
+## DEC-040
 
 Provide a keyboard shortcut to reveal the answer during desktop study.
 
@@ -391,7 +406,7 @@ Provide a keyboard shortcut to reveal the answer during desktop study.
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** The desktop interface should allow revealing a card without requiring a pointer click; the exact key was left to the implementation.
 
-## DEC-040
+## DEC-041
 
 Provide per-deck daily limits for new cards and scheduled reviews.
 
@@ -401,7 +416,7 @@ Provide per-deck daily limits for new cards and scheduled reviews.
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** The Customer uses these controls in Anki to determine the size of a daily session and asked for equivalent settings.
 
-## DEC-041
+## DEC-042
 
 Show separate study counts for new cards, reviews from earlier sessions, and cards that need to be reviewed again in the current session.
 
@@ -411,7 +426,7 @@ Show separate study counts for new cards, reviews from earlier sessions, and car
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** Two counters do not explain the remaining work when a card needs to return during the same session.
 
-## DEC-042
+## DEC-043
 
 Use the marked word and its source context within the destination deck to determine whether an equivalent card already exists.
 
@@ -421,7 +436,7 @@ Use the marked word and its source context within the destination deck to determ
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** The Customer asked for repeat generation to avoid duplicates while allowing a different meaning or a different destination deck to receive a card.
 
-## DEC-043
+## DEC-044
 
 Let a teacher review all cards in an explicitly shared deck while prioritizing cards the learner marked for review.
 
@@ -431,7 +446,7 @@ Let a teacher review all cards in an explicitly shared deck while prioritizing c
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** A learner may fail to notice problems, so marking a card should affect review priority rather than restrict the teacher to marked cards.
 
-## DEC-044
+## DEC-045
 
 Show the student associated with each shared deck and the remaining review work on the Teaching page.
 
@@ -441,7 +456,7 @@ Show the student associated with each shared deck and the remaining review work 
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** A teacher handling decks from several students needs to identify the owner and see how much review is pending.
 
-## DEC-045
+## DEC-046
 
 Store the source URL and other text metadata separately from the text used for word selection.
 
@@ -451,7 +466,7 @@ Store the source URL and other text metadata separately from the text used for w
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** The Customer wants traceability to the original material without generating vocabulary cards from words in a link.
 
-## DEC-046
+## DEC-047
 
 Allow learners to reorder their source texts.
 
@@ -461,7 +476,7 @@ Allow learners to reorder their source texts.
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** Learners may add texts they do not yet want to work on, and the Customer asked for movable rows or an equivalent ordering mechanism.
 
-## DEC-047
+## DEC-048
 
 Regenerate sentences that fail automated checks before presenting them as cards ready for review.
 
@@ -471,7 +486,7 @@ Regenerate sentences that fail automated checks before presenting them as cards 
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** The Customer found the failed-check state unclear and asked for generation to reach a valid result before ordinary review; retry limits still need to be specified.
 
-## DEC-048
+## DEC-049
 
 Keep an integrated placement test as a Could Have feature while retaining links to external tests.
 

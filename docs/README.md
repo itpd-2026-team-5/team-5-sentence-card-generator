@@ -17,6 +17,10 @@ Built by ITPD Team 5 for the IT Product Development course, autumn 2026; a work 
 - [Assumptions](assumptions.md): what we believe and have not yet checked, `ASM-nn`, and how we check it.
 - [Research](research/index.md): the alternatives, the comparison, the gaps, and our value proposition.
 
+## How we work
+
+- [Definition of done](definition-of-done.md): what done means for a story, a task, and a pull request.
+
 ## Around the project
 
 - [The repository](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator), with the code in `backend/` and `frontend/`.
