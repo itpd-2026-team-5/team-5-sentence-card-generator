@@ -2,8 +2,9 @@
 
 - **Date:** 2026-10-17.
 - **Participants:** Customer, KaramKhaddour, Byakko-san, Horokk1.
+- **Timestamps:** continuous elapsed time across the resumed meeting sessions.
 
-## Part 1
+## Product Demonstration And Settings
 
 [00:00:00] KaramKhaddour: Okay.
 [00:00:01] KaramKhaddour: First of all, do you want me to show it in desktop view, or in mobile view?
@@ -615,7 +616,7 @@
 [00:34:44] Customer: Save, like, cards in this deck.
 [00:34:51] Customer: Okay, like, a bit unclear.
 
-## Part 2 — Meeting Resumed
+## Deck Editing And Study
 
 [00:36:35] KaramKhaddour: Byakko-san.
 [00:36:38] KaramKhaddour: You need to allow me to share the screen again.
@@ -1287,84 +1288,84 @@
 [01:15:24] Customer: I do not pick those words.
 [01:15:26] Customer: So traceability wouldn't hurt.
 
-## Part 3 — Meeting Resumed; Timer Restarted
+## Text Generation And Teacher Review
 
-[00:00:03] Customer: [inaudible].
-[00:00:15] Customer: So, in Texts.
-[00:00:15] KaramKhaddour: Okay.
-[00:00:19] Customer: Sometimes learners may want to work on some texts and not others, but add them anyway; it should be possible to reorder the texts, perhaps in a table where each text has a row that you can move.
-[00:00:55] Customer: Any quick actions on texts?
-[00:00:55] Customer: [inaudible].
-[00:00:56] KaramKhaddour: Okay.
-[00:01:09] Customer: "Erase marked words," okay; [inaudible] two buttons.
-[00:01:23] Customer: "Type a word to find its sentences, or click a word: Learn or Ignore; unmarked words count as words you know."
-[00:01:37] Customer: Okay.
-[00:01:43] Customer: "Generate into," so I can select where to generate; "No words to generate."
-[00:01:56] Customer: Mm-hmm.
-[00:02:03] Customer: Is this operation idempotent?
-[00:02:03] Customer: When I choose another word in this text, will it generate only a card for that word, or for the other words too?
-[00:02:08] KaramKhaddour: What?
-[00:02:25] KaramKhaddour: Only for [inaudible].
-[00:02:27] Customer: Okay.
-[00:02:31] Customer: If I generate a card for [inaudible], what happens when I select another deck?
-[00:02:31] Customer: It says "No words to generate."
-[00:02:31] Customer: Maybe say that the words already have cards, rather than "No words to generate."
-[00:02:31] Customer: What happens [inaudible]?
-[00:02:56] KaramKhaddour: Mm-hmm.
-[00:03:09] KaramKhaddour: Okay.
-[00:03:23] KaramKhaddour: [inaudible] card [inaudible].
-[00:03:27] KaramKhaddour: [inaudible].
-[00:03:30] Customer: [inaudible].
-[00:03:38] KaramKhaddour: [inaudible] cards [inaudible].
-[00:03:48] KaramKhaddour: [inaudible].
-[00:03:54] Customer: Mm-hmm.
-[00:04:03] Customer: [inaudible].
-[00:04:12] Customer: We should not generate a new card if the deck already has a card for this word.
-[00:04:23] Customer: The word has some context.
-[00:04:31] Customer: For example, the sentence in the text and the word with its context could be a unique identifier for a card; it is like content-addressed storage.
-[00:04:31] Customer: We should not generate cards with identifiers that already exist.
-[00:05:11] Customer: If the identifier differs because the context has changed, for example the surrounding sentence changes the meaning of the word, [inaudible].
-[00:05:31] Customer: Or if the deck does not have a card with that unique identifier, then we should let them generate a card.
-[00:05:47] Customer: Okay, examples.
-[00:05:52] Customer: If a card exists in one deck but not in another, you should let them generate a card in the other deck.
-[00:06:06] KaramKhaddour: [inaudible].
-[00:06:10] Customer: Whether it exists is determined by a unique identifier assigned to the word, based on the word and its context; that is an approximation of a unique identifier to capture the word's meaning in the text.
-[00:06:10] Customer: "Edit text," okay; let us go back to Texts.
-[00:06:53] Customer: Let us go to Teaching, finally; "No shared decks yet," "Share a deck by email."
-[00:07:07] KaramKhaddour: The decks [inaudible].
-[00:07:10] Customer: Mm-hmm.
-[00:07:17] Customer: And you find the teacher by their email?
-[00:07:25] KaramKhaddour: Yes, by their email, but [inaudible].
-[00:07:32] Customer: Yes.
-[00:07:35] Customer: [inaudible] every card [inaudible].
-[00:07:48] Customer: What if the cards to review have the teacher label?
-[00:08:02] KaramKhaddour: [inaudible].
-[00:08:13] KaramKhaddour: [inaudible].
-[00:08:18] Customer: So I see only the cards labeled for the teacher?
-[00:08:31] KaramKhaddour: [inaudible] inside the deck [inaudible] marked cards [inaudible].
-[00:08:48] Customer: Mm-hmm.
-[00:08:52] KaramKhaddour: [inaudible].
-[00:08:58] Customer: [inaudible].
-[00:08:58] KaramKhaddour: Marking for the teacher is just for [inaudible].
-[00:09:07] Customer: Mm-hmm.
-[00:09:08] KaramKhaddour: [inaudible].
-[00:09:20] Customer: Maybe prioritize the marked cards for the teacher to review first, but let the teacher review other cards too, because students might not discover all the problems themselves.
-[00:09:20] Customer: The Teaching page should show students' decks, perhaps with an identifier of whom each deck belongs to.
-[00:09:30] KaramKhaddour: Mm-hmm.
-[00:10:11] Customer: And other information, maybe how many cards the teacher needs to review.
-[00:10:23] Customer: How many remain [inaudible].
-[00:10:26] KaramKhaddour: Okay.
-[00:10:31] Customer: Something like this, [inaudible].
-[00:10:37] KaramKhaddour: Okay.
-[00:10:42] Customer: We reviewed the MVP, and it seems to work; the core task [inaudible].
-[00:10:42] Customer: I can review [inaudible].
-[00:10:42] Customer: The sentences could be better; we could have used real generated sentences, but [inaudible].
-[00:10:42] Customer: [inaudible] accepted [inaudible].
-[00:11:11] Customer: [inaudible].
-[00:11:15] KaramKhaddour: [inaudible].
-[00:11:19] KaramKhaddour: [inaudible].
-[00:11:24] KaramKhaddour: Okay, [inaudible].
-[00:11:28] Customer: [inaudible] goodbye [inaudible].
-[00:11:30] KaramKhaddour: Bye.
-[00:11:35] KaramKhaddour: [inaudible].
-[00:11:37] Customer: Thanks.
+[01:15:32] Customer: [inaudible].
+[01:15:44] Customer: So, in Texts.
+[01:15:44] KaramKhaddour: Okay.
+[01:15:48] Customer: Sometimes learners may want to work on some texts and not others, but add them anyway; it should be possible to reorder the texts, perhaps in a table where each text has a row that you can move.
+[01:16:24] Customer: Any quick actions on texts?
+[01:16:24] Customer: [inaudible].
+[01:16:25] KaramKhaddour: Okay.
+[01:16:38] Customer: "Erase marked words," okay; [inaudible] two buttons.
+[01:16:52] Customer: "Type a word to find its sentences, or click a word: Learn or Ignore; unmarked words count as words you know."
+[01:17:06] Customer: Okay.
+[01:17:12] Customer: "Generate into," so I can select where to generate; "No words to generate."
+[01:17:25] Customer: Mm-hmm.
+[01:17:32] Customer: Is this operation idempotent?
+[01:17:32] Customer: When I choose another word in this text, will it generate only a card for that word, or for the other words too?
+[01:17:37] KaramKhaddour: What?
+[01:17:54] KaramKhaddour: Only for [inaudible].
+[01:17:56] Customer: Okay.
+[01:18:00] Customer: If I generate a card for [inaudible], what happens when I select another deck?
+[01:18:00] Customer: It says "No words to generate."
+[01:18:00] Customer: Maybe say that the words already have cards, rather than "No words to generate."
+[01:18:00] Customer: What happens [inaudible]?
+[01:18:25] KaramKhaddour: Mm-hmm.
+[01:18:38] KaramKhaddour: Okay.
+[01:18:52] KaramKhaddour: [inaudible] card [inaudible].
+[01:18:56] KaramKhaddour: [inaudible].
+[01:18:59] Customer: [inaudible].
+[01:19:07] KaramKhaddour: [inaudible] cards [inaudible].
+[01:19:17] KaramKhaddour: [inaudible].
+[01:19:23] Customer: Mm-hmm.
+[01:19:32] Customer: [inaudible].
+[01:19:41] Customer: We should not generate a new card if the deck already has a card for this word.
+[01:19:52] Customer: The word has some context.
+[01:20:00] Customer: For example, the sentence in the text and the word with its context could be a unique identifier for a card; it is like content-addressed storage.
+[01:20:00] Customer: We should not generate cards with identifiers that already exist.
+[01:20:40] Customer: If the identifier differs because the context has changed, for example the surrounding sentence changes the meaning of the word, [inaudible].
+[01:21:00] Customer: Or if the deck does not have a card with that unique identifier, then we should let them generate a card.
+[01:21:16] Customer: Okay, examples.
+[01:21:21] Customer: If a card exists in one deck but not in another, you should let them generate a card in the other deck.
+[01:21:35] KaramKhaddour: [inaudible].
+[01:21:39] Customer: Whether it exists is determined by a unique identifier assigned to the word, based on the word and its context; that is an approximation of a unique identifier to capture the word's meaning in the text.
+[01:21:39] Customer: "Edit text," okay; let us go back to Texts.
+[01:22:22] Customer: Let us go to Teaching, finally; "No shared decks yet," "Share a deck by email."
+[01:22:36] KaramKhaddour: The decks [inaudible].
+[01:22:39] Customer: Mm-hmm.
+[01:22:46] Customer: And you find the teacher by their email?
+[01:22:54] KaramKhaddour: Yes, by their email, but [inaudible].
+[01:23:01] Customer: Yes.
+[01:23:04] Customer: [inaudible] every card [inaudible].
+[01:23:17] Customer: What if the cards to review have the teacher label?
+[01:23:31] KaramKhaddour: [inaudible].
+[01:23:42] KaramKhaddour: [inaudible].
+[01:23:47] Customer: So I see only the cards labeled for the teacher?
+[01:24:00] KaramKhaddour: [inaudible] inside the deck [inaudible] marked cards [inaudible].
+[01:24:17] Customer: Mm-hmm.
+[01:24:21] KaramKhaddour: [inaudible].
+[01:24:27] Customer: [inaudible].
+[01:24:27] KaramKhaddour: Marking for the teacher is just for [inaudible].
+[01:24:36] Customer: Mm-hmm.
+[01:24:37] KaramKhaddour: [inaudible].
+[01:24:49] Customer: Maybe prioritize the marked cards for the teacher to review first, but let the teacher review other cards too, because students might not discover all the problems themselves.
+[01:24:49] Customer: The Teaching page should show students' decks, perhaps with an identifier of whom each deck belongs to.
+[01:24:59] KaramKhaddour: Mm-hmm.
+[01:25:40] Customer: And other information, maybe how many cards the teacher needs to review.
+[01:25:52] Customer: How many remain [inaudible].
+[01:25:55] KaramKhaddour: Okay.
+[01:26:00] Customer: Something like this, [inaudible].
+[01:26:06] KaramKhaddour: Okay.
+[01:26:11] Customer: We reviewed the MVP, and it seems to work; the core task [inaudible].
+[01:26:11] Customer: I can review [inaudible].
+[01:26:11] Customer: The sentences could be better; we could have used real generated sentences, but [inaudible].
+[01:26:11] Customer: [inaudible] accepted [inaudible].
+[01:26:40] Customer: [inaudible].
+[01:26:44] KaramKhaddour: [inaudible].
+[01:26:48] KaramKhaddour: [inaudible].
+[01:26:53] KaramKhaddour: Okay, [inaudible].
+[01:26:57] Customer: [inaudible] goodbye [inaudible].
+[01:26:59] KaramKhaddour: Bye.
+[01:27:04] KaramKhaddour: [inaudible].
+[01:27:06] Customer: Thanks.
