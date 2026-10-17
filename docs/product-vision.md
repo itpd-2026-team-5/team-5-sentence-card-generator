@@ -8,6 +8,8 @@ A learner of Russian, English, or German turns the words they mark in a text the
 
 **Supports:** [VP-01](research/value-proposition.md#vp-01), [VP-02](research/value-proposition.md#vp-02), [VP-03](research/value-proposition.md#vp-03).
 
+**Threshold:** [Threshold of success](threshold-of-success.md).
+
 ## Stakeholders
 
 - **Learner**: people studying Russian, English, or German who want personalized, LLM-generated sentences matched to their level.
