@@ -5,6 +5,7 @@
 ### MLS-03
 
 - **Due:** 2026-10-17
+- **Sprint Backlog:** [SPRINT-03 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/1)
 - **Sprints:** [SPRINT-03](#sprint-03)
 - **Advances:** [TOS-01](threshold-of-success.md#tos-01), [TOS-02](threshold-of-success.md#tos-02)
 
@@ -72,4 +73,4 @@ Provisional: the product and repository are ready for the final pitch, handover,
 
 - **Review:** The team holds its weekly review every Friday at 15:00, separately from the Customer meeting, and checks this plan, the [threshold of success](threshold-of-success.md), and the [risk register](risks.md).
 - **Checked by:** The accountable member of each scheduled issue reports its state; the team checks the sprint's GitHub milestone against its goal and release.
-- **Visible at:** The team's GitHub Project table view and the [sprints' GitHub milestones](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestones).
+- **Visible at:** The team's [GitHub Project table view](https://github.com/orgs/itpd-2026-team-5/projects/1/views/1) and the [sprints' GitHub milestones](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestones).
