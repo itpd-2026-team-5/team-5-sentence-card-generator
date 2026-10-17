@@ -4,6 +4,8 @@
 
 Closes #<!-- the task issue this pull request closes -->
 
+**Changelog:** <!-- either "Added an entry under [Unreleased] in CHANGELOG.md: <the entry>", or "Not user-visible." -->
+
 ## What I checked, and how
 
 <!-- How did you verify the change? For example: previewed the rendered Markdown, opened every new link, ran the link check. -->
