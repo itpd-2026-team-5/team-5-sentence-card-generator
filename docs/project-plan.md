@@ -5,7 +5,6 @@
 ### MLS-03
 
 - **Due:** 2026-10-17
-- **Sprint Backlog:** [SPRINT-03 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/1)
 - **Sprints:** [SPRINT-03](#sprint-03)
 - **Advances:** [TOS-01](threshold-of-success.md#tos-01), [TOS-02](threshold-of-success.md#tos-02)
 
@@ -18,6 +17,7 @@ The MUP delivers a working learner flow from bringing in a plain-text source thr
 The MUP candidate is a working end-to-end learner flow on the main branch, ready for the Customer's explicit verdict.
 
 - **Due:** 2026-10-17
+- **Sprint Backlog:** [SPRINT-03 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/1)
 
 #### REL-03
 
