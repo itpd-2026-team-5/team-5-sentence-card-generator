@@ -220,3 +220,18 @@ Let learners select their language level and offer optional links to external pl
 - **Made by:** Team, not contested
 - **Source:** [the Week 2 validation meeting](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/blob/main/reports/week-02/meeting-report.md)
 - **Why:** the prototype already allowed manual level selection, and the team proposed external tests for learners who are unsure; the Customer did not object, but specific tests and the reliability of the approach were not established.
+
+## DEC-023
+
+Build the product with a React and TypeScript frontend on Vite, a Python FastAPI backend with SQLAlchemy and Alembic on PostgreSQL, Claude through the official Anthropic SDKs, and docker compose to run it all.
+
+- **Status:** Active
+- **Date:** 2026-10-17
+- **Made by:** Team
+- **Source:** team discussion while building the prototype, carried into the product in [#59](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/59), [#60](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/60), and [#61](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/61)
+- **Why:** confirms the direction of [`DEC-006`](#dec-006) and fills in what it left open.
+  TypeScript catches API mismatches before the Customer sees them, and Vite gives a fast development loop.
+  PostgreSQL keeps each learner's cards, decks, and review history with real foreign keys, and Alembic migrates it on start, so a schema change never needs a manual step.
+  The official Anthropic SDKs give structured JSON output, typed errors, and, in the browser, the learner's own key that never reaches our server ([`DEC-019`](#dec-019)).
+  docker compose starts the database, a local mail inbox, the backend, and the frontend with one command, the same on every laptop, which is what makes [the setup page](setup.md) work from a clean checkout.
+  The team already works in Python and React, and the prototype was built and shown to the Customer on this stack.
