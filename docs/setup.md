@@ -63,17 +63,17 @@ When the frontend logs `Local: http://localhost:5173/`, open:
 
 | What | Address |
 | --- | --- |
-| The app | <http://localhost:5173> |
-| The mail inbox (Mailpit) | <http://localhost:8025> |
-| The API and its documentation | <http://localhost:8000/docs> |
+| The app | `http://localhost:5173` |
+| The mail inbox (Mailpit) | `http://localhost:8025` |
+| The API and its documentation | `http://localhost:8000/docs` |
 
 Stop with `Ctrl+C`, or `docker compose down` from another terminal.
 `docker compose down -v` also deletes the database, for a fresh start.
 
 ## Complete the core task
 
-1. Open <http://localhost:5173>, choose **Create an account**, and enter your full name, an email address, and a password of at least 8 characters.
-2. Open the inbox at <http://localhost:8025>, open the email "Confirm your email for Sentence Cards", and click its link.
+1. Open `http://localhost:5173`, choose **Create an account**, and enter your full name, an email address, and a password of at least 8 characters.
+2. Open the inbox at `http://localhost:8025`, open the email "Confirm your email for Sentence Cards", and click its link.
    The app opens on Settings.
 3. Choose the language you speak, the language you are learning, and your level, then **Save changes**.
 4. Open **Texts**, choose **Add text**, give it a title, paste a text in the language you are learning, and choose **Add and pick words**.
@@ -148,6 +148,6 @@ uv run alembic revision --autogenerate -m "what changed"
 ## When something goes wrong
 
 - **A port is already in use.** Stop what uses it, or change the host port: `DB_HOST_PORT` in `.env` moves the database, and `MAILPIT_HOST_PORT` the inbox.
-- **No email arrives.** With the default settings it is in Mailpit at <http://localhost:8025>, not in your real inbox. A new link can be requested once a minute from the "Check your inbox" page.
+- **No email arrives.** With the default settings it is in Mailpit at `http://localhost:8025`, not in your real inbox. A new link can be requested once a minute from the "Check your inbox" page.
 - **Generating fails with "The Claude API key is missing or invalid".** Set `ANTHROPIC_API_KEY` in `.env` and restart with `docker compose up`, enter your own key under Settings, or set `LLM_PROVIDER=fake`.
 - **The app shows old data after a schema change.** `docker compose down -v` deletes the database; the next start migrates a fresh one.
