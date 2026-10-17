@@ -224,8 +224,18 @@ a.empty:hover { border-color: var(--violet); }
 /* ---------- settings ---------- */
 .lang-row { display: flex; align-items: flex-end; gap: 0.9rem; }
 .lang-row label { flex: 1; }
-.savebar { position: fixed; left: 50%; bottom: 1.25rem; z-index: 20; transform: translate(-50%, 140%); display: flex; align-items: center; gap: 1.2rem; padding: 0.7rem 0.8rem 0.7rem 1.2rem; border-radius: 16px; background: var(--bg-2); border: 1px solid var(--line); box-shadow: var(--shadow); transition: transform 0.25s ease; }
-.savebar.show { transform: translate(-50%, 0); }
+/* The save bar floats over the bottom of the content column: centred on the column, not on
+   the window, since the sidebar takes the left 232px. Hidden, it slides down and fades out. */
+.savebar {
+  position: fixed; left: calc(50% + 116px); bottom: 1.25rem; z-index: 26;
+  width: max-content; max-width: min(620px, calc(100vw - 232px - 2.5rem));
+  display: flex; align-items: center; justify-content: space-between; gap: 1.2rem;
+  padding: 0.7rem 0.8rem 0.7rem 1.2rem; border-radius: 16px;
+  background: var(--bg-2); border: 1px solid var(--line); box-shadow: var(--shadow);
+  transform: translate(-50%, 120%); opacity: 0; visibility: hidden;
+  transition: transform 0.25s ease, opacity 0.2s ease, visibility 0.25s;
+}
+.savebar.show { transform: translate(-50%, 0); opacity: 1; visibility: visible; }
 .toast { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--good); font-size: 0.9rem; }
 
 /* ---------- study (full screen) ---------- */
@@ -380,6 +390,17 @@ kbd { font: 0.65rem var(--sans); color: var(--muted); border: 1px solid var(--li
   .rail-links { flex-direction: row; gap: 0; flex: 1; justify-content: space-around; }
   .rail-links a { flex-direction: column; gap: 0.1rem; padding: 0.35rem 0.4rem; font-size: 0.66rem; }
   .rail-study span { display: none; }
+  .savebar {
+    left: 0.75rem; right: 0.75rem; width: auto; max-width: none;
+    bottom: calc(4.4rem + env(safe-area-inset-bottom, 0px));
+    flex-direction: column; align-items: stretch; gap: 0.65rem;
+    padding: 0.85rem; text-align: center; border-radius: 18px;
+    transform: translateY(1.5rem);
+  }
+  .savebar.show { transform: none; }
+  .savebar .btn { width: 100%; padding: 0.8rem; font-size: 1rem; }
+  /* Room under the last section, so the bar never hides it. */
+  .page.narrow { padding-bottom: 9rem; }
   .rail-study { padding: 0.6rem; border-radius: 50%; }
   .stage { padding-bottom: 6rem; }
   .reader-layout { grid-template-columns: 1fr; }
