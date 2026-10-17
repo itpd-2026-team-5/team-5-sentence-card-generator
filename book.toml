@@ -1,0 +1,17 @@
+# The documentation site: mdBook builds docs/ into site/, and the "Docs site" workflow
+# publishes it on GitHub Pages.
+[book]
+title = "Sentence Cards Generator"
+authors = ["ITPD Team 5"]
+language = "en"
+src = "docs"
+
+[build]
+build-dir = "site"
+# A page missing from docs/SUMMARY.md is an error, not a silently created empty page.
+create-missing = false
+
+[output.html]
+git-repository-url = "https://github.com/itpd-2026-team-5/team-5-sentence-card-generator"
+edit-url-template = "https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/edit/main/docs/{path}"
+site-url = "/team-5-sentence-card-generator/"

@@ -1,0 +1,55 @@
+name: Docs site
+
+# Builds docs/ with mdBook on every pull request, and publishes it on GitHub Pages from main.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deployment at a time; a newer push replaces a queued one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  MDBOOK_VERSION: v0.5.4
+  MDBOOK_SHA256: 3f28de05dafca9d0f2eab99c662116b0e37b89b1d96a08f8f430b9eeae958cd7
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Install mdBook
+        run: |
+          archive="mdbook-${MDBOOK_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+          curl -sSfL -o "$archive" "https://github.com/rust-lang/mdBook/releases/download/${MDBOOK_VERSION}/${archive}"
+          echo "${MDBOOK_SHA256}  ${archive}" | sha256sum --check
+          tar -xzf "$archive" -C /usr/local/bin mdbook
+      - name: Build the site
+        run: mdbook build
+      - name: Upload the site
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: site
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - name: Publish on GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
