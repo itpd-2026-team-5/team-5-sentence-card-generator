@@ -2,6 +2,8 @@
 
 Maintained documentation for the Sentence Cards Generator.
 
+- [Set up and run](setup.md): from a clean checkout to the core task, and how to run the checks and the tests.
+
 ## Research
 
 - [Alternatives](research/alternatives.md): the problem space, properties P1 to P7, and `ALT-01` to `ALT-03`.
