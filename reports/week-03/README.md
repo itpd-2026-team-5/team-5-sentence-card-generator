@@ -51,7 +51,7 @@ The team showed US-01, US-02, and US-03. The Week 3 meeting report does not reco
 
 ## Repository evidence
 
-[PR #98](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/98) merged and closed task #95. The latest successful [Link check](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/39159715922), [Markdown check](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/39159715939), [Product checks](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/39159715891), and [Docs site](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/39159715964) on `main` all ran successfully on commit [`233e19a`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/commit/233e19aa85488580d8b3603fe1310853c61f2a3b).
+[PR #98](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/98) merged and closed task #95. The latest successful [Link check](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/39161192736), [Markdown check](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/39161192811), [Product checks](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/39161192782), and [Docs site](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/39161192764) on `main` all ran successfully on commit [`a68c43b`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/commit/a68c43b531403582fd3119a93515ac5d14da7ed5).
 
 ## Deviations
 
