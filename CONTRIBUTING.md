@@ -9,7 +9,7 @@ To run the product and its checks, see [the setup page](docs/setup.md).
 - **Stories** are issues opened from the *User Story* form, labelled `user-story` and one `moscow:*` priority. A story says what a user needs; it is never closed by a pull request, only by the Customer's acceptance.
 - **Tasks** are issues opened from the *Task* form, labelled `task`, each with its acceptance criteria as a checklist (`- [ ] AC-01: …`) and, when it works on a story, the story issues it serves.
 - **Sprints** are GitHub milestones, `SPRINT-03` to `SPRINT-09`, one per week. An issue is scheduled by putting it in its sprint's milestone and, at the same time, setting its `Responsible` (who does it) and `Accountable` (who checks it) fields to two different members, who are also its two assignees.
-- **The GitHub project** shows all of this in one place. We use its **table view**, with the `Responsible`, `Accountable`, `Assignees`, and `Milestone` columns, grouped by milestone, at the weekly review: it answers "is everything in this sprint owned, and by whom" without opening each issue. The project is linked from here once it exists, and is the only view we keep.
+- **The [GitHub Project](https://github.com/orgs/itpd-2026-team-5/projects/1/views/1)** shows all of this in one place. We use its **table view**, with the `Responsible`, `Accountable`, `Assignees`, and `Milestone` columns, grouped by milestone, at the weekly review: it answers "is everything in this sprint owned, and by whom" without opening each issue. It is the only view we keep.
 
 ## How a change gets in
 
