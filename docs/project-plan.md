@@ -21,6 +21,8 @@ The MUP candidate is a working end-to-end learner flow on the main branch, ready
 
 #### REL-03
 
+Released as [v0.1.0](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.1.0) on 2026-10-18.
+
 ### SPRINT-04
 
 A learner can complete the core text-to-card flow reliably, with automated checks covering its behavior and an architecture that supports further product work.
