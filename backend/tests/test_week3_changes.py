@@ -264,3 +264,16 @@ def test_highlight_falls_back_to_the_word_form():
     )
     with SessionLocal():
         pass
+
+
+def test_the_cards_are_read_from_an_answer_wrapped_in_text():
+    """A model behind a gateway that drops structured output may fence or explain its JSON."""
+    from app.llm import LLMError, parse_json
+
+    bare = '{"cards": []}'
+    assert parse_json(bare) == {"cards": []}
+    assert parse_json('Here you go:\n```json\n{"cards": [1]}\n```') == {"cards": [1]}
+    assert parse_json('Sure! {"cards": [2]} Hope it helps.') == {"cards": [2]}
+    for broken in ["No cards today.", '{"cards": [', "[1, 2]"]:
+        with pytest.raises(LLMError):
+            parse_json(broken)

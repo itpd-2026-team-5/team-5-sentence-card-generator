@@ -54,6 +54,25 @@ export const ownKey = {
   inUse: () => ownKey.source() === 'own' && ownKey.get() !== '',
 }
 
+/** The JSON object in a model's answer, bare or wrapped in a code fence or a sentence, as a
+ *  model behind a gateway that drops structured output may write it. */
+export function parseJson(text: string): Record<string, unknown> {
+  let body = text.trim()
+  const fenced = body.match(/```(?:json)?\s*(\{[\s\S]*\})\s*```/)
+  if (fenced) body = fenced[1]
+  else if (!body.startsWith('{')) {
+    const start = body.indexOf('{')
+    const end = body.lastIndexOf('}')
+    if (start < 0 || end <= start) throw new Error("The model's answer held no cards; try again.")
+    body = body.slice(start, end + 1)
+  }
+  try {
+    return JSON.parse(body)
+  } catch {
+    throw new Error("The model's answer was not valid JSON; try again.")
+  }
+}
+
 /** Effort and the server-side refusal fallback exist on the Claude 5 family only. */
 const newClaude = (model: string) => /claude-(opus|sonnet|haiku|fable)-5/.test(model)
 
@@ -106,7 +125,7 @@ async function callAnthropic(request: LLMRequest): Promise<LLMOutput> {
   const texts = response.content.flatMap((block) => (block.type === 'text' ? [block.text] : []))
   if (texts.length === 0) throw new Error('The model returned no sentences.')
   return {
-    data: JSON.parse(texts[texts.length - 1]),
+    data: parseJson(texts[texts.length - 1]),
     model: response.model,
     input_tokens: response.usage.input_tokens,
     output_tokens: response.usage.output_tokens,
@@ -143,7 +162,7 @@ async function callOpenAICompatible(request: LLMRequest): Promise<LLMOutput> {
   const content = choice?.message?.content
   if (!content) throw new Error('The model returned no sentences.')
   return {
-    data: JSON.parse(content),
+    data: parseJson(content),
     model: body.model ?? ownKey.model(),
     input_tokens: body.usage?.prompt_tokens ?? 0,
     output_tokens: body.usage?.completion_tokens ?? 0,
