@@ -382,6 +382,36 @@ kbd { font: 0.65rem var(--sans); color: var(--muted); border: 1px solid var(--li
 .welcome h2 { font-family: var(--serif); font-size: 1.5rem; }
 .small-burst { width: 56px; height: 56px; box-shadow: 0 0 0 8px rgba(139, 92, 246, 0.15); }
 
+/* ---------- Week 3 meeting changes ---------- */
+/* Compact tables for the decks and the teacher's students (DEC-031, DEC-045). */
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+.deck-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+.deck-table th { text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.deck-table td { padding: 0.65rem 0.9rem; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.deck-table tr:last-child td { border-bottom: none; }
+.deck-table tbody tr { cursor: pointer; transition: background 0.15s; }
+.deck-table tbody tr:hover { background: var(--surface-2); }
+.deck-table .num { text-align: right; white-space: nowrap; }
+.nowrap { white-space: nowrap; }
+.deck-name { font-weight: 600; }
+.deck-desc { display: block; }
+.count.again { color: var(--warn); border-color: rgba(251, 191, 36, 0.4); }
+.counts-line { display: inline-flex; gap: 0.3rem; }
+.level-table { width: 100%; margin-top: 0.9rem; border-collapse: collapse; }
+.level-table th { text-align: left; font-weight: 500; padding: 0.35rem 0.6rem 0.35rem 0; }
+.level-table td { padding: 0.35rem 0.6rem 0.35rem 0; }
+.big-switch { font-size: 0.95rem; color: var(--text); }
+.segmented.two { grid-template-columns: repeat(2, 1fr); }
+.icon-btn.is-on { color: var(--cyan); background: rgba(34, 211, 238, 0.12); }
+.icon-btn.is-ok { color: var(--good); cursor: default; }
+.card-row.marked { box-shadow: inset 3px 0 0 var(--cyan); }
+.card-row.archived { opacity: 0.55; }
+.text-row { grid-template-columns: auto minmax(0, 1fr) auto; }
+.text-order { font-weight: 700; color: var(--muted); min-width: 1.5rem; text-align: center; }
+.link { color: var(--cyan); }
+.link svg { vertical-align: -2px; }
+@media (hover: none) { .key-hint { display: none; } }
+
 /* ---------- small screens: sidebar becomes a bottom bar ---------- */
 @media (max-width: 860px) {
   .shell { grid-template-columns: 1fr; }
@@ -410,6 +440,9 @@ kbd { font: 0.65rem var(--sans); color: var(--muted); border: 1px solid var(--li
   .card-row { grid-template-columns: minmax(0, 1fr) auto; }
   .row-word { grid-column: 1 / -1; flex-direction: row; gap: 0.6rem; align-items: baseline; }
   .row-tags { display: none; }
+  .deck-table th:nth-child(2), .deck-table td:nth-child(2) { display: none; }
+  .text-row { grid-template-columns: auto minmax(0, 1fr); }
+  .text-row .row-actions { grid-column: 1 / -1; justify-content: flex-end; }
   .study-card { padding: 1.6rem 1.1rem; }
   .pick { flex-wrap: wrap; }
   .pick-counts { flex-basis: 100%; padding-left: calc(18px + 0.8rem); }

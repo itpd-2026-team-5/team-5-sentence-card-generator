@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { api, local, type Deck, type Mark, type TextDetail } from '../api'
+import { api, LANGUAGES, local, type Deck, type Mark, type TextDetail } from '../api'
 import { Drawer } from '../components/Drawer'
 import { Icon } from '../components/Icon'
+import { TextForm } from '../components/TextForm'
 
 export function Reader({ textId }: { textId: number }) {
   const [text, setText] = useState<TextDetail | null>(null)
@@ -62,7 +63,7 @@ export function Reader({ textId }: { textId: number }) {
     }
     const name = prompt('Name of the new deck')
     if (!name?.trim()) return
-    const deck = await api.createDeck(name.trim(), '')
+    const deck = await api.createDeck({ name: name.trim() })
     setDecks([...decks, deck])
     setDeckId(deck.id)
     local.set('generate-deck', String(deck.id))
@@ -104,6 +105,13 @@ export function Reader({ textId }: { textId: number }) {
           <button className="btn small" onClick={() => setEditing(true)}><Icon name="edit" size={14} /> Edit text</button>
         </div>
         <h1>{text.title}</h1>
+        {(text.source_url || text.notes) && (
+          <p className="muted small">
+            {text.source_url && <a className="link" href={text.source_url} target="_blank" rel="noreferrer"><Icon name="link" size={13} /> {new URL(text.source_url).hostname}</a>}
+            {text.source_url && text.notes && ' · '}
+            {text.notes}
+          </p>
+        )}
 
         <form className="finder" onSubmit={find}>
           <input value={query} onChange={(e) => { setQuery(e.target.value); setFound(null) }} placeholder="Type a word to find its sentences" aria-label="Find a word" />
@@ -191,7 +199,7 @@ export function Reader({ textId }: { textId: number }) {
         )}
         <label>Generate into
           <select value={deckId ?? ''} onChange={(e) => pickDeck(e.target.value)}>
-            {decks.map((d) => <option key={d.id} value={d.id}>{d.name}</option>)}
+            {decks.map((d) => <option key={d.id} value={d.id}>{d.name} ({LANGUAGES[d.target_language]})</option>)}
             <option value="new">+ New deck…</option>
           </select>
         </label>
@@ -208,32 +216,10 @@ export function Reader({ textId }: { textId: number }) {
 
       {editing && (
         <Drawer title="Edit text" onClose={() => setEditing(false)}>
-          <TextForm text={text} onSaved={(t) => { setText(t); setEditing(false) }} />
+          <TextForm initial={{ title: text.title, body: text.body, source_url: text.source_url, notes: text.notes }} submit="Save text"
+            onSave={async (fields) => { setText(await api.updateText(text.id, fields)); setEditing(false) }} />
         </Drawer>
       )}
     </div>
-  )
-}
-
-function TextForm({ text, onSaved }: { text: TextDetail; onSaved: (text: TextDetail) => void }) {
-  const [title, setTitle] = useState(text.title)
-  const [body, setBody] = useState(text.body)
-  const [error, setError] = useState('')
-  const save = async (event: React.FormEvent) => {
-    event.preventDefault()
-    try {
-      onSaved(await api.updateText(text.id, title, body))
-    } catch (e) {
-      setError((e as Error).message)
-    }
-  }
-  return (
-    <form className="stack" onSubmit={save}>
-      <label>Title<input required value={title} onChange={(e) => setTitle(e.target.value)} /></label>
-      <label>Text<textarea required rows={14} value={body} onChange={(e) => setBody(e.target.value)} /></label>
-      <p className="muted small">Cut what you do not need or add more. Cards you already made keep their sentences.</p>
-      <button className="btn primary" type="submit">Save text</button>
-      {error && <p className="error">{error}</p>}
-    </form>
   )
 }

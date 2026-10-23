@@ -42,7 +42,9 @@ export default function App() {
     api.profile().then((p) => {
       setLanguage(p.target_language)
       setKnown(p.known_language)
-      if (!p.set_up && path !== '/settings') go('/settings')
+      // A teacher can open their students' decks without setting up their own learning first.
+      const teaching = path === '/teaching' || path.startsWith('/teach/')
+      if (!p.set_up && path !== '/settings' && !teaching) go('/settings')
     }).catch(() => {})
   }, [path, ready, go])
 
