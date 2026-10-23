@@ -1,6 +1,7 @@
 """LLM providers behind one interface, so the model can be swapped without touching the pipeline."""
 
 import json
+import re
 from dataclasses import dataclass
 from typing import Protocol
 
@@ -25,30 +26,47 @@ class LLMProvider(Protocol):
     def generate_json(self, system: str, prompt: str, schema: dict) -> LLMResult: ...
 
 
+def supports_new_features(model: str) -> bool:
+    """Effort and the server-side refusal fallback exist on the Claude 5 family; an older
+    model, or another model behind a gateway, rejects them."""
+    return re.match(r"claude-(opus|sonnet|haiku|fable)-5", model) is not None
+
+
 class AnthropicProvider:
     def __init__(self, model: str, effort: str):
         self.model = model
         self.effort = effort
 
+    def _client(self) -> anthropic.Anthropic:
+        options = {}
+        if settings.anthropic_api_key:
+            options["api_key"] = settings.anthropic_api_key
+        if settings.anthropic_auth_token:
+            options["auth_token"] = settings.anthropic_auth_token
+        if settings.anthropic_base_url:
+            options["base_url"] = settings.anthropic_base_url
+        return anthropic.Anthropic(**options)
+
     def generate_json(self, system: str, prompt: str, schema: dict) -> LLMResult:
+        output_config: dict = {"format": {"type": "json_schema", "schema": schema}}
+        extra: dict = {}
+        if supports_new_features(self.model):
+            if self.effort:
+                output_config["effort"] = self.effort
+            # On a policy decline, the API re-runs the request on its recommended fallback model.
+            extra = {"betas": ["server-side-fallback-2026-07-01"], "fallbacks": "default"}
         try:
-            client = anthropic.Anthropic()
-            response = client.beta.messages.create(
+            response = self._client().beta.messages.create(
                 model=self.model,
                 max_tokens=16000,
                 system=system,
                 messages=[{"role": "user", "content": prompt}],
-                output_config={
-                    "effort": self.effort,
-                    "format": {"type": "json_schema", "schema": schema},
-                },
-                # On a policy decline, the API re-runs the request on its recommended fallback model.
-                betas=["server-side-fallback-2026-07-01"],
-                fallbacks="default",
+                output_config=output_config,
+                **extra,
             )
         except anthropic.AuthenticationError as e:
             raise LLMError(
-                "The Claude API key is missing or invalid; set ANTHROPIC_API_KEY."
+                "The Claude API key is missing or invalid; set ANTHROPIC_API_KEY or ANTHROPIC_AUTH_TOKEN."
             ) from e
         except anthropic.RateLimitError as e:
             raise LLMError("Claude is rate limiting us; try again in a minute.") from e

@@ -10,10 +10,17 @@ def test_profile_defaults_and_update(client):
     assert profile["target_language"] == "de"
     assert profile["placement_tests"]["en"].startswith("https://")
 
-    update = {**profile, "level": "B1", "sentence_max_chars": 90}
-    del update["placement_tests"], update["set_up"]
+    update = {
+        **profile,
+        "levels": {"de": "B1", "ru": "A1"},
+        "sentence_min_chars": 30,
+        "sentence_max_chars": 90,
+    }
+    del update["placement_tests"], update["set_up"], update["study_deck_ids"]
     saved = client.put("/api/profile", json=update).json()
-    assert (saved["level"], saved["sentence_max_chars"]) == ("B1", 90)
+    assert saved["levels"] == {"de": "B1", "ru": "A1"}
+    assert (saved["sentence_min_chars"], saved["sentence_max_chars"]) == (30, 90)
+    assert client.put("/api/profile", json={**update, "sentence_min_chars": 95}).status_code == 422
 
     same = {**update, "known_language": "de"}
     assert client.put("/api/profile", json=same).status_code == 422
@@ -53,7 +60,7 @@ def test_pick_words_and_generate_cards(client):
         == []
     )
     assert client.get("/api/texts").json()[0]["cards"] == 1
-    assert client.get("/api/usage").json()["requests"] == 1
+    assert client.get("/api/stats").json()["cards"] == 1
 
 
 def test_check_card_flags_bad_sentences():
@@ -93,15 +100,15 @@ def test_edit_card_clears_warnings(client):
 
 def test_mark_bad_and_regenerate(client):
     card = _one_card(client)[0]
-    bad = client.patch(f"/api/cards/{card['id']}", json={"status": "bad"}).json()
-    assert bad["status"] == "bad"
-    assert [c["id"] for c in client.get("/api/cards?status=bad").json()] == [card["id"]]
+    bad = client.patch(f"/api/cards/{card['id']}", json={"status": "archived"}).json()
+    assert bad["status"] == "archived"
+    assert [c["id"] for c in client.get("/api/cards?status=archived").json()] == [card["id"]]
 
     fresh = client.post(
         f"/api/cards/{card['id']}/regenerate", json={"feedback": "Too formal."}
     ).json()
     assert fresh["status"] == "active"
-    assert client.get("/api/usage").json()["requests"] == 2
+    assert client.get("/api/stats").json()["regenerated"] == 1
 
 
 def test_reorder_cards(client):

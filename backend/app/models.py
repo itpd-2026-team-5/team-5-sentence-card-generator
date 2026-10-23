@@ -46,13 +46,20 @@ class Profile(Base):
     user_id: Mapped[int | None] = mapped_column(
         ForeignKey("users.id", ondelete="CASCADE"), unique=True
     )
+    # The pair a new deck starts with; each deck keeps its own pair.
     known_language: Mapped[str] = mapped_column(String(2), default="en")
     target_language: Mapped[str] = mapped_column(String(2), default="de")
-    level: Mapped[str] = mapped_column(String(2), default="A2")
+    # The learner's level in each language they learn, such as {"de": "A2", "ru": "B1"}.
+    levels: Mapped[dict[str, str]] = mapped_column(JSON, default=dict)
     sentence_min_words: Mapped[int] = mapped_column(default=8)
     sentence_max_words: Mapped[int] = mapped_column(default=12)
-    # German words run long, so a sentence can also be capped in characters (0 = no cap).
+    # German words run long, so a sentence can also be bounded in characters (0 = no bound).
+    sentence_min_chars: Mapped[int] = mapped_column(default=0)
     sentence_max_chars: Mapped[int] = mapped_column(default=0)
+    # The decks the learner last chose to study, kept so Today opens with the same choice.
+    study_deck_ids: Mapped[list[int]] = mapped_column(JSON, default=list)
+    # Cards the learner deleted for good, counted for the quality statistics.
+    cards_deleted: Mapped[int] = mapped_column(default=0)
     # False until the learner first saves their settings; the app opens on Settings until then.
     set_up: Mapped[bool] = mapped_column(default=False)
 
@@ -76,7 +83,17 @@ class Deck(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     profile_id: Mapped[int] = mapped_column(ForeignKey("profiles.id"))
     name: Mapped[str] = mapped_column(String(100))
+    # What the deck is about, for the learner; it does not steer generation.
+    description: Mapped[str] = mapped_column(Text, default="")
+    # What the next sentences generated for this deck should follow; it may change between runs.
     instructions: Mapped[str] = mapped_column(Text, default="")
+    known_language: Mapped[str] = mapped_column(String(2), default="en")
+    target_language: Mapped[str] = mapped_column(String(2), default="de")
+    # A level for this deck only; empty means the learner's level in the target language.
+    level: Mapped[str] = mapped_column(String(2), default="")
+    # How many new cards and reviews a day this deck contributes to a session.
+    new_per_day: Mapped[int] = mapped_column(default=10)
+    reviews_per_day: Mapped[int] = mapped_column(default=200)
     position: Mapped[int] = mapped_column(default=0)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
@@ -110,6 +127,9 @@ class SourceText(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     profile_id: Mapped[int] = mapped_column(ForeignKey("profiles.id"))
     title: Mapped[str] = mapped_column(String(200))
+    # Kept apart from the body, so no card is ever made from a word in a link or a note.
+    source_url: Mapped[str] = mapped_column(String(500), default="")
+    notes: Mapped[str] = mapped_column(Text, default="")
     body: Mapped[str] = mapped_column(Text)
     position: Mapped[int] = mapped_column(default=0)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
@@ -149,14 +169,24 @@ class Card(Base):
     word_form: Mapped[str] = mapped_column(String(100))
     # The word's meaning in this sentence, in the learner's known language.
     word_translation: Mapped[str] = mapped_column(String(200), default="")
+    # The part of the sentence to highlight: the word, with its article for a German noun.
+    highlight: Mapped[str] = mapped_column(String(200), default="")
     source_sentence: Mapped[str] = mapped_column(Text)
     context: Mapped[str] = mapped_column(Text, default="")
     sentence: Mapped[str] = mapped_column(Text)
     translation: Mapped[str] = mapped_column(Text)
-    # "active"; "flagged" when the generated sentence failed a check;
-    # "bad" when a person marked it for removal or regeneration.
+    # The deck instructions the sentence was generated with, kept with the card.
+    instructions: Mapped[str] = mapped_column(Text, default="")
+    # "active"; "flagged" when the sentence still failed a check after the retries;
+    # "archived" when a person took it out of study without deleting it.
     status: Mapped[str] = mapped_column(String(10), default="active")
     problems: Mapped[list[str]] = mapped_column(JSON, default=list)
+    # Marked to be rewritten in the next batch regeneration of its deck.
+    needs_regeneration: Mapped[bool] = mapped_column(default=False)
+    # How many times the sentence was rewritten, for the quality statistics.
+    regenerations: Mapped[int] = mapped_column(default=0)
+    # When a teacher last confirmed the card; a card edited since needs checking again.
+    teacher_checked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     # The learner wants their teacher to look at this card; the note says why.
     needs_check: Mapped[bool] = mapped_column(default=False)
     note: Mapped[str] = mapped_column(Text, default="")
@@ -177,6 +207,14 @@ class Card(Base):
     @property
     def deck_ids(self) -> list[int]:
         return [deck.id for deck in self.decks]
+
+    @property
+    def text_exists(self) -> bool:
+        return self.text_id is not None
+
+    @property
+    def can_ask_teacher(self) -> bool:
+        return any(deck.shares for deck in self.decks)
 
 
 class ReviewState(Base):

@@ -8,12 +8,15 @@ Level = Literal["A1", "A2", "B1", "B2", "C1", "C2"]
 
 
 class ProfileIn(BaseModel):
+    # The pair a new deck starts with.
     known_language: Language
     target_language: Language
-    level: Level
+    # The learner's level in each language they learn.
+    levels: dict[Language, Level] = Field(default_factory=dict)
     sentence_min_words: int = Field(default=8, ge=3, le=30)
     sentence_max_words: int = Field(default=12, ge=3, le=30)
-    # 0 means no limit in characters.
+    # 0 means no bound in characters.
+    sentence_min_chars: int = Field(default=0, ge=0, le=500)
     sentence_max_chars: int = Field(default=0, ge=0, le=500)
 
 
@@ -22,36 +25,69 @@ class ProfileOut(ProfileIn):
     placement_tests: dict[str, str]
     # False until the learner first saves their settings.
     set_up: bool
+    study_deck_ids: list[int]
+
+
+class StudyDecksIn(BaseModel):
+    deck_ids: list[int]
 
 
 class DeckIn(BaseModel):
     name: str = Field(min_length=1, max_length=100)
+    description: str = Field(default="", max_length=2000)
     instructions: str = Field(default="", max_length=2000)
+    known_language: Language | None = None
+    target_language: Language | None = None
+    # Empty means the learner's level in the target language.
+    level: Level | Literal[""] = ""
+    new_per_day: int = Field(default=10, ge=0, le=999)
+    reviews_per_day: int = Field(default=200, ge=0, le=9999)
 
 
 class DeckUpdate(BaseModel):
     name: str | None = Field(default=None, min_length=1, max_length=100)
+    description: str | None = Field(default=None, max_length=2000)
     instructions: str | None = Field(default=None, max_length=2000)
+    known_language: Language | None = None
+    target_language: Language | None = None
+    level: Level | Literal[""] | None = None
+    new_per_day: int | None = Field(default=None, ge=0, le=999)
+    reviews_per_day: int | None = Field(default=None, ge=0, le=9999)
 
 
 class DeckOut(BaseModel):
     id: int
     name: str
+    description: str
     instructions: str
+    known_language: str
+    target_language: str
+    level: str
+    # The level generation uses: the deck's own, or the learner's in the target language.
+    effective_level: str
+    new_per_day: int
+    reviews_per_day: int
     cards: int
     due: int
     new: int
     needs_check: int
+    archived: int
+    to_regenerate: int
+    teachers: list[str]
 
 
 class TextIn(BaseModel):
     title: str = Field(min_length=1, max_length=200)
     body: str = Field(min_length=1, max_length=50000)
+    # Where the text came from; kept apart from the body, so no card is made from a link.
+    source_url: str = Field(default="", max_length=500, pattern=r"^(https?://\S+)?$")
+    notes: str = Field(default="", max_length=2000)
 
 
 class TextSummary(BaseModel):
     id: int
     title: str
+    source_url: str
     position: int
     to_learn: int
     cards: int
@@ -72,6 +108,8 @@ class Sentence(BaseModel):
 class TextDetail(BaseModel):
     id: int
     title: str
+    source_url: str
+    notes: str
     body: str
     sentences: list[Sentence]
     marks: dict[str, Literal["learn", "ignore"]]
@@ -109,6 +147,8 @@ class CardOut(BaseModel):
     word: str
     word_form: str
     word_translation: str
+    highlight: str
+    instructions: str
     source_sentence: str
     sentence: str
     translation: str
@@ -118,18 +158,33 @@ class CardOut(BaseModel):
     edited: bool
     needs_check: bool
     note: str
+    needs_regeneration: bool
+    regenerations: int
+    teacher_checked_at: datetime | None
     deck_ids: list[int]
+    # The text it came from still exists, so the card can link to it.
+    text_exists: bool
+    # One of its decks is shared with a teacher, so the learner can ask them about it.
+    can_ask_teacher: bool
 
 
 class GenerateOut(BaseModel):
     created: list[CardOut]
 
 
-class UsageOut(BaseModel):
-    cards: int
-    requests: int
+class StatsOut(BaseModel):
+    """Token use as the provider reported it, and how the learner judged the cards."""
+
     input_tokens: int
     output_tokens: int
+    cards: int
+    kept_as_generated: int
+    edited: int
+    regenerated: int
+    regenerations: int
+    archived: int
+    deleted: int
+    failed_checks: int
 
 
 class CardUpdate(BaseModel):
@@ -137,9 +192,12 @@ class CardUpdate(BaseModel):
     translation: str | None = Field(default=None, min_length=1, max_length=1000)
     word_form: str | None = Field(default=None, min_length=1, max_length=100)
     word_translation: str | None = Field(default=None, max_length=200)
-    status: Literal["active", "bad"] | None = None
+    status: Literal["active", "archived"] | None = None
     needs_check: bool | None = None
     note: str | None = Field(default=None, max_length=1000)
+    needs_regeneration: bool | None = None
+    # A teacher confirms the card is right as it stands.
+    teacher_checked: bool | None = None
 
 
 class CardDecksIn(BaseModel):
@@ -148,7 +206,19 @@ class CardDecksIn(BaseModel):
 
 class RegenerateIn(BaseModel):
     feedback: str = Field(default="", max_length=500)
+    # Instructions for this card's next sentence; they replace the ones it keeps.
+    instructions: str | None = Field(default=None, max_length=2000)
     llm_output: LLMOutput | None = None
+
+
+class BatchRegenerateIn(BaseModel):
+    llm_output: LLMOutput | None = None
+
+
+class BatchRegenerateOut(BaseModel):
+    regenerated: list["CardOut"]
+    # Cards still marked; a learner with their own key sends one batch at a time.
+    remaining: int
 
 
 class MoreIn(BaseModel):
@@ -190,11 +260,15 @@ class TaughtDeck(BaseModel):
 
     id: int
     name: str
+    description: str
     instructions: str
     student: str
+    student_name: str
     cards: int
     needs_check: int
-    bad: int
+    # Cards the teacher has not confirmed since they last changed.
+    to_check: int
+    archived: int
 
 
 class ReviewIn(BaseModel):
@@ -208,8 +282,11 @@ class StudyOut(BaseModel):
     # How long until the card returns, for each rating.
     intervals: dict[str, str] | None
     is_new: bool
-    due: int
+    # Left in this session: new cards, reviews of cards from earlier days, and cards to see
+    # again today because they were just learned or forgotten.
     new: int
+    review: int
+    again: int
     next_due: datetime | None
     # Done today: new cards started, and reviews of cards started before today.
     new_done: int

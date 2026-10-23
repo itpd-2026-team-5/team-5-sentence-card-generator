@@ -67,7 +67,7 @@ def test_a_new_learner_starts_on_settings(client):
 def test_learners_do_not_see_each_others_cards(client, teacher):
     card = one_card(client)
     assert teacher.get("/api/cards").json() == []
-    assert teacher.patch(f"/api/cards/{card['id']}", json={"status": "bad"}).status_code == 404
+    assert teacher.patch(f"/api/cards/{card['id']}", json={"status": "archived"}).status_code == 404
     assert teacher.get(f"/api/teaching/{first_deck(client)}/cards").status_code == 404
 
 
@@ -100,7 +100,7 @@ def test_a_teacher_corrects_only_the_shared_deck(client, teacher):
 
     client.delete(f"/api/decks/{deck}/shares/teacher@example.com")
     assert teacher.get("/api/teaching").json() == []
-    assert teacher.patch(url, json={"status": "bad"}).status_code == 404
+    assert teacher.patch(url, json={"status": "archived"}).status_code == 404
 
 
 def test_own_key_in_the_browser(client):
@@ -135,7 +135,7 @@ def test_own_key_in_the_browser(client):
     output = {"data": answer, "model": "claude-opus-5-5", "input_tokens": 900, "output_tokens": 80}
     done = client.post(url, json={**body, "llm_output": output}, headers=browser).json()
     assert done["created"][0]["word_translation"] == "money"
-    assert client.get("/api/usage").json()["input_tokens"] == 900
+    assert client.get("/api/stats").json()["input_tokens"] == 900
 
 
 def test_two_first_requests_at_once_share_one_profile(client, db_session):

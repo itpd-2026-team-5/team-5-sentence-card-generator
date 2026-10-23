@@ -37,7 +37,7 @@ def test_new_cards_come_in_the_learners_order(client, clock):
     first = client.get("/api/study").json()
     assert first["card"]["id"] == cards[2]["id"]
     assert first["is_new"] is True
-    assert (first["due"], first["new"]) == (0, 3)
+    assert (first["review"], first["again"], first["new"]) == (0, 0, 3)
     assert set(first["intervals"]) == {"again", "hard", "good", "easy"}
 
 
@@ -77,8 +77,8 @@ def test_again_returns_soon_and_easy_returns_later(client, clock):
     assert datetime.fromisoformat(easy["due"]) - clock["t"] >= timedelta(days=1)
 
 
-def test_new_cards_are_capped_per_day(client, clock, monkeypatch):
-    monkeypatch.setattr(study, "NEW_CARDS_PER_DAY", 2)
+def test_new_cards_are_capped_per_day_by_the_deck(client, clock):
+    client.patch(f"/api/decks/{first_deck(client)}", json={"new_per_day": 2})
     make_cards(client)
     assert client.get("/api/study").json()["new"] == 2
     for _ in range(2):
@@ -92,7 +92,7 @@ def test_new_cards_are_capped_per_day(client, clock, monkeypatch):
 
 def test_bad_and_flagged_cards_are_not_studied(client, clock):
     cards = make_cards(client, words=("Blick", "Kopf"))
-    client.patch(f"/api/cards/{cards[0]['id']}", json={"status": "bad"})
+    client.patch(f"/api/cards/{cards[0]['id']}", json={"status": "archived"})
     assert client.get("/api/study").json()["new"] == 1
     refused = client.post(f"/api/cards/{cards[0]['id']}/review", json={"rating": "good"})
     assert refused.status_code == 409
@@ -105,12 +105,13 @@ def test_too_hard_feeds_the_next_generation(client, clock, db_session):
     profile = Profile(
         known_language="en",
         target_language="de",
-        level="A2",
+        levels={"de": "A2"},
         sentence_min_words=8,
+        sentence_min_chars=0,
         sentence_max_words=12,
         sentence_max_chars=0,
     )
-    deck = Deck(name="D", instructions="Football only.")
+    deck = Deck(name="D", instructions="Football only.", known_language="en", target_language="de")
     prompt = build_prompt(
         profile, deck, [], [], [], too_hard_examples(db_session, profile_id(client))
     )
