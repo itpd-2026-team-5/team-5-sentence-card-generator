@@ -453,3 +453,4 @@ kbd { font: 0.75rem var(--sans); color: var(--muted); border: 1px solid var(--li
   .segmented { grid-template-columns: repeat(3, 1fr); }
 }
 .muted a { color: var(--cyan); }
+.file-pick input[type="file"] { padding: 0.5rem; cursor: pointer; }

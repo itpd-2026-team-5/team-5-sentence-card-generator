@@ -267,12 +267,17 @@ export const api = {
 
 const VOICES: Record<Language, string> = { en: 'en-US', de: 'de-DE', ru: 'ru-RU' }
 
-/** Read a sentence aloud with the browser's own voice. */
-export function speak(text: string, language: Language) {
-  if (!('speechSynthesis' in window)) return
+/** Read a sentence aloud with the browser's own voice; onFail runs when it cannot, such as when
+ *  the browser has no voice for the language. */
+export function speak(text: string, language: Language, onFail?: () => void) {
+  if (!('speechSynthesis' in window)) return onFail?.()
+  const voices = speechSynthesis.getVoices()
+  // An empty list means the voices are still loading, so only a full list without one is a failure.
+  if (voices.length && !voices.some((v) => v.lang.toLowerCase().startsWith(language))) return onFail?.()
   speechSynthesis.cancel()
   const utterance = new SpeechSynthesisUtterance(text)
   utterance.lang = VOICES[language]
+  utterance.onerror = (e) => { if (e.error !== 'canceled' && e.error !== 'interrupted') onFail?.() }
   speechSynthesis.speak(utterance)
 }
 

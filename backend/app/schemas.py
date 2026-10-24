@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 Language = Literal["en", "de", "ru"]
 Level = Literal["A1", "A2", "B1", "B2", "C1", "C2"]
@@ -82,6 +82,13 @@ class TextIn(BaseModel):
     # Where the text came from; kept apart from the body, so no card is made from a link.
     source_url: str = Field(default="", max_length=500, pattern=r"^(https?://\S+)?$")
     notes: str = Field(default="", max_length=2000)
+
+    @field_validator("body")
+    @classmethod
+    def not_blank(cls, body: str) -> str:
+        if not body.strip():
+            raise ValueError("The text is empty")
+        return body
 
 
 class TextSummary(BaseModel):

@@ -277,3 +277,8 @@ def test_the_cards_are_read_from_an_answer_wrapped_in_text():
     for broken in ["No cards today.", '{"cards": [', "[1, 2]"]:
         with pytest.raises(LLMError):
             parse_json(broken)
+
+
+def test_a_blank_text_is_refused(client):
+    assert client.post("/api/texts", json={"title": "Empty", "body": "  \n "}).status_code == 422
+    assert client.get("/api/texts").json() == []

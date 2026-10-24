@@ -13,8 +13,16 @@ export function TextForm({ initial, submit, onSave }: {
   const [busy, setBusy] = useState(false)
   const set = (key: keyof TextFields, value: string) => setFields({ ...fields, [key]: value })
 
+  const load = async (file: File | undefined) => {
+    if (!file) return
+    const body = await file.text()
+    setFields({ ...fields, body, title: fields.title || file.name.replace(/\.txt$/i, '') })
+    setError(body.trim() ? '' : `${file.name} is empty.`)
+  }
+
   const save = async (event: React.FormEvent) => {
     event.preventDefault()
+    if (!fields.body.trim()) return setError('The text is empty. Paste a text or choose a .txt file.')
     setBusy(true)
     try {
       await onSave({ ...fields, source_url: fields.source_url.trim() })
@@ -31,6 +39,9 @@ export function TextForm({ initial, submit, onSave }: {
       <label>Text
         <textarea required rows={12} value={fields.body} onChange={(e) => set('body', e.target.value)}
           placeholder="Paste a song, an article, or a chapter in the language you are learning." />
+      </label>
+      <label className="file-pick">Or load it from a .txt file
+        <input type="file" accept=".txt,text/plain" onChange={(e) => load(e.target.files?.[0])} />
       </label>
       <label>Where it is from <span className="muted">(optional)</span>
         <input type="url" value={fields.source_url} onChange={(e) => set('source_url', e.target.value)} placeholder="https://…" />

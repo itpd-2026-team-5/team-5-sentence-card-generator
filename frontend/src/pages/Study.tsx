@@ -29,6 +29,7 @@ export function Study({ deckIds, language, onExit }: { deckIds: number[]; langua
   const decks = deckIds.join(',')
   const [deckList, setDeckList] = useState<Deck[]>([])
   const [note, setNote] = useState('')
+  const noAudio = () => setNote('This browser cannot read the sentence aloud, so read it on the card.')
   useEffect(() => { api.decks().then(setDeckList).catch(() => {}) }, [])
 
   const load = useCallback(async () => {
@@ -49,7 +50,7 @@ export function Study({ deckIds, language, onExit }: { deckIds: number[]; langua
   // Read each new card aloud as it appears, for learners who review on the go.
   const cardId = study?.card?.id
   useEffect(() => {
-    if (autoplay && study?.card) speak(study.card.sentence, cardLanguage)
+    if (autoplay && study?.card) speak(study.card.sentence, cardLanguage, noAudio)
   }, [cardId]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const toggleAutoplay = () => {
@@ -165,7 +166,7 @@ export function Study({ deckIds, language, onExit }: { deckIds: number[]; langua
                   <p>{card.text_title ? (card.text_exists ? <><a className="link" href={`#/text/${card.text_id}`} onClick={onExit}>{card.text_title}</a>: </> : <><strong>{card.text_title}</strong>: </>) : null}{card.source_sentence}</p>
                 </details>
               ) : <span className="hint">Tap to show the answer<span className="key-hint"> or press <kbd>Space</kbd></span></span>}
-              <button className="ghost icon-btn listen" onClick={(e) => { e.stopPropagation(); speak(card.sentence, cardLanguage) }} aria-label="Listen again"><Icon name="sound" /></button>
+              <button className="ghost icon-btn listen" onClick={(e) => { e.stopPropagation(); speak(card.sentence, cardLanguage, noAudio) }} aria-label="Listen again"><Icon name="sound" /></button>
             </div>
           </div>
 
