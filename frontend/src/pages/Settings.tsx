@@ -95,7 +95,22 @@ export function Settings({ user, onSignedOut }: { user: User; onSignedOut: () =>
             </select>
           </label>
         </div>
-        <p className="muted small spaced">Learning more than one language? Give each deck its own pair when you create it.</p>
+        <div className="also-learning">
+          <span className="muted small">Also learning:</span>
+          {learning.slice(1).map((language) => (
+            <span key={language} className="chip">
+              {LANGUAGES[language]}
+              <button className="ghost" onClick={() => setLevel(language, '')} aria-label={`Stop learning ${LANGUAGES[language]}`} title="Stop learning"><Icon name="close" size={14} /></button>
+            </span>
+          ))}
+          {notLearning.length > 0 ? (
+            <select className="add-language" value="" onChange={(e) => e.target.value && setLevel(e.target.value as Language, 'A1')} aria-label="Add another language to learn">
+              <option value="">+ Add another language to learn</option>
+              {notLearning.map((language) => <option key={language} value={language}>{LANGUAGES[language]}</option>)}
+            </select>
+          ) : learning.length === 1 && <span className="muted small">no other language</span>}
+        </div>
+        <p className="muted small spaced">New decks use the pair above; a deck can use any language you learn.</p>
       </section>
 
       <section className="glass block">
@@ -108,9 +123,7 @@ export function Settings({ user, onSignedOut }: { user: User; onSignedOut: () =>
               <div key={language} className="level-block">
                 <div className="level-head">
                   <strong>{LANGUAGES[language]}</strong>
-                  {language === profile.target_language
-                    ? <span className="tag">For new decks</span>
-                    : <button className="ghost small" onClick={() => setLevel(language, '')}>Stop learning</button>}
+                  {language === profile.target_language && <span className="tag">For new decks</span>}
                 </div>
                 <div className="segmented" role="radiogroup" aria-label={`Level in ${LANGUAGES[language]}`}>
                   {LEVELS.map((l) => (
@@ -127,14 +140,6 @@ export function Settings({ user, onSignedOut }: { user: User; onSignedOut: () =>
           })}
         </div>
         <p className="muted small spaced">A deck can use a different level of its own.</p>
-        {notLearning.length > 0 && (
-          <label className="add-language">Learning another language?
-            <select value="" onChange={(e) => e.target.value && setLevel(e.target.value as Language, 'A1')}>
-              <option value="">Add a language…</option>
-              {notLearning.map((language) => <option key={language} value={language}>{LANGUAGES[language]}</option>)}
-            </select>
-          </label>
-        )}
       </section>
 
       <section className="glass block">

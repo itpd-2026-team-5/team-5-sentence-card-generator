@@ -399,7 +399,10 @@ kbd { font: 0.75rem var(--sans); color: var(--muted); border: 1px solid var(--li
 .counts-line { display: inline-flex; gap: 0.3rem; }
 .level-list { display: flex; flex-direction: column; gap: 1.4rem; }
 .level-head { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; margin-bottom: 0.6rem; font-size: 1.05rem; }
-.add-language { margin-top: 1rem; max-width: 22rem; }
+.also-learning { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-top: 1rem; }
+.also-learning .chip { cursor: default; padding-right: 0.3rem; }
+.also-learning .chip .ghost { display: inline-flex; padding: 0.1rem; }
+.add-language { width: auto; max-width: 100%; padding: 0.4rem 0.7rem; font-size: 0.92rem; }
 .big-switch { font-size: 0.95rem; color: var(--text); }
 .segmented.two { grid-template-columns: repeat(2, 1fr); }
 .icon-btn.is-on { color: var(--cyan); background: rgba(34, 211, 238, 0.12); }
