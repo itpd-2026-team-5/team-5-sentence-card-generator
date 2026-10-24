@@ -110,6 +110,8 @@ Take or pass on payments between a learner and their teacher.
 
 ![System context diagram](architecture/context.png)
 
+What the product is made of, inside this context, is in [the architecture document](architecture/README.md).
+
 The learners, teachers, and the customer are the actors.
 The external system is the LLM API provider.
 
