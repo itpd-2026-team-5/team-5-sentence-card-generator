@@ -54,9 +54,10 @@ export function Settings({ user, onSignedOut }: { user: User; onSignedOut: () =>
     setDirty(true)
   }
 
-  // The language for new decks has the big picker above; the table holds the others.
+  // The language for new decks comes first; every language with a level gets the same picker.
   const others = (Object.keys(LANGUAGES) as Language[]).filter((l) => l !== profile.known_language && l !== profile.target_language)
-  const mainTest = profile.placement_tests?.[profile.target_language]
+  const learning = [profile.target_language, ...others.filter((l) => profile.levels[l])]
+  const notLearning = others.filter((l) => !profile.levels[l])
 
   return (
     <div className="page narrow">
@@ -99,41 +100,41 @@ export function Settings({ user, onSignedOut }: { user: User; onSignedOut: () =>
 
       <section className="glass block">
         <h3>Your level in each language</h3>
-        <div className="segmented" role="radiogroup" aria-label={`Level in ${LANGUAGES[profile.target_language]}`}>
-          {LEVELS.map((level) => (
-            <button key={level} role="radio" aria-checked={(profile.levels[profile.target_language] ?? 'A2') === level}
-              className={(profile.levels[profile.target_language] ?? 'A2') === level ? 'on' : ''} onClick={() => setLevel(profile.target_language, level)}>
-              <strong>{level}</strong><small>{LEVEL_NOTES[level]}</small>
-            </button>
-          ))}
+        <div className="level-list">
+          {learning.map((language) => {
+            const level = profile.levels[language] ?? 'A2'
+            const test = profile.placement_tests?.[language]
+            return (
+              <div key={language} className="level-block">
+                <div className="level-head">
+                  <strong>{LANGUAGES[language]}</strong>
+                  {language === profile.target_language
+                    ? <span className="tag">For new decks</span>
+                    : <button className="ghost small" onClick={() => setLevel(language, '')}>Stop learning</button>}
+                </div>
+                <div className="segmented" role="radiogroup" aria-label={`Level in ${LANGUAGES[language]}`}>
+                  {LEVELS.map((l) => (
+                    <button key={l} role="radio" aria-checked={level === l} className={level === l ? 'on' : ''} onClick={() => setLevel(language, l)}>
+                      <strong>{l}</strong><small>{LEVEL_NOTES[l]}</small>
+                    </button>
+                  ))}
+                </div>
+                <p className="muted small">
+                  {test ? <>Not sure? <a href={test} target="_blank" rel="noreferrer">Take a free placement test ↗</a>{language === 'ru' ? ' (it asks for your email)' : ''}</> : 'No placement test linked yet.'}
+                </p>
+              </div>
+            )
+          })}
         </div>
-        <p className="muted small">
-          That is {LANGUAGES[profile.target_language]}. A deck can use a different level of its own.{' '}
-          {mainTest && <>Not sure? <a href={mainTest} target="_blank" rel="noreferrer">Take a free placement test ↗</a>{profile.target_language === 'ru' ? ' (it asks for your email)' : ''}</>}
-        </p>
-        {others.length > 0 && <p className="muted small spaced">Other languages you learn:</p>}
-        <table className="level-table">
-          <tbody>
-            {others.map((language) => {
-              const test = profile.placement_tests?.[language]
-              return (
-                <tr key={language}>
-                  <th>{LANGUAGES[language]}</th>
-                  <td>
-                    <select value={profile.levels[language] ?? ''} onChange={(e) => setLevel(language, e.target.value as Level | '')} aria-label={`Level in ${LANGUAGES[language]}`}>
-                      <option value="">Not learning</option>
-                      {LEVELS.map((level) => <option key={level} value={level}>{level}, {LEVEL_NOTES[level]}</option>)}
-                    </select>
-                  </td>
-                  <td className="muted small">
-                    {test ? <a href={test} target="_blank" rel="noreferrer">Free placement test ↗</a> : 'No test linked yet'}
-                    {language === 'ru' && test ? ' (asks for your email)' : ''}
-                  </td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
+        <p className="muted small spaced">A deck can use a different level of its own.</p>
+        {notLearning.length > 0 && (
+          <label className="add-language">Learning another language?
+            <select value="" onChange={(e) => e.target.value && setLevel(e.target.value as Language, 'A1')}>
+              <option value="">Add a language…</option>
+              {notLearning.map((language) => <option key={language} value={language}>{LANGUAGES[language]}</option>)}
+            </select>
+          </label>
+        )}
       </section>
 
       <section className="glass block">
@@ -233,13 +234,13 @@ function WhoWrites() {
     ownKey.set(key.trim())
     setSaved(true)
   }
-  const ready = source === 'service' || (key.trim() && model.trim() && baseUrl.trim())
+  const ready = key.trim() && model.trim() && baseUrl.trim()
 
   return (
     <section className="glass block stack">
       <h3>Who writes the sentences</h3>
       <div className="segmented two" role="radiogroup" aria-label="Key">
-        <button role="radio" aria-checked={source === 'service'} className={source === 'service' ? 'on' : ''} onClick={() => { setSource('service'); setSaved(false) }}>
+        <button role="radio" aria-checked={source === 'service'} className={source === 'service' ? 'on' : ''} onClick={() => { setSource('service'); ownKey.setSource('service'); setSaved(true) }}>
           <strong>The service</strong><small>Its key and model</small>
         </button>
         <button role="radio" aria-checked={source === 'own'} className={source === 'own' ? 'on' : ''} onClick={() => { setSource('own'); setSaved(false) }}>
@@ -266,10 +267,12 @@ function WhoWrites() {
           <p className="muted small">{PROVIDERS[kind].hint} The key stays in this browser: it goes straight to the provider and is never sent to our server, so we and your teacher cannot read it.</p>
         </>
       )}
-      <div className="row-gap">
-        <button className="btn primary" disabled={!ready} onClick={save}>Save in this browser</button>
-        {ownKey.get() && <button className="btn" onClick={() => { ownKey.set(''); setKey(''); setSource('service'); ownKey.setSource('service'); setSaved(true) }}>Forget my key</button>}
-      </div>
+      {source === 'own' && (
+        <div className="row-gap">
+          <button className="btn primary" disabled={!ready} onClick={save}>Save in this browser</button>
+          {ownKey.get() && <button className="btn" onClick={() => { ownKey.set(''); setKey(''); setSource('service'); ownKey.setSource('service'); setSaved(true) }}>Forget my key</button>}
+        </div>
+      )}
       {saved && <p className="toast"><Icon name="check" size={16} /> {source === 'own' ? `New sentences will be written with your key, by ${model}.` : 'New sentences will be written by the service.'}</p>}
     </section>
   )
