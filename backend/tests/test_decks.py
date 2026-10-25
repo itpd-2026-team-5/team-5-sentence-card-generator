@@ -113,9 +113,13 @@ def test_more_cards_for_the_same_word(client):
     assert all(c["deck_ids"] == cards[0]["deck_ids"] for c in more)
 
 
-def test_ask_the_teacher_to_check_a_card(client):
+def test_ask_the_teacher_to_check_a_card(client, teacher):
     _, cards = cards_in(client, first_deck(client), words=("Geld",))
     url = f"/api/cards/{cards[0]['id']}"
+    # Only a deck with a teacher lets the learner ask one.
+    assert cards[0]["can_ask_teacher"] is False
+    assert client.patch(url, json={"needs_check": True}).status_code == 409
+    client.post(f"/api/decks/{first_deck(client)}/shares", json={"email": "teacher@example.com"})
     flagged = client.patch(url, json={"needs_check": True, "note": "Is this natural?"}).json()
     assert (flagged["needs_check"], flagged["note"]) == (True, "Is this natural?")
     assert flagged["status"] == "active"

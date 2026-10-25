@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
-import { api, LANGUAGES, type Language, type Level, type Profile, type Usage, type User } from '../api'
-import { MODELS, ownKey } from '../llm'
+import { api, LANGUAGES, LEVELS, local, type Language, type Level, type Profile, type Stats, type User } from '../api'
 import { Icon } from '../components/Icon'
+import { ownKey, PROVIDERS, type ProviderKind } from '../llm'
 
-const LEVELS: Level[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 const LEVEL_NOTES: Record<Level, string> = {
   A1: 'Beginner', A2: 'Elementary', B1: 'Intermediate', B2: 'Upper intermediate', C1: 'Advanced', C2: 'Proficient',
 }
@@ -13,12 +12,12 @@ export function Settings({ user, onSignedOut }: { user: User; onSignedOut: () =>
   const [saved, setSaved] = useState<string>('')
   const [dirty, setDirty] = useState(false)
   const [error, setError] = useState('')
-  const [usage, setUsage] = useState<Usage | null>(null)
+  const [stats, setStats] = useState<Stats | null>(null)
   const [firstSave, setFirstSave] = useState(false)
 
   useEffect(() => {
     api.profile().then(setProfile, (e) => setError(e.message))
-    api.usage().then(setUsage)
+    api.stats().then(setStats)
   }, [])
   if (!profile) return <p className="muted">{error || 'Loading…'}</p>
 
@@ -28,10 +27,20 @@ export function Settings({ user, onSignedOut }: { user: User; onSignedOut: () =>
     setSaved('')
   }
 
+  const setLevel = (language: Language, level: Level | '') => {
+    const levels = { ...profile.levels }
+    if (level) levels[language] = level
+    else delete levels[language]
+    set('levels', levels)
+  }
+
   const save = async () => {
     try {
       if (!profile.set_up) setFirstSave(true)
-      setProfile(await api.saveProfile(profile))
+      // A learner who never picked a level for the language they learn starts at A2.
+      const levels = { ...profile.levels }
+      if (!levels[profile.target_language]) levels[profile.target_language] = 'A2'
+      setProfile(await api.saveProfile({ ...profile, levels }))
       setDirty(false)
       setSaved('Saved')
       setError('')
@@ -45,7 +54,10 @@ export function Settings({ user, onSignedOut }: { user: User; onSignedOut: () =>
     setDirty(true)
   }
 
-  const test = profile.placement_tests?.[profile.target_language]
+  // The language for new decks comes first; every language with a level gets the same picker.
+  const others = (Object.keys(LANGUAGES) as Language[]).filter((l) => l !== profile.known_language && l !== profile.target_language)
+  const learning = [profile.target_language, ...others.filter((l) => profile.levels[l])]
+  const notLearning = others.filter((l) => !profile.levels[l])
 
   return (
     <div className="page narrow">
@@ -65,11 +77,11 @@ export function Settings({ user, onSignedOut }: { user: User; onSignedOut: () =>
       <header className="page-head">
         <p className="eyebrow">Settings</p>
         <h1>Your languages</h1>
-        <p className="muted">Sentences are written for your level, from words you already know. Topics come from each deck's instructions.</p>
+        <p className="muted">Sentences are written for your level, from words you already know. Each deck has its own language pair and instructions.</p>
       </header>
 
       <section className="glass block">
-        <h3>Languages</h3>
+        <h3>Languages for new decks</h3>
         <div className="lang-row">
           <label>I speak
             <select value={profile.known_language} onChange={(e) => set('known_language', e.target.value as Language)}>
@@ -83,23 +95,51 @@ export function Settings({ user, onSignedOut }: { user: User; onSignedOut: () =>
             </select>
           </label>
         </div>
+        <div className="also-learning">
+          <span className="muted small">Also learning:</span>
+          {learning.slice(1).map((language) => (
+            <span key={language} className="chip">
+              {LANGUAGES[language]}
+              <button className="ghost" onClick={() => setLevel(language, '')} aria-label={`Stop learning ${LANGUAGES[language]}`} title="Stop learning"><Icon name="close" size={14} /></button>
+            </span>
+          ))}
+          {notLearning.length > 0 ? (
+            <select className="add-language" value="" onChange={(e) => e.target.value && setLevel(e.target.value as Language, 'A1')} aria-label="Add another language to learn">
+              <option value="">+ Add another language to learn</option>
+              {notLearning.map((language) => <option key={language} value={language}>{LANGUAGES[language]}</option>)}
+            </select>
+          ) : learning.length === 1 && <span className="muted small">no other language</span>}
+        </div>
+        <p className="muted small spaced">New decks use the pair above; a deck can use any language you learn.</p>
       </section>
 
       <section className="glass block">
-        <h3>Your level</h3>
-        <div className="segmented" role="radiogroup">
-          {LEVELS.map((level) => (
-            <button key={level} role="radio" aria-checked={profile.level === level}
-              className={profile.level === level ? 'on' : ''} onClick={() => set('level', level)}>
-              <strong>{level}</strong><small>{LEVEL_NOTES[level]}</small>
-            </button>
-          ))}
+        <h3>Your level in each language</h3>
+        <div className="level-list">
+          {learning.map((language) => {
+            const level = profile.levels[language] ?? 'A2'
+            const test = profile.placement_tests?.[language]
+            return (
+              <div key={language} className="level-block">
+                <div className="level-head">
+                  <strong>{LANGUAGES[language]}</strong>
+                  {language === profile.target_language && <span className="tag">For new decks</span>}
+                </div>
+                <div className="segmented" role="radiogroup" aria-label={`Level in ${LANGUAGES[language]}`}>
+                  {LEVELS.map((l) => (
+                    <button key={l} role="radio" aria-checked={level === l} className={level === l ? 'on' : ''} onClick={() => setLevel(language, l)}>
+                      <strong>{l}</strong><small>{LEVEL_NOTES[l]}</small>
+                    </button>
+                  ))}
+                </div>
+                <p className="muted small">
+                  {test ? <>Not sure? <a href={test} target="_blank" rel="noreferrer">Take a free placement test ↗</a>{language === 'ru' ? ' (it asks for your email)' : ''}</> : 'No placement test linked yet.'}
+                </p>
+              </div>
+            )
+          })}
         </div>
-        <p className="muted small">
-          Not sure?{' '}
-          {test ? <><a href={test} target="_blank" rel="noreferrer">Take a free placement test ↗</a>{profile.target_language === 'ru' ? ' (it asks for your email to send the result)' : ''}</>
-            : `No placement test is linked for ${LANGUAGES[profile.target_language]} yet.`}
-        </p>
+        <p className="muted small spaced">A deck can use a different level of its own.</p>
       </section>
 
       <section className="glass block">
@@ -109,23 +149,41 @@ export function Settings({ user, onSignedOut }: { user: User; onSignedOut: () =>
           <span className="muted">to</span>
           <label>Longest (words)<input type="number" min={3} max={30} value={profile.sentence_max_words} onChange={(e) => set('sentence_max_words', Number(e.target.value))} /></label>
         </div>
-        <label className="spaced">At most (characters)
-          <input type="number" min={0} max={500} step={10} value={profile.sentence_max_chars || ''} placeholder="No limit"
-            onChange={(e) => set('sentence_max_chars', Number(e.target.value) || 0)} />
-        </label>
-        <p className="muted small">German words can be long, so a limit in characters keeps a study session predictable.</p>
+        <div className="lang-row spaced">
+          <label>Shortest (characters)
+            <input type="number" min={0} max={500} step={10} value={profile.sentence_min_chars || ''} placeholder="No minimum"
+              onChange={(e) => set('sentence_min_chars', Number(e.target.value) || 0)} />
+          </label>
+          <span className="muted">to</span>
+          <label>Longest (characters)
+            <input type="number" min={0} max={500} step={10} value={profile.sentence_max_chars || ''} placeholder="No maximum"
+              onChange={(e) => set('sentence_max_chars', Number(e.target.value) || 0)} />
+          </label>
+        </div>
+        <p className="muted small">German words can be long, so bounds in characters keep a session predictable, and a minimum keeps sentences from being too simple.</p>
       </section>
 
-      <OwnKey />
+      <ReadAloud />
+      <WhoWrites />
 
       <section className="glass block">
-        <h3>LLM usage</h3>
-        {usage ? (
-          <div className="usage">
-            <div><strong>{usage.requests}</strong><span>requests</span></div>
-            <div><strong>{(usage.input_tokens + usage.output_tokens).toLocaleString()}</strong><span>tokens</span></div>
-            <div><strong>{usage.cards}</strong><span>cards</span></div>
-          </div>
+        <h3>Statistics</h3>
+        {stats ? (
+          <>
+            <div className="usage">
+              <div><strong>{stats.cards}</strong><span>cards</span></div>
+              <div><strong>{stats.kept_as_generated}</strong><span>kept as written</span></div>
+              <div><strong>{stats.edited}</strong><span>edited by hand</span></div>
+              <div><strong>{stats.regenerated}</strong><span>rewritten ({stats.regenerations} times)</span></div>
+              <div><strong>{stats.archived}</strong><span>archived</span></div>
+              <div><strong>{stats.deleted}</strong><span>deleted</span></div>
+            </div>
+            <p className="muted small spaced">
+              Tokens, as the provider reported them: {stats.input_tokens.toLocaleString()} in, {stats.output_tokens.toLocaleString()} out.
+              {stats.failed_checks > 0 && ` ${stats.failed_checks} cards still failed a check after the retries.`}
+              {' '}Your provider's own dashboard shows what you were billed.
+            </p>
+          </>
         ) : <p className="muted">Loading…</p>}
       </section>
 
@@ -143,49 +201,84 @@ export function Settings({ user, onSignedOut }: { user: User; onSignedOut: () =>
   )
 }
 
-/** The learner's own Anthropic API key, kept in this browser only. */
-function OwnKey() {
-  const [key, setKey] = useState(ownKey.get())
-  const [model, setModel] = useState(ownKey.model())
-  const [saved, setSaved] = useState(false)
-  const has = ownKey.get() !== ''
+/** Reading sentences aloud, switched in the app so the device need not be muted. */
+function ReadAloud() {
+  const [on, setOn] = useState(local.get('autoplay', 'on') === 'on')
+  return (
+    <section className="glass block">
+      <h3>Sound</h3>
+      <label className="switch big-switch">
+        <input type="checkbox" checked={on} onChange={(e) => { setOn(e.target.checked); local.set('autoplay', e.target.checked ? 'on' : 'off') }} />
+        Read each sentence aloud when a card appears
+      </label>
+      <p className="muted small">You can also switch it during study, with the speaker button.</p>
+    </section>
+  )
+}
 
-  const save = () => {
-    ownKey.set(key.trim())
-    ownKey.setModel(model)
-    setSaved(true)
-  }
-  const remove = () => {
-    ownKey.set('')
-    setKey('')
+/** Who writes the sentences: the service's key, or the learner's own key with any provider. */
+function WhoWrites() {
+  const [source, setSource] = useState(ownKey.source())
+  const [kind, setKind] = useState<ProviderKind>(ownKey.kind())
+  const [baseUrl, setBaseUrl] = useState(ownKey.baseUrl())
+  const [model, setModel] = useState(ownKey.model())
+  const [key, setKey] = useState(ownKey.get())
+  const [saved, setSaved] = useState(false)
+
+  const changeKind = (next: ProviderKind) => {
+    setKind(next)
+    setBaseUrl(PROVIDERS[next].defaultUrl)
+    setModel(PROVIDERS[next].models[0] ?? '')
     setSaved(false)
   }
+  const save = () => {
+    ownKey.setSource(source)
+    ownKey.setKind(kind)
+    ownKey.setBaseUrl(baseUrl.trim())
+    ownKey.setModel(model.trim())
+    ownKey.set(key.trim())
+    setSaved(true)
+  }
+  const ready = key.trim() && model.trim() && baseUrl.trim()
 
   return (
     <section className="glass block stack">
-      <h3>Your own API key</h3>
-      <p className="muted small">
-        Sentences are written with your own Anthropic API key, and you pay Anthropic for what you use.
-        The key stays in this browser: it goes straight to Anthropic and is never sent to our server, so
-        we and your teacher cannot read it. A teacher who rewrites your cards uses their own key.
-      </p>
-      <label>API key
-        <input type="password" autoComplete="off" spellCheck={false} placeholder="sk-ant-…" value={key}
-          onChange={(e) => { setKey(e.target.value); setSaved(false) }} />
-      </label>
-      <label>Model
-        <select value={model} onChange={(e) => { setModel(e.target.value); setSaved(false) }}>
-          {MODELS.map((m) => <option key={m.id} value={m.id}>{m.label}</option>)}
-        </select>
-      </label>
-      <div className="row-gap">
-        <button className="btn primary" disabled={!key.trim()} onClick={save}>Save in this browser</button>
-        {has && <button className="btn" onClick={remove}>Remove key</button>}
+      <h3>Who writes the sentences</h3>
+      <div className="segmented two" role="radiogroup" aria-label="Key">
+        <button role="radio" aria-checked={source === 'service'} className={source === 'service' ? 'on' : ''} onClick={() => { setSource('service'); ownKey.setSource('service'); setSaved(true) }}>
+          <strong>The service</strong><small>Its key and model</small>
+        </button>
+        <button role="radio" aria-checked={source === 'own'} className={source === 'own' ? 'on' : ''} onClick={() => { setSource('own'); setSaved(false) }}>
+          <strong>My own key</strong><small>Any provider, paid by you</small>
+        </button>
       </div>
-      <p className="muted small">
-        {saved ? 'Saved. New sentences will be written with your key.'
-          : has ? 'Your key is set in this browser.' : 'No key in this browser: sentences use the service, if it has one.'}
-      </p>
+      {source === 'own' && (
+        <>
+          <label>Provider
+            <select value={kind} onChange={(e) => changeKind(e.target.value as ProviderKind)}>
+              {(Object.keys(PROVIDERS) as ProviderKind[]).map((k) => <option key={k} value={k}>{PROVIDERS[k].label}</option>)}
+            </select>
+          </label>
+          <label>Address<input value={baseUrl} spellCheck={false} onChange={(e) => { setBaseUrl(e.target.value); setSaved(false) }} /></label>
+          <label>Model
+            <input value={model} list="model-suggestions" spellCheck={false} placeholder={kind === 'openai' ? 'e.g. the name your provider lists' : 'claude-opus-5-5'}
+              onChange={(e) => { setModel(e.target.value); setSaved(false) }} />
+            <datalist id="model-suggestions">{PROVIDERS[kind].models.map((m) => <option key={m} value={m} />)}</datalist>
+          </label>
+          <label>API key
+            <input type="password" autoComplete="off" spellCheck={false} placeholder="Your key" value={key}
+              onChange={(e) => { setKey(e.target.value); setSaved(false) }} />
+          </label>
+          <p className="muted small">{PROVIDERS[kind].hint} The key stays in this browser: it goes straight to the provider and is never sent to our server, so we and your teacher cannot read it.</p>
+        </>
+      )}
+      {source === 'own' && (
+        <div className="row-gap">
+          <button className="btn primary" disabled={!ready} onClick={save}>Save in this browser</button>
+          {ownKey.get() && <button className="btn" onClick={() => { ownKey.set(''); setKey(''); setSource('service'); ownKey.setSource('service'); setSaved(true) }}>Forget my key</button>}
+        </div>
+      )}
+      {saved && <p className="toast"><Icon name="check" size={16} /> {source === 'own' ? `New sentences will be written with your key, by ${model}.` : 'New sentences will be written by the service.'}</p>}
     </section>
   )
 }

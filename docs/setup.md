@@ -46,8 +46,9 @@ Choose how sentences are written:
 | Setting in `.env` | What happens |
 | --- | --- |
 | `LLM_PROVIDER=anthropic` and `ANTHROPIC_API_KEY=<your key>` | The server writes sentences with Claude (`LLM_MODEL`, by default `claude-opus-5-5`). |
+| `LLM_PROVIDER=anthropic`, `ANTHROPIC_BASE_URL=<gateway address>`, `ANTHROPIC_AUTH_TOKEN=<token>`, and `LLM_MODEL=<a model it offers>` | The server writes sentences through a gateway that speaks the Anthropic API. For a model older than the Claude 5 family, the request leaves out effort and the refusal fallback. |
 | `LLM_PROVIDER=fake` | No key needed: every card gets a placeholder sentence, "This is a short practice sentence that uses … today." Use it to try the product or to run it offline. |
-| Leave `ANTHROPIC_API_KEY` empty | Each learner enters their own key under Settings → Your own API key. It stays in their browser and goes straight to Anthropic; the server never sees it. |
+| Leave `ANTHROPIC_API_KEY` empty | Each learner chooses *My own key* under Settings → Who writes the sentences, with Anthropic, a gateway that speaks its API, or an OpenAI-compatible provider such as OpenRouter. The key stays in their browser and goes straight to the provider; the server never sees it. |
 
 Email: the sign-up confirmation goes to Mailpit, a local inbox that docker compose starts, so nothing leaves your computer.
 To send real email, set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, and `MAIL_FROM`, and set `APP_URL` to the address learners open, since the link in the email points there.

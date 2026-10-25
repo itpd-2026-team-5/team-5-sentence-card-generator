@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { api, local, speak, type Language, type Rating, type Study as StudyData } from '../api'
+import { api, local, speak, type Deck, type Language, type Rating, type Study as StudyData } from '../api'
 import { Icon } from '../components/Icon'
 
 const RATINGS: { rating: Rating; label: string; key: string }[] = [
@@ -27,22 +27,30 @@ export function Study({ deckIds, language, onExit }: { deckIds: number[]; langua
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const decks = deckIds.join(',')
+  const [deckList, setDeckList] = useState<Deck[]>([])
+  const [note, setNote] = useState('')
+  const noAudio = () => setNote('This browser cannot read the sentence aloud, so read it on the card.')
+  useEffect(() => { api.decks().then(setDeckList).catch(() => {}) }, [])
 
   const load = useCallback(async () => {
     try {
       setStudy(await api.study(decks ? decks.split(',').map(Number) : []))
       setRevealed(false)
       setTooHard(false)
+      setNote('')
     } catch (e) {
       setError((e as Error).message)
     }
   }, [decks])
   useEffect(() => { load() }, [load])
 
+  // Each card is read in its own deck's language; a learner may study several languages.
+  const cardLanguage = (deckList.find((d) => study?.card?.deck_ids.includes(d.id))?.target_language ?? language) as Language
+
   // Read each new card aloud as it appears, for learners who review on the go.
   const cardId = study?.card?.id
   useEffect(() => {
-    if (autoplay && study?.card) speak(study.card.sentence, language)
+    if (autoplay && study?.card) speak(study.card.sentence, cardLanguage, noAudio)
   }, [cardId]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const toggleAutoplay = () => {
@@ -85,7 +93,30 @@ export function Study({ deckIds, language, onExit }: { deckIds: number[]; langua
 
   const card = study.card
   const done = study.new_done + study.reviews_done
-  const total = done + study.due + study.new
+  const total = done + study.new + study.review + study.again
+
+  // Fix a bad sentence where it was found: rewrite it now, or mark it for the next batch.
+  const rewrite = async () => {
+    if (!card || busy) return
+    setBusy(true)
+    setError('')
+    try {
+      const fresh = await api.regenerateCard(card.id, 'Found while studying.')
+      setStudy({ ...study, card: fresh })
+      setNote('Rewritten. Here is the new sentence.')
+      setRevealed(false)
+    } catch (e) {
+      setError((e as Error).message)
+    } finally {
+      setBusy(false)
+    }
+  }
+  const markForLater = async () => {
+    if (!card) return
+    const updated = await api.updateCard(card.id, { needs_regeneration: !card.needs_regeneration })
+    setStudy({ ...study, card: updated })
+    setNote(updated.needs_regeneration ? 'Marked: it will be rewritten with the deck’s other marked cards.' : '')
+  }
 
   return (
     <div className="focus">
@@ -94,7 +125,11 @@ export function Study({ deckIds, language, onExit }: { deckIds: number[]; langua
         <div className="progress" aria-label={`${done} of ${total} done today`}>
           <span style={{ width: `${total ? (done / total) * 100 : 0}%` }} />
         </div>
-        <span className="muted small">{study.new} new · {study.due} review</span>
+        <span className="counts-line small" aria-label={`${study.new} new, ${study.review} to review, ${study.again} to see again`}>
+          <span className="count new" title="New cards">{study.new}</span>
+          <span className="count due" title="Reviews from earlier days">{study.review}</span>
+          <span className="count again" title="To see again today">{study.again}</span>
+        </span>
         <button className={`ghost icon-btn ${autoplay ? '' : 'muted-off'}`} onClick={toggleAutoplay}
           aria-pressed={autoplay} title={autoplay ? 'Sentences play aloud' : 'Sentences are silent'}
           aria-label="Play sentences aloud"><Icon name={autoplay ? 'sound' : 'mute'} /></button>
@@ -123,19 +158,24 @@ export function Study({ deckIds, language, onExit }: { deckIds: number[]; langua
                 {card.word}
                 <span className="card-word-meaning">{revealed ? card.word_translation : ''}</span>
               </p>
-              <p className="card-sentence">{highlight(card.sentence, card.word_form)}</p>
+              <p className="card-sentence">{highlight(card.sentence, [card.highlight, card.word_form], cardLanguage)}</p>
               <p className="card-translation">{revealed ? card.translation : ''}</p>
               {revealed ? (
                 <details className="source-note" onClick={(e) => e.stopPropagation()}>
                   <summary>Where the word came from</summary>
-                  <p>{card.text_title ? <><strong>{card.text_title}</strong>: </> : null}{card.source_sentence}</p>
+                  <p>{card.text_title ? (card.text_exists ? <><a className="link" href={`#/text/${card.text_id}`} onClick={onExit}>{card.text_title}</a>: </> : <><strong>{card.text_title}</strong>: </>) : null}{card.source_sentence}</p>
                 </details>
-              ) : <span className="hint">Tap to show the answer</span>}
-              <button className="ghost icon-btn listen" onClick={(e) => { e.stopPropagation(); speak(card.sentence, language) }} aria-label="Listen again"><Icon name="sound" /></button>
+              ) : <span className="hint">Tap to show the answer<span className="key-hint"> or press <kbd>Space</kbd></span></span>}
+              <button className="ghost icon-btn listen" onClick={(e) => { e.stopPropagation(); speak(card.sentence, cardLanguage, noAudio) }} aria-label="Listen again"><Icon name="sound" /></button>
             </div>
           </div>
 
+          {note && <p className="toast center-text">{note}</p>}
           <footer className={`focus-actions ${revealed ? 'show' : ''}`}>
+            <div className="row-gap center">
+              <button className="flag" onClick={rewrite} disabled={busy}><Icon name="sparkle" size={16} /> {busy ? 'Rewriting…' : 'Rewrite this sentence'}</button>
+              <button className={`flag ${card.needs_regeneration ? 'on' : ''}`} onClick={markForLater} aria-pressed={card.needs_regeneration}><Icon name="refresh" size={16} /> Rewrite later</button>
+            </div>
             <button className={`flag ${tooHard ? 'on' : ''}`} onClick={() => setTooHard(!tooHard)} aria-pressed={tooHard}>
               <Icon name="flag" size={16} /> Too hard <kbd>T</kbd>
             </button>
@@ -156,14 +196,25 @@ export function Study({ deckIds, language, onExit }: { deckIds: number[]; langua
   )
 }
 
-function highlight(sentence: string, form: string) {
-  const index = sentence.toLowerCase().indexOf(form.toLowerCase())
-  if (!form || index < 0) return sentence
+// German nouns are learned with their article, so the article right before the word is
+// highlighted too when the model did not include it.
+const GERMAN_ARTICLE = /(?:^|\s)((?:der|die|das|den|dem|des|ein|eine|einen|einem|einer|eines)\s+)$/i
+
+function highlight(sentence: string, spans: string[], language: Language) {
+  // The model's span (the word with its article), or failing that the word form itself.
+  const span = spans.find((s) => s && sentence.toLowerCase().includes(s.toLowerCase()))
+  if (!span) return sentence
+  let start = sentence.toLowerCase().indexOf(span.toLowerCase())
+  const end = start + span.length
+  if (language === 'de') {
+    const article = sentence.slice(0, start).match(GERMAN_ARTICLE)
+    if (article) start -= article[1].length
+  }
   return (
     <>
-      {sentence.slice(0, index)}
-      <mark>{sentence.slice(index, index + form.length)}</mark>
-      {sentence.slice(index + form.length)}
+      {sentence.slice(0, start)}
+      <mark>{sentence.slice(start, end)}</mark>
+      {sentence.slice(end)}
     </>
   )
 }

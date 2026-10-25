@@ -1,6 +1,7 @@
 """LLM providers behind one interface, so the model can be swapped without touching the pipeline."""
 
 import json
+import re
 from dataclasses import dataclass
 from typing import Protocol
 
@@ -25,30 +26,76 @@ class LLMProvider(Protocol):
     def generate_json(self, system: str, prompt: str, schema: dict) -> LLMResult: ...
 
 
+def parse_json(text: str) -> dict:
+    """The JSON object in a model's answer. Structured output returns it bare, but a model
+    behind a gateway that drops that setting may wrap it in a code fence or a sentence."""
+    text = text.strip()
+    fenced = re.search(r"```(?:json)?\s*(\{.*\})\s*```", text, re.DOTALL)
+    if fenced:
+        text = fenced.group(1)
+    elif not text.startswith("{"):
+        start, end = text.find("{"), text.rfind("}")
+        if start < 0 or end <= start:
+            raise LLMError("The model's answer held no cards; try again.")
+        text = text[start : end + 1]
+    try:
+        data = json.loads(text)
+    except json.JSONDecodeError as e:
+        raise LLMError("The model's answer was not valid JSON; try again.") from e
+    if not isinstance(data, dict):
+        raise LLMError("The model's answer was not in the expected shape; try again.")
+    return data
+
+
+def schema_reminder(schema: dict) -> str:
+    """The required shape, stated in the prompt too, for providers that ignore structured output."""
+    return (
+        "\n\nAnswer with only one JSON object, no other text, that matches this JSON schema:\n"
+        + json.dumps(schema)
+    )
+
+
+def supports_new_features(model: str) -> bool:
+    """Effort and the server-side refusal fallback exist on the Claude 5 family; an older
+    model, or another model behind a gateway, rejects them."""
+    return re.match(r"claude-(opus|sonnet|haiku|fable)-5", model) is not None
+
+
 class AnthropicProvider:
     def __init__(self, model: str, effort: str):
         self.model = model
         self.effort = effort
 
+    def _client(self) -> anthropic.Anthropic:
+        options = {}
+        if settings.anthropic_api_key:
+            options["api_key"] = settings.anthropic_api_key
+        if settings.anthropic_auth_token:
+            options["auth_token"] = settings.anthropic_auth_token
+        if settings.anthropic_base_url:
+            options["base_url"] = settings.anthropic_base_url
+        return anthropic.Anthropic(**options)
+
     def generate_json(self, system: str, prompt: str, schema: dict) -> LLMResult:
+        output_config: dict = {"format": {"type": "json_schema", "schema": schema}}
+        extra: dict = {}
+        if supports_new_features(self.model):
+            if self.effort:
+                output_config["effort"] = self.effort
+            # On a policy decline, the API re-runs the request on its recommended fallback model.
+            extra = {"betas": ["server-side-fallback-2026-07-01"], "fallbacks": "default"}
         try:
-            client = anthropic.Anthropic()
-            response = client.beta.messages.create(
+            response = self._client().beta.messages.create(
                 model=self.model,
                 max_tokens=16000,
                 system=system,
-                messages=[{"role": "user", "content": prompt}],
-                output_config={
-                    "effort": self.effort,
-                    "format": {"type": "json_schema", "schema": schema},
-                },
-                # On a policy decline, the API re-runs the request on its recommended fallback model.
-                betas=["server-side-fallback-2026-07-01"],
-                fallbacks="default",
+                messages=[{"role": "user", "content": prompt + schema_reminder(schema)}],
+                output_config=output_config,
+                **extra,
             )
         except anthropic.AuthenticationError as e:
             raise LLMError(
-                "The Claude API key is missing or invalid; set ANTHROPIC_API_KEY."
+                "The Claude API key is missing or invalid; set ANTHROPIC_API_KEY or ANTHROPIC_AUTH_TOKEN."
             ) from e
         except anthropic.RateLimitError as e:
             raise LLMError("Claude is rate limiting us; try again in a minute.") from e
@@ -68,7 +115,7 @@ class AnthropicProvider:
         if not texts:
             raise LLMError("Claude returned no sentences.")
         return LLMResult(
-            data=json.loads(texts[-1]),
+            data=parse_json(texts[-1]),
             model=response.model,
             input_tokens=response.usage.input_tokens,
             output_tokens=response.usage.output_tokens,
@@ -103,7 +150,11 @@ class NeedsLLM(Exception):
 
     def __init__(self, system: str, prompt: str, schema: dict):
         super().__init__("The browser must call the LLM")
-        self.request = {"system": system, "prompt": prompt, "schema": schema}
+        self.request = {
+            "system": system,
+            "prompt": prompt + schema_reminder(schema),
+            "schema": schema,
+        }
 
 
 class BrowserProvider:

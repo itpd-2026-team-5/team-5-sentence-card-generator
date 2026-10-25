@@ -18,7 +18,14 @@ from app.auth import (
 )
 from app.config import PLACEMENT_TESTS, settings
 from app.db import get_db
-from app.generation import generate_cards, mark_context, more_cards, regenerate_card
+from app.generation import (
+    deck_level,
+    generate_cards,
+    mark_context,
+    more_cards,
+    regenerate_card,
+    regenerate_marked,
+)
 from app.llm import BrowserProvider, LLMError, LLMProvider, NeedsLLM, get_provider
 from app.mail import MailError
 from app.models import (
@@ -33,6 +40,8 @@ from app.models import (
     User,
 )
 from app.schemas import (
+    BatchRegenerateIn,
+    BatchRegenerateOut,
     CardDecksIn,
     CardOut,
     CardUpdate,
@@ -53,12 +62,13 @@ from app.schemas import (
     ShareIn,
     ShareOut,
     SignUp,
+    StatsOut,
+    StudyDecksIn,
     StudyOut,
     TaughtDeck,
     TextDetail,
     TextIn,
     TextSummary,
-    UsageOut,
     UserOut,
     VerifyIn,
 )
@@ -85,7 +95,15 @@ def create_profile(db: Session, user: User) -> Profile:
         db.add(profile)
         # The profile row must exist before its first deck refers to it.
         db.flush()
-        db.add(Deck(profile_id=profile.id, name=FIRST_DECK, position=1))
+        db.add(
+            Deck(
+                profile_id=profile.id,
+                name=FIRST_DECK,
+                position=1,
+                known_language=profile.known_language or "en",
+                target_language=profile.target_language or "de",
+            )
+        )
         db.commit()
     except IntegrityError:
         db.rollback()
@@ -215,7 +233,12 @@ def resend(db: Session = Depends(get_db), user: User = Depends(signed_in_user)):
 
 def profile_out(profile: Profile) -> ProfileOut:
     data = ProfileIn.model_validate(profile, from_attributes=True)
-    return ProfileOut(**data.model_dump(), placement_tests=PLACEMENT_TESTS, set_up=profile.set_up)
+    return ProfileOut(
+        **data.model_dump(),
+        placement_tests=PLACEMENT_TESTS,
+        set_up=profile.set_up,
+        study_deck_ids=profile.study_deck_ids or [],
+    )
 
 
 @app.get("/api/profile", response_model=ProfileOut)
@@ -233,9 +256,30 @@ def update_profile(
         raise HTTPException(422, "Known and target language must differ")
     if data.sentence_min_words > data.sentence_max_words:
         raise HTTPException(422, "Minimum sentence length is above the maximum")
+    if data.sentence_max_chars and data.sentence_min_chars > data.sentence_max_chars:
+        raise HTTPException(422, "Minimum length in characters is above the maximum")
+    first_time = not profile.set_up
     for key, value in data.model_dump().items():
         setattr(profile, key, value)
+    if first_time:
+        # The decks made before the learner chose their languages take the chosen pair.
+        for deck in db.scalars(select(Deck).where(Deck.profile_id == profile.id)):
+            deck.known_language = data.known_language
+            deck.target_language = data.target_language
     profile.set_up = True
+    db.commit()
+    return profile_out(profile)
+
+
+@app.put("/api/profile/study-decks", response_model=ProfileOut)
+def save_study_decks(
+    data: StudyDecksIn,
+    db: Session = Depends(get_db),
+    profile: Profile = Depends(current_profile),
+):
+    """Remember which decks the learner chose to study, so Today opens with the same choice."""
+    owned = set(db.scalars(select(Deck.id).where(Deck.profile_id == profile.id)))
+    profile.study_deck_ids = [d for d in dict.fromkeys(data.deck_ids) if d in owned]
     db.commit()
     return profile_out(profile)
 
@@ -254,11 +298,21 @@ def deck_out(db: Session, deck: Deck) -> DeckOut:
     return DeckOut(
         id=deck.id,
         name=deck.name,
+        description=deck.description,
         instructions=deck.instructions,
+        known_language=deck.known_language,
+        target_language=deck.target_language,
+        level=deck.level,
+        effective_level=deck_level(deck.profile, deck),
+        new_per_day=deck.new_per_day,
+        reviews_per_day=deck.reviews_per_day,
         cards=_count(db, in_deck),
         due=_count(db, active.join(ReviewState).where(ReviewState.due <= now)),
         new=_count(db, active.outerjoin(ReviewState).where(ReviewState.card_id.is_(None))),
         needs_check=_count(db, in_deck.where(Card.needs_check.is_(True))),
+        archived=_count(db, in_deck.where(Card.status == "archived")),
+        to_regenerate=_count(db, in_deck.where(Card.needs_regeneration.is_(True))),
+        teachers=[share.teacher.email for share in deck.shares],
     )
 
 
@@ -275,7 +329,13 @@ def create_deck(
     data: DeckIn, db: Session = Depends(get_db), profile: Profile = Depends(current_profile)
 ):
     last = db.scalar(select(func.max(Deck.position)).where(Deck.profile_id == profile.id))
-    deck = Deck(profile_id=profile.id, position=(last or 0) + 1, **data.model_dump())
+    values = data.model_dump()
+    # A new deck starts with the learner's language pair unless it names its own.
+    values["known_language"] = values["known_language"] or profile.known_language
+    values["target_language"] = values["target_language"] or profile.target_language
+    if values["known_language"] == values["target_language"]:
+        raise HTTPException(422, "A deck's two languages must differ")
+    deck = Deck(profile_id=profile.id, position=(last or 0) + 1, **values)
     db.add(deck)
     db.commit()
     return deck_out(db, deck)
@@ -290,7 +350,10 @@ def update_deck(
 ):
     deck = own_deck(deck_id, db, profile)
     for key, value in data.model_dump(exclude_unset=True).items():
-        setattr(deck, key, value)
+        if value is not None:
+            setattr(deck, key, value)
+    if deck.known_language == deck.target_language:
+        raise HTTPException(422, "A deck's two languages must differ")
     db.commit()
     return deck_out(db, deck)
 
@@ -331,6 +394,7 @@ def list_texts(db: Session = Depends(get_db), profile: Profile = Depends(current
         TextSummary(
             id=t.id,
             title=t.title,
+            source_url=t.source_url,
             position=t.position,
             to_learn=sum(1 for w in t.words if w.status == "learn"),
             cards=card_counts.get(t.id, 0),
@@ -346,18 +410,35 @@ def create_text(
     last = db.scalar(
         select(func.max(SourceText.position)).where(SourceText.profile_id == profile.id)
     )
-    text = SourceText(
-        profile_id=profile.id, title=data.title, body=data.body, position=(last or 0) + 1
-    )
+    text = SourceText(profile_id=profile.id, position=(last or 0) + 1, **data.model_dump())
     db.add(text)
     db.commit()
-    return TextSummary(id=text.id, title=text.title, position=text.position, to_learn=0, cards=0)
+    return TextSummary(
+        id=text.id,
+        title=text.title,
+        source_url=text.source_url,
+        position=text.position,
+        to_learn=0,
+        cards=0,
+    )
+
+
+@app.put("/api/texts/order", status_code=204)
+def reorder_texts(
+    data: OrderIn, db: Session = Depends(get_db), profile: Profile = Depends(current_profile)
+):
+    """Put the learner's texts in the order they want to work through them."""
+    for position, text_id in enumerate(data.ids, start=1):
+        own_text(text_id, db, profile).position = position
+    db.commit()
 
 
 def text_detail(text: SourceText) -> TextDetail:
     return TextDetail(
         id=text.id,
         title=text.title,
+        source_url=text.source_url,
+        notes=text.notes,
         body=text.body,
         sentences=tokenize(text.body),
         marks={w.word.lower(): w.status for w in text.words},
@@ -380,7 +461,8 @@ def update_text(
 ):
     """Edit a text. Cards already made from it keep their sentences; marks keep their words."""
     text = own_text(text_id, db, profile)
-    text.title, text.body = data.title, data.body
+    for key, value in data.model_dump().items():
+        setattr(text, key, value)
     db.commit()
     return text_detail(text)
 
@@ -506,7 +588,10 @@ def update_card(
     user: User = Depends(current_user),
 ):
     card = reachable_card(card_id, db, user)
-    changes = data.model_dump(exclude_unset=True, exclude={"status", "needs_check", "note"})
+    owner = db.get(Profile, card.profile_id)
+    is_teacher = owner.user_id != user.id
+    flags = {"status", "needs_check", "note", "needs_regeneration", "teacher_checked"}
+    changes = data.model_dump(exclude_unset=True, exclude=flags)
     for key, value in changes.items():
         setattr(card, key, value)
     if changes:
@@ -514,12 +599,24 @@ def update_card(
         card.edited = True
         card.problems = []
         card.status = "active"
+        # A teacher's correction is checked by that teacher; a learner's needs checking again.
+        card.teacher_checked_at = study.now_utc() if is_teacher else None
     if data.status is not None:
         card.status = data.status
+    if data.needs_check and not card.can_ask_teacher:
+        raise HTTPException(409, "Share one of this card's decks with a teacher first")
     if data.needs_check is not None:
         card.needs_check = data.needs_check
     if data.note is not None:
         card.note = data.note
+    if data.needs_regeneration is not None:
+        card.needs_regeneration = data.needs_regeneration
+    if data.teacher_checked is not None:
+        if not is_teacher:
+            raise HTTPException(403, "Only a teacher of this deck can confirm a card")
+        card.teacher_checked_at = study.now_utc() if data.teacher_checked else None
+        if data.teacher_checked:
+            card.needs_check = False
     db.commit()
     return card
 
@@ -553,8 +650,32 @@ def regenerate(
     provider = pick_provider(request, data.llm_output)
     return llm_call(
         db,
-        lambda: CardOut.model_validate(regenerate_card(db, provider, owner, card, data.feedback)),
+        lambda: CardOut.model_validate(
+            regenerate_card(db, provider, owner, card, data.feedback, data.instructions)
+        ),
     )
+
+
+@app.post("/api/decks/{deck_id}/regenerate-marked", response_model=BatchRegenerateOut)
+def regenerate_marked_cards(
+    deck_id: int,
+    data: BatchRegenerateIn,
+    request: Request,
+    db: Session = Depends(get_db),
+    profile: Profile = Depends(current_profile),
+):
+    """Rewrite the next batch of the deck's cards marked for regeneration. Call again while
+    `remaining` is above zero."""
+    deck = own_deck(deck_id, db, profile)
+    provider = pick_provider(request, data.llm_output)
+
+    def run():
+        done, remaining = regenerate_marked(db, provider, profile, deck)
+        return BatchRegenerateOut(
+            regenerated=[CardOut.model_validate(c) for c in done], remaining=remaining
+        )
+
+    return llm_call(db, run)
 
 
 @app.post("/api/cards/{card_id}/more", response_model=GenerateOut)
@@ -581,7 +702,10 @@ def more(
 
 @app.delete("/api/cards/{card_id}", status_code=204)
 def delete_card(card_id: int, db: Session = Depends(get_db), user: User = Depends(current_user)):
-    db.delete(reachable_card(card_id, db, user))
+    card = reachable_card(card_id, db, user)
+    owner = db.get(Profile, card.profile_id)
+    owner.cards_deleted += 1
+    db.delete(card)
     db.commit()
 
 
@@ -648,34 +772,56 @@ def list_taught(db: Session = Depends(get_db), user: User = Depends(current_user
         TaughtDeck(
             id=share.deck.id,
             name=share.deck.name,
+            description=share.deck.description,
             instructions=share.deck.instructions,
             student=share.deck.profile.user.email if share.deck.profile.user else "",
+            student_name=share.deck.profile.user.full_name if share.deck.profile.user else "",
             cards=len(share.deck.cards),
             needs_check=sum(1 for c in share.deck.cards if c.needs_check),
-            bad=sum(1 for c in share.deck.cards if c.status == "bad"),
+            to_check=sum(1 for c in share.deck.cards if _to_check(c)),
+            archived=sum(1 for c in share.deck.cards if c.status == "archived"),
         )
         for share in shares
     ]
 
 
+def _to_check(card: Card) -> bool:
+    """The teacher has not confirmed the card since it last changed."""
+    return card.status != "archived" and card.teacher_checked_at is None
+
+
 @app.get("/api/teaching/{deck_id}/cards", response_model=list[CardOut])
 def taught_cards(deck_id: int, db: Session = Depends(get_db), user: User = Depends(current_user)):
     deck = taught_deck(deck_id, db, user)
-    return sorted(deck.cards, key=lambda c: (c.position, c.id))
+    # Every card is there; the ones the student asked about come first, then the ones the
+    # teacher has not confirmed yet, then the rest.
+    return sorted(deck.cards, key=lambda c: (not c.needs_check, not _to_check(c), c.position, c.id))
 
 
-@app.get("/api/usage", response_model=UsageOut)
-def usage(db: Session = Depends(get_db), profile: Profile = Depends(current_profile)):
-    requests, input_tokens, output_tokens = db.execute(
+@app.get("/api/stats", response_model=StatsOut)
+def stats(db: Session = Depends(get_db), profile: Profile = Depends(current_profile)):
+    """Tokens as the LLM provider reported them on each answer, and how the learner judged the
+    cards: kept as written, edited, rewritten, archived, or deleted."""
+    input_tokens, output_tokens = db.execute(
         select(
-            func.count(),
             func.coalesce(func.sum(GenerationLog.input_tokens), 0),
             func.coalesce(func.sum(GenerationLog.output_tokens), 0),
         ).where(GenerationLog.profile_id == profile.id)
     ).one()
-    cards = db.scalar(select(func.count()).select_from(Card).where(Card.profile_id == profile.id))
-    return UsageOut(
-        cards=cards, requests=requests, input_tokens=input_tokens, output_tokens=output_tokens
+    cards = db.scalars(select(Card).where(Card.profile_id == profile.id)).all()
+    return StatsOut(
+        input_tokens=input_tokens,
+        output_tokens=output_tokens,
+        cards=len(cards),
+        kept_as_generated=sum(
+            1 for c in cards if not c.edited and not c.regenerations and c.status == "active"
+        ),
+        edited=sum(1 for c in cards if c.edited),
+        regenerated=sum(1 for c in cards if c.regenerations),
+        regenerations=sum(c.regenerations for c in cards),
+        archived=sum(1 for c in cards if c.status == "archived"),
+        deleted=profile.cards_deleted,
+        failed_checks=sum(1 for c in cards if c.status == "flagged"),
     )
 
 
@@ -698,8 +844,9 @@ def study_next(
         card=CardOut.model_validate(card) if card else None,
         intervals=study.preview(card, now) if card else None,
         is_new=card is not None and card.review is None,
-        due=queue.due,
         new=queue.new,
+        review=queue.review,
+        again=queue.again,
         next_due=queue.next_due,
         new_done=new_done,
         reviews_done=reviews_done,

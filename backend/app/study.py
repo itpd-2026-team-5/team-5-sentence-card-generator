@@ -10,8 +10,9 @@ from sqlalchemy.orm import Session
 
 from app.models import Card, Deck, Profile, ReviewState
 
-NEW_CARDS_PER_DAY = 10
 RATINGS = {"again": Rating.Again, "hard": Rating.Hard, "good": Rating.Good, "easy": Rating.Easy}
+# FSRS states: a card being learned or relearned comes back within the same day.
+LEARNING, REVIEW, RELEARNING = 1, 2, 3
 
 scheduler = Scheduler()
 
@@ -19,59 +20,88 @@ scheduler = Scheduler()
 @dataclass
 class Queue:
     next_card: Card | None
-    due: int
+    # Left in this session: new cards, reviews from earlier days, and cards to see again today.
     new: int
+    review: int
+    again: int
     # When the next card comes back, if nothing is due right now.
     next_due: datetime | None
 
 
-def _studyable(profile: Profile, deck_ids: list[int] | None = None):
-    # Cards that failed a check or were marked bad are not studied.
-    condition = (Card.profile_id == profile.id) & (Card.status == "active")
-    if deck_ids:
-        # Only the decks the learner chose for this session.
-        condition &= Card.decks.any(Deck.id.in_(deck_ids))
-    return condition
+def _day_start(now: datetime) -> datetime:
+    return now.replace(hour=0, minute=0, second=0, microsecond=0)
 
 
-def _new_budget(db: Session, profile: Profile, now: datetime) -> int:
-    day_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
-    started = db.scalar(
-        select(func.count())
-        .select_from(ReviewState)
-        .join(Card)
-        .where(Card.profile_id == profile.id, ReviewState.started_at >= day_start)
-    )
-    return max(NEW_CARDS_PER_DAY - (started or 0), 0)
+def _studyable(card: Card) -> bool:
+    # Cards that failed a check or were archived are not studied.
+    return card.status == "active"
+
+
+def _chosen_decks(db: Session, profile: Profile, deck_ids: list[int] | None) -> list[Deck]:
+    query = select(Deck).where(Deck.profile_id == profile.id).order_by(Deck.position, Deck.id)
+    decks = db.scalars(query).all()
+    return [d for d in decks if d.id in deck_ids] if deck_ids else list(decks)
 
 
 def queue(db: Session, profile: Profile, now: datetime, deck_ids: list[int] | None = None) -> Queue:
-    due_query = (
-        select(Card)
-        .join(ReviewState)
-        .where(_studyable(profile, deck_ids), ReviewState.due <= now)
-        .order_by(ReviewState.due)
-    )
-    due_cards = db.scalars(due_query).all()
-    new_cards = db.scalars(
-        select(Card)
-        .outerjoin(ReviewState)
-        .where(_studyable(profile, deck_ids), ReviewState.card_id.is_(None))
-        .order_by(Card.position, Card.id)
-        .limit(_new_budget(db, profile, now))
-    ).all()
-    next_due = None
-    if not due_cards and not new_cards:
-        next_due = db.scalar(
-            select(func.min(ReviewState.due)).join(Card).where(_studyable(profile, deck_ids))
+    """The session over the chosen decks. Each deck adds at most its daily number of new
+    cards and of reviews; cards being learned or relearned today come back without a limit."""
+    day_start = _day_start(now)
+    seen: set[int] = set()
+    again: list[Card] = []
+    review: list[Card] = []
+    new: list[Card] = []
+    upcoming: list[datetime] = []
+    for deck in _chosen_decks(db, profile, deck_ids):
+        cards = [c for c in deck.cards if _studyable(c)]
+        started_today = sum(
+            1 for c in cards if c.review and _aware(c.review.started_at) >= day_start
         )
-    first = (due_cards or new_cards or [None])[0]
-    return Queue(next_card=first, due=len(due_cards), new=len(new_cards), next_due=next_due)
+        reviewed_today = sum(
+            1
+            for c in cards
+            if c.review
+            and c.review.reviewed_at
+            and _aware(c.review.reviewed_at) >= day_start
+            and _aware(c.review.started_at) < day_start
+        )
+        new_left = max(deck.new_per_day - started_today, 0)
+        reviews_left = max(deck.reviews_per_day - reviewed_today, 0)
+        for card in sorted(cards, key=lambda c: (c.position, c.id)):
+            if card.id in seen:
+                continue
+            state = card.review
+            if state is None:
+                if new_left:
+                    new.append(card)
+                    new_left -= 1
+                    seen.add(card.id)
+                continue
+            if _aware(state.due) > now:
+                upcoming.append(_aware(state.due))
+                continue
+            if state.fsrs.get("state") in (LEARNING, RELEARNING):
+                again.append(card)
+                seen.add(card.id)
+            elif reviews_left:
+                review.append(card)
+                reviews_left -= 1
+                seen.add(card.id)
+    again.sort(key=lambda c: c.review.due)
+    review.sort(key=lambda c: c.review.due)
+    first = (again or review or new or [None])[0]
+    next_due = min(upcoming) if first is None and upcoming else None
+    return Queue(first, len(new), len(review), len(again), next_due)
+
+
+def _aware(moment: datetime) -> datetime:
+    # SQLite returns naive datetimes; they are stored in UTC.
+    return moment if moment.tzinfo else moment.replace(tzinfo=UTC)
 
 
 def today(db: Session, profile: Profile, now: datetime) -> tuple[int, int]:
     """How many new cards the learner started today, and how many reviews of older cards."""
-    day_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    day_start = _day_start(now)
     reviewed = (Card.profile_id == profile.id) & (ReviewState.reviewed_at >= day_start)
     new = db.scalar(
         select(func.count())

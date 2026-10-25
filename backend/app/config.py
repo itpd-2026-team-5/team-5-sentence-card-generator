@@ -8,7 +8,14 @@ class Settings(BaseSettings):
     # "anthropic" calls Claude; "fake" returns canned sentences for tests and offline work.
     llm_provider: str = "anthropic"
     llm_model: str = "claude-opus-5-5"
+    # Effort and the refusal fallback are sent only to models that take them; empty turns
+    # effort off, for example on an older model behind a gateway.
     llm_effort: str = "low"
+    # Credentials for the service's key. A gateway that speaks the Anthropic API takes its
+    # address as anthropic_base_url and often a bearer token as anthropic_auth_token.
+    anthropic_api_key: str = ""
+    anthropic_auth_token: str = ""
+    anthropic_base_url: str = ""
     cors_origins: list[str] = ["http://localhost:5173"]
     # Where the app runs, for the link in the verification email.
     app_url: str = "http://localhost:5173"

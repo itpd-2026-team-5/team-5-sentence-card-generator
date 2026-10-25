@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { api, local, type Deck, type Study } from '../api'
+import { api, type Deck, type Study } from '../api'
 import { Icon } from '../components/Icon'
 import { Progress } from '../components/Progress'
 
@@ -23,10 +23,11 @@ export function Home() {
   const [study, setStudy] = useState<Study | null>(null)
 
   useEffect(() => {
-    api.decks().then((all) => {
+    Promise.all([api.decks(), api.profile()]).then(([all, profile]) => {
       setDecks(all)
-      // Remember the learner's last choice; start with every deck that has something to study.
-      const saved = local.get('study-decks', '').split(',').map(Number).filter((id) => all.some((d) => d.id === id))
+      // The learner's last choice is saved with their account; before they ever choose,
+      // start with every deck that has something to study.
+      const saved = (profile.study_deck_ids ?? []).filter((id) => all.some((d) => d.id === id))
       setChosen(saved.length ? saved : all.filter((d) => d.due + d.new > 0).map((d) => d.id))
     })
   }, [])
@@ -40,10 +41,10 @@ export function Home() {
   const toggle = (id: number) => {
     const next = chosen.includes(id) ? chosen.filter((d) => d !== id) : [...chosen, id]
     setChosen(next)
-    local.set('study-decks', next.join(','))
+    api.saveStudyDecks(next)
   }
 
-  const left = study ? study.due + study.new : 0
+  const left = study ? study.new + study.review + study.again : 0
   const names = decks.filter((d) => chosen.includes(d.id)).map((d) => d.name)
 
   return (
@@ -73,7 +74,7 @@ export function Home() {
           ))}
         </ul>
         {study && (
-          <Progress newDone={study.new_done} newLeft={study.new} reviewsDone={study.reviews_done} reviewsLeft={study.due} />
+          <Progress newDone={study.new_done} newLeft={study.new} reviewsDone={study.reviews_done} reviewsLeft={study.review + study.again} />
         )}
         {chosen.length === 0 ? (
           <p className="muted">Choose a deck to study.</p>

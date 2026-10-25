@@ -21,20 +21,24 @@ export function Teaching() {
           <span className="muted">Ask your student to open a deck, choose Edit deck, and share it with your email.</span>
         </div>
       ) : (
-        <ul className="card-rows">
-          {decks.map((deck) => (
-            <li key={deck.id} className="card-row teach-row" onClick={() => { location.hash = `/teach/${deck.id}` }}>
-              <div className="row-word"><strong>{deck.name}</strong><span className="muted small">{deck.student}</span></div>
-              <div className="row-text"><p className="muted small">{deck.instructions || 'No instructions'}</p></div>
-              <div className="row-tags">
-                <span className="tag">{deck.cards} cards</span>
-                {deck.needs_check > 0 && <span className="tag teacher">{deck.needs_check} questions</span>}
-                {deck.bad > 0 && <span className="tag bad">{deck.bad} bad</span>}
-              </div>
-              <div className="row-actions"><Icon name="play" size={16} /></div>
-            </li>
-          ))}
-        </ul>
+        <div className="table-wrap">
+          <table className="deck-table">
+            <thead>
+              <tr><th>Student</th><th>Deck</th><th className="num">Cards</th><th className="num">Asked</th><th className="num">Left to check</th></tr>
+            </thead>
+            <tbody>
+              {decks.map((deck) => (
+                <tr key={deck.id} onClick={() => { location.hash = `/teach/${deck.id}` }}>
+                  <td><strong>{deck.student_name || deck.student}</strong><span className="muted small deck-desc">{deck.student}</span></td>
+                  <td><a href={`#/teach/${deck.id}`} className="deck-name">{deck.name}</a>{deck.description && <span className="muted small deck-desc">{deck.description}</span>}</td>
+                  <td className="num">{deck.cards}</td>
+                  <td className="num">{deck.needs_check > 0 ? <span className="tag teacher">{deck.needs_check}</span> : <span className="muted">0</span>}</td>
+                  <td className="num">{deck.to_check > 0 ? <strong>{deck.to_check}</strong> : <span className="tag ok">done</span>}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   )
@@ -61,7 +65,10 @@ export function TeachDeck({ deckId, language }: { deckId: number; language: Lang
   if (!deck || !cards) return <p className="muted">Loading…</p>
 
   const replace = (card: Card) => setCards(cards.map((c) => (c.id === card.id ? card : c)))
-  const shown = onlyOpen ? cards.filter((c) => c.needs_check || c.status !== 'active') : cards
+  // Every card is shown, the ones the student asked about first; the switch narrows to the
+  // cards still waiting for the teacher.
+  const shown = onlyOpen ? cards.filter((c) => c.needs_check || (!c.teacher_checked_at && c.status !== 'archived')) : cards
+  const left = cards.filter((c) => !c.teacher_checked_at && c.status !== 'archived').length
 
   return (
     <div className="page wide">
@@ -69,9 +76,9 @@ export function TeachDeck({ deckId, language }: { deckId: number; language: Lang
         <div className="stack tight">
           <a className="back" href="#/teaching">← Teaching</a>
           <h1>{deck.name}</h1>
-          <p className="muted">{deck.student}{deck.instructions ? ` · ${deck.instructions}` : ''}</p>
+          <p className="muted">{deck.student_name || deck.student} ({deck.student}) · {left} of {cards.length} left to check{deck.instructions ? ` · next sentences: ${deck.instructions}` : ''}</p>
         </div>
-        <label className="switch"><input type="checkbox" checked={onlyOpen} onChange={(e) => setOnlyOpen(e.target.checked)} /> Only questions and problems</label>
+        <label className="switch"><input type="checkbox" checked={onlyOpen} onChange={(e) => setOnlyOpen(e.target.checked)} /> Only cards left to check</label>
       </header>
 
       <div className="sheet-wrap">
@@ -131,7 +138,7 @@ function SheetRow({ card, language, onSaved, onDeleted }: {
         {card.needs_check ? (
           <>
             <span>{card.note || 'Please check'}</span>
-            <button className="btn small" disabled={busy} onClick={() => run(() => api.updateCard(card.id, { needs_check: false }))}>Answered</button>
+            <button className="btn small" disabled={busy} onClick={() => run(() => api.updateCard(card.id, { teacher_checked: true }))}>Answered</button>
           </>
         ) : card.status === 'flagged' ? <span className="muted small">{card.problems.join('; ')}</span> : null}
       </td>
@@ -144,9 +151,13 @@ function SheetRow({ card, language, onSaved, onDeleted }: {
       </td>
       <td className="sheet-actions">
         <button className="ghost icon-btn" aria-label="Listen" onClick={() => speak(card.sentence, language)}><Icon name="sound" size={16} /></button>
-        <button className={`ghost icon-btn ${card.status === 'bad' ? 'is-bad' : ''}`} disabled={busy}
-          title={card.status === 'bad' ? 'Restore' : 'Mark bad'} aria-label={card.status === 'bad' ? 'Restore' : 'Mark bad'}
-          onClick={() => run(() => api.updateCard(card.id, { status: card.status === 'bad' ? 'active' : 'bad' }))}><Icon name="flag" size={16} /></button>
+        {card.teacher_checked_at
+          ? <span className="ghost icon-btn is-ok" title="You checked this card"><Icon name="check" size={16} /></span>
+          : <button className="ghost icon-btn" disabled={busy} title="Looks right" aria-label="Looks right"
+              onClick={() => run(() => api.updateCard(card.id, { teacher_checked: true }))}><Icon name="check" size={16} /></button>}
+        <button className={`ghost icon-btn ${card.status === 'archived' ? 'is-on' : ''}`} disabled={busy}
+          title={card.status === 'archived' ? 'Bring back into study' : 'Archive'} aria-label={card.status === 'archived' ? 'Unarchive' : 'Archive'}
+          onClick={() => run(() => api.updateCard(card.id, { status: card.status === 'archived' ? 'active' : 'archived' }))}><Icon name="archive" size={16} /></button>
         <button className="ghost icon-btn danger-icon" disabled={busy} aria-label="Delete" title="Delete"
           onClick={() => run(async () => { if (confirm(`Delete the card for “${card.word}”?`)) { await api.deleteCard(card.id); onDeleted(card.id) } })}><Icon name="trash" size={16} /></button>
       </td>
