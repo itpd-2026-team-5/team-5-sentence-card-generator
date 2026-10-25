@@ -12,7 +12,7 @@ A passage the learner pasted in to pick words from, kept with its title, its sou
 
 ### Marked Word
 
-A word the learner chose in a text, either to learn, which gets a card, or to ignore, which no sentence may use.
+A word the learner chose in one sentence of a text, either to learn, which gets a card for that sentence and its meaning there, or to ignore, which no sentence may use.
 
 **Defined by:** [`FR-002`](functional-requirements/fr/FR-002.md) and [`US-02`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/31).
 
