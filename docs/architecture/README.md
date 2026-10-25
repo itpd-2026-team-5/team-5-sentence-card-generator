@@ -15,6 +15,10 @@ The product runs as the containers below, and [`ADR-001`](adr/ADR-001.md) decide
 
 ![Container view](container.png)
 
+The `frontend`, `backend`, and `database` are the product's containers.
+The LLM provider and the email provider are external systems the product calls.
+Mailpit, which `docker-compose.yml` also starts, is a development-only inbox that stands in for the email provider on a laptop; it is not part of the product, so the view draws it as the email provider.
+
 ### Container Responsibilities
 
 | Container | Responsibilities |
@@ -27,7 +31,6 @@ The product runs as the containers below, and [`ADR-001`](adr/ADR-001.md) decide
 
 In the container view, solid boxes are the containers, the cylinder is a data store, and dashed boxes are external systems the product calls; each arrow is one exchange, labelled with what crosses it, and points from the caller.
 The two arrows into the LLM provider are the two ways a sentence is written: with the service's key from the `backend`, or with the learner's own key from the `frontend`, per [`ADR-002`](adr/ADR-002.md).
-The email provider is Mailpit, a local inbox, when the product runs on a laptop.
 The image is [`container.png`](container.png), rendered with Mermaid CLI 11.4.2 from its source [`container.mmd`](container.mmd).
 The system context diagram is in [the product vision](../product-vision.md#system-context).
 
