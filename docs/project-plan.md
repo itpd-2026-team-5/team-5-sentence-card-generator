@@ -40,7 +40,8 @@ Released as [v0.2.0](https://github.com/itpd-2026-team-5/team-5-sentence-card-ge
 
 Provisional: the product can be deployed through a repeatable workflow and verified in a test environment.
 
-- **Due:** 2026-10-30
+- **Due:** 2026-10-31
+- **Sprint Backlog:** [SPRINT-05 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/3)
 
 #### REL-05
 
@@ -48,7 +49,7 @@ Provisional: the product can be deployed through a repeatable workflow and verif
 
 Provisional: the team can observe product use and present a running product with evidence of its behavior.
 
-- **Due:** 2026-11-06
+- **Due:** 2026-11-07
 
 #### REL-06
 
@@ -56,7 +57,7 @@ Provisional: the team can observe product use and present a running product with
 
 Provisional: the product and study tasks are ready for structured usability testing with external learners.
 
-- **Due:** 2026-11-13
+- **Due:** 2026-11-14
 
 #### REL-07
 
@@ -64,7 +65,7 @@ Provisional: the product and study tasks are ready for structured usability test
 
 Provisional: the product's configuration and dependencies support a reproducible final build and release.
 
-- **Due:** 2026-11-20
+- **Due:** 2026-11-21
 
 #### REL-08
 
@@ -72,7 +73,7 @@ Provisional: the product's configuration and dependencies support a reproducible
 
 Provisional: the product and repository are ready for the final pitch, handover, and course review.
 
-- **Due:** 2026-11-27
+- **Due:** 2026-11-28
 
 #### REL-09
 
