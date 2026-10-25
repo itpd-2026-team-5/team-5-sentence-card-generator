@@ -31,6 +31,8 @@ A learner can complete the core text-to-card flow reliably, with automated check
 
 #### REL-04
 
+Released as [v0.2.0](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.2.0) on 2026-10-25.
+
 ### SPRINT-05
 
 Provisional: the product can be deployed through a repeatable workflow and verified in a test environment.

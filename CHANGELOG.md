@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-25
+
 ### Added
 
 - Give each deck its own language pair, its own level if you like, a description, and its own daily limits for new cards and reviews.
@@ -61,3 +63,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Share a deck with your teacher, who sees only that deck and corrects its cards in a sheet, one card per row.
 - Use your own Anthropic API key, kept in your browser and sent straight to Anthropic, never to our server.
 - Run the whole product with one command, `docker compose up`, following the setup page.
+
+[Unreleased]: https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.2.0
+[0.1.0]: https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.1.0
