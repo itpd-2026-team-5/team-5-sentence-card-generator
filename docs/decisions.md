@@ -495,3 +495,334 @@ Keep an integrated placement test as a Could Have feature while retaining links 
 - **Made by:** Customer
 - **Source:** [the Week 3 validation meeting](../reports/week-03/meeting-report.md).
 - **Why:** The Customer appreciated the real external tests and explicitly described a test inside the application as optional rather than a required capability.
+
+## DEC-050
+
+Limit sentence-generation validation to three attempts before marking the card as Failed check.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** Three attempts were accepted as sufficient at 00:05:50 after the presenter explained that a failed attempt is retried immediately; this makes the retry policy behind DEC-048 bounded.
+
+## DEC-051
+
+Generate only one card for the same word in an identical source sentence within the destination deck.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 00:10:42–00:11:42 the Customer clarified DEC-043: repeated occurrences in an identical source sentence share an identifier, while a different source context or meaning must remain distinguishable.
+
+## DEC-052
+
+Separate the interface language from proficiency settings for each supported learning language.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 00:15:57–00:17:46 the Customer required an independent interface-language choice and a level for German, Russian, and English, retaining external placement-test links and deck-specific overrides.
+
+## DEC-053
+
+Retain external placement-test links without building an integrated placement test for the current delivery.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 00:13:52–00:14:27 the Customer confirmed the direction of DEC-049 because the team lacks assessment expertise and an internally generated test would not establish reliable proficiency.
+
+## DEC-054
+
+Defer a service-wide paid subscription to a Could Have feature after the course project.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 00:20:40–00:21:36 the Customer described a possible subscription including service-funded generation, then deferred its implementation; the example prices were not an agreed tariff.
+
+## DEC-055
+
+Use an explicit API endpoint label and check whether a user-provided endpoint is reachable.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 00:22:44–00:24:00 the Customer found Address ambiguous and requested terminology that makes the expected OpenAI-compatible endpoint clear, with a reachability check.
+
+## DEC-056
+
+Label LLM rewrites as Regenerated and unchanged output as Kept as generated, grouping related statistics together.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 00:26:07–00:26:44 the Customer distinguished LLM regeneration from manual editing so that the relationship between generated, retained, and edited cards is understandable.
+
+## DEC-057
+
+Provide separate pronunciation playback for the source word, translated word, source sentence, and translated sentence for learners and teachers.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 00:30:00–00:32:13 and 01:03:41–01:04:35 the Customer required access to each element's pronunciation; buttons and clearly indicated clickable text remain interface alternatives to compare.
+
+## DEC-058
+
+Use clearly distinguishable green for new cards and blue for review cards.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 00:33:17–00:33:52 the Customer requested familiar Anki-style colors with stronger contrast so the study counters are easier to interpret.
+
+## DEC-059
+
+Keep study controls and progress visible independently of a long list of selectable decks.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 00:37:04–00:41:04 the Customer requested a visible Study control, clearer progress, and a separate deck-list area so that many decks do not force scrolling to reach the action.
+
+## DEC-060
+
+Keep Review as the label for cards that have already been studied and are due again.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 00:28:35–00:29:12 the Customer considered the term, compared it with Anki, and confirmed keeping it.
+
+## DEC-061
+
+Preserve student notes after teacher acknowledgment and visually distinguish addressed notes from outstanding ones.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 00:54:50–00:55:55 the Customer accepted retaining the note rather than deleting it, with the approval state and a visual hint showing that the request has been addressed.
+
+## DEC-062
+
+Prioritize and visibly identify learner-requested teacher reviews even when the learner leaves no note.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 00:57:30–00:59:23 the Customer confirmed the direction of DEC-044 and clarified that priority must follow the review request rather than the presence of a comment; any color marker needs an explanation.
+
+## DEC-063
+
+Preserve the source capitalization of selected words in the word tray.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 01:12:59–01:13:11 the Customer pointed out that lowercasing German nouns loses their original spelling.
+
+## DEC-064
+
+Show a context-sensitive translation for each selected word so different meanings can be distinguished.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 01:11:22–01:12:37 the Customer supported the team's translation proposal and specified that selecting words with different translations must produce cards for both meanings.
+
+## DEC-065
+
+Let the learner inspect and edit newly generated cards on the text page before approving their addition to a deck.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 01:15:27–01:16:39 the Customer wanted to correct cards immediately after generation; approved cards can leave the temporary preview and remain in their destination deck.
+
+## DEC-066
+
+Make the text page show which decks contain cards for each selected word.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 01:17:02–01:18:59 the Customer found that a card-to-text link does not answer the reverse question and proposed a separate view of existing cards alongside newly generated cards.
+
+## DEC-067
+
+Show both the learning language and translation language explicitly in deck and generation controls.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 00:47:03–00:47:19 and 01:13:40–01:14:13 the Customer found German from English and a German-only destination label confusing and requested clearer language information.
+
+## DEC-068
+
+Keep learner, teacher, and service API keys isolated so that none is disclosed to another party.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 01:20:24–01:21:10 the Customer explicitly required that sharing a deck reveals neither participant's key and that service users cannot obtain the built-in service key.
+
+## DEC-069
+
+Preserve stored application data when the service is stopped and restarted.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 01:21:20–01:21:33 the Customer required shutdown behavior that does not lose data or damage the database.
+
+## DEC-070
+
+Support self-hosting the application on a Linux virtual machine.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 01:21:38–01:22:07 the Customer required Linux operation; the exact distribution version and remaining prerequisites were left to specification.
+
+## DEC-071
+
+Make the application usable on a phone without horizontal scrolling.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 01:05:33–01:06:18 and 01:22:20–01:23:20 the Customer requested a usable mobile workflow and measurable usability scenarios; opening an individual card is an option for avoiding a wide teacher table.
+
+## DEC-072
+
+Warn the learner when 30% of cards in a generation batch require regeneration.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 01:24:54–01:28:06 the Customer rejected relying on global model statistics because different keys and models can be used, and selected an initial per-batch threshold that may be revised after observing results.
+
+## DEC-073
+
+Notify the learner immediately when an expired or rejected API key prevents generation.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 01:27:01–01:27:21 the Customer distinguished a known key failure from uncertain prompt or model quality and required an immediate notification.
+
+## DEC-074
+
+Use an explicit Save changes action before applying teacher edits and review-status changes to a learner's cards.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 00:50:53–00:53:21 the Customer objected to immediate application and asked for a save step that allows the teacher to review or undo a pending change.
+
+## DEC-075
+
+Keep US-08 open until its playback scope and audio-failure behavior are verified against AC-01 and AC-02.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Team, not contested
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 01:32:33–01:32:48 the presenter explicitly left US-08 open because the current audio approach needs rework; the Customer had requested playback for all four card elements, and AC-02 was not demonstrated.
+
+## DEC-076
+
+Track problematic-generation reporting separately from the basic sentence-generation workflow of US-03.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Team, not contested
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 01:31:50–01:32:27 the Customer described the warning as fault tolerance and the team proposed separate follow-up scope; this separation does not itself establish that every existing US-03 acceptance criterion passed.
+
+## DEC-077
+
+Label active, archived, and teacher-requested card counts explicitly in the deck list.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 00:43:53–00:46:08 the Customer found bare numbers and Asked counts unclear and requested words or dedicated columns that explain the statistics.
+
+## DEC-078
+
+Explain that proficiency defaults affect future generation and that a deck can override its level.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 00:17:58–00:19:01 the Customer requested moving the override explanation to a visible position and clarifying what changing the default will affect.
+
+## DEC-079
+
+Allow the learner to reorder the decks selected for study on Today.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 00:41:37–00:43:38 the Customer asked about study order and proposed reordering decks before selecting and studying them.
+
+## DEC-080
+
+Explain the teacher-review action icons with a legend near the table.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 01:04:44–01:05:23 the Customer found the check, archive, and delete icons understandable but requested an explanation of their exact effects; a compact rewrite icon is an interface option to evaluate.
+
+## DEC-081
+
+Indicate that text rows can be reordered by dragging.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Customer
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 01:07:46–01:08:10 drag and drop was available but undiscoverable, so the Customer requested a familiar marker indicating that rows can move.
+
+## DEC-082
+
+Close US-01, US-02, and US-03 for the demonstrated text-to-card workflow.
+
+- **Status:** Active
+- **Date:** 2026-10-24
+- **Made by:** Team, not contested
+- **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
+- **Why:** At 01:29:24 the Customer agreed with the basic text-and-word capability; at 01:29:31–01:29:35 KaramKhaddour explicitly confirmed satisfaction of the text-input criteria and described them; at 01:30:39–01:31:00 the team concluded that US-01 and US-02 could close, and at 01:31:24–01:32:27 reached the same conclusion for US-03 with problem reporting tracked separately under [DEC-076](#dec-076), without objection from the Customer.
+  This records the team's closure decision and the spoken participant confirmations, not a separate Customer confirmation that every AC-nn passed; the report distinguishes these results from individual test details not recorded in the discussion.
