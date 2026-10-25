@@ -8,25 +8,25 @@ The words this project uses in one way only.
 
 A passage the learner pasted in to pick words from, kept with its title, its source address, and notes, and separate from the cards made from it.
 
-**Defined by:** [`DEC-007`](decisions.md#dec-007) and [`DEC-046`](decisions.md#dec-046).
+**Defined by:** [`FR-001`](functional-requirements/fr/FR-001.md), [`DEC-007`](decisions.md#dec-007), and [`DEC-046`](decisions.md#dec-046).
 
 ### Marked Word
 
 A word the learner chose in a text, either to learn, which gets a card, or to ignore, which no sentence may use.
 
-**Defined by:** [`US-02`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/31).
+**Defined by:** [`FR-002`](functional-requirements/fr/FR-002.md) and [`US-02`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/31).
 
 ### Known Word
 
 A word of the learner's texts that they left unmarked, which the product treats as a word the learner already knows and writes sentences from.
 
-**Defined by:** [`ASM-04`](assumptions.md#asm-04).
+**Defined by:** [`FR-002`](functional-requirements/fr/FR-002.md) and [`ASM-04`](assumptions.md#asm-04).
 
 ### Source Sentence
 
 The sentence of a text in which a word was marked, which fixes the meaning the word's card is written in.
 
-**Defined by:** [`DEC-003`](decisions.md#dec-003).
+**Defined by:** [`FR-003`](functional-requirements/fr/FR-003.md) and [`DEC-003`](decisions.md#dec-003).
 
 ## Cards And Decks
 
@@ -34,13 +34,13 @@ The sentence of a text in which a word was marked, which fixes the meaning the w
 
 One marked word with a new sentence that uses it in its source meaning, the sentence's translation, the word's translation in that sentence, and the card's own review history.
 
-**Defined by:** [`DEC-007`](decisions.md#dec-007) and [`DEC-012`](decisions.md#dec-012).
+**Defined by:** [`FR-003`](functional-requirements/fr/FR-003.md), [`DEC-007`](decisions.md#dec-007), and [`DEC-012`](decisions.md#dec-012).
 
 ### Deck
 
 A named set of cards with its own language pair, level, generation instructions, and daily limits, which the learner generates cards into and chooses to study.
 
-**Defined by:** [`DEC-007`](decisions.md#dec-007) and [`DEC-024`](decisions.md#dec-024) and [`DEC-041`](decisions.md#dec-041).
+**Defined by:** [`FR-003`](functional-requirements/fr/FR-003.md), [`FR-008`](functional-requirements/fr/FR-008.md), [`DEC-007`](decisions.md#dec-007), [`DEC-024`](decisions.md#dec-024), and [`DEC-041`](decisions.md#dec-041).
 
 ### Generation Instructions
 
@@ -52,19 +52,19 @@ The deck's free-text guidance to the LLM about the sentences it should write, su
 
 A card whose sentence still failed an automatic check after three attempts, kept in its deck but out of study until it is fixed.
 
-**Defined by:** [`DEC-048`](decisions.md#dec-048).
+**Defined by:** [`FR-003`](functional-requirements/fr/FR-003.md), [`ADR-003`](architecture/adr/ADR-003.md), and [`DEC-048`](decisions.md#dec-048).
 
 ### Archived Card
 
 A card the learner took out of study without deleting it, which stays in its deck and can be brought back.
 
-**Defined by:** [`DEC-034`](decisions.md#dec-034).
+**Defined by:** [`FR-006`](functional-requirements/fr/FR-006.md) and [`DEC-034`](decisions.md#dec-034).
 
 ### Rewrite
 
 Replacing a card's sentence and translations with newly generated ones, optionally with instructions, while the card keeps its review history.
 
-**Defined by:** [`DEC-035`](decisions.md#dec-035).
+**Defined by:** [`FR-006`](functional-requirements/fr/FR-006.md) and [`DEC-035`](decisions.md#dec-035).
 
 ## Study
 
@@ -72,13 +72,13 @@ Replacing a card's sentence and translations with newly generated ones, optional
 
 One run through the due and new cards of the decks the learner ticked on Today, within each deck's daily limits.
 
-**Defined by:** [`DEC-008`](decisions.md#dec-008).
+**Defined by:** [`FR-008`](functional-requirements/fr/FR-008.md), [`FR-009`](functional-requirements/fr/FR-009.md), and [`DEC-008`](decisions.md#dec-008).
 
 ### Again Card
 
 A card rated `Again` or still being learned today, which comes back in the same day's session without counting against a daily limit.
 
-**Defined by:** [`DEC-042`](decisions.md#dec-042).
+**Defined by:** [`FR-009`](functional-requirements/fr/FR-009.md) and [`DEC-042`](decisions.md#dec-042).
 
 ## People And Keys
 
@@ -92,16 +92,16 @@ A person with an account who brings texts, owns decks, and studies cards.
 
 A person with an account who reviews and corrects the decks learners shared with them, and nothing else of those learners'.
 
-**Defined by:** [`DEC-044`](decisions.md#dec-044).
+**Defined by:** [`FR-011`](functional-requirements/fr/FR-011.md) and [`DEC-044`](decisions.md#dec-044).
 
 ### Own Key
 
 A learner's or a teacher's own LLM API key, kept in their browser and sent only to their LLM provider, never to the product's server.
 
-**Defined by:** [`DEC-019`](decisions.md#dec-019).
+**Defined by:** [`FR-005`](functional-requirements/fr/FR-005.md), [`ADR-002`](architecture/adr/ADR-002.md), and [`DEC-019`](decisions.md#dec-019).
 
 ### Service Key
 
 The product's own LLM API key, held by the backend and used when a learner has not chosen their own key.
 
-**Defined by:** [`DEC-028`](decisions.md#dec-028).
+**Defined by:** [`ADR-001`](architecture/adr/ADR-001.md) and [`DEC-028`](decisions.md#dec-028).

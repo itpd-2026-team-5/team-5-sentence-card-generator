@@ -9,7 +9,7 @@ The course requirements are routed from [`SKILL.md`](https://github.com/inno-itp
   The LLM providers are in `app/llm.py`, card generation and its checks in `app/generation.py`, and the review scheduler in `app/study.py`.
 - `frontend/` is the React and TypeScript frontend: `src/pages/` holds one file per screen, `src/components/` the shared parts, `src/api.ts` the calls to the backend, and `src/llm.ts` the learner's own key.
 - `docs/` holds the maintained documentation, which mdBook publishes as the documentation site; a new page is listed in `docs/SUMMARY.md` or the site does not show it.
-  The quality requirements are under `docs/quality-requirements/qr/`, the decisions in `docs/decisions.md`, the assumptions in `docs/assumptions.md`, and the words the project uses in `docs/glossary.md`.
+  The functional requirements are under `docs/functional-requirements/fr/` and the quality requirements under `docs/quality-requirements/qr/`, each folder with its index in its `README.md`; the architecture is `docs/architecture/README.md`, with its records in `docs/architecture/adr/`, started from `TEMPLATE.md`; the decisions are in `docs/decisions.md`, the assumptions in `docs/assumptions.md`, and the words the project uses in `docs/glossary.md`.
 - `reports/week-NN/` holds each week's evidence: the report, the meeting script, report, and transcript, and the AI usage report.
 - `.github/` holds the workflows, the issue forms, the pull request template, and the Dependabot settings.
 - `docker-compose.yml` starts the database, the backend, the frontend, and a local mail inbox; `docs/setup.md` says how.
