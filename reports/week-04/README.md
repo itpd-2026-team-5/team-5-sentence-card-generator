@@ -47,7 +47,7 @@ The [Week 2 MUP candidate](../week-02/README.md#minimum-usable-product-candidate
 | Customer validation | [reports/week-04/meeting-report.md](meeting-report.md), [reports/week-04/meeting-transcript.md](meeting-transcript.md), and the story issues [#30](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/30), [#31](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/31), [#32](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/32), and [#41](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/41). Verdict limits are stated above and in the meeting report. |
 | `REL-04` | [v0.2.0 release](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.2.0), [CHANGELOG.md](../../CHANGELOG.md), and [docs/project-plan.md#rel-04](../../docs/project-plan.md#rel-04). |
 | Sprint retrospective | [reports/week-04/sprint-retrospective.md](sprint-retrospective.md). |
-| AI usage | [PR #134](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/134) proposes `reports/week-04/ai-usage.md`, but the PR is open and the file is not yet on `main`. |
+| AI usage | [AI-usage report](ai-usage.md), merged in [PR #134](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/134). |
 
 ## Contribution
 
@@ -55,7 +55,7 @@ The [Week 2 MUP candidate](../week-02/README.md#minimum-usable-product-candidate
 | --- | --- |
 | @Byakko-san | Synchronized future sprint dates and preserved the unscheduled backlog in [PR #137](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/137). |
 | @KaramKhaddour | Contributed the quality requirements ([PR #118](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/118)), architecture and functional requirements ([PR #126](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/126)), meeting-feedback implementation ([PR #129](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/129)), and release records ([PR #132](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/132)). |
-| @Horokk1 | Prepared the Part 10 meeting artifacts in [PR #130](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/130); the AI-usage report is proposed in [open PR #134](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/134). |
+| @Horokk1 | Prepared the Part 10 meeting artifacts in [PR #130](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/130) and the AI-usage report in [PR #134](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/134). |
 | @saleemasekrea000 | Added the sprint retrospective in [PR #136](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/136). |
 
 ## Repository evidence
@@ -66,7 +66,7 @@ The Part 10 artifacts were merged and closed task #127 in [PR #130](https://gith
 
 - **Part 2:** the required `Maintainability` / `Testability` criterion in QR-02 names `backend/app/generation.py`, `backend/app/study.py`, and `frontend/src/main.tsx`, but not a payment module by repository path as the assignment checklist requires. The repository has no payment module; this criterion remains incomplete rather than inventing a path.
 - **Part 10:** the meeting report states that the meeting did not record an explicit Customer verdict on the architecture-to-driver mapping. The transcript also does not establish explicit accept/reject verdicts for every story, the exact MUP-candidate confirmation, or the final read-back. [The meeting script](meeting-script.md) now marks unanswered questions as open instead of closed. A further Customer review and accurate updates to the report and story issues are still required.
-- **Part 13 and submission:** the AI-usage report is in open PR #134 and is not merged into `main`. This README is not yet merged into `main`; consequently, the required full-hash permalink and snapshot, and the two-page Moodle PDF, are not yet available. The PDF also requires team-member details that are not part of this public report.
+- **Part 13 and submission:** the [AI-usage report](ai-usage.md) was merged into `main` in [PR #134](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/134). This README is not yet merged into `main`; consequently, the required full-hash permalink and snapshot, and the two-page Moodle PDF, are not yet available. The PDF also requires team-member details that are not part of this public report.
 - **Timing:** REL-04 and the related Week 4 work were published on 2026-10-25, after the assignment's 2026-10-24 hard deadline.
 
 ## Privacy
