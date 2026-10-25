@@ -114,8 +114,11 @@ class AnthropicProvider:
         texts = [block.text for block in response.content if block.type == "text"]
         if not texts:
             raise LLMError("Claude returned no sentences.")
+        data = parse_json(texts[-1])
+        if any(key not in data for key in schema.get("required", [])):
+            raise LLMError("The model's answer was not in the expected shape; try again.")
         return LLMResult(
-            data=parse_json(texts[-1]),
+            data=data,
             model=response.model,
             input_tokens=response.usage.input_tokens,
             output_tokens=response.usage.output_tokens,
@@ -127,6 +130,11 @@ class FakeProvider:
 
     def generate_json(self, system: str, prompt: str, schema: dict) -> LLMResult:
         request = json.loads(prompt.split("\n", 1)[1])
+        if "glosses" in schema["properties"]:
+            glosses = [{"id": w["id"], "gloss": f"[{w['word']}]"} for w in request["words"]]
+            return LLMResult(
+                data={"glosses": glosses}, model="fake", input_tokens=0, output_tokens=0
+            )
         cards = []
         for n, item in enumerate(request["words"]):
             # A different sentence for each copy of a word, so "more cards" can be told apart.
@@ -135,6 +143,7 @@ class FakeProvider:
             variant = f" ({seen + 1})" if seen else ""
             cards.append(
                 {
+                    "id": item.get("id", str(n)),
                     "word": item["word"],
                     "word_form": item["word"],
                     "word_translation": f"[{item['word']}]",
@@ -174,8 +183,9 @@ class BrowserProvider:
         if self.output is None:
             raise NeedsLLM(system, prompt, schema)
         output, self.output = self.output, None
-        if not isinstance(output.get("data"), dict) or "cards" not in output["data"]:
-            raise LLMError("The answer from Claude was not in the expected shape.")
+        data = output.get("data")
+        if not isinstance(data, dict) or any(key not in data for key in schema.get("required", [])):
+            raise LLMError("The answer from the model was not in the expected shape.")
         return LLMResult(
             data=output["data"],
             model=output["model"],

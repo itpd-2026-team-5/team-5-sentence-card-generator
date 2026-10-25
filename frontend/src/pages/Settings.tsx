@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { api, LANGUAGES, LEVELS, local, type Language, type Level, type Profile, type Stats, type User } from '../api'
 import { Icon } from '../components/Icon'
-import { ownKey, PROVIDERS, type ProviderKind } from '../llm'
+import { listModels, ownKey, PROVIDERS, type ProviderKind } from '../llm'
 
 const LEVEL_NOTES: Record<Level, string> = {
   A1: 'Beginner', A2: 'Elementary', B1: 'Intermediate', B2: 'Upper intermediate', C1: 'Advanced', C2: 'Proficient',
@@ -115,6 +115,10 @@ export function Settings({ user, onSignedOut }: { user: User; onSignedOut: () =>
 
       <section className="glass block">
         <h3>Your level in each language</h3>
+        <p className="muted small level-intro">
+          New sentences in each language are written at this level. A deck can set a level of its own, which then wins for that deck.
+          Changing a level here affects only cards generated from now on, not the cards you already have.
+        </p>
         <div className="level-list">
           {learning.map((language) => {
             const level = profile.levels[language] ?? 'A2'
@@ -123,7 +127,7 @@ export function Settings({ user, onSignedOut }: { user: User; onSignedOut: () =>
               <div key={language} className="level-block">
                 <div className="level-head">
                   <strong>{LANGUAGES[language]}</strong>
-                  {language === profile.target_language && <span className="tag">For new decks</span>}
+                  {language === profile.target_language && <span className="tag" title="The language new decks start with">Main language</span>}
                 </div>
                 <div className="segmented" role="radiogroup" aria-label={`Level in ${LANGUAGES[language]}`}>
                   {LEVELS.map((l) => (
@@ -139,7 +143,6 @@ export function Settings({ user, onSignedOut }: { user: User; onSignedOut: () =>
             )
           })}
         </div>
-        <p className="muted small spaced">A deck can use a different level of its own.</p>
       </section>
 
       <section className="glass block">
@@ -172,9 +175,9 @@ export function Settings({ user, onSignedOut }: { user: User; onSignedOut: () =>
           <>
             <div className="usage">
               <div><strong>{stats.cards}</strong><span>cards</span></div>
-              <div><strong>{stats.kept_as_generated}</strong><span>kept as written</span></div>
+              <div><strong>{stats.kept_as_generated}</strong><span>kept as generated</span></div>
+              <div><strong>{stats.regenerated}</strong><span>regenerated{stats.regenerations > stats.regenerated ? ` (${stats.regenerations} times in all)` : ''}</span></div>
               <div><strong>{stats.edited}</strong><span>edited by hand</span></div>
-              <div><strong>{stats.regenerated}</strong><span>rewritten ({stats.regenerations} times)</span></div>
               <div><strong>{stats.archived}</strong><span>archived</span></div>
               <div><strong>{stats.deleted}</strong><span>deleted</span></div>
             </div>
@@ -224,6 +227,22 @@ function WhoWrites() {
   const [model, setModel] = useState(ownKey.model())
   const [key, setKey] = useState(ownKey.get())
   const [saved, setSaved] = useState(false)
+  const [check, setCheck] = useState<'checking' | { ok: boolean; message: string } | null>(null)
+  const [found, setFound] = useState<string[]>([])
+
+  // Ask the provider for its models with this key, so a wrong address or key shows before saving.
+  const checkConnection = async () => {
+    setCheck('checking')
+    try {
+      const models = await listModels(kind, baseUrl, key.trim())
+      setFound(models)
+      if (!model.trim() && models[0]) setModel(models[0])
+      setCheck({ ok: true, message: models.length ? `Connected: ${models.length} models; pick one under Model.` : 'Connected, but the provider listed no models.' })
+    } catch (e) {
+      setFound([])
+      setCheck({ ok: false, message: (e as Error).message })
+    }
+  }
 
   const changeKind = (next: ProviderKind) => {
     setKind(next)
@@ -259,16 +278,22 @@ function WhoWrites() {
               {(Object.keys(PROVIDERS) as ProviderKind[]).map((k) => <option key={k} value={k}>{PROVIDERS[k].label}</option>)}
             </select>
           </label>
-          <label>Address<input value={baseUrl} spellCheck={false} onChange={(e) => { setBaseUrl(e.target.value); setSaved(false) }} /></label>
+          <label>Base URL<input value={baseUrl} spellCheck={false} placeholder={PROVIDERS[kind].defaultUrl} onChange={(e) => { setBaseUrl(e.target.value); setSaved(false); setCheck(null) }} /></label>
           <label>Model
             <input value={model} list="model-suggestions" spellCheck={false} placeholder={kind === 'openai' ? 'e.g. the name your provider lists' : 'claude-opus-5-5'}
               onChange={(e) => { setModel(e.target.value); setSaved(false) }} />
-            <datalist id="model-suggestions">{PROVIDERS[kind].models.map((m) => <option key={m} value={m} />)}</datalist>
+            <datalist id="model-suggestions">{(found.length ? found : PROVIDERS[kind].models).map((m) => <option key={m} value={m} />)}</datalist>
           </label>
           <label>API key
             <input type="password" autoComplete="off" spellCheck={false} placeholder="Your key" value={key}
               onChange={(e) => { setKey(e.target.value); setSaved(false) }} />
           </label>
+          <div className="row-gap">
+            <button className="btn small" disabled={!key.trim() || !baseUrl.trim() || check === 'checking'} onClick={checkConnection}>
+              {check === 'checking' ? 'Checking…' : 'Check the connection'}
+            </button>
+            {check && check !== 'checking' && <span className={check.ok ? 'toast' : 'error'}>{check.message}</span>}
+          </div>
           <p className="muted small">{PROVIDERS[kind].hint} The key stays in this browser: it goes straight to the provider and is never sent to our server, so we and your teacher cannot read it.</p>
         </>
       )}

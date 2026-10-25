@@ -16,8 +16,12 @@ BATCH_SIZE = 20
 # times in all; one that still fails is kept as "failed a check" so the learner can fix it.
 MAX_ATTEMPTS = 3
 DEFAULT_LEVEL = "A2"
+# When this share of a run's sentences had to be written again, the learner is warned that the
+# deck's instructions or the model may be the problem (the Customer's threshold, Week 4 meeting).
+REWRITE_WARNING = 0.3
 
 SYSTEM = """You write example sentences for a language learner's flashcards.
+Each word comes with an id; give that same id back on its card.
 For each word, write one new sentence in the target language that uses the word with the same meaning it has in its source sentence; the context around the source sentence tells you which meaning that is.
 Never copy the source sentence or its context.
 Write for the learner's level, and build the sentence from words the learner already knows where you can.
@@ -40,6 +44,7 @@ CARD_SCHEMA = {
             "items": {
                 "type": "object",
                 "properties": {
+                    "id": {"type": "string"},
                     "word": {"type": "string"},
                     "word_form": {"type": "string"},
                     "highlight": {"type": "string"},
@@ -48,6 +53,7 @@ CARD_SCHEMA = {
                     "translation": {"type": "string"},
                 },
                 "required": [
+                    "id",
                     "word",
                     "word_form",
                     "highlight",
@@ -171,21 +177,24 @@ def _same_card_exists(deck: Deck, word: TextWord) -> bool:
 
 def generate_cards(
     db: Session, provider: LLMProvider, profile: Profile, text: SourceText, deck: Deck
-) -> list[Card]:
+) -> tuple[list[Card], int]:
     """Generate cards into a deck for the words marked to learn in a text that it has no card
-    for yet."""
+    for yet. Returns the cards, and how many of their sentences had to be written again."""
     pending = [w for w in text.words if w.status == "learn" and not _same_card_exists(deck, w)]
     known, avoid = learner_vocabulary(db, profile.id)
     cards: list[Card] = []
+    rewritten = 0
     position = _next_position(db, profile)
 
     for start in range(0, len(pending), BATCH_SIZE):
         batch = pending[start : start + BATCH_SIZE]
-        by_word = {w.word.lower(): w for w in batch}
-        items = [_item(w) for w in batch]
-        results = _with_retries(db, provider, profile, deck, items, known, avoid)
-        for r in results:
-            source = by_word.pop(r["word"].lower(), None)
+        # The same word may be marked in two sentences, so each mark gets its own id.
+        by_id = {str(i): w for i, w in enumerate(batch)}
+        items = [_item(w, key) for key, w in by_id.items()]
+        results, again = _with_retries(db, provider, profile, deck, items, known, avoid)
+        rewritten += again
+        for key, r in _match(items, results):
+            source = by_id.pop(key, None)
             if source is None:
                 continue
             card = _new_card(profile, text, source.word, source.sentence, source.context, r)
@@ -195,11 +204,27 @@ def generate_cards(
             db.add(card)
             cards.append(card)
     db.commit()
-    return cards
+    return cards, rewritten
 
 
-def _item(word: TextWord) -> dict:
+def _match(items: list[dict], results: list[dict]) -> list[tuple[str, dict]]:
+    """Pair each answer with the item it answers: by its id, or, when the model left the id
+    out, by its word, taking the items in order."""
+    left = {i["id"]: i for i in items}
+    pairs = []
+    for r in results:
+        key = str(r.get("id", ""))
+        if key not in left:
+            key = next((k for k, i in left.items() if i["word"].lower() == r["word"].lower()), "")
+        if key in left:
+            del left[key]
+            pairs.append((key, r))
+    return pairs
+
+
+def _item(word: TextWord, key: str) -> dict:
     return {
+        "id": key,
         "word": word.word,
         "source_sentence": word.sentence,
         "context": word.context or word.sentence,
@@ -209,31 +234,34 @@ def _item(word: TextWord) -> dict:
 def _with_retries(db, provider, profile, deck, items, known, avoid, instructions=None):
     """Ask for the cards, then rewrite each one that failed a check, telling the model what
     failed, until it passes or the attempts run out. A learner's own key runs in the browser,
-    which sends one request at a time, so there the first answer is final."""
-    results = _request(db, provider, profile, deck, items, known, avoid, instructions)
+    which sends one request at a time, so there the first answer is final.
+
+    Returns the answers, each carrying its item's id, and how many items needed asking again."""
+    by_id = {i["id"]: i for i in items}
+    results = {
+        key: r
+        for key, r in _match(
+            items, _request(db, provider, profile, deck, items, known, avoid, instructions)
+        )
+    }
+    asked_again = set()
     attempts = MAX_ATTEMPTS if getattr(provider, "retries", True) else 1
     for _ in range(attempts - 1):
-        failed = [r for r in results if r["problems"]]
-        if not failed:
-            break
-        by_word = {i["word"].lower(): i for i in items}
         retry = [
             {
-                **by_word[r["word"].lower()],
+                **by_id[key],
                 "rejected_sentence": r["sentence"],
                 "feedback": "It failed these checks: " + "; ".join(r["problems"]),
             }
-            for r in failed
-            if r["word"].lower() in by_word
+            for key, r in results.items()
+            if r["problems"]
         ]
         if not retry:
             break
-        fixed = {
-            r["word"].lower(): r
-            for r in _request(db, provider, profile, deck, retry, known, avoid, instructions)
-        }
-        results = [fixed.get(r["word"].lower(), r) if r["problems"] else r for r in results]
-    return results
+        asked_again.update(i["id"] for i in retry)
+        fixed = _request(db, provider, profile, deck, retry, known, avoid, instructions)
+        results.update(_match(retry, fixed))
+    return [{**r, "id": key} for key, r in results.items()], len(asked_again)
 
 
 def more_cards(
@@ -246,6 +274,7 @@ def more_cards(
         select(Card.sentence).where(Card.profile_id == profile.id, Card.word == card.word)
     ).all()
     item = {
+        "id": "0",
         "word": card.word,
         "source_sentence": card.source_sentence,
         "context": card.context or card.source_sentence,
@@ -324,6 +353,7 @@ def _apply(card: Card, r: dict) -> None:
 
 def _rejected(card: Card, feedback: str) -> dict:
     return {
+        "id": str(card.id),
         "word": card.word,
         "source_sentence": card.source_sentence,
         "context": card.context or card.source_sentence,
@@ -346,7 +376,7 @@ def regenerate_card(
         card.instructions = instructions
     known, avoid = learner_vocabulary(db, profile.id)
     deck = card.decks[0]
-    results = _with_retries(
+    results, _ = _with_retries(
         db, provider, profile, deck, [_rejected(card, feedback)], known, avoid, card.instructions
     )
     if not results:
@@ -364,24 +394,74 @@ def regenerate_marked(
     marked = sorted(
         (c for c in deck.cards if c.needs_regeneration), key=lambda c: (c.position, c.id)
     )
-    # One card per word in a batch, so each answer matches exactly one card.
-    batch = list({c.word.lower(): c for c in reversed(marked)}.values())[::-1][:BATCH_SIZE]
+    batch = marked[:BATCH_SIZE]
     if not batch:
         return [], 0
     known, avoid = learner_vocabulary(db, profile.id)
-    by_word = {c.word.lower(): c for c in batch}
+    by_id = {str(c.id): c for c in batch}
     items = [_rejected(c, "") for c in batch]
     # One request per instructions set, since each card keeps the ones it was made with.
     done: list[Card] = []
     for instructions in dict.fromkeys(c.instructions for c in batch):
-        group = [i for i in items if by_word[i["word"].lower()].instructions == instructions]
-        for r in _with_retries(db, provider, profile, deck, group, known, avoid, instructions):
-            card = by_word.pop(r["word"].lower(), None)
+        group = [i for i in items if by_id[i["id"]].instructions == instructions]
+        results, _ = _with_retries(db, provider, profile, deck, group, known, avoid, instructions)
+        for r in results:
+            card = by_id.pop(r["id"], None)
             if card is not None:
                 _apply(card, r)
                 done.append(card)
     db.commit()
     return done, len(marked) - len(done)
+
+
+GLOSS_SYSTEM = """You help a language learner tell the meanings of words apart.
+For each word, give its translation as it is used in its sentence, in one to three words of the
+learner's known language, and give back the word's id with it."""
+
+GLOSS_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "glosses": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {"id": {"type": "string"}, "gloss": {"type": "string"}},
+                "required": ["id", "gloss"],
+                "additionalProperties": False,
+            },
+        }
+    },
+    "required": ["glosses"],
+    "additionalProperties": False,
+}
+
+
+def gloss_marks(db: Session, provider: LLMProvider, profile: Profile, text: SourceText) -> None:
+    """Fill in the translation of each word marked to learn that has none yet, in one request."""
+    todo = [w for w in text.words if w.status == "learn" and not w.gloss]
+    if not todo:
+        return
+    by_id = {str(i): w for i, w in enumerate(todo)}
+    request = {
+        "known_language": LANGUAGES[profile.known_language],
+        "words": [{"id": k, "word": w.word, "sentence": w.sentence} for k, w in by_id.items()],
+    }
+    prompt = "Translate each word in this request.\n" + json.dumps(request, ensure_ascii=False)
+    result = provider.generate_json(GLOSS_SYSTEM, prompt, GLOSS_SCHEMA)
+    db.add(
+        GenerationLog(
+            profile_id=profile.id,
+            model=result.model,
+            words=len(todo),
+            input_tokens=result.input_tokens,
+            output_tokens=result.output_tokens,
+        )
+    )
+    for g in result.data["glosses"]:
+        word = by_id.get(str(g.get("id", "")))
+        if word is not None:
+            word.gloss = str(g.get("gloss", "")).strip()[:200]
+    db.commit()
 
 
 def mark_context(text: SourceText, sentence: str) -> str:

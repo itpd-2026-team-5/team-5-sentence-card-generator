@@ -43,7 +43,7 @@ export function Library() {
         </div>
         <button className="btn primary" onClick={() => setAdding(true)}><Icon name="plus" size={16} /> Add text</button>
       </header>
-      <p className="muted">A text is where you find words: paste one, mark the words you want to learn, and generate their cards into a deck. Put the texts in the order you want to work through them.</p>
+      <p className="muted">A text is where you find words: paste one, mark the words you want to learn, and generate their cards into a deck. Drag a text by its handle, or use the arrows, to put the texts in the order you want to work through them.</p>
       {error && <p className="error">{error}</p>}
 
       {loaded && texts.length === 0 && (
@@ -59,7 +59,7 @@ export function Library() {
             <li key={text.id} {...drag.props(text.id)}
               className={`card-row text-row ${drag.dragging === text.id ? 'dragging' : ''} ${drag.over === text.id && drag.dragging !== text.id ? 'drop' : ''}`}
               onClick={() => { location.hash = `/text/${text.id}` }}>
-              <span className="text-order">{index + 1}</span>
+              <span className="text-order" title="Drag to move"><Icon name="grip" size={18} /><span>{index + 1}</span></span>
               <div className="row-text">
                 <p><a href={`#/text/${text.id}`} className="deck-name">{text.title}</a></p>
                 <p className="muted small">

@@ -21,6 +21,8 @@ const PATHS: Record<string, string> = {
   up: 'M6 15l6-6 6 6',
   down: 'M6 9l6 6 6-6',
   mute: 'M11 5L6 9H3v6h3l5 4V5zM16 9l5 6M21 9l-5 6',
+  // Six dots: the usual sign that a row can be dragged.
+  grip: 'M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01',
 }
 
 export function Icon({ name, size = 20 }: { name: keyof typeof PATHS | string; size?: number }) {

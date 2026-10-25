@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { api, speak, type Card, type Language, type TaughtDeck } from '../api'
+import { api, type Card, type Language, type TaughtDeck } from '../api'
+import { Say } from '../components/Say'
 import { Icon } from '../components/Icon'
 
 /** The decks students shared with the signed-in teacher. */
@@ -81,13 +82,22 @@ export function TeachDeck({ deckId, language }: { deckId: number; language: Lang
         <label className="switch"><input type="checkbox" checked={onlyOpen} onChange={(e) => setOnlyOpen(e.target.checked)} /> Only cards left to check</label>
       </header>
 
+      <ul className="legend sheet-legend" aria-label="What the marks mean">
+        <li><span className="legend-asked" /> The student asked you about this card</li>
+        <li><Icon name="sound" size={14} /> Listen</li>
+        <li><Icon name="check" size={14} /> Looks right: answers the question and marks the card checked</li>
+        <li><Icon name="refresh" size={14} /> Write a new sentence, with what is wrong</li>
+        <li><Icon name="archive" size={14} /> Archive: out of the student's study</li>
+        <li><Icon name="trash" size={14} /> Delete</li>
+      </ul>
+
       <div className="sheet-wrap">
         <table className="sheet">
           <thead>
             <tr><th>Word</th><th>Meaning</th><th>Sentence</th><th>Translation</th><th>Student's note</th><th>New sentence</th><th /></tr>
           </thead>
           <tbody>
-            {shown.map((card) => <SheetRow key={card.id} card={card} language={language} onSaved={replace}
+            {shown.map((card) => <SheetRow key={card.id} card={card} language={deck.target_language ?? language} known={deck.known_language ?? 'en'} onSaved={replace}
               onDeleted={(id) => setCards(cards.filter((c) => c.id !== id))} />)}
           </tbody>
         </table>
@@ -97,9 +107,10 @@ export function TeachDeck({ deckId, language }: { deckId: number; language: Lang
   )
 }
 
-function SheetRow({ card, language, onSaved, onDeleted }: {
+function SheetRow({ card, language, known, onSaved, onDeleted }: {
   card: Card
   language: Language
+  known: Language
   onSaved: (card: Card) => void
   onDeleted: (id: number) => void
 }) {
@@ -130,27 +141,31 @@ function SheetRow({ card, language, onSaved, onDeleted }: {
 
   return (
     <tr className={`${card.status} ${card.needs_check ? 'asks' : ''} ${busy ? 'busy' : ''}`}>
-      <td className="sheet-word">{card.word}</td>
-      <td><input key={card.word_translation} {...cell('word_translation')} aria-label={`Meaning of ${card.word}`} /></td>
-      <td><textarea key={card.sentence} rows={2} {...cell('sentence')} aria-label={`Sentence for ${card.word}`} /></td>
-      <td><textarea key={card.translation} rows={2} {...cell('translation')} aria-label={`Translation for ${card.word}`} /></td>
-      <td className="sheet-note">
+      <td className="sheet-word" data-label="Word">{card.word}<Say text={card.word_form || card.word} language={language} label="the word" /></td>
+      <td data-label="Meaning"><span className="cell-say"><input key={card.word_translation} {...cell('word_translation')} aria-label={`Meaning of ${card.word}`} /><Say text={card.word_translation} language={known} label="the meaning" /></span></td>
+      <td data-label="Sentence"><span className="cell-say"><textarea key={card.sentence} rows={2} {...cell('sentence')} aria-label={`Sentence for ${card.word}`} /><Say text={card.sentence} language={language} label="the sentence" /></span></td>
+      <td data-label="Translation"><span className="cell-say"><textarea key={card.translation} rows={2} {...cell('translation')} aria-label={`Translation for ${card.word}`} /><Say text={card.translation} language={known} label="the translation" /></span></td>
+      <td className="sheet-note" data-label="Student's note">
         {card.needs_check ? (
+          <span className="note-open">{card.note || 'Please check this card'}</span>
+        ) : card.note && card.teacher_checked_at ? (
           <>
-            <span>{card.note || 'Please check'}</span>
-            <button className="btn small" disabled={busy} onClick={() => run(() => api.updateCard(card.id, { teacher_checked: true }))}>Answered</button>
+            <span className="note-done" title="You answered this">{card.note}</span>
+            <button className="btn small" disabled={busy} onClick={() => run(() => api.updateCard(card.id, { needs_check: true, teacher_checked: false }))}>Reopen</button>
           </>
         ) : card.status === 'flagged' ? <span className="muted small">{card.problems.join('; ')}</span> : null}
       </td>
-      <td className="sheet-regen">
-        <input placeholder="What is wrong?" value={reason} onChange={(e) => setReason(e.target.value)} aria-label="Reason" />
-        <button className="btn small" disabled={busy} onClick={() => run(async () => { const c = await api.regenerateCard(card.id, reason); setReason(''); return c })}>
-          <Icon name="refresh" size={14} /> {busy ? '…' : 'Rewrite'}
-        </button>
+      <td className="sheet-regen" data-label="New sentence">
+        <span className="cell-say">
+          <input placeholder="What is wrong?" value={reason} onChange={(e) => setReason(e.target.value)} aria-label="Reason" />
+          <button className="ghost icon-btn" disabled={busy} title="Write a new sentence" aria-label="Write a new sentence"
+            onClick={() => run(async () => { const c = await api.regenerateCard(card.id, reason); setReason(''); return c })}>
+            <Icon name="refresh" size={16} />
+          </button>
+        </span>
         {error && <span className="error small">{error}</span>}
       </td>
       <td className="sheet-actions">
-        <button className="ghost icon-btn" aria-label="Listen" onClick={() => speak(card.sentence, language)}><Icon name="sound" size={16} /></button>
         {card.teacher_checked_at
           ? <span className="ghost icon-btn is-ok" title="You checked this card"><Icon name="check" size={16} /></span>
           : <button className="ghost icon-btn" disabled={busy} title="Looks right" aria-label="Looks right"

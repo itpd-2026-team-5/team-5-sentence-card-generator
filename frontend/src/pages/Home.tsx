@@ -44,6 +44,15 @@ export function Home() {
     api.saveStudyDecks(next)
   }
 
+  // New cards come in the order of the decks, so moving a deck up studies it first.
+  const move = (index: number, by: number) => {
+    const next = [...decks]
+    const [deck] = next.splice(index, 1)
+    next.splice(index + by, 0, deck)
+    setDecks(next)
+    api.reorderDecks(next.map((d) => d.id))
+  }
+
   const left = study ? study.new + study.review + study.again : 0
   const names = decks.filter((d) => chosen.includes(d.id)).map((d) => d.name)
 
@@ -55,29 +64,9 @@ export function Home() {
       </header>
 
       <section className="glass block stack">
-        <div className="row-between">
-          <h3>Study</h3>
-          <span className="muted small">Choose one deck or several</span>
-        </div>
-        <ul className="deck-picks">
-          {decks.map((deck) => (
-            <li key={deck.id}>
-              <label className={`pick ${chosen.includes(deck.id) ? 'on' : ''}`}>
-                <input type="checkbox" checked={chosen.includes(deck.id)} onChange={() => toggle(deck.id)} />
-                <span className="pick-name">{deck.name}</span>
-                <span className="pick-counts">
-                  <span className="count new" title="New">{deck.new} new</span>
-                  <span className="count due" title="To review">{deck.due} to review</span>
-                </span>
-              </label>
-            </li>
-          ))}
-        </ul>
-        {study && (
-          <Progress newDone={study.new_done} newLeft={study.new} reviewsDone={study.reviews_done} reviewsLeft={study.review + study.again} />
-        )}
+        <h3>Today in the decks you ticked</h3>
         {chosen.length === 0 ? (
-          <p className="muted">Choose a deck to study.</p>
+          <p className="muted">Tick at least one deck below to study it.</p>
         ) : left > 0 ? (
           <a className="btn primary start" href={`#/study?decks=${chosen.join(',')}`}>
             <Icon name="play" size={16} /> Study {names.length === 1 ? names[0] : `${names.length} decks`} · {left} {left === 1 ? 'card' : 'cards'}
@@ -88,6 +77,35 @@ export function Home() {
               : 'No cards to study in these decks yet. Add a text and pick words to make some.'}
           </p>
         )}
+        {study && chosen.length > 0 && (
+          <Progress newDone={study.new_done} newLeft={study.new} reviewsDone={study.reviews_done} reviewsLeft={study.review + study.again} />
+        )}
+      </section>
+
+      <section className="glass block stack">
+        <div className="row-between">
+          <h3>Your decks</h3>
+          <span className="muted small"><span className="count new">new</span> never studied · <span className="count due">review</span> due again</span>
+        </div>
+        <p className="muted small">Tick the decks to study together. New cards come in the order of this list; use the arrows to study a deck first.</p>
+        <ul className="deck-picks scroll-list">
+          {decks.map((deck, index) => (
+            <li key={deck.id} className="pick-row">
+              <label className={`pick ${chosen.includes(deck.id) ? 'on' : ''}`}>
+                <input type="checkbox" checked={chosen.includes(deck.id)} onChange={() => toggle(deck.id)} />
+                <span className="pick-name">{deck.name}</span>
+                <span className="pick-counts">
+                  <span className="count new" title="Never studied">{deck.new} new</span>
+                  <span className="count due" title="Due for review">{deck.due} to review</span>
+                </span>
+              </label>
+              <span className="order-buttons">
+                <button className="ghost icon-btn" disabled={index === 0} onClick={() => move(index, -1)} aria-label={`Move ${deck.name} up`} title="Study earlier"><Icon name="up" size={16} /></button>
+                <button className="ghost icon-btn" disabled={index === decks.length - 1} onClick={() => move(index, 1)} aria-label={`Move ${deck.name} down`} title="Study later"><Icon name="down" size={16} /></button>
+              </span>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {decks.every((d) => d.cards === 0) && (

@@ -25,7 +25,7 @@ export const PROVIDERS: Record<ProviderKind, { label: string; defaultUrl: string
     label: 'Anthropic (Claude), or a gateway that speaks its API',
     defaultUrl: 'https://api.anthropic.com',
     models: ['claude-opus-5-5', 'claude-sonnet-5-5', 'claude-haiku-5-5'],
-    hint: 'Leave the address as it is for a key from Anthropic; change it for a gateway.',
+    hint: 'Leave the base URL as it is for a key from Anthropic; change it for a gateway.',
   },
   openai: {
     label: 'OpenRouter, or another OpenAI-compatible provider',
@@ -130,6 +130,38 @@ async function callAnthropic(request: LLMRequest): Promise<LLMOutput> {
     input_tokens: response.usage.input_tokens,
     output_tokens: response.usage.output_tokens,
   }
+}
+
+/** Check a key before saving it: ask the provider for the models the key may use. */
+export async function listModels(kind: ProviderKind, baseUrl: string, key: string): Promise<string[]> {
+  const base = baseUrl.trim().replace(/\/+$/, '')
+  if (kind === 'anthropic') {
+    const client = new Anthropic({
+      apiKey: key,
+      authToken: base !== PROVIDERS.anthropic.defaultUrl ? key : null,
+      baseURL: base,
+      dangerouslyAllowBrowser: true,
+    })
+    try {
+      const page = await client.models.list({ limit: 100 })
+      return page.data.map((m) => m.id)
+    } catch (error) {
+      if (error instanceof Anthropic.AuthenticationError) throw new Error('The key was not accepted.')
+      if (error instanceof Anthropic.APIConnectionError) throw new Error('Could not reach this base URL from the browser.')
+      if (error instanceof Anthropic.APIError) throw new Error(`The provider answered with an error (${error.status}).`)
+      throw error
+    }
+  }
+  let response: Response
+  try {
+    response = await fetch(`${base}/models`, { headers: { Authorization: `Bearer ${key}` } })
+  } catch {
+    throw new Error('Could not reach this base URL from the browser.')
+  }
+  if (response.status === 401 || response.status === 403) throw new Error('The key was not accepted.')
+  if (!response.ok) throw new Error(`The provider answered with an error (${response.status}).`)
+  const body = await response.json() as { data?: { id: string }[] }
+  return (body.data ?? []).map((m) => m.id)
 }
 
 /** OpenRouter and other providers with an OpenAI-style chat completions endpoint. */
