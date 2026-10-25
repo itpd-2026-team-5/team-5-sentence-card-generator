@@ -65,25 +65,25 @@ Questions 8, 17, and 18 have priority when discussion needs more time; preserve 
 1. _(closed)_ May we record this meeting?
 2. _(closed)_ May we publish a sanitized English transcript in the public project repository?
 3. _(closed)_ If publication is refused, may we share the sanitized transcript privately with the course instructors through Moodle?
-4. _(closed)_ Have you received the project-group invitation and can you access the group for follow-up questions?
+4. _(open; not answered in the transcript)_ Have you received the project-group invitation and can you access the group for follow-up questions?
 5. _(open)_ After reviewing the evidence for each Week 3 action and open question, which outcomes can we close and what evidence is still missing for the others?
-6. _(closed)_ Do you accept US-01 against AC-01 through AC-03 as demonstrated, or reject it with the failed or unproven criteria identified?
-7. _(closed)_ Do you accept US-02 against AC-01 through AC-03 as demonstrated, or reject it with the failed or unproven criteria identified?
-8. _(closed, priority)_ Do you accept US-03 against AC-01 through AC-04 with real LLM generation as demonstrated, or reject it with the failed or unproven criteria identified?
+6. _(partly answered; explicit Customer verdict not recorded)_ Do you accept US-01 against AC-01 through AC-03 as demonstrated, or reject it with the failed or unproven criteria identified?
+7. _(open; explicit Customer verdict not recorded)_ Do you accept US-02 against AC-01 through AC-03 as demonstrated, or reject it with the failed or unproven criteria identified?
+8. _(open, priority; explicit Customer verdict not recorded)_ Do you accept US-03 against AC-01 through AC-04 with real LLM generation as demonstrated, or reject it with the failed or unproven criteria identified?
 9. _(open)_ When a learner uses several languages and decks, which defaults, deck overrides, placement-test support, and interface-language controls are needed to get appropriately difficult sentences?
 10. _(open)_ When choosing a provider, model, and personal or service key, what information is needed to understand the choice, its cost, and the generation statistics, and what funding policy belongs in the current release?
 11. _(open)_ When you leave and resume a session across several decks, what remaining work do you expect the counters, colors, progress indicator, and deck order to show, including on a phone?
-12. _(closed)_ Do you accept the demonstrated audio story against each of its current acceptance criteria, or reject it with the failed or unproven criteria identified?
+12. _(open; Customer verdict not recorded)_ Do you accept the demonstrated audio story against each of its current acceptance criteria, or reject it with the failed or unproven criteria identified?
 13. _(open)_ When a learner asks for review, which cards should a teacher see first, how should a request without a note appear, and should a deck allow one teacher or several?
 14. _(open)_ While correcting a shared card, what should happen to the student's note, review status, and learner-visible content before saving, after saving, and if the teacher needs to undo the status change?
 15. _(open)_ Starting from a text with selected words, what meaning, capitalization, generation preview, and deck-location information is needed to distinguish word senses, avoid duplicate cards, and find the cards again?
 16. _(open)_ Which proposed quality scenarios or priorities would fail the learner's or teacher's real task, and what response measures should change to make them acceptable?
 17. _(open, priority)_ For each driver we have shown, where does the proposed allocation of responsibilities leave an unacceptable risk in key isolation, persistence, LLM failure, pronunciation consistency, mobile operation, or deployment, and what must change before you accept the architecture?
 18. _(open, priority)_ During one generation batch, after how many unsuccessful attempts or what proportion of problematic cards should the system stop or warn the learner, and which failures require an immediate message?
-19. _(closed)_ With the changes and unresolved risks we have listed, do you accept the reviewed quality requirements and architecture as the direction for the next increment?
-20. _(closed)_ Do you accept US-01, US-02, and US-03 as the sufficient MUP candidate, with a separate scope decision for any removed story and any resulting change to the core task?
+19. _(open; no recorded verdict on the quality requirements and architecture)_ With the changes and unresolved risks we have listed, do you accept the reviewed quality requirements and architecture as the direction for the next increment?
+20. _(open; exact MUP-candidate confirmation not recorded)_ Do you accept US-01, US-02, and US-03 as the sufficient MUP candidate, with a separate scope decision for any removed story and any resulting change to the core task?
 21. _(open)_ Which rework or next stories should take priority in Week 5, and which two or more concrete follow-ups should we commit to with owners and deadlines?
-22. _(closed)_ Does our read-back correctly capture each story's verdict, the quality and architecture decisions, remaining questions, and the owners and Week 5 deadlines of the agreed action points?
+22. _(open; read-back response not recorded)_ Does our read-back correctly capture each story's verdict, the quality and architecture decisions, remaining questions, and the owners and Week 5 deadlines of the agreed action points?
 
 ## Roles
 
