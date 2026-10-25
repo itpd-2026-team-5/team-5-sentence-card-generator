@@ -27,7 +27,10 @@ Released as [v0.1.0](https://github.com/itpd-2026-team-5/team-5-sentence-card-ge
 
 A learner can complete the core text-to-card flow reliably, with automated checks covering its behavior and an architecture that supports further product work.
 
-- **Due:** 2026-10-23
+- **Due:** 2026-10-24
+- **Sprint Backlog:** [SPRINT-04 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/2)
+- **Planned Velocity:** 21
+- **Actual Velocity:** 18; [US-08](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/41) did not pass review and moved to SPRINT-05 for audio rework, per [DEC-075](decisions.md#dec-075).
 
 #### REL-04
 
