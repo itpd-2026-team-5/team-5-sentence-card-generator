@@ -85,6 +85,26 @@ Stop with `Ctrl+C`, or `docker compose down` from another terminal.
 
 From there, **Today** lists your decks to study.
 
+## Try it with demo data
+
+To see the product with a learner, two teachers, decks, texts, and cards already in it, run this once while the app is running:
+
+```sh
+docker compose exec backend uv run --no-dev python -m app.seed
+```
+
+It needs no API key and no email, because the cards' sentences are written in advance. Sign in at `http://localhost:5173` with any of these accounts:
+
+| Email | Password | Who |
+| --- | --- | --- |
+| `learner@example.com` | `learner-demo` | Lena Lerner, a learner of German and Russian, with four decks |
+| `teacher@example.com` | `teacher-demo` | Tamara Lehrer, who teaches Lena's "Travel by train" and "Shopping" decks |
+| `ivan.teacher@example.com` | `teacher-demo` | Ivan Petrov, who teaches Lena's Russian deck |
+
+The learner's data shows each part of the product: both meanings of "Bank" learned from one text, a question for the teacher and one the teacher answered, a card marked to rewrite, an archived card, and cards due for review.
+The demo accounts are only on your computer.
+Running the command again changes nothing; add `--reset` to delete the demo accounts and create them again, which also deletes anything you did with them.
+
 ## Run the checks and the tests
 
 The same commands run in CI, in the "Product checks" workflow, on every pull request and on `main`.

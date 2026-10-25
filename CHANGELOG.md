@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- Try the product with demo data: one command creates a learner and two teachers with decks, texts, and cards, with no API key or email needed.
+
 ## [0.2.0] - 2026-10-25
 
 ### Added
