@@ -5,14 +5,16 @@
 An LLM writes natural sentences in Russian, English, and German at a fixed length while keeping to the learner's known words.
 
 - **Status:** Open
-- **How to check:** In Week 2, generate 30 sentences per language for a sample learner profile, have a speaker check them, and count the unknown words in each.
+- **How to check:** In Week 5, a fluent reviewer of each language checks the 30 sentences per language from the [real-model check](../reports/week-04/llm-cost-and-quality-check.md) as [`TOS-02`](threshold-of-success.md#tos-02) describes, the Russian and English ones by reviewers the team knows and the German ones by an outside reviewer; the unknown words are counted again once the known-word list keeps to the deck's language.
+  The first real run kept every sentence within the length bounds, and the German sentences had 0.8 unknown words on average, but the Russian and English ones had about 6, because the list mixed the learner's languages.
 
 ## ASM-02
 
 The token cost per card is low enough for the course budget and for a learner who generates hundreds of cards.
 
-- **Status:** Open
-- **How to check:** In Week 2, measure the cost of 100 cards with the model we choose, including regenerations.
+- **Status:** Confirmed
+- **How to check:** In Week 4, measure the cost of 100 cards with the model we chose, including regenerations, and compare it with the $4 of usage the team bought and with a subscription that keeps a 50% margin.
+- **Outcome:** 100 cards and 10 rewrites cost $0.54 at list price with Claude Sonnet 4.5, about $0.0054 a card, so $4 makes about 730 cards, enough for the course's checks; a learner making 300 cards a month costs $1.63 to $2.89, which a subscription of $3.30 to $5.80 a month covers with a 50% margin, per the [real-model check](../reports/week-04/llm-cost-and-quality-check.md).
 
 ## ASM-03
 
