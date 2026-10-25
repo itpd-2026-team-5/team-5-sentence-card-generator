@@ -6,6 +6,7 @@
 - [Definition of done](definition-of-done.md)
 - [Product vision](product-vision.md)
 - [Threshold of success](threshold-of-success.md)
+- [Glossary](glossary.md)
 - [Decisions](decisions.md)
 - [Assumptions](assumptions.md)
 - [Architecture](architecture/README.md)
