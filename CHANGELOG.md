@@ -16,6 +16,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Write sentences with your own key from any Anthropic-compatible or OpenAI-compatible provider, such as OpenRouter, or switch back to the service's key without forgetting yours.
 - See how your cards turned out: how many you kept as written, edited, rewrote, archived, or deleted, and the tokens the provider reported.
 - As a teacher, see who each shared deck belongs to and how many cards are left to check, and confirm a card once it is right.
+- Load a text from a `.txt` file instead of pasting it.
+- Add another language to learn beside your main pair in Settings, and pick a level only for the languages you learn.
 
 ### Changed
 
@@ -25,6 +27,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - You can ask your teacher about a card only once its deck is shared with a teacher.
 - The deck list is a compact table, and the teacher sees every card of a shared deck, the ones you asked about first.
 - Read-aloud can be switched off in Settings as well as during study.
+- A blank text is refused with a message, and study says so when the browser cannot read a sentence aloud.
+- Small and secondary text is larger and brighter, so it is easier to read.
 
 ## [0.1.0] - 2026-10-18
 
