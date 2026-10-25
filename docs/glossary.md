@@ -27,6 +27,7 @@ A word of the learner's texts that they left unmarked, which the product treats 
 The sentence of a text in which a word was marked, which fixes the meaning the word's card is written in.
 
 **Defined by:** [`FR-003`](functional-requirements/fr/FR-003.md) and [`DEC-003`](decisions.md#dec-003).
+
 ## Cards And Decks
 
 ### Card
@@ -64,6 +65,7 @@ A card the learner took out of study without deleting it, which stays in its dec
 Replacing a card's sentence and translations with newly generated ones, optionally with instructions, while the card keeps its review history.
 
 **Defined by:** [`FR-006`](functional-requirements/fr/FR-006.md) and [`DEC-035`](decisions.md#dec-035).
+
 ## Study
 
 ### Session
@@ -77,6 +79,7 @@ One run through the due and new cards of the decks the learner ticked on Today, 
 A card rated `Again` or still being learned today, which comes back in the same day's session without counting against a daily limit.
 
 **Defined by:** [`FR-009`](functional-requirements/fr/FR-009.md) and [`DEC-042`](decisions.md#dec-042).
+
 ## People And Keys
 
 ### Learner
