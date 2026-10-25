@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
-import { api, LANGUAGES, local, type Deck, type Mark, type TextDetail } from '../api'
+import { useEffect, useRef, useState } from 'react'
+import { api, LANGUAGES, local, type Card, type Deck, type Mark, type TextDetail, type WordMark } from '../api'
+import { CardEditor } from '../components/CardEditor'
 import { Drawer } from '../components/Drawer'
 import { Icon } from '../components/Icon'
 import { TextForm } from '../components/TextForm'
@@ -15,10 +16,13 @@ export function Reader({ textId }: { textId: number }) {
   const [found, setFound] = useState<string[] | null>(null)
   const [editing, setEditing] = useState(false)
   const [busy, setBusy] = useState(false)
-  const [made, setMade] = useState<{ count: number; deck: Deck } | null>(null)
+  const [made, setMade] = useState<{ cards: Card[]; deck: Deck; warning: string } | null>(null)
+  const [open, setOpen] = useState<Card | null>(null)
   const [error, setError] = useState('')
+  const glossTimer = useRef<number | undefined>(undefined)
 
-  const loadCards = () => api.cards({ textId }).then((cards) => setWithCard(new Set(cards.map((c) => c.word.toLowerCase()))))
+  // A mark has its card when a card came from the same word in the same sentence.
+  const loadCards = () => api.cards({ textId }).then((cards) => setWithCard(new Set(cards.map((c) => markKey(c.word, c.source_sentence)))))
   useEffect(() => {
     api.text(textId).then(setText, (e) => setError(e.message))
     loadCards()
@@ -40,14 +44,28 @@ export function Reader({ textId }: { textId: number }) {
 
   if (!text) return <p className="muted">{error || 'Loading…'}</p>
 
+  // The same rules as the server: a learned word is marked per sentence, an ignored word for the whole text.
   const choose = async (word: string, sentence: string, status: Mark | 'none') => {
-    const key = word.toLowerCase()
-    const marks = { ...text.marks }
-    if (status === 'none') delete marks[key]
-    else marks[key] = status
+    const same = (m: WordMark) => m.word.toLowerCase() === word.toLowerCase()
+    let marks = text.marks
+    if (status === 'learn') {
+      marks = marks.filter((m) => !(same(m) && m.status === 'ignore'))
+      if (!marks.some((m) => same(m) && m.sentence === sentence)) marks = [...marks, { word, sentence, status, gloss: '', decks: [] }]
+    } else if (status === 'ignore') {
+      marks = [...marks.filter((m) => !same(m)), { word, sentence, status, gloss: '', decks: [] }]
+    } else {
+      marks = marks.filter((m) => !(same(m) && (m.status === 'ignore' || m.sentence === sentence)))
+    }
     setText({ ...text, marks })
     setActive(null)
     await api.mark(textId, word, sentence, status)
+    // Look up what each new word means in its sentence, once the learner pauses.
+    if (status === 'learn') {
+      window.clearTimeout(glossTimer.current)
+      glossTimer.current = window.setTimeout(() => {
+        api.gloss(textId).then((detail) => setText((current) => current && { ...current, marks: detail.marks }), () => {})
+      }, 1200)
+    }
   }
 
   const find = async (event: React.FormEvent) => {
@@ -75,9 +93,10 @@ export function Reader({ textId }: { textId: number }) {
     setError('')
     setMade(null)
     try {
-      const { created } = await api.generate(textId, deckId)
+      const { created, warning } = await api.generate(textId, deckId)
       await loadCards()
-      setMade({ count: created.length, deck: decks.find((d) => d.id === deckId)! })
+      setText(await api.text(textId))
+      setMade({ cards: created, deck: decks.find((d) => d.id === deckId)!, warning })
     } catch (e) {
       setError((e as Error).message)
     } finally {
@@ -85,17 +104,22 @@ export function Reader({ textId }: { textId: number }) {
     }
   }
 
-  const learn = Object.entries(text.marks).filter(([, s]) => s === 'learn').map(([w]) => w)
-  const ignore = Object.entries(text.marks).filter(([, s]) => s === 'ignore').map(([w]) => w)
-  const pending = learn.filter((w) => !withCard.has(w)).length
-  const marked = new Set(Object.keys(text.marks))
+  const learn = text.marks.filter((m) => m.status === 'learn')
+  const ignore = text.marks.filter((m) => m.status === 'ignore')
+  const pending = learn.filter((m) => !withCard.has(markKey(m.word, m.sentence))).length
+  const learnedHere = new Set(learn.map((m) => markKey(m.word, m.sentence)))
+  const learnedWords = new Set(learn.map((m) => m.word.toLowerCase()))
+  const ignored = new Set(ignore.map((m) => m.word.toLowerCase()))
+  const markOf = (word: string, sentence: string) => {
+    const key = word.toLowerCase()
+    if (learnedHere.has(markKey(word, sentence))) return 'learn'
+    if (ignored.has(key)) return 'ignore'
+    return learnedWords.has(key) ? 'learn-elsewhere' : ''
+  }
   const sentences = text.sentences
     .map((sentence, i) => ({ sentence, i }))
-    .filter(({ sentence }) => !onlyMarked || sentence.words.some((w) => marked.has(w.toLowerCase())))
-
-  // A chip only knows the lowercase word; find the sentence it came from for the API call.
-  const sentenceOf = (key: string) =>
-    text.sentences.find((s) => s.words.some((w) => w.toLowerCase() === key))?.text ?? ''
+    .filter(({ sentence }) => !onlyMarked || sentence.words.some((w) => markOf(w, sentence.text)))
+  const deck = decks.find((d) => d.id === deckId)
 
   return (
     <div className="reader-layout">
@@ -137,7 +161,7 @@ export function Reader({ textId }: { textId: number }) {
         )}
 
         <div className="row-between reader-tools">
-          <p className="muted small">Or click a word to learn it or ignore it. Words you leave alone count as words you know.</p>
+          <p className="muted small">Or click a word to learn it or ignore it. Words you leave alone count as words you know. A word with two meanings can be learned in each of its sentences.</p>
           <label className="switch"><input type="checkbox" checked={onlyMarked} onChange={(e) => setOnlyMarked(e.target.checked)} /> Only sentences with marked words</label>
         </div>
         <div className="prose">
@@ -146,8 +170,7 @@ export function Reader({ textId }: { textId: number }) {
               {sentence.tokens.map((token, j) => {
                 if (!token.word) return <span key={j}>{token.text}</span>
                 const word = token.text
-                const key = word.toLowerCase()
-                const mark = text.marks[key]
+                const mark = markOf(word, sentence.text)
                 const id = `${i}:${j}`
                 return (
                   <span key={j} className="w-wrap">
@@ -157,9 +180,11 @@ export function Reader({ textId }: { textId: number }) {
                     </button>
                     {active === id && (
                       <span className="pop" role="menu">
-                        <button role="menuitem" className="learn" onClick={() => choose(word, sentence.text, 'learn')}>Learn</button>
+                        <button role="menuitem" className="learn" onClick={() => choose(word, sentence.text, 'learn')}>
+                          {mark === 'learn-elsewhere' ? 'Learn in this meaning too' : 'Learn'}
+                        </button>
                         <button role="menuitem" onClick={() => choose(word, sentence.text, 'ignore')}>Ignore</button>
-                        {mark && <button role="menuitem" onClick={() => choose(word, sentence.text, 'none')}>Clear</button>}
+                        {(mark === 'learn' || mark === 'ignore') && <button role="menuitem" onClick={() => choose(word, sentence.text, 'none')}>Clear</button>}
                       </span>
                     )}
                   </span>
@@ -177,21 +202,28 @@ export function Reader({ textId }: { textId: number }) {
           <p className="label">To learn <span>{learn.length}</span></p>
           <div className="chips">
             {learn.length === 0 && <span className="muted small">Nothing picked yet.</span>}
-            {learn.map((word) => (
-              <button key={word} className={`chip learn ${withCard.has(word) ? 'done' : ''}`} title={withCard.has(word) ? 'Has a card' : 'Remove'}
-                onClick={() => choose(word, sentenceOf(word), 'none')}>
-                {word}{withCard.has(word) ? <Icon name="check" size={12} /> : <Icon name="close" size={12} />}
-              </button>
-            ))}
+            {learn.map((m) => {
+              const done = withCard.has(markKey(m.word, m.sentence))
+              return (
+                <button key={markKey(m.word, m.sentence)} className={`chip learn ${done ? 'done' : ''}`}
+                  title={`${m.sentence}${m.decks.length ? `\nAlready in: ${m.decks.join(', ')}` : ''}\n${done ? 'Has a card from this sentence' : 'Click to remove'}`}
+                  onClick={() => choose(m.word, m.sentence, 'none')}>
+                  <span>{m.word}{m.gloss && <span className="chip-gloss"> · {m.gloss}</span>}</span>
+                  {m.decks.length > 0 && <span className="chip-decks">in {m.decks.length === 1 ? m.decks[0] : `${m.decks.length} decks`}</span>}
+                  {done ? <Icon name="check" size={12} /> : <Icon name="close" size={12} />}
+                </button>
+              )
+            })}
           </div>
+          {learn.some((m) => m.decks.length > 0) && <p className="muted small">“in …” names the decks that already have a card for the word.</p>}
         </div>
         {ignore.length > 0 && (
           <div className="chips-block">
             <p className="label">Ignored <span>{ignore.length}</span></p>
             <div className="chips">
-              {ignore.map((word) => (
-                <button key={word} className="chip ignore" title="Remove" onClick={() => choose(word, sentenceOf(word), 'none')}>
-                  {word}<Icon name="close" size={12} />
+              {ignore.map((m) => (
+                <button key={m.word} className="chip ignore" title="Remove" onClick={() => choose(m.word, m.sentence, 'none')}>
+                  {m.word}<Icon name="close" size={12} />
                 </button>
               ))}
             </div>
@@ -199,20 +231,50 @@ export function Reader({ textId }: { textId: number }) {
         )}
         <label>Generate into
           <select value={deckId ?? ''} onChange={(e) => pickDeck(e.target.value)}>
-            {decks.map((d) => <option key={d.id} value={d.id}>{d.name} ({LANGUAGES[d.target_language]})</option>)}
+            {decks.map((d) => <option key={d.id} value={d.id}>{d.name}: {LANGUAGES[d.target_language]} from {LANGUAGES[d.known_language]}</option>)}
             <option value="new">+ New deck…</option>
           </select>
         </label>
+        {deck && <p className="muted small">Sentences in {LANGUAGES[deck.target_language]}, translated into {LANGUAGES[deck.known_language]}, at level {deck.effective_level}.</p>}
         <button className="btn primary wide" disabled={busy || pending === 0 || deckId === null} onClick={generate}>
           {busy ? 'Writing sentences…' : pending === 0 ? 'No new words to generate' : `Generate ${pending} card${pending === 1 ? '' : 's'}`}
         </button>
         {made && (
-          <a className="toast" href={`#/deck/${made.deck.id}`}>
-            <Icon name="check" size={16} /> {made.count} {made.count === 1 ? 'card' : 'cards'} added to {made.deck.name} →
-          </a>
+          <div className="made">
+            <a className="toast" href={`#/deck/${made.deck.id}`}>
+              <Icon name="check" size={16} /> {made.cards.length} {made.cards.length === 1 ? 'card' : 'cards'} added to {made.deck.name} →
+            </a>
+            {made.warning && <p className="warn-note">{made.warning}</p>}
+            {made.cards.length > 0 && (
+              <>
+                <p className="label">Just made <span>click one to change it</span></p>
+                <ul className="made-list">
+                  {made.cards.map((card) => (
+                    <li key={card.id}>
+                      <button className={`made-card ${card.status === 'flagged' ? 'flagged' : ''}`} onClick={() => setOpen(card)}>
+                        <strong>{card.word_form}</strong> {card.word_translation}
+                        <span className="serif">{card.sentence}</span>
+                        <span className="muted small">{card.translation}</span>
+                        {card.status === 'flagged' && <span className="tag warn">failed a check</span>}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
         )}
         {error && <p className="error">{error}</p>}
       </aside>
+
+      {open && made && (
+        <Drawer title={open.word_form} onClose={() => setOpen(null)}>
+          <CardEditor key={open.id} card={open} decks={decks} language={made.deck.target_language}
+            onSaved={(card) => { setOpen(card); setMade({ ...made, cards: made.cards.map((c) => (c.id === card.id ? card : c)) }) }}
+            onCreated={(cards) => setMade({ ...made, cards: [...made.cards, ...cards] })}
+            onDeleted={(id) => { setOpen(null); setMade({ ...made, cards: made.cards.filter((c) => c.id !== id) }); loadCards() }} />
+        </Drawer>
+      )}
 
       {editing && (
         <Drawer title="Edit text" onClose={() => setEditing(false)}>
@@ -222,4 +284,8 @@ export function Reader({ textId }: { textId: number }) {
       )}
     </div>
   )
+}
+
+function markKey(word: string, sentence: string) {
+  return `${word.toLowerCase()}|${sentence}`
 }

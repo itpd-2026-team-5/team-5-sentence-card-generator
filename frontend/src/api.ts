@@ -4,6 +4,15 @@ export type Language = 'en' | 'de' | 'ru'
 export type Level = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2'
 export type Mark = 'learn' | 'ignore'
 
+/** A word marked in one sentence; the word and its sentence are the mark's identity. */
+export interface WordMark {
+  word: string
+  sentence: string
+  status: Mark
+  gloss: string
+  decks: string[]
+}
+
 export interface Profile {
   known_language: Language
   target_language: Language
@@ -55,7 +64,7 @@ export interface TextDetail {
   notes: string
   body: string
   sentences: { text: string; words: string[]; tokens: { text: string; word: boolean }[] }[]
-  marks: Record<string, Mark>
+  marks: WordMark[]
 }
 
 export interface Card {
@@ -132,6 +141,8 @@ export interface TaughtDeck {
   name: string
   description: string
   instructions: string
+  known_language: Language
+  target_language: Language
   student: string
   student_name: string
   cards: number
@@ -229,6 +240,7 @@ export const api = {
   createText: (fields: TextFields) => request<TextSummary>('POST', '/texts', fields),
   updateText: (id: number, fields: TextFields) => request<TextDetail>('PUT', `/texts/${id}`, fields),
   reorderTexts: (ids: number[]) => request<void>('PUT', '/texts/order', { ids }),
+  reorderDecks: (ids: number[]) => request<void>('PUT', '/decks/order', { ids }),
   deleteText: (id: number) => request<void>('DELETE', `/texts/${id}`),
   text: (id: number) => request<TextDetail>('GET', `/texts/${id}`),
   find: (id: number, word: string) =>
@@ -236,7 +248,8 @@ export const api = {
   mark: (id: number, word: string, sentence: string, status: Mark | 'none') =>
     request<void>('PUT', `/texts/${id}/marks`, { word, sentence, status }),
   generate: (id: number, deckId: number) =>
-    withLLM<{ created: Card[] }>('POST', `/texts/${id}/generate`, { deck_id: deckId }),
+    withLLM<{ created: Card[]; rewritten: number; warning: string }>('POST', `/texts/${id}/generate`, { deck_id: deckId }),
+  gloss: (id: number) => withLLM<TextDetail>('POST', `/texts/${id}/glosses`, {}),
 
   cards: (filter: { deckId?: number; textId?: number; status?: string; needsCheck?: boolean } = {}) => {
     const query = new URLSearchParams()

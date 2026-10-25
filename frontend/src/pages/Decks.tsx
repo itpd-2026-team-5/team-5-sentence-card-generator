@@ -3,9 +3,6 @@ import { api, LANGUAGES, LEVELS, type Deck, type DeckFields, type Language, type
 import { Drawer } from '../components/Drawer'
 import { Icon } from '../components/Icon'
 
-const pair = (deck: Pick<Deck, 'known_language' | 'target_language'>) =>
-  `${LANGUAGES[deck.target_language]} from ${LANGUAGES[deck.known_language]}`
-
 /** The decks as compact rows: what each holds, what is due, and who teaches it. */
 export function Decks() {
   const [decks, setDecks] = useState<Deck[] | null>(null)
@@ -32,7 +29,11 @@ export function Decks() {
       <div className="table-wrap">
         <table className="deck-table">
           <thead>
-            <tr><th>Deck</th><th>Languages</th><th className="num">Cards</th><th className="num">New</th><th className="num">Due</th><th>Teacher</th></tr>
+            <tr>
+              <th>Deck</th><th>Learning</th><th>Translated into</th><th>Level</th>
+              <th className="num">Cards</th><th className="num" title="Never studied">New</th><th className="num" title="Due for review">To review</th>
+              <th>Teacher</th><th className="num" title="Cards you asked the teacher to check">Asked</th>
+            </tr>
           </thead>
           <tbody>
             {decks.map((deck) => (
@@ -41,14 +42,14 @@ export function Decks() {
                   <a href={`#/deck/${deck.id}`} className="deck-name">{deck.name}</a>
                   {deck.description && <span className="muted small deck-desc">{deck.description}</span>}
                 </td>
-                <td className="muted small nowrap">{pair(deck)} · {deck.effective_level}</td>
-                <td className="num">{deck.cards}{deck.archived > 0 && <span className="muted small"> +{deck.archived} archived</span>}</td>
+                <td className="nowrap">{LANGUAGES[deck.target_language]}</td>
+                <td className="nowrap">{LANGUAGES[deck.known_language]}</td>
+                <td>{deck.effective_level}</td>
+                <td className="num nowrap">{deck.cards - deck.archived} active{deck.archived > 0 && <span className="muted small"> · {deck.archived} archived</span>}</td>
                 <td className="num"><span className="count new">{deck.new}</span></td>
                 <td className="num"><span className="count due">{deck.due}</span></td>
-                <td className="small">
-                  {deck.teachers.length ? deck.teachers.join(', ') : <span className="muted">—</span>}
-                  {deck.needs_check > 0 && <span className="tag teacher"> {deck.needs_check} asked</span>}
-                </td>
+                <td className="small" title={deck.teachers.join(', ')}>{deck.teachers.length ? deck.teachers.map((t) => t.split('@')[0]).join(', ') : <span className="muted">No teacher</span>}</td>
+                <td className="num">{deck.needs_check > 0 ? <span className="tag teacher">{deck.needs_check}</span> : <span className="muted">—</span>}</td>
               </tr>
             ))}
           </tbody>

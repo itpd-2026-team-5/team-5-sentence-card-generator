@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { api, local, speak, type Deck, type Language, type Rating, type Study as StudyData } from '../api'
 import { Icon } from '../components/Icon'
+import { Say } from '../components/Say'
 
 const RATINGS: { rating: Rating; label: string; key: string }[] = [
   { rating: 'again', label: 'Again', key: '1' },
@@ -45,7 +46,9 @@ export function Study({ deckIds, language, onExit }: { deckIds: number[]; langua
   useEffect(() => { load() }, [load])
 
   // Each card is read in its own deck's language; a learner may study several languages.
-  const cardLanguage = (deckList.find((d) => study?.card?.deck_ids.includes(d.id))?.target_language ?? language) as Language
+  const cardDeck = deckList.find((d) => study?.card?.deck_ids.includes(d.id))
+  const cardLanguage = (cardDeck?.target_language ?? language) as Language
+  const knownLanguage = (cardDeck?.known_language ?? 'en') as Language
 
   // Read each new card aloud as it appears, for learners who review on the go.
   const cardId = study?.card?.id
@@ -155,18 +158,17 @@ export function Study({ deckIds, language, onExit }: { deckIds: number[]; langua
               onClick={() => setRevealed(true)} aria-label={revealed ? 'Card' : 'Show the answer'}>
               <span className="kind">{study.is_new ? 'New' : 'Review'}</span>
               <p className="card-word">
-                {card.word}
-                <span className="card-word-meaning">{revealed ? card.word_translation : ''}</span>
+                <span>{card.word}<Say text={card.word_form || card.word} language={cardLanguage} label="the word" onFail={noAudio} /></span>
+                {revealed && <span className="card-word-meaning">{card.word_translation}<Say text={card.word_translation} language={knownLanguage} label="the word's translation" onFail={noAudio} /></span>}
               </p>
-              <p className="card-sentence">{highlight(card.sentence, [card.highlight, card.word_form], cardLanguage)}</p>
-              <p className="card-translation">{revealed ? card.translation : ''}</p>
+              <p className="card-sentence">{highlight(card.sentence, [card.highlight, card.word_form], cardLanguage)}<Say text={card.sentence} language={cardLanguage} label="the sentence" onFail={noAudio} /></p>
+              <p className="card-translation">{revealed && <>{card.translation}<Say text={card.translation} language={knownLanguage} label="the translation" onFail={noAudio} /></>}</p>
               {revealed ? (
                 <details className="source-note" onClick={(e) => e.stopPropagation()}>
                   <summary>Where the word came from</summary>
                   <p>{card.text_title ? (card.text_exists ? <><a className="link" href={`#/text/${card.text_id}`} onClick={onExit}>{card.text_title}</a>: </> : <><strong>{card.text_title}</strong>: </>) : null}{card.source_sentence}</p>
                 </details>
               ) : <span className="hint">Tap to show the answer<span className="key-hint"> or press <kbd>Space</kbd></span></span>}
-              <button className="ghost icon-btn listen" onClick={(e) => { e.stopPropagation(); speak(card.sentence, cardLanguage, noAudio) }} aria-label="Listen again"><Icon name="sound" /></button>
             </div>
           </div>
 

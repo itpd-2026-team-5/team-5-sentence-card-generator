@@ -151,6 +151,8 @@ class TextWord(Base):
     # The sentence with its neighbours, so the LLM can tell which meaning the word has.
     context: Mapped[str] = mapped_column(Text, default="")
     status: Mapped[str] = mapped_column(String(10))  # "learn" or "ignore"
+    # The word's translation in this sentence, so the learner can tell two meanings apart.
+    gloss: Mapped[str] = mapped_column(String(200), default="", server_default="")
 
     text: Mapped[SourceText] = relationship(back_populates="words")
 

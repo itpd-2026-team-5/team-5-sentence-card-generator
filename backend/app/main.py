@@ -19,8 +19,10 @@ from app.auth import (
 from app.config import PLACEMENT_TESTS, settings
 from app.db import get_db
 from app.generation import (
+    REWRITE_WARNING,
     deck_level,
     generate_cards,
+    gloss_marks,
     mark_context,
     more_cards,
     regenerate_card,
@@ -51,7 +53,9 @@ from app.schemas import (
     DeckUpdate,
     GenerateIn,
     GenerateOut,
+    GlossIn,
     MarkIn,
+    MarkOut,
     MoreIn,
     OrderIn,
     ProfileIn,
@@ -324,6 +328,16 @@ def list_decks(db: Session = Depends(get_db), profile: Profile = Depends(current
     return [deck_out(db, d) for d in decks]
 
 
+@app.put("/api/decks/order", status_code=204)
+def reorder_decks(
+    data: OrderIn, db: Session = Depends(get_db), profile: Profile = Depends(current_profile)
+):
+    """Put the learner's decks in the order they want to study them."""
+    for position, deck_id in enumerate(data.ids, start=1):
+        own_deck(deck_id, db, profile).position = position
+    db.commit()
+
+
 @app.post("/api/decks", response_model=DeckOut, status_code=201)
 def create_deck(
     data: DeckIn, db: Session = Depends(get_db), profile: Profile = Depends(current_profile)
@@ -433,7 +447,18 @@ def reorder_texts(
     db.commit()
 
 
-def text_detail(text: SourceText) -> TextDetail:
+def text_detail(text: SourceText, db: Session) -> TextDetail:
+    learn = {w.word.lower() for w in text.words if w.status == "learn"}
+    in_decks: dict[str, list[str]] = {}
+    if learn:
+        rows = db.execute(
+            select(func.lower(Card.word), Deck.name)
+            .join(Card.decks)
+            .where(Card.profile_id == text.profile_id, func.lower(Card.word).in_(learn))
+            .distinct()
+        )
+        for word, deck in rows:
+            in_decks.setdefault(word, []).append(deck)
     return TextDetail(
         id=text.id,
         title=text.title,
@@ -441,7 +466,16 @@ def text_detail(text: SourceText) -> TextDetail:
         notes=text.notes,
         body=text.body,
         sentences=tokenize(text.body),
-        marks={w.word.lower(): w.status for w in text.words},
+        marks=[
+            MarkOut(
+                word=w.word,
+                sentence=w.sentence,
+                status=w.status,
+                gloss=w.gloss,
+                decks=sorted(in_decks.get(w.word.lower(), [])) if w.status == "learn" else [],
+            )
+            for w in sorted(text.words, key=lambda w: w.id)
+        ],
     )
 
 
@@ -449,7 +483,7 @@ def text_detail(text: SourceText) -> TextDetail:
 def read_text(
     text_id: int, db: Session = Depends(get_db), profile: Profile = Depends(current_profile)
 ):
-    return text_detail(own_text(text_id, db, profile))
+    return text_detail(own_text(text_id, db, profile), db)
 
 
 @app.put("/api/texts/{text_id}", response_model=TextDetail)
@@ -464,7 +498,7 @@ def update_text(
     for key, value in data.model_dump().items():
         setattr(text, key, value)
     db.commit()
-    return text_detail(text)
+    return text_detail(text, db)
 
 
 @app.get("/api/texts/{text_id}/find", response_model=list[str])
@@ -493,24 +527,34 @@ def mark_word(
     db: Session = Depends(get_db),
     profile: Profile = Depends(current_profile),
 ):
+    """Mark a word in one sentence. A word and its sentence are the mark's identity, so the same
+    word can be learned in two sentences, for two meanings; ignoring a word is for the whole text,
+    since an ignored word is kept out of every sentence."""
     text = own_text(text_id, db, profile)
-    existing = next((w for w in text.words if w.word.lower() == data.word.lower()), None)
-    if data.status == "none":
-        if existing:
-            db.delete(existing)
-    elif existing:
-        existing.status = data.status
-        existing.sentence = data.sentence
-        existing.context = mark_context(text, data.sentence)
-    else:
-        text.words.append(
-            TextWord(
-                word=data.word,
-                sentence=data.sentence,
-                context=mark_context(text, data.sentence),
-                status=data.status,
+    same_word = [w for w in text.words if w.word.lower() == data.word.lower()]
+    if data.status == "learn":
+        for w in same_word:
+            if w.status == "ignore":
+                text.words.remove(w)
+        if not any(w.status == "learn" and w.sentence == data.sentence for w in same_word):
+            text.words.append(
+                TextWord(
+                    word=data.word,
+                    sentence=data.sentence,
+                    context=mark_context(text, data.sentence),
+                    status="learn",
+                )
             )
+    elif data.status == "ignore":
+        for w in same_word:
+            text.words.remove(w)
+        text.words.append(
+            TextWord(word=data.word, sentence=data.sentence, context="", status="ignore")
         )
+    else:
+        for w in same_word:
+            if w.status == "ignore" or w.sentence == data.sentence:
+                text.words.remove(w)
     db.commit()
 
 
@@ -525,14 +569,41 @@ def generate(
     text = own_text(text_id, db, profile)
     deck = own_deck(data.deck_id, db, profile)
     provider = pick_provider(request, data.llm_output)
-    return llm_call(
-        db,
-        lambda: GenerateOut(
-            created=[
-                CardOut.model_validate(c) for c in generate_cards(db, provider, profile, text, deck)
-            ]
-        ),
-    )
+
+    def run():
+        cards, rewritten = generate_cards(db, provider, profile, text, deck)
+        warning = ""
+        if cards and rewritten / len(cards) >= REWRITE_WARNING:
+            warning = (
+                f"{rewritten} of {len(cards)} sentences failed a check and had to be written "
+                "again. The deck's instructions may ask for something hard to meet, or the model "
+                "may not suit this language; try clearer instructions or another model."
+            )
+        return GenerateOut(
+            created=[CardOut.model_validate(c) for c in cards], rewritten=rewritten, warning=warning
+        )
+
+    return llm_call(db, run)
+
+
+@app.post("/api/texts/{text_id}/glosses", response_model=TextDetail)
+def gloss_words(
+    text_id: int,
+    data: GlossIn,
+    request: Request,
+    db: Session = Depends(get_db),
+    profile: Profile = Depends(current_profile),
+):
+    """Translate each word marked to learn as it is used in its sentence, so the learner can
+    see which meaning each mark is, such as "Bank: bench" and "Bank: bank"."""
+    text = own_text(text_id, db, profile)
+    provider = pick_provider(request, data.llm_output)
+
+    def run():
+        gloss_marks(db, provider, profile, text)
+        return text_detail(text, db)
+
+    return llm_call(db, run)
 
 
 # ---------- cards ----------
@@ -774,6 +845,8 @@ def list_taught(db: Session = Depends(get_db), user: User = Depends(current_user
             name=share.deck.name,
             description=share.deck.description,
             instructions=share.deck.instructions,
+            known_language=share.deck.known_language,
+            target_language=share.deck.target_language,
             student=share.deck.profile.user.email if share.deck.profile.user else "",
             student_name=share.deck.profile.user.full_name if share.deck.profile.user else "",
             cards=len(share.deck.cards),

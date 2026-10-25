@@ -14,6 +14,9 @@
   --good: #34d399;
   --warn: #fbbf24;
   --bad: #fb7185;
+  /* As in Anki: green for new cards, blue for cards to review. */
+  --new: #4ade80;
+  --review: #60a5fa;
   --mark: rgba(251, 191, 36, 0.28);
   --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
   --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
@@ -31,6 +34,8 @@
     --text: #1b1a33;
     --muted: #4a4c68;
     --mark: rgba(251, 191, 36, 0.45);
+    --new: #16a34a;
+    --review: #2563eb;
     --shadow: 0 20px 50px rgba(60, 50, 120, 0.15);
     color-scheme: light;
   }
@@ -279,17 +284,17 @@ kbd { font: 0.75rem var(--sans); color: var(--muted); border: 1px solid var(--li
 .pick-name { flex: 1; font-weight: 600; }
 .pick-counts { display: flex; gap: 0.5rem; font-size: 0.88rem; font-weight: 500; }
 .count { white-space: nowrap; padding: 0.1rem 0.55rem; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
-.count.new { color: var(--cyan); border-color: rgba(34, 211, 238, 0.4); }
-.count.due { color: var(--good); border-color: rgba(52, 211, 153, 0.4); }
+.count.new { color: var(--new); border-color: var(--new); }
+.count.due { color: var(--review); border-color: var(--review); }
 .start { align-self: flex-start; }
 .segments { display: flex; flex-direction: column; gap: 0.5rem; }
 .segment-bar { display: flex; gap: 3px; height: 10px; border-radius: 999px; overflow: hidden; }
 .seg { display: block; height: 100%; }
 .seg.empty { background: var(--line); }
-.seg.new-done, .dot.new-done { background: var(--cyan); }
-.seg.review-done, .dot.review-done { background: var(--good); }
-.seg.new-left, .dot.new-left { background: rgba(34, 211, 238, 0.25); }
-.seg.review-left, .dot.review-left { background: rgba(52, 211, 153, 0.25); }
+.seg.new-done, .dot.new-done { background: var(--new); }
+.seg.review-done, .dot.review-done { background: var(--review); }
+.seg.new-left, .dot.new-left { background: color-mix(in srgb, var(--new) 30%, transparent); }
+.seg.review-left, .dot.review-left { background: color-mix(in srgb, var(--review) 30%, transparent); }
 .legend { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.35rem 1.1rem; font-size: 0.88rem; color: var(--muted); }
 .legend li { display: inline-flex; align-items: center; gap: 0.4rem; }
 .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
@@ -367,13 +372,16 @@ kbd { font: 0.75rem var(--sans); color: var(--muted); border: 1px solid var(--li
 .sheet textarea { font-family: var(--serif); font-size: 1rem; min-width: 260px; resize: vertical; }
 .sheet-word { font-weight: 600; color: var(--cyan); padding-top: 0.75rem !important; white-space: nowrap; }
 .sheet-note { min-width: 160px; font-size: 0.92rem; }
-.sheet-note span { display: block; color: var(--violet); margin: 0.4rem 0; }
+.sheet-note span { display: block; margin: 0.4rem 0; }
+.note-open { color: var(--violet); font-weight: 600; }
+.note-done { color: var(--muted); text-decoration: line-through; }
 .sheet-regen { min-width: 190px; }
 .sheet td:nth-child(2) input { min-width: 120px; }
 .sheet-regen input { margin-bottom: 0.3rem; border-color: var(--line); }
 .sheet-actions { white-space: nowrap; }
 .sheet tr.bad td { opacity: 0.55; }
-.sheet tr.asks { box-shadow: inset 3px 0 0 var(--violet); }
+.sheet tr.asks td { background: rgba(139, 92, 246, 0.08); }
+.sheet tr.asks td:first-child { box-shadow: inset 4px 0 0 var(--violet); }
 .sheet tr.busy { opacity: 0.6; }
 .danger-icon:hover { color: var(--bad); }
 .pad { padding: 1rem; }
@@ -410,7 +418,8 @@ kbd { font: 0.75rem var(--sans); color: var(--muted); border: 1px solid var(--li
 .card-row.marked { box-shadow: inset 3px 0 0 var(--cyan); }
 .card-row.archived { opacity: 0.55; }
 .text-row { grid-template-columns: auto minmax(0, 1fr) auto; }
-.text-order { font-weight: 700; color: var(--muted); min-width: 1.5rem; text-align: center; }
+.text-order { display: inline-flex; align-items: center; gap: 0.15rem; font-weight: 700; color: var(--muted); min-width: 1.5rem; cursor: grab; }
+.text-order svg { stroke-width: 3; }
 .link { color: var(--cyan); }
 .link svg { vertical-align: -2px; }
 @media (hover: none) { .key-hint { display: none; } }
@@ -443,7 +452,7 @@ kbd { font: 0.75rem var(--sans); color: var(--muted); border: 1px solid var(--li
   .card-row { grid-template-columns: minmax(0, 1fr) auto; }
   .row-word { grid-column: 1 / -1; flex-direction: row; gap: 0.6rem; align-items: baseline; }
   .row-tags { display: none; }
-  .deck-table th:nth-child(2), .deck-table td:nth-child(2) { display: none; }
+  .deck-table th:nth-child(3), .deck-table td:nth-child(3), .deck-table th:nth-child(4), .deck-table td:nth-child(4), .deck-table th:nth-child(8), .deck-table td:nth-child(8) { display: none; }
   .text-row { grid-template-columns: auto minmax(0, 1fr); }
   .text-row .row-actions { grid-column: 1 / -1; justify-content: flex-end; }
   .study-card { padding: 1.6rem 1.1rem; }
@@ -454,3 +463,44 @@ kbd { font: 0.75rem var(--sans); color: var(--muted); border: 1px solid var(--li
 }
 .muted a { color: var(--cyan); }
 .file-pick input[type="file"] { padding: 0.5rem; cursor: pointer; }
+
+/* Week 4 meeting: Today's deck list, the reader's tray, and the new cards. */
+.pick-row { display: flex; align-items: center; gap: 0.35rem; }
+.pick-row .pick { flex: 1; }
+.order-buttons { display: flex; flex-direction: column; }
+.order-buttons .icon-btn { padding: 0.15rem; }
+.order-buttons .icon-btn:disabled { opacity: 0.25; cursor: default; }
+.scroll-list { max-height: 26rem; overflow-y: auto; padding-right: 0.25rem; }
+.w.learn-elsewhere { text-decoration: underline dotted var(--good); text-underline-offset: 4px; }
+.chip.learn { flex-wrap: wrap; text-align: left; }
+.chip-gloss { color: var(--muted); font-weight: 400; }
+.chip-decks { font-size: 0.78rem; color: var(--review); }
+.made { display: flex; flex-direction: column; gap: 0.6rem; }
+.warn-note { color: var(--warn); font-size: 0.92rem; border: 1px solid var(--warn); border-radius: 12px; padding: 0.6rem 0.8rem; background: rgba(251, 191, 36, 0.08); }
+.made-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.45rem; max-height: 22rem; overflow-y: auto; }
+.made-card { display: flex; flex-direction: column; gap: 0.15rem; width: 100%; text-align: left; font: inherit; color: var(--text); cursor: pointer; padding: 0.6rem 0.75rem; border-radius: 12px; border: 1px solid var(--line); background: rgba(0, 0, 0, 0.12); }
+.made-card:hover { border-color: var(--violet); }
+.made-card.flagged { border-color: var(--warn); }
+.made-card strong { color: var(--cyan); }
+.made-card .serif { font-size: 1rem; }
+.level-intro { margin: -0.25rem 0 1rem; }
+.say { display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; margin-left: 0.4rem; width: 1.9rem; height: 1.9rem; border-radius: 999px; border: 1px solid var(--line); background: var(--surface-2); color: var(--cyan); cursor: pointer; flex-shrink: 0; }
+.say:hover { border-color: var(--cyan); }
+.card-sentence .say { width: 2.1rem; height: 2.1rem; }
+.sheet-legend { margin-bottom: 0.8rem; }
+.sheet-legend li { gap: 0.35rem; }
+.legend-asked { display: inline-block; width: 4px; height: 1rem; border-radius: 2px; background: var(--violet); }
+.cell-say { display: flex; align-items: flex-start; gap: 0.2rem; }
+.cell-say .say { margin-top: 0.35rem; margin-left: 0; }
+/* On a phone the teacher's table becomes one card per row, each field under its label. */
+@media (max-width: 720px) {
+  .sheet thead { display: none; }
+  .sheet, .sheet tbody, .sheet tr, .sheet td { display: block; width: 100%; }
+  .sheet tr { padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--line); }
+  .sheet td { border: none; padding: 0.25rem 0; }
+  .sheet td[data-label]::before { content: attr(data-label); display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  .sheet textarea { min-width: 0; }
+  .sheet tr.asks td:first-child { box-shadow: none; }
+  .sheet tr.asks { box-shadow: inset 4px 0 0 var(--violet); }
+}
+.deck-table td:first-child { min-width: 12rem; }

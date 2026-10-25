@@ -18,6 +18,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - As a teacher, see who each shared deck belongs to and how many cards are left to check, and confirm a card once it is right.
 - Load a text from a `.txt` file instead of pasting it.
 - Add another language to learn beside your main pair in Settings, and pick a level only for the languages you learn.
+- Learn the same word in two meanings from one text, such as "Bank" as a bench and as a bank: a word is marked in each of its sentences, and each mark gets its own card.
+- See what each word you picked means in its sentence, and which of your decks already have a card for it.
+- See the cards you just generated on the text's page, and change one there straight away.
+- A warning when 30% or more of a run's sentences failed a check and had to be written again, since the deck's instructions or the model may be the problem.
+- Listen to each part of a card on its own: the word, its meaning, the sentence, and the translation, while you study and when you teach.
+- Put your decks in order on Today; new cards come in that order.
+- Check a key's connection in Settings before saving it, and pick a model from the ones the provider lists.
+- As a teacher, see a legend for the marks and buttons, and reopen a question you answered.
 
 ### Changed
 
@@ -29,6 +37,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Read-aloud can be switched off in Settings as well as during study.
 - A blank text is refused with a message, and study says so when the browser cannot read a sentence aloud.
 - Small and secondary text is larger and brighter, so it is easier to read.
+- Today shows the study button and the day's progress first, and the decks in their own list below; new cards are green and cards to review blue, as in Anki.
+- The deck list shows the language learned and the language it is translated into in two columns, the active and archived cards in words, and the cards asked to the teacher in their own column.
+- The statistics say "kept as generated" and "regenerated", side by side, and the own-key form says "Base URL".
+- An answered question keeps the learner's note, crossed out, and the cards a learner asked about stand out by their colour; on a phone the teacher sees one card per row.
+- Words in the list to learn keep their capital letters, and the texts show a handle to drag them by.
+- Settings explains at the top what a level changes, and that a deck's own level wins.
 
 ## [0.1.0] - 2026-10-18
 

@@ -119,7 +119,24 @@ class TextDetail(BaseModel):
     notes: str
     body: str
     sentences: list[Sentence]
-    marks: dict[str, Literal["learn", "ignore"]]
+    marks: list["MarkOut"]
+
+
+class MarkOut(BaseModel):
+    """A word marked in one sentence: the word and its sentence are the mark's identity, so the
+    same word can be learned in two meanings from one text."""
+
+    word: str
+    sentence: str
+    status: Literal["learn", "ignore"]
+    # The word's translation in this sentence, once it has been looked up.
+    gloss: str
+    # The learner's decks that already have a card for this word.
+    decks: list[str]
+
+
+class GlossIn(BaseModel):
+    llm_output: "LLMOutput | None" = None
 
 
 class MarkIn(BaseModel):
@@ -177,6 +194,10 @@ class CardOut(BaseModel):
 
 class GenerateOut(BaseModel):
     created: list[CardOut]
+    # How many of the new cards' sentences failed a check and had to be written again.
+    rewritten: int = 0
+    # Set when so many had to be written again that the instructions or the model may be wrong.
+    warning: str = ""
 
 
 class StatsOut(BaseModel):
@@ -269,6 +290,8 @@ class TaughtDeck(BaseModel):
     name: str
     description: str
     instructions: str
+    known_language: str
+    target_language: str
     student: str
     student_name: str
     cards: int
@@ -304,3 +327,7 @@ class ReviewOut(BaseModel):
     card_id: int
     due: datetime
     reps: int
+
+
+TextDetail.model_rebuild()
+GlossIn.model_rebuild()

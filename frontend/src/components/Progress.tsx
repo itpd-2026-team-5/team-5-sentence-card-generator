@@ -7,8 +7,8 @@ export function Progress({ newDone, newLeft, reviewsDone, reviewsLeft }: {
 }) {
   const total = newDone + newLeft + reviewsDone + reviewsLeft
   const parts = [
-    { key: 'new-done', value: newDone, label: 'new studied' },
-    { key: 'review-done', value: reviewsDone, label: 'reviews done' },
+    { key: 'new-done', value: newDone, label: 'new studied today' },
+    { key: 'review-done', value: reviewsDone, label: 'reviews done today' },
     { key: 'new-left', value: newLeft, label: 'new left' },
     { key: 'review-left', value: reviewsLeft, label: 'reviews left' },
   ]

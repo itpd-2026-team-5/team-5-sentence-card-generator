@@ -37,10 +37,8 @@ def test_pick_words_and_generate_cards(client):
     client.put(marks, json={"word": "Blick", "sentence": "x", "status": "learn"})
     client.put(marks, json={"word": "Blick", "sentence": "x", "status": "none"})
     client.put(marks, json={"word": "Kopf", "sentence": sentence, "status": "ignore"})
-    assert client.get(f"/api/texts/{text['id']}").json()["marks"] == {
-        "sagte": "learn",
-        "kopf": "ignore",
-    }
+    marked = client.get(f"/api/texts/{text['id']}").json()["marks"]
+    assert [(m["word"], m["status"]) for m in marked] == [("sagte", "learn"), ("Kopf", "ignore")]
 
     created = client.post(
         f"/api/texts/{text['id']}/generate", json={"deck_id": first_deck(client)}
