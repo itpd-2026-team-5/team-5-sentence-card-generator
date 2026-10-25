@@ -64,6 +64,15 @@ Handle review scheduling internally using an established spaced-repetition algor
 - **What it costs:** drastically increases development scope compared to just generating an export file for Anki.
 - **Decision:** [`DEC-005`](decisions.md#dec-005)
 
+### CON-06
+
+Support self-hosting the application on a Linux virtual machine.
+
+- **Status:** Active
+- **Source:** Customer-given
+- **What it costs:** deployment, persistent storage, and the run instructions must be verified on Linux; development on another operating system does not establish deployment support.
+- **Decision:** [`DEC-070`](decisions.md#dec-070)
+
 ## Boundary
 
 ### BND-01
@@ -106,6 +115,22 @@ Take or pass on payments between a learner and their teacher.
 - **Handled by:** The learner and the teacher, outside the product
 - **Why:** [`DEC-020`](decisions.md#dec-020): the Customer decided in the validation meeting that payments stay outside the service.
 
+### BND-06
+
+Build and administer an integrated language-placement test for the current delivery.
+
+- **Status:** Active
+- **Handled by:** The learner, using an external placement test
+- **Why:** [`DEC-053`](decisions.md#dec-053): retain external test links and per-language level selection; assessment reliability still needs evidence, and building an internal test is deferred.
+
+### BND-07
+
+Sell and bill a service-wide subscription during the course project.
+
+- **Status:** Active
+- **Handled by:** Nobody
+- **Why:** [`DEC-054`](decisions.md#dec-054): subscriptions that include service-funded generation remain a Could Have after the course project; no tariff, quota, or funding commitment was agreed.
+
 ## System Context
 
 ![System context diagram](architecture/context.png)
@@ -117,4 +142,5 @@ The external system is the LLM API provider.
 
 - [User stories](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues?q=label%3Auser-story)
 - [Decisions](decisions.md) and [assumptions](assumptions.md)
+- [Quality requirements](quality-requirements/README.md)
 - [Set up and run the product](setup.md)

@@ -10,6 +10,7 @@ Built by ITPD Team 5 for the IT Product Development course, autumn 2026; a work 
 
 - [Set up and run](setup.md): from a clean checkout to your first cards, and how to run the checks and the tests.
 - [Product vision](product-vision.md): the goal, who the product is for, its constraints and boundary, and the system context.
+- [Quality requirements](quality-requirements/README.md): the required security, generation, reliability, mobile, and deployment outcomes and their verification measures.
 
 ## How we decided
 
