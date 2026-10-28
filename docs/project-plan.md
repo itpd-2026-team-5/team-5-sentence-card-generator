@@ -10,6 +10,24 @@
 
 The MUP delivers a working learner flow from bringing in a plain-text source through selecting words to generating cards with new sentences and translations. Its exact scope follows the Customer's recorded verdict on the MUP candidate.
 
+### MLS-05
+
+- **Due:** 2026-10-31
+- **Sprints:** [SPRINT-04](#sprint-04), [SPRINT-05](#sprint-05)
+- **Advances:** [TOS-01](threshold-of-success.md#tos-01)
+
+A learner turns a text into cards, corrects a sentence they do not trust, hears the sentence, and studies on a phone in the product running on the staging and production deployments.
+The Customer can open that product from the university network, and the checks that prove it run in CI and against the deployments.
+
+### MLS-07
+
+- **Due:** 2026-11-14
+- **Sprints:** [SPRINT-06](#sprint-06), [SPRINT-07](#sprint-07)
+- **Advances:** [TOS-01](threshold-of-success.md#tos-01), [TOS-03](threshold-of-success.md#tos-03)
+
+A learner studies decks in the order they chose and returns for reviews the product scheduled, and a teacher corrects a deck the learner shared, which the learner then studies.
+It builds on the deployed product of the previous increment, so external learners and a teacher can try it in the usability sessions.
+
 ## Sprints
 
 ### SPRINT-03
@@ -38,10 +56,11 @@ Released as [v0.2.0](https://github.com/itpd-2026-team-5/team-5-sentence-card-ge
 
 ### SPRINT-05
 
-Provisional: the product can be deployed through a repeatable workflow and verified in a test environment.
+The product runs on staging and production on the university VM, its critical modules and High-importance quality requirements are covered by recorded tests, and a learner can correct a sentence, hear it, and study on a phone.
 
 - **Due:** 2026-10-31
 - **Sprint Backlog:** [SPRINT-05 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/3)
+- **Planned Velocity:** 16
 
 #### REL-05
 
