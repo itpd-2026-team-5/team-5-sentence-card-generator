@@ -16,8 +16,8 @@ The MUP delivers a working learner flow from bringing in a plain-text source thr
 - **Sprints:** [SPRINT-04](#sprint-04), [SPRINT-05](#sprint-05)
 - **Advances:** [TOS-01](threshold-of-success.md#tos-01)
 
-A learner turns a text into cards, corrects a sentence they do not trust, hears the sentence, and studies on a phone in the product running on the staging and production deployments.
-The Customer can open that product from the university network, and the checks that prove it run in CI and against the deployments.
+A learner can import a text, generate cards, and study them in the product running on staging and production on the university VM.
+The release is verified by CI and deployed checks, and the Customer can open it from the university network.
 
 ### MLS-07
 
@@ -25,8 +25,8 @@ The Customer can open that product from the university network, and the checks t
 - **Sprints:** [SPRINT-06](#sprint-06), [SPRINT-07](#sprint-07)
 - **Advances:** [TOS-01](threshold-of-success.md#tos-01), [TOS-03](threshold-of-success.md#tos-03)
 
-A learner studies decks in the order they chose and returns for reviews the product scheduled, and a teacher corrects a deck the learner shared, which the learner then studies.
-It builds on the deployed product of the previous increment, so external learners and a teacher can try it in the usability sessions.
+A learner studies on a phone and returns for reviews the product scheduled, while a teacher reviews and corrects a deck the learner explicitly shared.
+External learners can try the deployed product in structured usability sessions.
 
 ## Sprints
 
@@ -56,11 +56,11 @@ Released as [v0.2.0](https://github.com/itpd-2026-team-5/team-5-sentence-card-ge
 
 ### SPRINT-05
 
-The product runs on staging and production on the university VM, its critical modules and High-importance quality requirements are covered by recorded tests, and a learner can correct a sentence, hear it, and study on a phone.
+A learner can complete the core text-to-card-and-study flow from the university network on a product deployed to staging and production, with automated checks verifying the critical modules and active High-importance quality requirements.
 
 - **Due:** 2026-10-31
 - **Sprint Backlog:** [SPRINT-05 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/3)
-- **Planned Velocity:** 16
+- **Planned Velocity:** 21
 
 #### REL-05
 
