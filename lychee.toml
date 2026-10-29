@@ -1,0 +1,2 @@
+# Course materials are maintained and checked by the course repository.
+exclude_path = ["(^|/)\\.agents/skills/itpd(/|$)"]
