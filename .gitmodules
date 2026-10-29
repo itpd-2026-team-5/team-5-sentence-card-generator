@@ -1,0 +1,3 @@
+[submodule ".agents/skills/itpd"]
+	path = .agents/skills/itpd
+	url = https://github.com/inno-itpd/itpd.git
