@@ -25,7 +25,7 @@ A story closes only when the Customer accepts it at a meeting, criterion by crit
 - A pull request closes exactly one task issue, with `Closes #<number>` in its description, and its branch is named `<issue number>-<short-description>`.
 - The accountable reviewer ticks every acceptance criterion of that task before approving.
 - The approval comes from a member other than the author.
-- The repository checks are green: the link check, the Markdown check, and product-code CI (`Product checks`); for changes to `backend/` or `frontend/`, its lint, format, test, and build jobs pass.
+- The repository checks are green: the link check, the Markdown check, `actionlint` (`Workflow lint`), and product-code CI (`Product checks`): the backend's lint, formatting, type check, and tests, and the frontend's lint, formatting, type check, and build.
 - A user-visible change adds an entry to the `[Unreleased]` section of [`CHANGELOG.md`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/blob/main/CHANGELOG.md); the description says which, as the pull request template asks.
 - The acceptance criteria this pull request claims pass on its branch, and on `main` after it merges.
 - No secret, recording, or private-only material is committed: no API keys, no `.env`, no real names or emails, no recording links.

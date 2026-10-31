@@ -24,6 +24,10 @@ jobs:
         run: uv run ruff check .
       - name: Check formatting
         run: uv run ruff format --check .
+      - name: Type check
+        run: uv run mypy app
+      # Build: not applicable. The backend is Python run from source by uvicorn, so there is
+      # no compile or bundle step; its container image is built on the VM at deploy time.
       - name: Test
         run: uv run pytest
 
@@ -44,5 +48,11 @@ jobs:
         run: npm ci
       - name: Lint
         run: npm run lint
-      - name: Type-check and build
-        run: npm run build
+      - name: Check formatting
+        run: npm run format:check
+      - name: Type check
+        run: npm run typecheck
+      - name: Build
+        run: npx vite build
+      # Automated tests: not applicable. The frontend has no unit tests; its critical module,
+      # src/main.tsx, is checked by the type check and the build above, per QR-02.

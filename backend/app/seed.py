@@ -10,6 +10,7 @@ It only touches the demo accounts below. Run it again with `--reset` to start th
 
 import sys
 from datetime import UTC, datetime, timedelta
+from typing import Any
 
 from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
@@ -38,7 +39,7 @@ ACCOUNTS = (LEARNER, TEACHER, RU_TEACHER)
 # Each deck: its fields, the teacher it is shared with, and one text with the cards made from it.
 # A card is (word, source sentence, its meaning there, the part to highlight, the new sentence,
 # its translation). The sentences are written by hand, so the demo needs no LLM.
-DECKS = [
+DECKS: list[dict[str, Any]] = [
     {
         "name": "Travel by train",
         "description": "Words from my train trips",
@@ -295,7 +296,9 @@ def seed(db: Session, reset: bool = False) -> bool:
     teachers = {spec: account(db, *spec)[0] for spec in (TEACHER, RU_TEACHER)}
     now = study.now_utc()
     # The profile's first deck becomes the first demo deck.
-    first = db.scalar(select(Deck).where(Deck.profile_id == profile.id, Deck.name == FIRST_DECK))
+    first = db.scalars(
+        select(Deck).where(Deck.profile_id == profile.id, Deck.name == FIRST_DECK)
+    ).one()
     cards: dict[str, Card] = {}
     position = 0
 

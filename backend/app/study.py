@@ -2,9 +2,11 @@
 
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
+from typing import cast
 
 from fsrs import Card as FsrsCard
 from fsrs import Rating, Scheduler
+from fsrs.card import CardDict
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
@@ -87,9 +89,9 @@ def queue(db: Session, profile: Profile, now: datetime, deck_ids: list[int] | No
                 review.append(card)
                 reviews_left -= 1
                 seen.add(card.id)
-    again.sort(key=lambda c: c.review.due)
-    review.sort(key=lambda c: c.review.due)
-    first = (again or review or new or [None])[0]
+    again.sort(key=_due)
+    review.sort(key=_due)
+    first = next(iter(again or review or new), None)
     next_due = min(upcoming) if first is None and upcoming else None
     return Queue(first, len(new), len(review), len(again), next_due)
 
@@ -118,8 +120,13 @@ def today(db: Session, profile: Profile, now: datetime) -> tuple[int, int]:
     return new or 0, old or 0
 
 
+def _due(card: Card) -> datetime:
+    assert card.review is not None
+    return card.review.due
+
+
 def _state(card: Card) -> FsrsCard:
-    return FsrsCard.from_dict(card.review.fsrs) if card.review else FsrsCard()
+    return FsrsCard.from_dict(cast(CardDict, card.review.fsrs)) if card.review else FsrsCard()
 
 
 def format_interval(delta: timedelta) -> str:
@@ -157,7 +164,7 @@ def review(db: Session, card: Card, rating: str, too_hard: bool, now: datetime) 
             too_hard=False,
         )
     review_state = card.review
-    review_state.fsrs = updated.to_dict()
+    review_state.fsrs = dict(updated.to_dict())
     review_state.due = updated.due
     review_state.reps += 1
     review_state.reviewed_at = now

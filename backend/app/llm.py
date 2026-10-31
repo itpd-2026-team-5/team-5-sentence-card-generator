@@ -3,9 +3,10 @@
 import json
 import re
 from dataclasses import dataclass
-from typing import Protocol
+from typing import Any, Protocol, cast
 
 import anthropic
+from anthropic.types.beta import BetaMessageParam, BetaOutputConfigParam
 
 from app.config import settings
 
@@ -67,7 +68,7 @@ class AnthropicProvider:
         self.effort = effort
 
     def _client(self) -> anthropic.Anthropic:
-        options = {}
+        options: dict[str, Any] = {}
         if settings.anthropic_api_key:
             options["api_key"] = settings.anthropic_api_key
         if settings.anthropic_auth_token:
@@ -77,19 +78,22 @@ class AnthropicProvider:
         return anthropic.Anthropic(**options)
 
     def generate_json(self, system: str, prompt: str, schema: dict) -> LLMResult:
-        output_config: dict = {"format": {"type": "json_schema", "schema": schema}}
-        extra: dict = {}
+        output_config: BetaOutputConfigParam = {"format": {"type": "json_schema", "schema": schema}}
+        extra: dict[str, Any] = {}
         if supports_new_features(self.model):
             if self.effort:
-                output_config["effort"] = self.effort
+                output_config["effort"] = cast(Any, self.effort)
             # On a policy decline, the API re-runs the request on its recommended fallback model.
             extra = {"betas": ["server-side-fallback-2026-07-01"], "fallbacks": "default"}
+        messages: list[BetaMessageParam] = [
+            {"role": "user", "content": prompt + schema_reminder(schema)}
+        ]
         try:
             response = self._client().beta.messages.create(
                 model=self.model,
                 max_tokens=16000,
                 system=system,
-                messages=[{"role": "user", "content": prompt + schema_reminder(schema)}],
+                messages=messages,
                 output_config=output_config,
                 **extra,
             )

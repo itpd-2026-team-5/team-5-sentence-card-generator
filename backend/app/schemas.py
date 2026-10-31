@@ -5,6 +5,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 Language = Literal["en", "de", "ru"]
 Level = Literal["A1", "A2", "B1", "B2", "C1", "C2"]
+MarkStatus = Literal["learn", "ignore"]
 
 
 class ProfileIn(BaseModel):
@@ -128,7 +129,7 @@ class MarkOut(BaseModel):
 
     word: str
     sentence: str
-    status: Literal["learn", "ignore"]
+    status: MarkStatus
     # The word's translation in this sentence, once it has been looked up.
     gloss: str
     # The learner's decks that already have a card for this word.
