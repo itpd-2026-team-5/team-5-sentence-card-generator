@@ -56,6 +56,7 @@ from app.schemas import (
     GenerateIn,
     GenerateOut,
     GlossIn,
+    Language,
     MarkIn,
     MarkOut,
     MarkStatus,
@@ -411,7 +412,7 @@ def list_texts(db: Session = Depends(get_db), profile: Profile = Depends(current
     return [
         TextSummary(
             id=t.id,
-            language=t.language,
+            language=cast(Language, t.language),
             title=t.title,
             source_url=t.source_url,
             position=t.position,
@@ -440,7 +441,7 @@ def create_text(
     db.commit()
     return TextSummary(
         id=text.id,
-        language=text.language,
+        language=cast(Language, text.language),
         title=text.title,
         source_url=text.source_url,
         position=text.position,
@@ -473,7 +474,7 @@ def text_detail(text: SourceText, db: Session) -> TextDetail:
             in_decks.setdefault(word, []).append(deck)
     return TextDetail(
         id=text.id,
-        language=text.language,
+        language=cast(Language, text.language),
         title=text.title,
         source_url=text.source_url,
         notes=text.notes,
