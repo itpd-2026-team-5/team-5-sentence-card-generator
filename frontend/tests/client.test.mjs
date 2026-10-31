@@ -29,7 +29,7 @@ const storage = {
 }
 globalThis.localStorage = storage
 globalThis.document = { documentElement: { lang: 'en' } }
-const { api, session, local, ownKey, parseJson, callLLM, listModels } =
+const { api, session, local, ownKey, parseJson, callLLM, listModels, languageName } =
   await import(pathToFileURL(join(output, 'client.mjs')).href)
 
 let calls
@@ -57,6 +57,15 @@ function browserKey() {
   ownKey.setBaseUrl('https://provider.invalid/v1/')
   ownKey.setModel('test-model')
 }
+
+test('legacy and unrecognized text languages have a display label without guessing a language', () => {
+  for (const language of [undefined, null, '', 'xx', 'constructor', '__proto__']) {
+    assert.equal(languageName(language), 'Language not set')
+  }
+  assert.equal(languageName('en'), 'English')
+  assert.equal(languageName('de'), 'German')
+  assert.equal(languageName('ru'), 'Russian')
+})
 
 test('preferences survive unavailable or full browser storage', () => {
   assert.equal(local.get('missing', 'fallback'), 'fallback')
