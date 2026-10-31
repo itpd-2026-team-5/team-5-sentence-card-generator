@@ -3,6 +3,7 @@
 How well the Sentence Cards Generator must do what it does, each as an ISO/IEC 25010:2023 pair and a quality attribute scenario in its own file under [`qr/`](qr/).
 This table is the priority matrix: active requirements first, then by business importance, then by technical risk.
 Business importance is the value of the outcome to the Customer; technical risk is how hard the outcome is to achieve and to test.
+Each requirement's tests are in its file, and what they last found is in the [quality requirement testing plan](../project-plan.md#quality-requirement-testing-plan).
 
 | QR | Outcome | Business importance | Technical risk | Characteristic | Sub-characteristic | Status |
 | --- | --- | --- | --- | --- | --- | --- |

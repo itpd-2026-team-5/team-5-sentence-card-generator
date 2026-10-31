@@ -9,6 +9,7 @@ Sentence Cards Generator, Team 5.
 The testing work adds frontend client regression tests to the existing backend suite and prepares their integration into product CI in a separate workflow change.
 The local checks, results, and environment limitations are recorded in [testing.md](testing.md).
 The product is deployed to staging and production on the university VM, as described in [the deployment runbook](../../docs/deployment.md) and [the deployment below](#deployment); it is reached from the university network, at the address given in the Moodle submission.
+Every active High business-importance quality requirement now has a test; their results, including the ones not yet verified, are in the [quality requirement testing plan](../../docs/project-plan.md#quality-requirement-testing-plan).
 This report does not yet cover REL-05, the customer review, the sprint retrospective, and the team contribution evidence, which still need to be completed for Submission 5.
 
 ## Coverage
@@ -33,6 +34,33 @@ On 2026-10-31, `saleemasekrea000` deployed commit [`248b766`](https://github.com
 
 What the production check verified of the [core task](../../docs/setup.md#complete-the-core-task): signing in, adding a text, marking words to learn, and reading a deck's cards.
 What it did not verify: generating new cards, because the LLM providers cannot be reached from the university network; see [Deviations](#deviations) and the [failed deploy record](../../docs/deployment.md#2026-10-31-card-generation-cannot-reach-an-llm-from-the-vm).
+
+### QR-07 QRT-01 on staging
+
+The `deployed` check of [QR-07 QRT-01](../../docs/quality-requirements/qr/QR-07.md#qrt-01), run on 2026-10-31 by `saleemasekrea000` on the university VM.
+
+- **Environment:** the staging deployment (`cards-staging`) with the demo data, reached at `$STAGING_URL`.
+- **Commit:** [`130b5a3`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/commit/130b5a3fcf32b38f025d7f0f3aeb8c9d4de78b03), deployed to staging before the run.
+- **Command:** `scripts/check-restart.sh`, from `~/cards/app` on the VM.
+- **Measured value:** 11 tables and 72 rows unchanged after each of three stop-and-start cycles and after the interrupted write; the next scheduled review unchanged; every index passes `amcheck`.
+
+```text
+commit: 130b5a3fcf32b38f025d7f0f3aeb8c9d4de78b03
+target: cards-staging at $STAGING_URL
+cycle 1: stop and start of backend and db (11 tables, 72 rows)
+  records: same
+  next scheduled review (card 1): same
+cycle 2: stop and start of backend and db (11 tables, 72 rows)
+  records: same
+  next scheduled review (card 1): same
+cycle 3: stop and start of backend and db (11 tables, 72 rows)
+  records: same
+  next scheduled review (card 1): same
+interrupted write: database killed during an uncommitted update of every deck
+  records: same
+integrity: every btree index passes amcheck
+PASS
+```
 
 ## Deviations
 
