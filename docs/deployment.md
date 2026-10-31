@@ -22,17 +22,18 @@ What each environment cannot do:
 ## The VM
 
 - The university gives the team one VM, which hosts both staging and production.
-  Get it from the university portal, recreate it from the Ubuntu image the portal offers, and set its password yourself.
-  Record the image's version in the week's report when you recreate it.
+  It comes from the StudentsCoursesCloud portal, in the ITPD subscription: Ubuntu Linux 24.04 (64-bit), 4 vCPU, 4.5 GB of memory, and a 58 GB disk.
+  Get it from the portal, recreate it from the portal's Ubuntu image, and set its password yourself.
+  The first deploy, on 2026-10-31, used the VM as the portal provisioned it, unused, because the portal gave our account no recreate action and no console.
 - The VM is reachable only from the university network: connect from a lab machine or from the campus network.
-- The VM's address, its user, and its password are not in this repository.
+- You log in as `root`, so the `sudo` in the commands below is not needed.
+- The VM's address and its password are not in this repository.
   The address is in the team's Moodle submission, and the password is in the team's password manager.
-  Every command below reads them from two variables you set in your own shell:
+  Every command below reads the address from a variable you set in your own shell:
 
 ```sh
 export VM_HOST=<university-vm-ipv4>
-export VM_USER=<vm-user>
-ssh "$VM_USER@$VM_HOST"
+ssh "root@$VM_HOST"
 ```
 
 ### Prepare the VM once
@@ -117,6 +118,7 @@ Run the steps on the VM, from a campus machine.
    ```
 
 3. Check staging: `curl http://localhost:8081/api/health` prints `{"status":"ok"}`, and the core task below works at `http://<university-vm-ipv4>:8081`.
+   The backend runs the database migrations before it starts, so for about 30 seconds after a deploy the health check answers `502 Bad Gateway`; wait and try again.
    Run the week's `deployed` quality requirement tests against staging now.
    If staging fails, stop here: production keeps running the previous release.
 4. Back up the production database before changing it:
@@ -177,4 +179,11 @@ When the production verification fails, put production back on the previous rele
 
 Each deploy that failed its check is recorded here: the date, the check that showed it, how it was recovered, and what to try first next time.
 
-No deploy has failed yet.
+### 2026-10-31: Card generation cannot reach an LLM from the VM
+
+- **What showed it:** on production, **Generate** answered "Could not reach the Claude API." with the server's key, and "Could not reach this base URL from the browser." with a learner's own key from a campus machine.
+  On the VM, `curl https://api.anthropic.com/v1/messages` timed out and `curl https://openrouter.ai/api/v1/models` returned `403`, so the LLM providers are unreachable or refuse requests from the university network, while the rest of the internet, such as `apt` and GitHub, works.
+- **How it was recovered:** no rollback, because the deployment itself works: sign-in, the texts, marking words, the decks, and studying run on production.
+  Only writing new sentences is unavailable there.
+- **What to try first next time:** an LLM gateway reachable from the university network, set as `ANTHROPIC_BASE_URL` and `ANTHROPIC_AUTH_TOKEN` in both env files, then `up -d` for each deployment; or, in the browser, **Settings → My own key** with that gateway's base URL.
+  Check it from the VM first with `curl` against the gateway's address.
