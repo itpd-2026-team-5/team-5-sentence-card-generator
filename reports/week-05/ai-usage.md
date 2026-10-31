@@ -18,5 +18,23 @@ The language-label fix passed all 24 frontend client tests and the TypeScript/pr
 
 ## Remaining disclosure
 
-This records the testing and feature-documentation work in this session only.
-Team members must add any other AI use during Week 05 before submitting the weekly report.
+The sections above record the testing and feature-documentation work and saleemasekrea000's work.
+Each other team member adds a section of their own, with their tools, what they used them for, and what they accepted, changed, or rejected, or one line saying they used no AI tools.
+
+## saleemasekrea000
+
+### Tools and purpose
+
+Claude Code, with the Claude Opus 5.5 model, read Assignment 5 and the course guides and requirements it links, and drafted and checked the work for Parts 2 to 5 and Part 7:
+
+- The `actionlint` workflow, the backend type check with mypy and the fixes for its 44 findings, Prettier for the frontend, and the split type-check and build steps in `Product checks`.
+- The deployment files: `compose.deploy.yml`, the frontend's `Dockerfile` and `nginx.conf`, and the deployment runbook `docs/deployment.md`.
+- The `QRT-01` sections of QR-01, QR-02, QR-03, QR-06, and QR-07, the QR-07 restart check `scripts/check-restart.sh`, and the quality requirement testing plan.
+- The deployment record and the QR-07 evidence in this week's report, and the Week 4 follow-up tables in the meeting report.
+- Step-by-step guidance while deploying to the university VM from campus.
+
+### Accepted, changed, or rejected
+
+- Accepted after checking: the CI changes, after the backend tests, mypy, the frontend checks, and `actionlint` passed locally and in CI; the deployment, after staging and production ran side by side locally and then on the VM; and the restart check, after it passed against a local staging copy, reported `FAIL` when a change was made to commit, and passed on the VM's staging.
+- Changed: commit messages shortened to one line without an AI co-author trailer; a broken link to a file not yet on `main` replaced in the runbook; a bug in the restart script's database helper fixed after a review of its code; the VM's real address, ID, and passwords kept out of every committed file; and a screenshot showing the address bar replaced with a cropped one.
+- Rejected: using the seeded demo cards as proof that production generates cards; the report records card generation on production as not verified, because no LLM provider is reachable from the university network.
