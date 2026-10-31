@@ -10,7 +10,9 @@ The testing work adds frontend client regression tests to the existing backend s
 The local checks, results, and environment limitations are recorded in [testing.md](testing.md).
 The product is deployed to staging and production on the university VM, as described in [the deployment runbook](../../docs/deployment.md) and [the deployment below](#deployment); it is reached from the university network, at the address given in the Moodle submission.
 Every active High business-importance quality requirement now has a test; their results, including the ones not yet verified, are in the [quality requirement testing plan](../../docs/project-plan.md#quality-requirement-testing-plan).
-This report does not yet cover REL-05, the customer review, the sprint retrospective, and the team contribution evidence, which still need to be completed for Submission 5.
+The product CI names a step for each applicable check; the backend build is recorded as not applicable, because the backend runs from source with no compile or bundle step.
+After the [Sprint Review](meeting-report.md), the release commit `b904ab3` was redeployed and retested, and REL-05 was released as [v0.3.0](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.3.0); its record is in the [plan](../../docs/project-plan.md#rel-05).
+The team contribution evidence still needs to be completed for Submission 5.
 
 ## Coverage
 
@@ -20,6 +22,10 @@ This report does not yet cover REL-05, the customer review, the sprint retrospec
 | Feature documentation | [docs/features.md](../../docs/features.md) |
 | Deployment runbook | [docs/deployment.md](../../docs/deployment.md) |
 | Staging and production deployment | [Deployment](#deployment) |
+| Sprint Review | [reports/week-05/meeting-report.md](meeting-report.md) |
+| Quality requirement testing plan | [docs/project-plan.md](../../docs/project-plan.md#quality-requirement-testing-plan) |
+| REL-05 | [docs/project-plan.md](../../docs/project-plan.md#rel-05) |
+| Sprint retrospective | [reports/week-05/sprint-retrospective.md](sprint-retrospective.md) |
 | AI usage | [reports/week-05/ai-usage.md](ai-usage.md) |
 
 ## Deployment
@@ -61,6 +67,36 @@ interrupted write: database killed during an uncommitted update of every deck
 integrity: every btree index passes amcheck
 PASS
 ```
+
+### QR-07 QRT-01 on the release commit
+
+After the Sprint Review, on 2026-10-31, `saleemasekrea000` redeployed `main` at [`b904ab3`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/commit/b904ab3b668c52754f1050406c3d65dcdc17dce5), which adds the fix for texts without a language, to staging and then production, and reran the `deployed` check of [QR-07 QRT-01](../../docs/quality-requirements/qr/QR-07.md#qrt-01) on staging.
+
+- **Environment:** the staging deployment (`cards-staging`) with the demo data, reached at `$STAGING_URL`; `curl http://localhost:8081/api/health` returned `{"status":"ok"}` before the run.
+- **Commit:** `b904ab3`, the commit tagged `v0.3.0`.
+- **Command:** `scripts/check-restart.sh`, from `~/cards/app` on the VM.
+- **Measured value:** 11 tables and 72 rows unchanged after each of three stop-and-start cycles and after the interrupted write; the next scheduled review unchanged; every index passes `amcheck`.
+
+```text
+commit: b904ab3b668c52754f1050406c3d65dcdc17dce5
+target: cards-staging at $STAGING_URL
+cycle 1: stop and start of backend and db (11 tables, 72 rows)
+  records: same
+  next scheduled review (card 1): same
+cycle 2: stop and start of backend and db (11 tables, 72 rows)
+  records: same
+  next scheduled review (card 1): same
+cycle 3: stop and start of backend and db (11 tables, 72 rows)
+  records: same
+  next scheduled review (card 1): same
+interrupted write: database killed during an uncommitted update of every deck
+  records: same
+integrity: every btree index passes amcheck
+PASS
+```
+
+The same commit then went to production, after a backup of its database, and was checked from a campus browser: the demo learner signed in, opened a text, marked a word, and opened a deck.
+Generating cards remains unverified there, as recorded in the deviations.
 
 ## Deviations
 
