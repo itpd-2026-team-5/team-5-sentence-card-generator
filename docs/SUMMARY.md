@@ -6,6 +6,7 @@
 - [Deployment](deployment.md)
 - [Definition of done](definition-of-done.md)
 - [Product vision](product-vision.md)
+- [Features](features.md)
 - [Threshold of success](threshold-of-success.md)
 - [Glossary](glossary.md)
 - [Decisions](decisions.md)

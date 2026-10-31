@@ -8,13 +8,14 @@ Sentence Cards Generator, Team 5.
 
 The testing work adds frontend client regression tests to the existing backend suite and prepares their integration into product CI in a separate workflow change.
 The local checks, results, and environment limitations are recorded in [testing.md](testing.md).
-This report currently covers testing only; the production instance, REL-05, presentation deck, customer review, sprint retrospective, and team contribution evidence still need to be completed for Submission 5.
+This report currently covers testing and feature documentation; the production instance, REL-05, customer review, sprint retrospective, and team contribution evidence still need to be completed for Submission 5.
 
 ## Coverage
 
 | Deliverable | Artifact |
 | --- | --- |
 | Test suite and automated checks | [reports/week-05/testing.md](testing.md) |
+| Feature documentation | [docs/features.md](../../docs/features.md) |
 | AI usage | [reports/week-05/ai-usage.md](ai-usage.md) |
 
 ## Deviations
