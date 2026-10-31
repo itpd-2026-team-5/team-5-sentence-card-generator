@@ -826,3 +826,213 @@ Close US-01, US-02, and US-03 for the demonstrated text-to-card workflow.
 - **Source:** [the Week 4 validation meeting](../reports/week-04/meeting-report.md#decisions).
 - **Why:** At 01:29:24 the Customer agreed with the basic text-and-word capability; at 01:29:31–01:29:35 KaramKhaddour explicitly confirmed satisfaction of the text-input criteria and described them; at 01:30:39–01:31:00 the team concluded that US-01 and US-02 could close, and at 01:31:24–01:32:27 reached the same conclusion for US-03 with problem reporting tracked separately under [DEC-076](#dec-076), without objection from the Customer.
   This records the team's closure decision and the spoken participant confirmations, not a separate Customer confirmation that every AC-nn passed; the report distinguishes these results from individual test details not recorded in the discussion.
+
+## DEC-083
+
+Keep interface-language options in their native names and show deck-language names in the selected interface language.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Customer
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 00:09:43–00:10:47, the Customer confirmed the current direction after comparing the language picker with Linux, agreeing that users must recognize their own language, and checking the translated language name in the deck settings.
+
+## DEC-084
+
+Select the learning and translation language pair in the generation flow, filter destination decks by that pair, and let a new deck inherit it.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Customer
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 00:14:55–00:16:39, the Customer found the global pair unnecessary when selecting a destination for a text and proposed choosing the pair beside the deck selector, with creation of a matching deck when needed.
+
+## DEC-085
+
+Move learning-language selection into the per-language proficiency controls and remove the separate Languages for new decks settings card.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Customer
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 00:12:10–00:12:47 and 00:17:17–00:17:41, the Customer found the separate card confusing and proposed selecting each learning language and its level together; the pair needed for generation belongs in the flow recorded by [DEC-084](#dec-084).
+
+## DEC-086
+
+Vertically align the sentence-length range separator with its input fields.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Customer
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 00:17:56–00:18:15, the Customer identified the word to between the minimum and maximum inputs as bottom-aligned and asked for it to be moved higher.
+
+## DEC-087
+
+Restore the missing mobile navigation so users can switch between the application's sections.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Team, not contested
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 00:20:26–00:21:05, during the mobile demonstration the navigation did not appear; KaramKhaddour identified this as a problem and stated that it should be visible at the bottom so users can change sections.
+
+## DEC-088
+
+Provide an easily discoverable global sound control near the top of the interface and preserve its setting across study sessions.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Customer
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 00:21:14–00:22:33, the Customer proposed a control near the top-right corner that applies across sessions, rather than requiring users to return to Settings to change the global default.
+
+## DEC-089
+
+Keep the study-session sound override for that session only and initialize each new session from the global sound default.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Customer
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 00:22:42–00:23:36, after considering removal of the override and persistence between sessions, the Customer chose to keep a quick session-only override for cases such as being interrupted in a public place.
+
+## DEC-090
+
+Allow provider-token counts to be removed from the user-facing Settings statistics.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Customer
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 00:24:18–00:24:37, the displayed input and output token counts were both zero, and the Customer said those counts may be removed; this permits removing that display rather than requiring the removal of internal usage collection or card-quality statistics.
+
+## DEC-091
+
+Keep Teaching available to every account rather than hiding it behind a separate teacher-only account category.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Customer
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 00:25:17–00:25:43, the Customer confirmed the current direction after learning that Teaching appears for everyone and agreed to retain it because any user can become a teacher.
+
+## DEC-092
+
+Show the account email in the Teaching workflow where users need it to receive shared decks.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Customer
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 00:26:41–00:27:21, the Customer could not immediately find the email needed for sharing and proposed displaying it there instead of making users search near the bottom of Settings.
+
+## DEC-093
+
+If card reordering is implemented, keep the user-defined order separate from card identifiers.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Customer
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 00:38:49–00:41:28, the Customer described the problems caused by encoding order in identifiers and directed the team to keep those concepts separate; this is a constraint on a possible future feature, whose delivery is deferred by [DEC-094](#dec-094).
+
+## DEC-094
+
+Postpone individual-card reordering rather than scheduling it as required work for the next sprint.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Customer
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 00:44:31–00:45:52, after exploring the interaction with existing review progress and scheduling, the Customer agreed that reordering could be a future feature and asked the team to focus on the existing interface; no scheduling algorithm for it was selected.
+
+## DEC-095
+
+Show each sentence, its translation, and an approval action directly in the desktop teacher table, with card details available for further inspection.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Customer
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 00:48:19–00:49:50, the Customer confirmed and refined the compact review direction in [DEC-017](#dec-017), so busy teachers can check and approve sentences without opening every card and searching the side panel.
+
+## DEC-096
+
+Keep teacher pronunciation controls in the card details rather than adding them to the summary review table.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Customer
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 00:50:03–00:50:22, the Customer expected teachers to know both languages and not need playback for every quick review, so leaving those controls in the details keeps the table uncluttered.
+
+## DEC-097
+
+Keep the learner's generation instructions read-only for teachers while allowing teachers to enter corrective feedback for regeneration.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Customer
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 00:53:26–00:55:19, the Customer distinguished the instructions that determine a deck's topic from the teacher's explanation of what was wrong: the learner controls the former, while the teacher needs the latter to improve the sentence.
+
+## DEC-098
+
+Allow teachers to archive shared cards while reserving permanent deletion for the learner.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Customer
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 00:55:49–00:57:52, after considering both deletion and archiving, the Customer's final direction was to let teachers archive and leave permanent deletion to the student, avoiding an irreversible removal that might later prove mistaken.
+
+## DEC-099
+
+Keep the regenerated sentence preview and rewrite actions visible together in the card-editing workflow.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Customer
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 00:58:10–00:59:44, the Customer could not see the generated result without scrolling after Rewrite now and required quick feedback so a teacher can inspect the result and retry; a two-column desktop layout and repositioned mobile controls were options, not a fixed layout decision.
+
+## DEC-100
+
+Prioritize improving the existing desktop and mobile interfaces in Week 6, with particular attention to mobile usability.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Customer
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 01:00:03–01:00:40, KaramKhaddour proposed improving presentation rather than adding more functionality, and the Customer agreed to that focus after the review exposed navigation and teacher-layout problems.
+
+## DEC-101
+
+Verify that pronunciation and LLM generation work from the actual deployment environment, including any replacement VM.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Customer
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 01:00:40–01:01:25, the Customer added working audio and LLM API access to the next steps; discussing an external VM did not select a migration, a provider, or a pronunciation service.
+
+## DEC-102
+
+Accept the demonstrated deployed version as sufficient for the Week 5 submission despite the blocked live LLM generation.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Customer
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 01:02:49–01:03:31, when saleemasekrea000 asked whether the deployed version with existing cards could be submitted, the Customer explicitly said this version was sufficient; this is a submission-scope decision, not an acceptance verdict for every story or a claim that live generation passed.
+
+## DEC-103
+
+Carry trials of alternative LLM API providers into the next sprint instead of requiring a provider replacement for the current submission.
+
+- **Status:** Active
+- **Date:** 2026-10-31
+- **Made by:** Customer
+- **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
+- **Why:** At 01:01:13–01:01:29 and 01:03:25–01:03:31, the Customer allowed other providers to be tried the following week after accepting the current deployed version for submission; a free-provider aggregator and a Chinese provider were possibilities, and neither was selected.

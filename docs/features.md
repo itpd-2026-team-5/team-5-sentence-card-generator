@@ -22,7 +22,7 @@ A [learner](glossary.md#learner) can choose which words to learn from a [text](g
 A [learner](glossary.md#learner) can turn a [marked word](glossary.md#marked-word) into a [card](glossary.md#card) with a new sentence to study in a [deck](glossary.md#deck).
 
 - **Stories:** [US-03](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/32), [US-05](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/38), [US-06](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/39)
-- **Behavior:** [FR-003](functional-requirements/fr/FR-003.md), [FR-004](functional-requirements/fr/FR-004.md), [FR-005](functional-requirements/fr/FR-005.md)
+- **Behavior:** [FR-003](functional-requirements/fr/FR-003.md), [FR-004](functional-requirements/fr/FR-004.md), [FR-005](functional-requirements/fr/FR-005.md), [FR-012](functional-requirements/fr/FR-012.md)
 - **Decisions:** [ADR-002](architecture/adr/ADR-002.md), [ADR-003](architecture/adr/ADR-003.md)
 
 ## Improve a card before studying it

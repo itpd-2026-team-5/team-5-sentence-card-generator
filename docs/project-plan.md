@@ -68,6 +68,10 @@ A learner can complete the core text-to-card-and-study flow from the university 
 
 Provisional: the team can observe product use and present a running product with evidence of its behavior.
 
+The Customer review prioritizes improving desktop and especially mobile usability under [DEC-100](decisions.md#dec-100), and verifying deployed pronunciation and LLM access under [DEC-101](decisions.md#dec-101).
+Alternative provider trials carry into this sprint under [DEC-103](decisions.md#dec-103); no provider or external-VM migration has been selected.
+Individual-card reordering remains deferred under [DEC-094](decisions.md#dec-094), with separate order and identifiers required if it is later implemented under [DEC-093](decisions.md#dec-093).
+
 - **Due:** 2026-11-07
 
 #### REL-06

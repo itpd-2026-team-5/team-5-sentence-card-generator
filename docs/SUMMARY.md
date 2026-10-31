@@ -30,6 +30,7 @@
   - [FR-009: Schedule Each Review With FSRS](functional-requirements/fr/FR-009.md)
   - [FR-010: Read A Sentence Aloud](functional-requirements/fr/FR-010.md)
   - [FR-011: Let A Teacher Correct A Shared Deck](functional-requirements/fr/FR-011.md)
+  - [FR-012: Configure Interface And Learning Preferences](functional-requirements/fr/FR-012.md)
 - [Quality requirements](quality-requirements/README.md)
   - [QR-01: Keep Shared Data And API Keys Confidential](quality-requirements/qr/QR-01.md)
   - [QR-02: Run The Checks On The Critical Modules From A Clean Checkout](quality-requirements/qr/QR-02.md)
