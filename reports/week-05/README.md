@@ -12,21 +12,52 @@ The product is deployed to staging and production on the university VM, as descr
 Every active High business-importance quality requirement now has a test; their results, including the ones not yet verified, are in the [quality requirement testing plan](../../docs/project-plan.md#quality-requirement-testing-plan).
 The product CI names a step for each applicable check; the backend build is recorded as not applicable, because the backend runs from source with no compile or bundle step.
 After the [Sprint Review](meeting-report.md), the release commit `b904ab3` was redeployed and retested, and REL-05 was released as [v0.3.0](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.3.0); its record is in the [plan](../../docs/project-plan.md#rel-05).
-The team contribution evidence still needs to be completed for Submission 5.
+The plan carries two milestones: [MLS-05](../../docs/project-plan.md#mls-05), due with this sprint, delivers the core text-to-card-and-study flow on staging and production on the university VM, and [MLS-07](../../docs/project-plan.md#mls-07), due in SPRINT-07, delivers studying on a phone and teacher review of an explicitly shared deck.
+SPRINT-05's Actual Velocity is 0 of the planned 21, because the Sprint Review took no story verdicts: US-10, US-08, and US-14 moved to SPRINT-06, and the rework the review asked for is planned there.
+
+## Customer Meeting Outcome
+
+The Customer accepted the demonstrated deployed version as sufficient for the Week 5 submission, despite the blocked live generation, per [DEC-102](../../docs/decisions.md#dec-102).
+No story was accepted or rejected against its `AC-nn` at the meeting, as the [meeting report](meeting-report.md#decisions) records: [US-10](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/36), [US-08](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/41), shown for its playback buttons, and [US-14](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/141) stay open and moved to SPRINT-06, where the [meeting's action points](meeting-report.md#action-points) take a verdict per criterion.
+
+The two implemented quality requirement tests passed at their levels:
+
+- [QR-02 QRT-01](../../docs/quality-requirements/qr/QR-02.md#qrt-01), `CI`: `Passes` in the [`Product checks` run on `b904ab3`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/41224928507).
+- [QR-07 QRT-01](../../docs/quality-requirements/qr/QR-07.md#qrt-01), `deployed`: `Passes` on staging, on [the first deployment](#qr-07-qrt-01-on-staging) and on [the release commit](#qr-07-qrt-01-on-the-release-commit).
 
 ## Coverage
 
 | Deliverable | Artifact |
 | --- | --- |
-| Test suite and automated checks | [reports/week-05/testing.md](testing.md) |
+| Sprint plan and milestones | [docs/project-plan.md#sprint-05](../../docs/project-plan.md#sprint-05) and [#milestones](../../docs/project-plan.md#milestones) |
+| New stories | [the `User Story` issues](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues?q=is%3Aissue%20type%3A%22User%20Story%22), with [US-14](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/141) scheduled in SPRINT-05 and [US-15](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/142) refined for SPRINT-06 |
+| Quality requirement tests | [docs/quality-requirements/qr/](../../docs/quality-requirements/README.md), with a `QRT-01` in QR-01, QR-02, QR-03, QR-06, and QR-07 |
+| Testing plan | [docs/project-plan.md#quality-requirement-testing-plan](../../docs/project-plan.md#quality-requirement-testing-plan) |
+| Automated tests and CI | [`.github/workflows/`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/tree/main/.github/workflows), with `actionlint` and the product-code checks; the local results are in [testing.md](testing.md) |
+| Deployment | [docs/deployment.md](../../docs/deployment.md), and [the staging and production deployment with its core-task verification](#deployment) |
 | Feature documentation | [docs/features.md](../../docs/features.md) |
-| Deployment runbook | [docs/deployment.md](../../docs/deployment.md) |
-| Staging and production deployment | [Deployment](#deployment) |
-| Sprint Review | [reports/week-05/meeting-report.md](meeting-report.md) |
-| Quality requirement testing plan | [docs/project-plan.md](../../docs/project-plan.md#quality-requirement-testing-plan) |
-| REL-05 | [docs/project-plan.md](../../docs/project-plan.md#rel-05) |
+| Week 4 action points | [`## Previous action points`](meeting-report.md#previous-action-points) |
+| Week 4 open questions | [`## Previous open questions`](meeting-report.md#previous-open-questions) |
+| Meeting script | [reports/week-05/meeting-script.md](meeting-script.md) |
+| Meeting transcript | [reports/week-05/meeting-transcript.md](meeting-transcript.md) |
+| Customer validation | [reports/week-05/meeting-report.md](meeting-report.md), and [each story's verdict](#customer-meeting-outcome) |
+| `REL-05` | the tag and its [release body](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.3.0), the changelog's [0.3.0 section](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/blob/main/CHANGELOG.md#030---2026-10-31), and the [plan's REL-05 block](../../docs/project-plan.md#rel-05) |
 | Sprint retrospective | [reports/week-05/sprint-retrospective.md](sprint-retrospective.md) |
 | AI usage | [reports/week-05/ai-usage.md](ai-usage.md) |
+
+## Contribution
+
+| Member | Work |
+| --- | --- |
+| Byakko-san | Planned SPRINT-05 and its milestones ([#151](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/151)), installed the course materials as a skill ([#153](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/153)), and reviewed [#159](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/159), [#161](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/161), [#163](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/163), [#165](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/165), [#167](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/167), [#169](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/169), [#171](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/171), and [#175](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/175). |
+| Horokk1 | Wrote the Sprint Review's script, transcript, and report ([#177](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/177)), and reviewed [#151](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/151), [#153](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/153), [#159](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/159), [#165](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/165), [#171](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/171), and [#180](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/180). |
+| KaramKhaddour | Added the frontend regression tests and ran them in CI ([#159](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/159), [#161](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/161)), documented the features ([#163](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/163)), reworked teacher review and multilingual generation ([#165](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/165)), fixed texts without a language ([#175](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/175)), and reviewed [#151](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/151), [#153](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/153), [#155](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/155), and [#157](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/157). |
+| saleemasekrea000 | Added `actionlint` and completed the product checks ([#155](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/155)), deployed to the university VM and wrote the runbook ([#157](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/157), [#167](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/167)), wrote the quality requirement tests and the testing plan ([#169](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/169), [#171](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/171)), cut REL-05 and closed the sprint ([#180](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/180)), and reviewed [#177](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/177). |
+
+## Repository Evidence
+
+- A merged pull request that closed its task issue: [#180](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/180), which closed [#179](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/179).
+- The latest runs on `main`: [link check](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/workflows/lychee.yml?query=branch%3Amain), [Markdown check](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/workflows/markdown.yml?query=branch%3Amain), [`actionlint`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/workflows/actionlint.yml?query=branch%3Amain), and [product-code checks](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/workflows/product.yml?query=branch%3Amain).
 
 ## Deployment
 
@@ -110,6 +141,8 @@ The deployment is otherwise working; generation needs an LLM gateway reachable f
 [QR-03 QRT-01](../../docs/quality-requirements/qr/QR-03.md#qrt-01) is a `manual` test: whether a generated card can be kept is the reviewer's and the learner's judgement, which no command can assert.
 Its run also needs the service's LLM, which the university VM cannot reach, as recorded above.
 
+The rework the Sprint Review asked for, from [DEC-084](../../docs/decisions.md#dec-084) onward, is deferred to SPRINT-06 in the [meeting's action points](meeting-report.md#action-points), so REL-05 is the reviewed and tested commit `b904ab3` without it.
+
 ## Privacy
 
-No private-only material was committed as part of this testing work.
+No private-only material was committed to the repository.
