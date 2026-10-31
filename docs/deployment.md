@@ -54,7 +54,7 @@ sudo ufw allow 8080/tcp && sudo ufw allow 8081/tcp && sudo ufw allow 8025/tcp &&
 
 ## The two deployments
 
-Staging and production are two runs of the same [`compose.deploy.yml`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/blob/main/compose.deploy.yml), as two compose projects.
+Staging and production are two runs of the same `compose.deploy.yml` in the repository root, as two compose projects.
 Each project has its own containers, its own database volume, its own email inbox, and its own env file, so a command aimed at one never touches the other's data.
 
 | Deployment | Compose project | Env file              | App port | Email inbox port |
