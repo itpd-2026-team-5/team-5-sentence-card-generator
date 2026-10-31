@@ -43,6 +43,9 @@ On production, the last step of the core task, generating cards for the marked w
 The VM cannot reach the Claude API (the connection times out) and OpenRouter refuses it (`403`), and a learner's own key in the browser fails the same way from the campus network.
 The deployment is otherwise working; generation needs an LLM gateway reachable from the university network, as the [runbook](../../docs/deployment.md#2026-10-31-card-generation-cannot-reach-an-llm-from-the-vm) describes.
 
+[QR-03 QRT-01](../../docs/quality-requirements/qr/QR-03.md#qrt-01) is a `manual` test: whether a generated card can be kept is the reviewer's and the learner's judgement, which no command can assert.
+Its run also needs the service's LLM, which the university VM cannot reach, as recorded above.
+
 ## Privacy
 
 No private-only material was committed as part of this testing work.
