@@ -1,3 +1,4 @@
+import { t } from "../i18n";
 import { speak, type Language } from "../api";
 import { Icon } from "./Icon";
 
@@ -17,8 +18,8 @@ export function Say({
     <button
       type="button"
       className="say"
-      title={`Listen to ${label}`}
-      aria-label={`Listen to ${label}`}
+      title={t("Listen to {v0}", { v0: label })}
+      aria-label={t("Listen to {v0}", { v0: label })}
       onClick={(e) => {
         e.stopPropagation();
         speak(text, language, onFail);

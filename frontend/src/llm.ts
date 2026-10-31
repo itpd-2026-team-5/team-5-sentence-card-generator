@@ -1,3 +1,4 @@
+import { t } from "./i18n";
 import Anthropic from "@anthropic-ai/sdk";
 import { local } from "./storage";
 
@@ -74,13 +75,13 @@ export function parseJson(text: string): Record<string, unknown> {
     const start = body.indexOf("{");
     const end = body.lastIndexOf("}");
     if (start < 0 || end <= start)
-      throw new Error("The model's answer held no cards; try again.");
+      throw new Error(t("The model's answer held no cards; try again."));
     body = body.slice(start, end + 1);
   }
   try {
     return JSON.parse(body);
   } catch {
-    throw new Error("The model's answer was not valid JSON; try again.");
+    throw new Error(t("The model's answer was not valid JSON; try again."));
   }
 }
 
@@ -132,29 +133,36 @@ async function callAnthropic(request: LLMRequest): Promise<LLMOutput> {
         });
   } catch (error) {
     if (error instanceof Anthropic.AuthenticationError)
-      throw new Error("Your API key was not accepted. Check it in Settings.");
+      throw new Error(
+        t("Your API key was not accepted. Check it in Settings."),
+      );
     if (error instanceof Anthropic.PermissionDeniedError)
-      throw new Error("Your API key may not use this model.");
+      throw new Error(t("Your API key may not use this model."));
     if (error instanceof Anthropic.NotFoundError)
-      throw new Error(`The provider does not know the model “${model}”.`);
+      throw new Error(
+        t("The provider does not know the model “{v0}”.", { v0: model }),
+      );
     if (error instanceof Anthropic.RateLimitError)
       throw new Error(
-        "The provider is rate limiting your key; try again in a minute.",
+        t("The provider is rate limiting your key; try again in a minute."),
       );
     if (error instanceof Anthropic.APIConnectionError)
-      throw new Error("Could not reach the provider from this browser.");
+      throw new Error(t("Could not reach the provider from this browser."));
     if (error instanceof Anthropic.APIError)
-      throw new Error(`The provider returned an error (${error.status}).`);
+      throw new Error(
+        t("The provider returned an error ({v0}).", { v0: error.status }),
+      );
     throw error;
   }
   if (response.stop_reason === "refusal")
-    throw new Error("The model declined to write these sentences.");
+    throw new Error(t("The model declined to write these sentences."));
   if (response.stop_reason === "max_tokens")
-    throw new Error("The answer was cut off; try fewer words at once.");
+    throw new Error(t("The answer was cut off; try fewer words at once."));
   const texts = response.content.flatMap((block) =>
     block.type === "text" ? [block.text] : [],
   );
-  if (texts.length === 0) throw new Error("The model returned no sentences.");
+  if (texts.length === 0)
+    throw new Error(t("The model returned no sentences."));
   return {
     data: parseJson(texts[texts.length - 1]),
     model: response.model,
@@ -182,12 +190,14 @@ export async function listModels(
       return page.data.map((m) => m.id);
     } catch (error) {
       if (error instanceof Anthropic.AuthenticationError)
-        throw new Error("The key was not accepted.");
+        throw new Error(t("The key was not accepted."));
       if (error instanceof Anthropic.APIConnectionError)
-        throw new Error("Could not reach this base URL from the browser.");
+        throw new Error(t("Could not reach this base URL from the browser."));
       if (error instanceof Anthropic.APIError)
         throw new Error(
-          `The provider answered with an error (${error.status}).`,
+          t("The provider answered with an error ({v0}).", {
+            v0: error.status,
+          }),
         );
       throw error;
     }
@@ -198,13 +208,13 @@ export async function listModels(
       headers: { Authorization: `Bearer ${key}` },
     });
   } catch {
-    throw new Error("Could not reach this base URL from the browser.");
+    throw new Error(t("Could not reach this base URL from the browser."));
   }
   if (response.status === 401 || response.status === 403)
-    throw new Error("The key was not accepted.");
+    throw new Error(t("The key was not accepted."));
   if (!response.ok)
     throw new Error(
-      `The provider answered with an error (${response.status}).`,
+      t("The provider answered with an error ({v0}).", { v0: response.status }),
     );
   const body = (await response.json()) as { data?: { id: string }[] };
   return (body.data ?? []).map((m) => m.id);
@@ -235,22 +245,24 @@ async function callOpenAICompatible(request: LLMRequest): Promise<LLMOutput> {
       }),
     });
   } catch {
-    throw new Error("Could not reach the provider from this browser.");
+    throw new Error(t("Could not reach the provider from this browser."));
   }
   if (response.status === 401 || response.status === 403)
-    throw new Error("Your API key was not accepted. Check it in Settings.");
+    throw new Error(t("Your API key was not accepted. Check it in Settings."));
   if (response.status === 429)
     throw new Error(
-      "The provider is rate limiting your key; try again in a minute.",
+      t("The provider is rate limiting your key; try again in a minute."),
     );
   if (!response.ok)
-    throw new Error(`The provider returned an error (${response.status}).`);
+    throw new Error(
+      t("The provider returned an error ({v0}).", { v0: response.status }),
+    );
   const body = await response.json();
   const choice = body.choices?.[0];
   if (choice?.finish_reason === "length")
-    throw new Error("The answer was cut off; try fewer words at once.");
+    throw new Error(t("The answer was cut off; try fewer words at once."));
   const content = choice?.message?.content;
-  if (!content) throw new Error("The model returned no sentences.");
+  if (!content) throw new Error(t("The model returned no sentences."));
   return {
     data: parseJson(content),
     model: body.model ?? ownKey.model(),

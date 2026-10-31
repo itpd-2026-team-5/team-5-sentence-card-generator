@@ -9,6 +9,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - Try the product with demo data: one command creates a learner and two teachers with decks, texts, and cards, with no API key or email needed.
+- Choose English, German, or Russian for the interface independently of learning languages, using a compact globe menu on the sign-in page or the language setting; the choice is remembered in this browser.
+- Set each text's language when adding or editing it, and generate its cards into a deck with the same learning language.
+
+### Changed
+
+- Teachers see a compact card overview and open a card to edit, listen, rewrite, confirm, reopen, archive, or delete it; edits are saved explicitly, with an unsaved-edit warning.
+- Each teacher pronunciation button sits beside the sentence, translation, word, or meaning it reads.
+- Dropdowns share themed colors, rounded menus, selection highlights, and focus states; model suggestions support searching and a typed model name.
+- The text-file chooser uses the app's violet and cyan button colors.
+
+### Fixed
+
+- Card generation and rewriting use known and ignored words from texts in the deck's learning language, so one language no longer fills another language's vocabulary limit.
+- Card details wrap narrow fields, status badges, and long text so the panel fits the screen without horizontal scrolling.
 
 ## [0.2.0] - 2026-10-25
 

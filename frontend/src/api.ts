@@ -1,3 +1,4 @@
+import { t } from "./i18n";
 import { callLLM, ownKey, type LLMRequest } from "./llm";
 
 export type Language = "en" | "de" | "ru";
@@ -59,6 +60,7 @@ export type DeckFields = Pick<
 >;
 
 export interface TextSummary {
+  language: Language;
   id: number;
   title: string;
   source_url: string;
@@ -68,6 +70,7 @@ export interface TextSummary {
 }
 
 export interface TextDetail {
+  language: Language;
   id: number;
   title: string;
   source_url: string;
@@ -175,6 +178,7 @@ export interface TaughtDeck {
 }
 
 export interface TextFields {
+  language?: Language;
   title: string;
   body: string;
   source_url: string;
@@ -216,7 +220,7 @@ async function request<T>(
       session.onUnverified();
     const detail =
       typeof error.detail === "string" ? error.detail : response.statusText;
-    throw new Error(detail);
+    throw new Error(t(detail));
   }
   return response.status === 204 ? (undefined as T) : response.json();
 }

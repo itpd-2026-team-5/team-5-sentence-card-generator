@@ -1,3 +1,4 @@
+import { t } from "../i18n";
 import { useEffect, useState } from "react";
 import { api, type Deck, type Study } from "../api";
 import { Icon } from "../components/Icon";
@@ -16,10 +17,12 @@ function greeting() {
 
 function when(iso: string) {
   const minutes = Math.round((new Date(iso).getTime() - Date.now()) / 60000);
-  if (minutes < 1) return "in a moment";
-  if (minutes < 60) return `in ${minutes} min`;
-  if (minutes < 1440) return `in ${Math.round(minutes / 60)} h`;
-  return `on ${new Date(iso).toLocaleDateString()}`;
+  if (minutes < 1) return t("in a moment");
+  if (minutes < 60) return t("in {v0} min", { v0: minutes });
+  if (minutes < 1440) return t("in {v0} h", { v0: Math.round(minutes / 60) });
+  return t("on {v0}", {
+    v0: new Date(iso).toLocaleDateString(document.documentElement.lang),
+  });
 }
 
 /** Today: choose the decks to study, as in Anki, then start one session over them. */
@@ -48,7 +51,7 @@ export function Home() {
     if (decks) api.study(chosen).then(setStudy);
   }, [decks, chosen]);
 
-  if (!decks) return <p className="muted">Loading…</p>;
+  if (!decks) return <p className="muted">{t("Loading…")}</p>;
 
   const toggle = (id: number) => {
     const next = chosen.includes(id)
@@ -80,27 +83,34 @@ export function Home() {
             month: "long",
           })}
         </p>
-        <h1>{greeting()}.</h1>
+        <h1>{t(greeting())}.</h1>
       </header>
 
       <section className="glass block stack">
-        <h3>Today in the decks you ticked</h3>
+        <h3>{t("Today in the decks you ticked")}</h3>
         {chosen.length === 0 ? (
-          <p className="muted">Tick at least one deck below to study it.</p>
+          <p className="muted">
+            {t("Tick at least one deck below to study it.")}
+          </p>
         ) : left > 0 ? (
           <a
             className="btn primary start"
             href={`#/study?decks=${chosen.join(",")}`}
           >
-            <Icon name="play" size={16} /> Study{" "}
+            <Icon name="play" size={16} /> {t("Study")}{" "}
             {names.length === 1 ? names[0] : `${names.length} decks`} · {left}{" "}
-            {left === 1 ? "card" : "cards"}
+            {left === 1 ? t("card") : t("cards")}
           </a>
         ) : (
           <p className="muted">
             {study?.next_due
-              ? `Nothing to study in these decks now. The next card returns ${when(study.next_due)}.`
-              : "No cards to study in these decks yet. Add a text and pick words to make some."}
+              ? t(
+                  "Nothing to study in these decks now. The next card returns {v0}.",
+                  { v0: when(study.next_due) },
+                )
+              : t(
+                  "No cards to study in these decks yet. Add a text and pick words to make some.",
+                )}
           </p>
         )}
         {study && chosen.length > 0 && (
@@ -115,15 +125,16 @@ export function Home() {
 
       <section className="glass block stack">
         <div className="row-between">
-          <h3>Your decks</h3>
+          <h3>{t("Your decks")}</h3>
           <span className="muted small">
-            <span className="count new">new</span> never studied ·{" "}
-            <span className="count due">review</span> due again
+            <span className="count new">{t("new")}</span> {t("never studied ·")}{" "}
+            <span className="count due">{t("review")}</span> {t("due again")}
           </span>
         </div>
         <p className="muted small">
-          Tick the decks to study together. New cards come in the order of this
-          list; use the arrows to study a deck first.
+          {t(
+            "Tick the decks to study together. New cards come in the order of this list; use the arrows to study a deck first.",
+          )}
         </p>
         <ul className="deck-picks scroll-list">
           {decks.map((deck, index) => (
@@ -136,11 +147,11 @@ export function Home() {
                 />
                 <span className="pick-name">{deck.name}</span>
                 <span className="pick-counts">
-                  <span className="count new" title="Never studied">
-                    {deck.new} new
+                  <span className="count new" title={t("Never studied")}>
+                    {deck.new} {t("new")}
                   </span>
-                  <span className="count due" title="Due for review">
-                    {deck.due} to review
+                  <span className="count due" title={t("Due for review")}>
+                    {deck.due} {t("to review")}
                   </span>
                 </span>
               </label>
@@ -149,8 +160,8 @@ export function Home() {
                   className="ghost icon-btn"
                   disabled={index === 0}
                   onClick={() => move(index, -1)}
-                  aria-label={`Move ${deck.name} up`}
-                  title="Study earlier"
+                  aria-label={t("Move {v0} up", { v0: deck.name })}
+                  title={t("Study earlier")}
                 >
                   <Icon name="up" size={16} />
                 </button>
@@ -158,8 +169,8 @@ export function Home() {
                   className="ghost icon-btn"
                   disabled={index === decks.length - 1}
                   onClick={() => move(index, 1)}
-                  aria-label={`Move ${deck.name} down`}
-                  title="Study later"
+                  aria-label={t("Move {v0} down", { v0: deck.name })}
+                  title={t("Study later")}
                 >
                   <Icon name="down" size={16} />
                 </button>
@@ -171,10 +182,11 @@ export function Home() {
 
       {decks.every((d) => d.cards === 0) && (
         <a className="empty glass" href="#/texts">
-          <strong>Make your first cards</strong>
+          <strong>{t("Make your first cards")}</strong>
           <span className="muted">
-            Add a text, mark the words you want to learn, and generate cards
-            into a deck.
+            {t(
+              "Add a text, mark the words you want to learn, and generate cards into a deck.",
+            )}
           </span>
         </a>
       )}

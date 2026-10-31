@@ -1,5 +1,6 @@
+import { t } from "../i18n";
 import { useEffect, useState } from "react";
-import { api, type TextSummary } from "../api";
+import { api, LANGUAGES, type TextSummary } from "../api";
 import { Drawer } from "../components/Drawer";
 import { Icon } from "../components/Icon";
 import { TextForm } from "../components/TextForm";
@@ -38,7 +39,11 @@ export function Library() {
   const remove = async (event: React.MouseEvent, text: TextSummary) => {
     event.preventDefault();
     event.stopPropagation();
-    if (!confirm(`Delete “${text.title}”? Its cards stay in their decks.`))
+    if (
+      !confirm(
+        t("Delete “{v0}”? Its cards stay in their decks.", { v0: text.title }),
+      )
+    )
       return;
     await api.deleteText(text.id);
     load();
@@ -49,27 +54,26 @@ export function Library() {
       <header className="page-head row-between">
         <div>
           <p className="eyebrow">
-            {texts.length} {texts.length === 1 ? "text" : "texts"}
+            {texts.length} {texts.length === 1 ? t("text") : t("texts")}
           </p>
-          <h1>Texts</h1>
+          <h1>{t("Texts")}</h1>
         </div>
         <button className="btn primary" onClick={() => setAdding(true)}>
-          <Icon name="plus" size={16} /> Add text
+          <Icon name="plus" size={16} /> {t("Add text")}
         </button>
       </header>
       <p className="muted">
-        A text is where you find words: paste one, mark the words you want to
-        learn, and generate their cards into a deck. Drag a text by its handle,
-        or use the arrows, to put the texts in the order you want to work
-        through them.
+        {t(
+          "A text is where you find words: paste one, mark the words you want to learn, and generate their cards into a deck. Drag a text by its handle, or use the arrows, to put the texts in the order you want to work through them.",
+        )}
       </p>
       {error && <p className="error">{error}</p>}
 
       {loaded && texts.length === 0 && (
         <div className="empty glass">
-          <strong>No texts yet</strong>
+          <strong>{t("No texts yet")}</strong>
           <span className="muted">
-            Add a text in the language you are learning.
+            {t("Add a text in the language you are learning.")}
           </span>
         </div>
       )}
@@ -85,7 +89,7 @@ export function Library() {
                 location.hash = `/text/${text.id}`;
               }}
             >
-              <span className="text-order" title="Drag to move">
+              <span className="text-order" title={t("Drag to move")}>
                 <Icon name="grip" size={18} />
                 <span>{index + 1}</span>
               </span>
@@ -96,7 +100,8 @@ export function Library() {
                   </a>
                 </p>
                 <p className="muted small">
-                  {text.to_learn} to learn · {text.cards} cards
+                  {t(LANGUAGES[text.language])} · {text.to_learn}{" "}
+                  {t("to learn ·")} {text.cards} {t("cards")}
                   {text.source_url && (
                     <>
                       {" "}
@@ -108,7 +113,7 @@ export function Library() {
                         rel="noreferrer"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        source ↗
+                        {t("source ↗")}
                       </a>
                     </>
                   )}
@@ -117,7 +122,7 @@ export function Library() {
               <div className="row-actions">
                 <button
                   className="ghost icon-btn"
-                  aria-label="Move up"
+                  aria-label={t("Move up")}
                   disabled={index === 0}
                   onClick={(e) => move(e, index, -1)}
                 >
@@ -125,7 +130,7 @@ export function Library() {
                 </button>
                 <button
                   className="ghost icon-btn"
-                  aria-label="Move down"
+                  aria-label={t("Move down")}
                   disabled={index === texts.length - 1}
                   onClick={(e) => move(e, index, 1)}
                 >
@@ -133,7 +138,7 @@ export function Library() {
                 </button>
                 <button
                   className="ghost icon-btn danger-icon"
-                  aria-label={`Delete ${text.title}`}
+                  aria-label={t("Delete {v0}", { v0: text.title })}
                   onClick={(e) => remove(e, text)}
                 >
                   <Icon name="trash" size={16} />
@@ -145,9 +150,9 @@ export function Library() {
       )}
 
       {adding && (
-        <Drawer title="Add a text" onClose={() => setAdding(false)}>
+        <Drawer title={t("Add a text")} onClose={() => setAdding(false)}>
           <TextForm
-            submit="Add and pick words"
+            submit={t("Add and pick words")}
             onSave={async (fields) => {
               const text = await api.createText(fields);
               location.hash = `/text/${text.id}`;

@@ -78,6 +78,7 @@ class DeckOut(BaseModel):
 
 
 class TextIn(BaseModel):
+    language: Language | None = None
     title: str = Field(min_length=1, max_length=200)
     body: str = Field(min_length=1, max_length=50000)
     # Where the text came from; kept apart from the body, so no card is made from a link.
@@ -93,6 +94,7 @@ class TextIn(BaseModel):
 
 
 class TextSummary(BaseModel):
+    language: Language
     id: int
     title: str
     source_url: str
@@ -114,6 +116,7 @@ class Sentence(BaseModel):
 
 
 class TextDetail(BaseModel):
+    language: Language
     id: int
     title: str
     source_url: str

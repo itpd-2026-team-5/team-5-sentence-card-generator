@@ -56,6 +56,7 @@ from app.schemas import (
     GenerateIn,
     GenerateOut,
     GlossIn,
+    Language,
     MarkIn,
     MarkOut,
     MarkStatus,
@@ -411,6 +412,7 @@ def list_texts(db: Session = Depends(get_db), profile: Profile = Depends(current
     return [
         TextSummary(
             id=t.id,
+            language=cast(Language, t.language),
             title=t.title,
             source_url=t.source_url,
             position=t.position,
@@ -428,11 +430,18 @@ def create_text(
     last = db.scalar(
         select(func.max(SourceText.position)).where(SourceText.profile_id == profile.id)
     )
-    text = SourceText(profile_id=profile.id, position=(last or 0) + 1, **data.model_dump())
+    fields = data.model_dump(exclude={"language"})
+    text = SourceText(
+        profile_id=profile.id,
+        position=(last or 0) + 1,
+        language=data.language or profile.target_language,
+        **fields,
+    )
     db.add(text)
     db.commit()
     return TextSummary(
         id=text.id,
+        language=cast(Language, text.language),
         title=text.title,
         source_url=text.source_url,
         position=text.position,
@@ -465,6 +474,7 @@ def text_detail(text: SourceText, db: Session) -> TextDetail:
             in_decks.setdefault(word, []).append(deck)
     return TextDetail(
         id=text.id,
+        language=cast(Language, text.language),
         title=text.title,
         source_url=text.source_url,
         notes=text.notes,
@@ -499,7 +509,7 @@ def update_text(
 ):
     """Edit a text. Cards already made from it keep their sentences; marks keep their words."""
     text = own_text(text_id, db, profile)
-    for key, value in data.model_dump().items():
+    for key, value in data.model_dump(exclude_none=True).items():
         setattr(text, key, value)
     db.commit()
     return text_detail(text, db)
@@ -572,6 +582,8 @@ def generate(
 ):
     text = own_text(text_id, db, profile)
     deck = own_deck(data.deck_id, db, profile)
+    if text.language != deck.target_language:
+        raise HTTPException(422, "The text and deck must use the same learning language")
     provider = pick_provider(request, data.llm_output)
 
     def run():

@@ -1,3 +1,4 @@
+import { t } from "../i18n";
 import { useEffect, useState } from "react";
 import {
   api,
@@ -23,7 +24,8 @@ export function Decks() {
     api.decks().then(setDecks, (e) => setError(e.message));
     api.profile().then(setProfile);
   }, []);
-  if (!decks || !profile) return <p className="muted">{error || "Loading…"}</p>;
+  if (!decks || !profile)
+    return <p className="muted">{error || t("Loading…")}</p>;
 
   return (
     <div className="page">
@@ -32,10 +34,10 @@ export function Decks() {
           <p className="eyebrow">
             {decks.length} {decks.length === 1 ? "deck" : "decks"}
           </p>
-          <h1>Decks</h1>
+          <h1>{t("Decks")}</h1>
         </div>
         <button className="btn primary" onClick={() => setAdding(true)}>
-          <Icon name="plus" size={16} /> New deck
+          <Icon name="plus" size={16} /> {t("New deck")}
         </button>
       </header>
 
@@ -43,20 +45,23 @@ export function Decks() {
         <table className="deck-table">
           <thead>
             <tr>
-              <th>Deck</th>
-              <th>Learning</th>
-              <th>Translated into</th>
-              <th>Level</th>
-              <th className="num">Cards</th>
-              <th className="num" title="Never studied">
-                New
+              <th>{t("Deck")}</th>
+              <th>{t("Learning")}</th>
+              <th>{t("Translated into")}</th>
+              <th>{t("Level")}</th>
+              <th className="num">{t("Cards")}</th>
+              <th className="num" title={t("Never studied")}>
+                {t("New")}
               </th>
-              <th className="num" title="Due for review">
-                To review
+              <th className="num" title={t("Due for review")}>
+                {t("To review")}
               </th>
-              <th>Teacher</th>
-              <th className="num" title="Cards you asked the teacher to check">
-                Asked
+              <th>{t("Teacher")}</th>
+              <th
+                className="num"
+                title={t("Cards you asked the teacher to check")}
+              >
+                {t("Asked")}
               </th>
             </tr>
           </thead>
@@ -78,15 +83,15 @@ export function Decks() {
                     </span>
                   )}
                 </td>
-                <td className="nowrap">{LANGUAGES[deck.target_language]}</td>
-                <td className="nowrap">{LANGUAGES[deck.known_language]}</td>
+                <td className="nowrap">{t(LANGUAGES[deck.target_language])}</td>
+                <td className="nowrap">{t(LANGUAGES[deck.known_language])}</td>
                 <td>{deck.effective_level}</td>
                 <td className="num nowrap">
-                  {deck.cards - deck.archived} active
+                  {deck.cards - deck.archived} {t("active")}
                   {deck.archived > 0 && (
                     <span className="muted small">
                       {" "}
-                      · {deck.archived} archived
+                      · {deck.archived} {t("archived")}
                     </span>
                   )}
                 </td>
@@ -100,7 +105,7 @@ export function Decks() {
                   {deck.teachers.length ? (
                     deck.teachers.map((t) => t.split("@")[0]).join(", ")
                   ) : (
-                    <span className="muted">No teacher</span>
+                    <span className="muted">{t("No teacher")}</span>
                   )}
                 </td>
                 <td className="num">
@@ -117,10 +122,10 @@ export function Decks() {
       </div>
 
       {adding && (
-        <Drawer title="New deck" onClose={() => setAdding(false)}>
+        <Drawer title={t("New deck")} onClose={() => setAdding(false)}>
           <DeckForm
             profile={profile}
-            submit="Create deck"
+            submit={t("Create deck")}
             onSave={async (fields) => {
               const deck = await api.createDeck(fields);
               location.hash = `/deck/${deck.id}`;
@@ -174,26 +179,27 @@ export function DeckForm({
   return (
     <form className="stack" onSubmit={save}>
       <label>
-        Name
+        {t("Name")}
         <input
           required
           autoFocus
           value={fields.name}
           onChange={(e) => set("name", e.target.value)}
-          placeholder="e.g. Verbs of motion"
+          placeholder={t("e.g. Verbs of motion")}
         />
       </label>
       <label>
-        Description <span className="muted">(optional, for you)</span>
+        {t("Description")}{" "}
+        <span className="muted">{t("(optional, for you)")}</span>
         <input
           value={fields.description}
           onChange={(e) => set("description", e.target.value)}
-          placeholder="e.g. Words from my train trips"
+          placeholder={t("e.g. Words from my train trips")}
         />
       </label>
       <div className="lang-row">
         <label>
-          Learning
+          {t("Learning")}
           <select
             value={fields.target_language}
             onChange={(e) => set("target_language", e.target.value as Language)}
@@ -206,7 +212,7 @@ export function DeckForm({
           </select>
         </label>
         <label>
-          Translated into
+          {t("Translated into")}
           <select
             value={fields.known_language}
             onChange={(e) => set("known_language", e.target.value as Language)}
@@ -219,12 +225,15 @@ export function DeckForm({
           </select>
         </label>
         <label>
-          Level
+          {t("Level")}
           <select
             value={fields.level}
             onChange={(e) => set("level", e.target.value as Level | "")}
           >
-            <option value="">Mine ({learnerLevel})</option>
+            <option value="">
+              {t("Mine (")}
+              {learnerLevel})
+            </option>
             {LEVELS.map((level) => (
               <option key={level} value={level}>
                 {level}
@@ -234,22 +243,25 @@ export function DeckForm({
         </label>
       </div>
       <label>
-        Instructions for the next sentences{" "}
-        <span className="muted">(optional)</span>
+        {t("Instructions for the next sentences")}{" "}
+        <span className="muted">{t("(optional)")}</span>
         <textarea
           rows={4}
           value={fields.instructions}
           onChange={(e) => set("instructions", e.target.value)}
-          placeholder="e.g. Sentences about football, in everyday spoken German."
+          placeholder={t(
+            "e.g. Sentences about football, in everyday spoken German.",
+          )}
         />
       </label>
       <p className="muted small">
-        Each card keeps the instructions it was written with, so changing them
-        affects only the cards you generate next.
+        {t(
+          "Each card keeps the instructions it was written with, so changing them affects only the cards you generate next.",
+        )}
       </p>
       <div className="lang-row">
         <label>
-          New cards a day
+          {t("New cards a day")}
           <input
             type="number"
             min={0}
@@ -259,7 +271,7 @@ export function DeckForm({
           />
         </label>
         <label>
-          Reviews a day
+          {t("Reviews a day")}
           <input
             type="number"
             min={0}
