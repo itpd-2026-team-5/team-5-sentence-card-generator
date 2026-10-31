@@ -1,3 +1,5 @@
+from typing import cast
+
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -56,6 +58,7 @@ from app.schemas import (
     GlossIn,
     MarkIn,
     MarkOut,
+    MarkStatus,
     MoreIn,
     OrderIn,
     ProfileIn,
@@ -63,6 +66,7 @@ from app.schemas import (
     RegenerateIn,
     ReviewIn,
     ReviewOut,
+    Sentence,
     ShareIn,
     ShareOut,
     SignUp,
@@ -111,7 +115,7 @@ def create_profile(db: Session, user: User) -> Profile:
         db.commit()
     except IntegrityError:
         db.rollback()
-        profile = db.scalar(select(Profile).where(Profile.user_id == user.id))
+        profile = db.scalars(select(Profile).where(Profile.user_id == user.id)).one()
     return profile
 
 
@@ -465,12 +469,12 @@ def text_detail(text: SourceText, db: Session) -> TextDetail:
         source_url=text.source_url,
         notes=text.notes,
         body=text.body,
-        sentences=tokenize(text.body),
+        sentences=[Sentence.model_validate(s) for s in tokenize(text.body)],
         marks=[
             MarkOut(
                 word=w.word,
                 sentence=w.sentence,
-                status=w.status,
+                status=cast(MarkStatus, w.status),
                 gloss=w.gloss,
                 decks=sorted(in_decks.get(w.word.lower(), [])) if w.status == "learn" else [],
             )
@@ -613,7 +617,7 @@ def reachable_card(card_id: int, db: Session, user: User) -> Card:
     """A card the user may correct: their own, or one in a deck a student shared with them."""
     card = db.get(Card, card_id)
     if card is not None:
-        owner = db.get(Profile, card.profile_id)
+        owner = db.get_one(Profile, card.profile_id)
         if owner.user_id == user.id or any(
             share.teacher_id == user.id for deck in card.decks for share in deck.shares
         ):
@@ -659,7 +663,7 @@ def update_card(
     user: User = Depends(current_user),
 ):
     card = reachable_card(card_id, db, user)
-    owner = db.get(Profile, card.profile_id)
+    owner = db.get_one(Profile, card.profile_id)
     is_teacher = owner.user_id != user.id
     flags = {"status", "needs_check", "note", "needs_regeneration", "teacher_checked"}
     changes = data.model_dump(exclude_unset=True, exclude=flags)
@@ -717,7 +721,7 @@ def regenerate(
     """Write a new sentence in place. A teacher may do this too, with their own key; the
     sentence is still written for the student's level and the deck's instructions."""
     card = reachable_card(card_id, db, user)
-    owner = db.get(Profile, card.profile_id)
+    owner = db.get_one(Profile, card.profile_id)
     provider = pick_provider(request, data.llm_output)
     return llm_call(
         db,
@@ -774,7 +778,7 @@ def more(
 @app.delete("/api/cards/{card_id}", status_code=204)
 def delete_card(card_id: int, db: Session = Depends(get_db), user: User = Depends(current_user)):
     card = reachable_card(card_id, db, user)
-    owner = db.get(Profile, card.profile_id)
+    owner = db.get_one(Profile, card.profile_id)
     owner.cards_deleted += 1
     db.delete(card)
     db.commit()
@@ -833,7 +837,7 @@ def unshare_deck(
 def taught_deck(deck_id: int, db: Session, user: User) -> Deck:
     if db.get(DeckShare, (deck_id, user.id)) is None:
         raise HTTPException(404, "Deck not found")
-    return db.get(Deck, deck_id)
+    return db.get_one(Deck, deck_id)
 
 
 @app.get("/api/teaching", response_model=list[TaughtDeck])

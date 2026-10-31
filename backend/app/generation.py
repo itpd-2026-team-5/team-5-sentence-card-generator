@@ -283,7 +283,7 @@ def more_cards(
     deck = card.decks[0]
     results = _request(db, provider, profile, deck, [item] * count, known, avoid, card.instructions)
     position = _next_position(db, profile)
-    cards = []
+    cards: list[Card] = []
     for r in results[:count]:
         new = _new_card(profile, None, card.word, card.source_sentence, card.context, r)
         new.text_id, new.text_title = card.text_id, card.text_title
