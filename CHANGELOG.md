@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-31
+
 ### Added
 
 - Try the product with demo data: one command creates a learner and two teachers with decks, texts, and cards, with no API key or email needed.
@@ -83,6 +85,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Use your own Anthropic API key, kept in your browser and sent straight to Anthropic, never to our server.
 - Run the whole product with one command, `docker compose up`, following the setup page.
 
-[Unreleased]: https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.3.0
 [0.2.0]: https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.2.0
 [0.1.0]: https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.1.0

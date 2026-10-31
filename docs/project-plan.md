@@ -61,8 +61,16 @@ A learner can complete the core text-to-card-and-study flow from the university 
 - **Due:** 2026-10-31
 - **Sprint Backlog:** [SPRINT-05 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/3)
 - **Planned Velocity:** 21
+- **Actual Velocity:** 0; the Sprint Review took no story verdicts, so [US-10](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/36), [US-08](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/41), and [US-14](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/141) moved to SPRINT-06 for the per-criterion verdicts the [Week 5 meeting report](../reports/week-05/meeting-report.md#action-points) assigns.
 
 #### REL-05
+
+- **Released:** [v0.3.0](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.3.0) on 2026-10-31.
+- **Checked QRs:**
+  - [QR-02](quality-requirements/qr/QR-02.md)
+  - [QR-07](quality-requirements/qr/QR-07.md)
+
+  Each test's result is in the [Quality Requirement Testing Plan](#quality-requirement-testing-plan).
 
 ### SPRINT-06
 
@@ -109,9 +117,9 @@ The tests themselves are in their requirements' files.
 | --- | --- | --- | --- | --- | --- |
 | [QR-03](quality-requirements/qr/QR-03.md) | [QR-03 QRT-01](quality-requirements/qr/QR-03.md#qrt-01) | Not verified | None | [SPRINT-06](#sprint-06) | None |
 | [QR-01](quality-requirements/qr/QR-01.md) | [QR-01 QRT-01](quality-requirements/qr/QR-01.md#qrt-01) | Not verified | None | [SPRINT-06](#sprint-06) | None |
-| [QR-02](quality-requirements/qr/QR-02.md) | [QR-02 QRT-01](quality-requirements/qr/QR-02.md#qrt-01) | Passes | [SPRINT-05](#sprint-05) | [SPRINT-05](#sprint-05) | [`Product checks` run on `main`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/41210843286) |
+| [QR-02](quality-requirements/qr/QR-02.md) | [QR-02 QRT-01](quality-requirements/qr/QR-02.md#qrt-01) | Passes | [SPRINT-05](#sprint-05) | [SPRINT-05](#sprint-05) | [`Product checks` run on `main` at `b904ab3`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/41224928507) |
 | [QR-06](quality-requirements/qr/QR-06.md) | [QR-06 QRT-01](quality-requirements/qr/QR-06.md#qrt-01) | Not verified | None | [SPRINT-06](#sprint-06) | None |
-| [QR-07](quality-requirements/qr/QR-07.md) | [QR-07 QRT-01](quality-requirements/qr/QR-07.md#qrt-01) | Passes | [SPRINT-05](#sprint-05) | [SPRINT-05](#sprint-05) | [Staging run of `scripts/check-restart.sh`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/blob/main/reports/week-05/README.md#qr-07-qrt-01-on-staging) |
+| [QR-07](quality-requirements/qr/QR-07.md) | [QR-07 QRT-01](quality-requirements/qr/QR-07.md#qrt-01) | Passes | [SPRINT-05](#sprint-05) | [SPRINT-05](#sprint-05) | [Staging run of `scripts/check-restart.sh` on `b904ab3`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/blob/main/reports/week-05/README.md#qr-07-qrt-01-on-the-release-commit) |
 
 ## Progress Monitoring
 
