@@ -10,4 +10,5 @@ An app that uses an LLM to generate Anki flashcards with sentences, translations
 - **Current week's report:** [reports/week-02/README.md](reports/week-02/README.md)
 - **Maintained documentation:** [docs/](docs/README.md), also published as a website: <https://itpd-2026-team-5.github.io/team-5-sentence-card-generator/>
 - **Set up and run the product:** [docs/setup.md](docs/setup.md)
+- **Deploy to the university VM:** [docs/deployment.md](docs/deployment.md)
 - **How we work:** [CONTRIBUTING.md](CONTRIBUTING.md)
