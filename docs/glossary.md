@@ -44,9 +44,15 @@ A named set of cards with its own language pair, level, generation instructions,
 
 ### Generation Instructions
 
-The deck's free-text guidance to the LLM about the sentences it should write, such as a topic, kept with each card generated under it.
+The learner-controlled deck guidance to the LLM about the sentences it should write, such as a topic, kept with each card generated under it and distinct from a teacher's corrective feedback.
 
-**Defined by:** [`DEC-013`](decisions.md#dec-013) and [`DEC-033`](decisions.md#dec-033).
+**Defined by:** [`DEC-013`](decisions.md#dec-013), [`DEC-033`](decisions.md#dec-033), and [`DEC-097`](decisions.md#dec-097).
+
+### Corrective Feedback
+
+A teacher's explanation of what was wrong with a card's generated sentence, used to guide a rewrite without changing the learner's generation instructions.
+
+**Defined by:** [FR-011](functional-requirements/fr/FR-011.md) and [DEC-097](decisions.md#dec-097).
 
 ### Flagged Card
 
@@ -56,9 +62,9 @@ A card whose sentence still failed an automatic check after three attempts, kept
 
 ### Archived Card
 
-A card the learner took out of study without deleting it, which stays in its deck and can be brought back.
+A card taken out of study without permanent deletion, by its learner or a teacher with access to its shared deck, which stays in the learner's deck.
 
-**Defined by:** [`FR-006`](functional-requirements/fr/FR-006.md) and [`DEC-034`](decisions.md#dec-034).
+**Defined by:** [`FR-006`](functional-requirements/fr/FR-006.md), [`FR-011`](functional-requirements/fr/FR-011.md), [`DEC-034`](decisions.md#dec-034), and [`DEC-098`](decisions.md#dec-098).
 
 ### Rewrite
 
@@ -90,9 +96,9 @@ A person with an account who brings texts, owns decks, and studies cards.
 
 ### Teacher
 
-A person with an account who reviews and corrects the decks learners shared with them, and nothing else of those learners'.
+A user acting as a reviewer for decks explicitly shared with their account, and nothing else of those learners'; Teaching is available to any account, while deck access still requires sharing.
 
-**Defined by:** [`FR-011`](functional-requirements/fr/FR-011.md) and [`DEC-044`](decisions.md#dec-044).
+**Defined by:** [`FR-011`](functional-requirements/fr/FR-011.md), [`DEC-044`](decisions.md#dec-044), and [`DEC-091`](decisions.md#dec-091).
 
 ### Own Key
 

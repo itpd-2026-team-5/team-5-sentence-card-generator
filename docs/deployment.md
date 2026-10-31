@@ -148,9 +148,11 @@ After each production deploy, do the [core task](setup.md#complete-the-core-task
 1. Create an account, and confirm it from the email in the inbox at `http://<university-vm-ipv4>:8025`.
 2. Set the languages and the level, add a text, mark two words to learn, and generate into a deck.
 3. Open the deck: there is one card for each marked word, with a new sentence and its translation.
+4. Play the card's word, meaning, sentence, and translation from the same client and network; check that the expected pronunciation is heard, per [DEC-101](decisions.md#dec-101).
 
 Record in the week's report the commit, the date, who checked, and what was seen, with a screenshot of the deck.
 Use the placeholder, not the real address, in the report.
+Keep live-generation and playback results separate from health checks or opening seeded cards; use [QR-08](quality-requirements/qr/QR-08.md) for the full deployment outcome.
 
 ## Roll back
 
@@ -187,3 +189,6 @@ Each deploy that failed its check is recorded here: the date, the check that sho
   Only writing new sentences is unavailable there.
 - **What to try first next time:** an LLM gateway reachable from the university network, set as `ANTHROPIC_BASE_URL` and `ANTHROPIC_AUTH_TOKEN` in both env files, then `up -d` for each deployment; or, in the browser, **Settings → My own key** with that gateway's base URL.
   Check it from the VM first with `curl` against the gateway's address.
+- **Customer submission decision:** [DEC-102](decisions.md#dec-102) accepts the demonstrated deployed version for the Week 5 submission despite blocked generation, and [DEC-103](decisions.md#dec-103) carries alternative-provider trials into the next sprint.
+  This limited submission decision leaves the generation check outstanding; the runbook's verification steps and quality targets still apply.
+  Check any proposed replacement provider from the VM and from the client path that will actually use it; an external VM or a particular provider has not been selected.

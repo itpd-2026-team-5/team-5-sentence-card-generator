@@ -7,7 +7,7 @@ A story names the requirements that specify it in its `### Specified by` section
 | --- | --- | --- | --- |
 | [FR-001](fr/FR-001.md) | Bring In A Text | `frontend`, `backend` | Active |
 | [FR-002](fr/FR-002.md) | Mark Words To Learn In A Text | `frontend`, `backend` | Active |
-| [FR-003](fr/FR-003.md) | Generate A Card For Each Marked Word Into A Deck | `backend` | Active |
+| [FR-003](fr/FR-003.md) | Generate A Card For Each Marked Word Into A Deck | `frontend`, `backend` | Active |
 | [FR-004](fr/FR-004.md) | Skip A Card The Deck Already Has | `backend` | Active |
 | [FR-005](fr/FR-005.md) | Write Sentences With The Learner's Own Key | `frontend` | Active |
 | [FR-006](fr/FR-006.md) | Correct A Card | `frontend`, `backend` | Active |
@@ -16,3 +16,4 @@ A story names the requirements that specify it in its `### Specified by` section
 | [FR-009](fr/FR-009.md) | Schedule Each Review With FSRS | `backend` | Active |
 | [FR-010](fr/FR-010.md) | Read A Sentence Aloud | `frontend` | Active |
 | [FR-011](fr/FR-011.md) | Let A Teacher Correct A Shared Deck | `frontend`, `backend` | Active |
+| [FR-012](fr/FR-012.md) | Configure Interface And Learning Preferences | `frontend`, `backend` | Active |
