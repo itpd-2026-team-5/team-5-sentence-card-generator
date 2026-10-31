@@ -1,6 +1,6 @@
 import { t } from "../i18n";
 import { useEffect, useState } from "react";
-import { api, LANGUAGES, type TextSummary } from "../api";
+import { api, languageName, type TextSummary } from "../api";
 import { Drawer } from "../components/Drawer";
 import { Icon } from "../components/Icon";
 import { TextForm } from "../components/TextForm";
@@ -100,7 +100,7 @@ export function Library() {
                   </a>
                 </p>
                 <p className="muted small">
-                  {t(LANGUAGES[text.language])} · {text.to_learn}{" "}
+                  {t(languageName(text.language))} · {text.to_learn}{" "}
                   {t("to learn ·")} {text.cards} {t("cards")}
                   {text.source_url && (
                     <>

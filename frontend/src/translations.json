@@ -1,4 +1,8 @@
 {
+  "Language not set": {
+    "de": "Sprache nicht festgelegt",
+    "ru": "Язык не указан"
+  },
   "Sentence Cards": {
     "de": "Satzkarten",
     "ru": "Карточки с предложениями"

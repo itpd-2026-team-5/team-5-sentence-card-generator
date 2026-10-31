@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Fixed
 
+- Text lists and readers stay open when an older API response omits the text's language; they show "Language not set" instead of crashing.
 - Card generation and rewriting use known and ignored words from texts in the deck's learning language, so one language no longer fills another language's vocabulary limit.
 - Card details wrap narrow fields, status badges, and long text so the panel fits the screen without horizontal scrolling.
 

@@ -193,6 +193,13 @@ export const LANGUAGES: Record<Language, string> = {
   ru: "Russian",
 };
 
+/** Older API responses may omit a text's language; do not guess its meaning. */
+export function languageName(language: string | null | undefined): string {
+  return language && Object.hasOwn(LANGUAGES, language)
+    ? LANGUAGES[language as Language]
+    : "Language not set";
+}
+
 /** Called when the server says nobody is signed in, so the app can show the sign-in page. */
 export const session = { onSignedOut: () => {}, onUnverified: () => {} };
 

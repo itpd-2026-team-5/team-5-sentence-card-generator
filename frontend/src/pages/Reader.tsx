@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   api,
   LANGUAGES,
+  languageName,
   local,
   type Card,
   type Deck,
@@ -193,7 +194,7 @@ export function Reader({ textId }: { textId: number }) {
         </div>
         <h1>{text.title}</h1>
         <p className="muted small">
-          {t("Text language")}: {t(LANGUAGES[text.language])}
+          {t("Text language")}: {t(languageName(text.language))}
         </p>
         {(text.source_url || text.notes) && (
           <p className="muted small">
