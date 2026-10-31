@@ -46,6 +46,6 @@ Dependabot's pull requests go through the same review: approve and merge a minor
 ## Before you push
 
 From `backend/`: `uv run ruff check .`, `uv run ruff format --check .`, and `uv run pytest`.
-From `frontend/`: `npm run lint` and `npm run build`.
+From `frontend/`: `npm run lint`, `npm test`, and `npm run build`.
 For Markdown: `npx markdownlint-cli2 "**/*.md"`.
 These are the same checks CI runs, so a green run locally is a green run on the pull request.
