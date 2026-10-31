@@ -54,8 +54,6 @@ Accepted after review: the plan was aligned with Assignment 5 in a second commit
 
 ## Horokk1
 
-> Draft from Horokk1's Week 4 disclosure, because this sprint's commits name no tool; Horokk1 confirms or corrects it and removes this line before the merge.
-
 ### Tools and purpose
 
 GPT Whisper transcribed the Week 5 Customer meeting, and ChatGPT / Codex helped prepare the [meeting transcript](meeting-transcript.md), the [meeting script](meeting-script.md), and the [meeting report](meeting-report.md) ([#177](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/177)).
