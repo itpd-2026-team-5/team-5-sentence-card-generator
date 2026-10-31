@@ -123,6 +123,7 @@ Frontend, from `frontend/`:
 ```sh
 npm ci
 npm run lint
+npm test                  # frontend client regression tests; no API key or provider calls
 npm run build             # type-checks, then builds
 ```
 

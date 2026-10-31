@@ -17,7 +17,7 @@ The course requirements are routed from [`SKILL.md`](https://github.com/inno-itp
 ## Checks
 
 - Backend, from `backend/`: `uv run ruff check .`, `uv run ruff format --check .`, and `uv run pytest`; the tests use SQLite and a fake LLM, so they need no key and no network.
-- Frontend, from `frontend/`: `npm run lint` and `npm run build`, which type-checks.
+- Frontend, from `frontend/`: `npm run lint`, `npm test`, and `npm run build`, which type-checks.
 - The "Product checks" workflow runs both sets on every pull request.
 - Markdown: `npx markdownlint-cli2 "**/*.md"`, run in CI by the "Markdown check" workflow with the rules in `.markdownlint-cli2.jsonc`.
 - Links: `lychee --include-fragments .`, run in CI by the "Link check" workflow; it fetches external links, so it needs the network, and a link that cannot be checked goes in `.lycheeignore` with a reason and a date.
