@@ -96,6 +96,19 @@ Provisional: the product and repository are ready for the final pitch, handover,
 
 #### REL-09
 
+## Quality Requirement Testing Plan
+
+What each quality requirement test found at its last check, in the order of the [quality requirements index](quality-requirements/README.md).
+The tests themselves are in their requirements' files.
+
+| QR | QRT | Status | Checked | Planned for sprint | Evidence |
+| --- | --- | --- | --- | --- | --- |
+| [QR-03](quality-requirements/qr/QR-03.md) | [QR-03 QRT-01](quality-requirements/qr/QR-03.md#qrt-01) | Not verified | None | [SPRINT-06](#sprint-06) | None |
+| [QR-01](quality-requirements/qr/QR-01.md) | [QR-01 QRT-01](quality-requirements/qr/QR-01.md#qrt-01) | Not verified | None | [SPRINT-06](#sprint-06) | None |
+| [QR-02](quality-requirements/qr/QR-02.md) | [QR-02 QRT-01](quality-requirements/qr/QR-02.md#qrt-01) | Passes | [SPRINT-05](#sprint-05) | [SPRINT-05](#sprint-05) | [`Product checks` run on `main`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/41210843286) |
+| [QR-06](quality-requirements/qr/QR-06.md) | [QR-06 QRT-01](quality-requirements/qr/QR-06.md#qrt-01) | Not verified | None | [SPRINT-06](#sprint-06) | None |
+| [QR-07](quality-requirements/qr/QR-07.md) | [QR-07 QRT-01](quality-requirements/qr/QR-07.md#qrt-01) | Passes | [SPRINT-05](#sprint-05) | [SPRINT-05](#sprint-05) | [Staging run of `scripts/check-restart.sh`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/blob/main/reports/week-05/README.md#qr-07-qrt-01-on-staging) |
+
 ## Progress Monitoring
 
 - **Review:** The team holds its weekly review every Friday at 15:00, separately from the Customer meeting, and checks this plan, the [threshold of success](threshold-of-success.md), and the [risk register](risks.md).
