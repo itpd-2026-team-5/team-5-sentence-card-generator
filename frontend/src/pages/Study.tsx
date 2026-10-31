@@ -1,3 +1,4 @@
+import { t } from "../i18n";
 import { useCallback, useEffect, useState } from "react";
 import {
   api,
@@ -20,10 +21,12 @@ const RATINGS: { rating: Rating; label: string; key: string }[] = [
 
 function when(iso: string) {
   const minutes = Math.round((new Date(iso).getTime() - Date.now()) / 60000);
-  if (minutes < 1) return "in a moment";
-  if (minutes < 60) return `in ${minutes} min`;
-  if (minutes < 1440) return `in ${Math.round(minutes / 60)} h`;
-  return `on ${new Date(iso).toLocaleDateString()}`;
+  if (minutes < 1) return t("in a moment");
+  if (minutes < 60) return t("in {v0} min", { v0: minutes });
+  if (minutes < 1440) return t("in {v0} h", { v0: Math.round(minutes / 60) });
+  return t("on {v0}", {
+    v0: new Date(iso).toLocaleDateString(document.documentElement.lang),
+  });
 }
 
 /** A study session over the chosen decks. The sentence stays where it is: revealing the
@@ -127,7 +130,7 @@ export function Study({
   if (!study)
     return (
       <div className="focus">
-        <p className="muted">{error || "Loading…"}</p>
+        <p className="muted">{error || t("Loading…")}</p>
       </div>
     );
 
@@ -170,24 +173,31 @@ export function Study({
         <button
           className="ghost icon-btn"
           onClick={onExit}
-          aria-label="Leave session"
+          aria-label={t("Leave session")}
         >
           <Icon name="close" />
         </button>
-        <div className="progress" aria-label={`${done} of ${total} done today`}>
+        <div
+          className="progress"
+          aria-label={t("{v0} of {v1} done today", { v0: done, v1: total })}
+        >
           <span style={{ width: `${total ? (done / total) * 100 : 0}%` }} />
         </div>
         <span
           className="counts-line small"
-          aria-label={`${study.new} new, ${study.review} to review, ${study.again} to see again`}
+          aria-label={t("{v0} new, {v1} to review, {v2} to see again", {
+            v0: study.new,
+            v1: study.review,
+            v2: study.again,
+          })}
         >
-          <span className="count new" title="New cards">
+          <span className="count new" title={t("New cards")}>
             {study.new}
           </span>
-          <span className="count due" title="Reviews from earlier days">
+          <span className="count due" title={t("Reviews from earlier days")}>
             {study.review}
           </span>
-          <span className="count again" title="To see again today">
+          <span className="count again" title={t("To see again today")}>
             {study.again}
           </span>
         </span>
@@ -195,8 +205,10 @@ export function Study({
           className={`ghost icon-btn ${autoplay ? "" : "muted-off"}`}
           onClick={toggleAutoplay}
           aria-pressed={autoplay}
-          title={autoplay ? "Sentences play aloud" : "Sentences are silent"}
-          aria-label="Play sentences aloud"
+          title={
+            autoplay ? t("Sentences play aloud") : t("Sentences are silent")
+          }
+          aria-label={t("Play sentences aloud")}
         >
           <Icon name={autoplay ? "sound" : "mute"} />
         </button>
@@ -207,21 +219,24 @@ export function Study({
           <div className="burst">
             <Icon name="check" size={40} />
           </div>
-          <h1>{done > 0 ? "Session complete" : "Nothing to study"}</h1>
+          <h1>{done > 0 ? t("Session complete") : t("Nothing to study")}</h1>
           <p className="muted">
             {done > 0
-              ? `You studied ${done} card${done === 1 ? "" : "s"} today. `
+              ? t("You studied {v0} card{v1} today. ", {
+                  v0: done,
+                  v1: done === 1 ? "" : "s",
+                })
               : ""}
             {study.next_due
-              ? `The next card returns ${when(study.next_due)}.`
-              : "Generate cards into these decks to begin."}
+              ? t("The next card returns {v0}.", { v0: when(study.next_due) })
+              : t("Generate cards into these decks to begin.")}
           </p>
           <div className="row-gap center">
             <button className="btn" onClick={load}>
-              Check again
+              {t("Check again")}
             </button>
             <button className="btn primary" onClick={onExit}>
-              Back to Today
+              {t("Back to Today")}
             </button>
           </div>
         </div>
@@ -233,16 +248,18 @@ export function Study({
               role="button"
               tabIndex={0}
               onClick={() => setRevealed(true)}
-              aria-label={revealed ? "Card" : "Show the answer"}
+              aria-label={revealed ? t("Card") : t("Show the answer")}
             >
-              <span className="kind">{study.is_new ? "New" : "Review"}</span>
+              <span className="kind">
+                {study.is_new ? t("New") : t("Review")}
+              </span>
               <p className="card-word">
                 <span>
                   {card.word}
                   <Say
                     text={card.word_form || card.word}
                     language={cardLanguage}
-                    label="the word"
+                    label={t("the word")}
                     onFail={noAudio}
                   />
                 </span>
@@ -252,7 +269,7 @@ export function Study({
                     <Say
                       text={card.word_translation}
                       language={knownLanguage}
-                      label="the word's translation"
+                      label={t("the word's translation")}
                       onFail={noAudio}
                     />
                   </span>
@@ -267,7 +284,7 @@ export function Study({
                 <Say
                   text={card.sentence}
                   language={cardLanguage}
-                  label="the sentence"
+                  label={t("the sentence")}
                   onFail={noAudio}
                 />
               </p>
@@ -278,7 +295,7 @@ export function Study({
                     <Say
                       text={card.translation}
                       language={knownLanguage}
-                      label="the translation"
+                      label={t("the translation")}
                       onFail={noAudio}
                     />
                   </>
@@ -289,7 +306,7 @@ export function Study({
                   className="source-note"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <summary>Where the word came from</summary>
+                  <summary>{t("Where the word came from")}</summary>
                   <p>
                     {card.text_title ? (
                       card.text_exists ? (
@@ -314,10 +331,10 @@ export function Study({
                 </details>
               ) : (
                 <span className="hint">
-                  Tap to show the answer
+                  {t("Tap to show the answer")}
                   <span className="key-hint">
                     {" "}
-                    or press <kbd>Space</kbd>
+                    {t("or press")} <kbd>{t("Space")}</kbd>
                   </span>
                 </span>
               )}
@@ -329,14 +346,14 @@ export function Study({
             <div className="row-gap center">
               <button className="flag" onClick={rewrite} disabled={busy}>
                 <Icon name="sparkle" size={16} />{" "}
-                {busy ? "Rewriting…" : "Rewrite this sentence"}
+                {busy ? t("Rewriting…") : t("Rewrite this sentence")}
               </button>
               <button
                 className={`flag ${card.needs_regeneration ? "on" : ""}`}
                 onClick={markForLater}
                 aria-pressed={card.needs_regeneration}
               >
-                <Icon name="refresh" size={16} /> Rewrite later
+                <Icon name="refresh" size={16} /> {t("Rewrite later")}
               </button>
             </div>
             <button
@@ -344,7 +361,7 @@ export function Study({
               onClick={() => setTooHard(!tooHard)}
               aria-pressed={tooHard}
             >
-              <Icon name="flag" size={16} /> Too hard <kbd>T</kbd>
+              <Icon name="flag" size={16} /> {t("Too hard")} <kbd>{t("T")}</kbd>
             </button>
             <div className="rate-row">
               {RATINGS.map(({ rating, label, key }) => (
@@ -354,8 +371,10 @@ export function Study({
                   disabled={busy || !revealed}
                   onClick={() => rate(rating)}
                 >
-                  <strong>{label}</strong>
-                  <small>in {study.intervals?.[rating]}</small>
+                  <strong>{t(label)}</strong>
+                  <small>
+                    {t("in")} {study.intervals?.[rating]}
+                  </small>
                   <kbd>{key}</kbd>
                 </button>
               ))}

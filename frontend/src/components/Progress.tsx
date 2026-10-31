@@ -1,3 +1,4 @@
+import { t } from "../i18n";
 /** One bar in four parts: new cards studied and left, reviews done and left. */
 export function Progress({
   newDone,
@@ -22,7 +23,7 @@ export function Progress({
       <div
         className="segment-bar"
         role="img"
-        aria-label={parts.map((p) => `${p.value} ${p.label}`).join(", ")}
+        aria-label={parts.map((p) => `${p.value} ${t(p.label)}`).join(", ")}
       >
         {total === 0 ? (
           <span className="seg empty" style={{ flex: 1 }} />
@@ -42,7 +43,7 @@ export function Progress({
         {parts.map((p) => (
           <li key={p.key}>
             <span className={`dot ${p.key}`} />
-            {p.value} {p.label}
+            {p.value} {t(p.label)}
           </li>
         ))}
       </ul>

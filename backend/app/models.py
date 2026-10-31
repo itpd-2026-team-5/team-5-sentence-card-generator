@@ -131,6 +131,7 @@ class SourceText(Base):
     source_url: Mapped[str] = mapped_column(String(500), default="")
     notes: Mapped[str] = mapped_column(Text, default="")
     body: Mapped[str] = mapped_column(Text)
+    language: Mapped[str] = mapped_column(String(2), default="de")
     position: Mapped[int] = mapped_column(default=0)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 

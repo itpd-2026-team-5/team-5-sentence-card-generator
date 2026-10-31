@@ -1,3 +1,4 @@
+import { t } from "../i18n";
 import { useEffect, useState } from "react";
 import { api, type User } from "../api";
 import { Icon } from "../components/Icon";
@@ -45,29 +46,31 @@ export function CheckInbox({
         <span className="burst small-burst">
           <Icon name="mail" size={26} />
         </span>
-        <h1>Check your inbox.</h1>
+        <h1>{t("Check your inbox.")}</h1>
         <p>
-          Hello {user.full_name}. We sent a link to{" "}
-          <strong>{user.email}</strong>. Open it to confirm your email address
-          and start.
+          {t("Hello")} {user.full_name}
+          {t(". We sent a link to")} <strong>{user.email}</strong>
+          {t(". Open it to confirm your email address and start.")}
         </p>
         {local && (
           <p className="muted small">
-            Running on your own computer? The email is in the local inbox at{" "}
+            {t(
+              "Running on your own computer? The email is in the local inbox at",
+            )}{" "}
             <a
               className="link"
               href={`${location.protocol}//${location.hostname}:8025`}
               target="_blank"
               rel="noreferrer"
             >
-              port 8025 ↗
+              {t("port 8025 ↗")}
             </a>
             .
           </p>
         )}
         <div className="row-gap">
           <button className="btn" onClick={resend}>
-            Send the link again
+            {t("Send the link again")}
           </button>
           <button
             className="btn"
@@ -79,7 +82,7 @@ export function CheckInbox({
                 )
             }
           >
-            I have confirmed
+            {t("I have confirmed")}
           </button>
         </div>
         {note && <p className="toast">{note}</p>}
@@ -91,7 +94,7 @@ export function CheckInbox({
             onSignedOut();
           }}
         >
-          Use another account
+          {t("Use another account")}
         </button>
       </div>
     </div>
@@ -122,12 +125,14 @@ export function VerifyLink({
   return (
     <div className="signin">
       <div className="glass block stack signin-card">
-        <h1>{error ? "This link did not work." : "Confirming your email…"}</h1>
+        <h1>
+          {error ? t("This link did not work.") : t("Confirming your email…")}
+        </h1>
         {error && (
           <>
             <p className="error">{error}</p>
             <a className="btn" href="#/">
-              Go to sign in
+              {t("Go to sign in")}
             </a>
           </>
         )}

@@ -70,9 +70,13 @@ CARD_SCHEMA = {
 }
 
 
-def learner_vocabulary(db: Session, profile_id: int) -> tuple[list[str], list[str]]:
+def learner_vocabulary(db: Session, profile_id: int, language: str) -> tuple[list[str], list[str]]:
     """Words the learner knows (in their texts but not picked) and words to avoid (marked ignore)."""
-    texts = db.scalars(select(SourceText).where(SourceText.profile_id == profile_id)).all()
+    texts = db.scalars(
+        select(SourceText)
+        .where(SourceText.profile_id == profile_id, SourceText.language == language)
+        .order_by(SourceText.position, SourceText.id)
+    ).all()
     marked = {(w.word.lower(), w.status) for t in texts for w in t.words}
     learning = {word for word, status in marked if status == "learn"}
     avoid = sorted({word for word, status in marked if status == "ignore"})
@@ -181,7 +185,7 @@ def generate_cards(
     """Generate cards into a deck for the words marked to learn in a text that it has no card
     for yet. Returns the cards, and how many of their sentences had to be written again."""
     pending = [w for w in text.words if w.status == "learn" and not _same_card_exists(deck, w)]
-    known, avoid = learner_vocabulary(db, profile.id)
+    known, avoid = learner_vocabulary(db, profile.id, deck.target_language)
     cards: list[Card] = []
     rewritten = 0
     position = _next_position(db, profile)
@@ -269,7 +273,8 @@ def more_cards(
 ) -> list[Card]:
     """More cards for the same word, each with a new sentence, in the same decks.
     Each card keeps its own review progress."""
-    known, avoid = learner_vocabulary(db, profile.id)
+    deck = card.decks[0]
+    known, avoid = learner_vocabulary(db, profile.id, deck.target_language)
     siblings = db.scalars(
         select(Card.sentence).where(Card.profile_id == profile.id, Card.word == card.word)
     ).all()
@@ -280,7 +285,6 @@ def more_cards(
         "context": card.context or card.source_sentence,
         "existing_sentences": list(siblings),
     }
-    deck = card.decks[0]
     results = _request(db, provider, profile, deck, [item] * count, known, avoid, card.instructions)
     position = _next_position(db, profile)
     cards: list[Card] = []
@@ -374,8 +378,8 @@ def regenerate_card(
     The card keeps the instructions it was made with, unless new ones are given."""
     if instructions is not None:
         card.instructions = instructions
-    known, avoid = learner_vocabulary(db, profile.id)
     deck = card.decks[0]
+    known, avoid = learner_vocabulary(db, profile.id, deck.target_language)
     results, _ = _with_retries(
         db, provider, profile, deck, [_rejected(card, feedback)], known, avoid, card.instructions
     )
@@ -397,7 +401,7 @@ def regenerate_marked(
     batch = marked[:BATCH_SIZE]
     if not batch:
         return [], 0
-    known, avoid = learner_vocabulary(db, profile.id)
+    known, avoid = learner_vocabulary(db, profile.id, deck.target_language)
     by_id = {str(c.id): c for c in batch}
     items = [_rejected(c, "") for c in batch]
     # One request per instructions set, since each card keeps the ones it was made with.

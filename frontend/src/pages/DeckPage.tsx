@@ -1,3 +1,4 @@
+import { t } from "../i18n";
 import { useEffect, useState } from "react";
 import {
   api,
@@ -53,7 +54,7 @@ export function DeckPage({
     api.decks().then((all) => {
       setDecks(all);
       setDeck(all.find((d) => d.id === deckId) ?? null);
-      if (!all.some((d) => d.id === deckId)) setError("Deck not found");
+      if (!all.some((d) => d.id === deckId)) setError(t("Deck not found"));
     });
   const loadCards = () => api.cards({ deckId }).then(setCards);
   useEffect(() => {
@@ -63,7 +64,8 @@ export function DeckPage({
   }, [deckId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const drag = useDragReorder(cards, setCards, api.reorderCards);
-  if (!deck || !profile) return <p className="muted">{error || "Loading…"}</p>;
+  if (!deck || !profile)
+    return <p className="muted">{error || t("Loading…")}</p>;
 
   const language = deck.target_language;
   const shown = cards.filter((c) => matches(c, filter));
@@ -121,7 +123,10 @@ export function DeckPage({
   const remove = async () => {
     if (
       !confirm(
-        `Delete the deck “${deck.name}”? Cards that are in no other deck are deleted with it.`,
+        t(
+          "Delete the deck “{v0}”? Cards that are in no other deck are deleted with it.",
+          { v0: deck.name },
+        ),
       )
     )
       return;
@@ -138,27 +143,28 @@ export function DeckPage({
       <header className="page-head row-between">
         <div className="stack tight">
           <a className="back" href="#/decks">
-            ← Decks
+            {t("← Decks")}
           </a>
           <h1>{deck.name}</h1>
           {deck.description && <p>{deck.description}</p>}
           <p className="muted small">
-            {LANGUAGES[deck.target_language]} from{" "}
-            {LANGUAGES[deck.known_language]} · level {deck.effective_level} ·{" "}
-            {deck.new_per_day} new and {deck.reviews_per_day} reviews a day
+            {t(LANGUAGES[deck.target_language])} {t("from")}{" "}
+            {t(LANGUAGES[deck.known_language])} {t("· level")}{" "}
+            {deck.effective_level} · {deck.new_per_day} {t("new and")}{" "}
+            {deck.reviews_per_day} {t("reviews a day")}
             {deck.teachers.length > 0 &&
-              ` · shared with ${deck.teachers.join(", ")}`}
+              t(" · shared with {v0}", { v0: deck.teachers.join(", ") })}
           </p>
         </div>
         <div className="row-gap">
           <button className="btn" onClick={() => setEditing(true)}>
-            <Icon name="edit" size={16} /> Edit deck
+            <Icon name="edit" size={16} /> {t("Edit deck")}
           </button>
           <a
             className={`btn primary ${deck.due + deck.new === 0 ? "disabled" : ""}`}
             href={`#/study?decks=${deck.id}`}
           >
-            <Icon name="play" size={16} /> Study · {deck.due + deck.new}
+            <Icon name="play" size={16} /> {t("Study ·")} {deck.due + deck.new}
           </a>
         </div>
       </header>
@@ -172,7 +178,7 @@ export function DeckPage({
               className={filter === f.key ? "on" : ""}
               onClick={() => setFilter(f.key)}
             >
-              {f.label}
+              {t(f.label)}
               {f.key === "rewrite" && marked ? ` · ${marked}` : ""}
               {f.key === "archived" && deck.archived
                 ? ` · ${deck.archived}`
@@ -184,27 +190,34 @@ export function DeckPage({
           <button className="btn" disabled={!!busy} onClick={rewriteMarked}>
             <Icon name="refresh" size={16} />{" "}
             {busy === "batch"
-              ? "Rewriting…"
-              : `Rewrite ${marked} marked ${marked === 1 ? "card" : "cards"}`}
+              ? t("Rewriting…")
+              : t("Rewrite {v0} marked {v1}", {
+                  v0: marked,
+                  v1: marked === 1 ? t("card") : t("cards"),
+                })}
           </button>
         )}
       </div>
       {filter === "study" && cards.length > 1 && (
         <span className="muted small drag-hint">
-          Drag a card to change the order new cards come in. The ↻ mark collects
-          cards to rewrite together.
+          {t(
+            "Drag a card to change the order new cards come in. The ↻ mark collects cards to rewrite together.",
+          )}
         </span>
       )}
 
       {shown.length === 0 ? (
         <div className="empty glass">
           <strong>
-            {filter === "study" ? "No cards in this deck yet" : "No cards here"}
+            {filter === "study"
+              ? t("No cards in this deck yet")
+              : t("No cards here")}
           </strong>
           {filter === "study" && (
             <span className="muted">
-              Open a text, mark words to learn, and generate them into this
-              deck.
+              {t(
+                "Open a text, mark words to learn, and generate them into this deck.",
+              )}
             </span>
           )}
         </div>
@@ -228,21 +241,21 @@ export function DeckPage({
               <div className="row-tags">
                 {card.needs_check && (
                   <span className="tag teacher" title={card.note}>
-                    teacher
+                    {t("teacher")}
                   </span>
                 )}
                 {card.status === "flagged" && (
                   <span className="tag warn" title={card.problems.join("; ")}>
-                    check
+                    {t("check")}
                   </span>
                 )}
-                {card.edited && <span className="tag">edited</span>}
+                {card.edited && <span className="tag">{t("edited")}</span>}
               </div>
               <div className="row-actions">
                 <button
                   className="ghost icon-btn"
-                  aria-label="Listen"
-                  title="Listen"
+                  aria-label={t("Listen")}
+                  title={t("Listen")}
                   onClick={(e) => {
                     e.stopPropagation();
                     speak(card.sentence, language);
@@ -255,10 +268,10 @@ export function DeckPage({
                   aria-pressed={card.needs_regeneration}
                   title={
                     card.needs_regeneration
-                      ? "Marked for the next rewrite"
-                      : "Mark to rewrite with the others"
+                      ? t("Marked for the next rewrite")
+                      : t("Mark to rewrite with the others")
                   }
-                  aria-label="Mark to rewrite"
+                  aria-label={t("Mark to rewrite")}
                   onClick={quick(card, {
                     needs_regeneration: !card.needs_regeneration,
                   })}
@@ -267,8 +280,8 @@ export function DeckPage({
                 </button>
                 <button
                   className="ghost icon-btn"
-                  title="Rewrite now"
-                  aria-label="Rewrite now"
+                  title={t("Rewrite now")}
+                  aria-label={t("Rewrite now")}
                   disabled={busy === `card-${card.id}`}
                   onClick={rewriteNow(card)}
                 >
@@ -278,11 +291,11 @@ export function DeckPage({
                   className={`ghost icon-btn ${card.status === "archived" ? "is-on" : ""}`}
                   title={
                     card.status === "archived"
-                      ? "Bring back into study"
-                      : "Archive: keep it, but stop studying it"
+                      ? t("Bring back into study")
+                      : t("Archive: keep it, but stop studying it")
                   }
                   aria-label={
-                    card.status === "archived" ? "Unarchive" : "Archive"
+                    card.status === "archived" ? t("Unarchive") : t("Archive")
                   }
                   onClick={quick(card, {
                     status: card.status === "archived" ? "active" : "archived",
@@ -321,11 +334,11 @@ export function DeckPage({
       )}
 
       {editing && (
-        <Drawer title="Edit deck" onClose={() => setEditing(false)}>
+        <Drawer title={t("Edit deck")} onClose={() => setEditing(false)}>
           <DeckForm
             deck={deck}
             profile={profile}
-            submit="Save deck"
+            submit={t("Save deck")}
             onSave={async (fields) => {
               await api.updateDeck(deck.id, fields);
               await loadDecks();
@@ -342,7 +355,7 @@ export function DeckPage({
           />
           <div className="divider spaced" />
           <button className="btn danger" onClick={remove}>
-            <Icon name="trash" size={16} /> Delete deck
+            <Icon name="trash" size={16} /> {t("Delete deck")}
           </button>
         </Drawer>
       )}
@@ -379,11 +392,11 @@ function Sharing({
 
   return (
     <div className="stack">
-      <h3>Share with a teacher</h3>
+      <h3>{t("Share with a teacher")}</h3>
       <p className="muted small">
-        Your teacher sees this deck's cards and can fix them, mark them bad,
-        rewrite them, or delete them. They see no other deck, and never your API
-        key.
+        {t(
+          "Your teacher sees this deck's cards and can fix them, mark them bad, rewrite them, or delete them. They see no other deck, and never your API key.",
+        )}
       </p>
       {shares.map((share) => (
         <div key={share.email} className="row-between center-y">
@@ -396,7 +409,7 @@ function Sharing({
               onChange();
             }}
           >
-            Stop sharing
+            {t("Stop sharing")}
           </button>
         </div>
       ))}
@@ -404,13 +417,13 @@ function Sharing({
         <input
           type="email"
           required
-          placeholder="teacher@example.com"
+          placeholder={t("teacher@example.com")}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          aria-label="Teacher's email"
+          aria-label={t("Teacher's email")}
         />
         <button className="btn" type="submit">
-          Share
+          {t("Share")}
         </button>
       </form>
       {error && <p className="error">{error}</p>}

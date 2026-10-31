@@ -1,4 +1,7 @@
+import { t } from "../i18n";
 import { useEffect, useState } from "react";
+import { InterfaceLanguage } from "../components/InterfaceLanguage";
+import { ModelPicker } from "../components/ModelPicker";
 import {
   api,
   LANGUAGES,
@@ -40,7 +43,7 @@ export function Settings({
     api.profile().then(setProfile, (e) => setError(e.message));
     api.stats().then(setStats);
   }, []);
-  if (!profile) return <p className="muted">{error || "Loading…"}</p>;
+  if (!profile) return <p className="muted">{error || t("Loading…")}</p>;
 
   const set = <K extends keyof Profile>(key: K, value: Profile[K]) => {
     setProfile({ ...profile, [key]: value });
@@ -64,7 +67,7 @@ export function Settings({
         levels[profile.target_language] = "A2";
       setProfile(await api.saveProfile({ ...profile, levels }));
       setDirty(false);
-      setSaved("Saved");
+      setSaved(t("Saved"));
       setError("");
     } catch (e) {
       setError((e as Error).message);
@@ -94,37 +97,48 @@ export function Settings({
     <div className="page narrow">
       {!profile.set_up && (
         <section className="glass block welcome">
-          <h2>Welcome, {user.full_name.split(" ")[0]}.</h2>
+          <h2>
+            {t("Welcome,")} {user.full_name.split(" ")[0]}.
+          </h2>
           <p>
-            Before your first cards, tell us which language you speak, which one
-            you are learning, and your level. Every sentence is written for
-            them. Save, and you can start.
+            {t(
+              "Before your first cards, tell us which language you speak, which one you are learning, and your level. Every sentence is written for them. Save, and you can start.",
+            )}
           </p>
         </section>
       )}
       {profile.set_up && saved && firstSave && (
         <section className="glass block welcome">
-          <h2>You are set up.</h2>
-          <p>Next, add a text and mark the words you want to learn.</p>
+          <h2>{t("You are set up.")}</h2>
+          <p>{t("Next, add a text and mark the words you want to learn.")}</p>
           <a className="btn primary" href="#/texts">
-            Add your first text
+            {t("Add your first text")}
           </a>
         </section>
       )}
       <header className="page-head">
-        <p className="eyebrow">Settings</p>
-        <h1>Your languages</h1>
+        <p className="eyebrow">{t("Settings")}</p>
+        <h1>{t("Your languages")}</h1>
         <p className="muted">
-          Sentences are written for your level, from words you already know.
-          Each deck has its own language pair and instructions.
+          {t(
+            "Sentences are written for your level, from words you already know. Each deck has its own language pair and instructions.",
+          )}
         </p>
       </header>
 
       <section className="glass block">
-        <h3>Languages for new decks</h3>
+        <InterfaceLanguage />
+        <p className="muted small">
+          {t(
+            "Saved in this browser. Your learning languages and card voices stay the same.",
+          )}
+        </p>
+      </section>
+      <section className="glass block">
+        <h3>{t("Languages for new decks")}</h3>
         <div className="lang-row">
           <label>
-            I speak
+            {t("I speak")}
             <select
               value={profile.known_language}
               onChange={(e) =>
@@ -141,13 +155,13 @@ export function Settings({
           <button
             className="ghost icon-btn"
             onClick={swap}
-            aria-label="Swap languages"
-            title="Swap"
+            aria-label={t("Swap languages")}
+            title={t("Swap")}
           >
             <Icon name="swap" />
           </button>
           <label>
-            I am learning
+            {t("I am learning")}
             <select
               value={profile.target_language}
               onChange={(e) =>
@@ -163,15 +177,17 @@ export function Settings({
           </label>
         </div>
         <div className="also-learning">
-          <span className="muted small">Also learning:</span>
+          <span className="muted small">{t("Also learning:")}</span>
           {learning.slice(1).map((language) => (
             <span key={language} className="chip">
-              {LANGUAGES[language]}
+              {t(LANGUAGES[language])}
               <button
                 className="ghost"
                 onClick={() => setLevel(language, "")}
-                aria-label={`Stop learning ${LANGUAGES[language]}`}
-                title="Stop learning"
+                aria-label={t("Stop learning {v0}", {
+                  v0: LANGUAGES[language],
+                })}
+                title={t("Stop learning")}
               >
                 <Icon name="close" size={14} />
               </button>
@@ -184,55 +200,56 @@ export function Settings({
               onChange={(e) =>
                 e.target.value && setLevel(e.target.value as Language, "A1")
               }
-              aria-label="Add another language to learn"
+              aria-label={t("Add another language to learn")}
             >
-              <option value="">+ Add another language to learn</option>
+              <option value="">{t("+ Add another language to learn")}</option>
               {notLearning.map((language) => (
                 <option key={language} value={language}>
-                  {LANGUAGES[language]}
+                  {t(LANGUAGES[language])}
                 </option>
               ))}
             </select>
           ) : (
             learning.length === 1 && (
-              <span className="muted small">no other language</span>
+              <span className="muted small">{t("no other language")}</span>
             )
           )}
         </div>
         <p className="muted small spaced">
-          New decks use the pair above; a deck can use any language you learn.
+          {t(
+            "New decks use the pair above; a deck can use any language you learn.",
+          )}
         </p>
       </section>
 
       <section className="glass block">
-        <h3>Your level in each language</h3>
+        <h3>{t("Your level in each language")}</h3>
         <p className="muted small level-intro">
-          New sentences in each language are written at this level. A deck can
-          set a level of its own, which then wins for that deck. Changing a
-          level here affects only cards generated from now on, not the cards you
-          already have.
+          {t(
+            "New sentences in each language are written at this level. A deck can set a level of its own, which then wins for that deck. Changing a level here affects only cards generated from now on, not the cards you already have.",
+          )}
         </p>
         <div className="level-list">
           {learning.map((language) => {
-            const level = profile.levels[language] ?? "A2";
+            const level = profile.levels[language] ?? t("A2");
             const test = profile.placement_tests?.[language];
             return (
               <div key={language} className="level-block">
                 <div className="level-head">
-                  <strong>{LANGUAGES[language]}</strong>
+                  <strong>{t(LANGUAGES[language])}</strong>
                   {language === profile.target_language && (
                     <span
                       className="tag"
-                      title="The language new decks start with"
+                      title={t("The language new decks start with")}
                     >
-                      Main language
+                      {t("Main language")}
                     </span>
                   )}
                 </div>
                 <div
                   className="segmented"
                   role="radiogroup"
-                  aria-label={`Level in ${LANGUAGES[language]}`}
+                  aria-label={t("Level in {v0}", { v0: LANGUAGES[language] })}
                 >
                   {LEVELS.map((l) => (
                     <button
@@ -243,21 +260,21 @@ export function Settings({
                       onClick={() => setLevel(language, l)}
                     >
                       <strong>{l}</strong>
-                      <small>{LEVEL_NOTES[l]}</small>
+                      <small>{t(LEVEL_NOTES[l])}</small>
                     </button>
                   ))}
                 </div>
                 <p className="muted small">
                   {test ? (
                     <>
-                      Not sure?{" "}
+                      {t("Not sure?")}{" "}
                       <a href={test} target="_blank" rel="noreferrer">
-                        Take a free placement test ↗
+                        {t("Take a free placement test ↗")}
                       </a>
-                      {language === "ru" ? " (it asks for your email)" : ""}
+                      {language === "ru" ? t(" (it asks for your email)") : ""}
                     </>
                   ) : (
-                    "No placement test linked yet."
+                    t("No placement test linked yet.")
                   )}
                 </p>
               </div>
@@ -267,10 +284,10 @@ export function Settings({
       </section>
 
       <section className="glass block">
-        <h3>Sentence length</h3>
+        <h3>{t("Sentence length")}</h3>
         <div className="lang-row">
           <label>
-            Shortest (words)
+            {t("Shortest (words)")}
             <input
               type="number"
               min={3}
@@ -281,9 +298,9 @@ export function Settings({
               }
             />
           </label>
-          <span className="muted">to</span>
+          <span className="muted">{t("to")}</span>
           <label>
-            Longest (words)
+            {t("Longest (words)")}
             <input
               type="number"
               min={3}
@@ -297,29 +314,29 @@ export function Settings({
         </div>
         <div className="lang-row spaced">
           <label>
-            Shortest (characters)
+            {t("Shortest (characters)")}
             <input
               type="number"
               min={0}
               max={500}
               step={10}
               value={profile.sentence_min_chars || ""}
-              placeholder="No minimum"
+              placeholder={t("No minimum")}
               onChange={(e) =>
                 set("sentence_min_chars", Number(e.target.value) || 0)
               }
             />
           </label>
-          <span className="muted">to</span>
+          <span className="muted">{t("to")}</span>
           <label>
-            Longest (characters)
+            {t("Longest (characters)")}
             <input
               type="number"
               min={0}
               max={500}
               step={10}
               value={profile.sentence_max_chars || ""}
-              placeholder="No maximum"
+              placeholder={t("No maximum")}
               onChange={(e) =>
                 set("sentence_max_chars", Number(e.target.value) || 0)
               }
@@ -327,8 +344,9 @@ export function Settings({
           </label>
         </div>
         <p className="muted small">
-          German words can be long, so bounds in characters keep a session
-          predictable, and a minimum keeps sentences from being too simple.
+          {t(
+            "German words can be long, so bounds in characters keep a session predictable, and a minimum keeps sentences from being too simple.",
+          )}
         </p>
       </section>
 
@@ -336,57 +354,59 @@ export function Settings({
       <WhoWrites />
 
       <section className="glass block">
-        <h3>Statistics</h3>
+        <h3>{t("Statistics")}</h3>
         {stats ? (
           <>
             <div className="usage">
               <div>
                 <strong>{stats.cards}</strong>
-                <span>cards</span>
+                <span>{t("cards")}</span>
               </div>
               <div>
                 <strong>{stats.kept_as_generated}</strong>
-                <span>kept as generated</span>
+                <span>{t("kept as generated")}</span>
               </div>
               <div>
                 <strong>{stats.regenerated}</strong>
                 <span>
-                  regenerated
+                  {t("regenerated")}
                   {stats.regenerations > stats.regenerated
-                    ? ` (${stats.regenerations} times in all)`
+                    ? t(" ({v0} times in all)", { v0: stats.regenerations })
                     : ""}
                 </span>
               </div>
               <div>
                 <strong>{stats.edited}</strong>
-                <span>edited by hand</span>
+                <span>{t("edited by hand")}</span>
               </div>
               <div>
                 <strong>{stats.archived}</strong>
-                <span>archived</span>
+                <span>{t("archived")}</span>
               </div>
               <div>
                 <strong>{stats.deleted}</strong>
-                <span>deleted</span>
+                <span>{t("deleted")}</span>
               </div>
             </div>
             <p className="muted small spaced">
-              Tokens, as the provider reported them:{" "}
-              {stats.input_tokens.toLocaleString()} in,{" "}
-              {stats.output_tokens.toLocaleString()} out.
+              {t("Tokens, as the provider reported them:")}{" "}
+              {stats.input_tokens.toLocaleString()} {t("in,")}{" "}
+              {stats.output_tokens.toLocaleString()} {t("out.")}
               {stats.failed_checks > 0 &&
-                ` ${stats.failed_checks} cards still failed a check after the retries.`}{" "}
-              Your provider's own dashboard shows what you were billed.
+                t(" {v0} cards still failed a check after the retries.", {
+                  v0: stats.failed_checks,
+                })}{" "}
+              {t("Your provider's own dashboard shows what you were billed.")}
             </p>
           </>
         ) : (
-          <p className="muted">Loading…</p>
+          <p className="muted">{t("Loading…")}</p>
         )}
       </section>
 
       <section className="glass block row-between center-y">
         <div>
-          <h3>Account</h3>
+          <h3>{t("Account")}</h3>
           <p>{user.full_name}</p>
           <p className="muted small">{user.email}</p>
         </div>
@@ -397,7 +417,7 @@ export function Settings({
             onSignedOut();
           }}
         >
-          Sign out
+          {t("Sign out")}
         </button>
       </section>
 
@@ -406,13 +426,13 @@ export function Settings({
           {error ? (
             <span className="error">{error}</span>
           ) : profile.set_up ? (
-            "You have unsaved changes"
+            t("You have unsaved changes")
           ) : (
-            "Check your languages and level, then save"
+            t("Check your languages and level, then save")
           )}
         </span>
         <button className="btn primary" onClick={save}>
-          Save changes
+          {t("Save changes")}
         </button>
       </div>
       {saved && !dirty && (
@@ -429,7 +449,7 @@ function ReadAloud() {
   const [on, setOn] = useState(local.get("autoplay", "on") === "on");
   return (
     <section className="glass block">
-      <h3>Sound</h3>
+      <h3>{t("Sound")}</h3>
       <label className="switch big-switch">
         <input
           type="checkbox"
@@ -439,10 +459,10 @@ function ReadAloud() {
             local.set("autoplay", e.target.checked ? "on" : "off");
           }}
         />
-        Read each sentence aloud when a card appears
+        {t("Read each sentence aloud when a card appears")}
       </label>
       <p className="muted small">
-        You can also switch it during study, with the speaker button.
+        {t("You can also switch it during study, with the speaker button.")}
       </p>
     </section>
   );
@@ -471,7 +491,9 @@ function WhoWrites() {
       setCheck({
         ok: true,
         message: models.length
-          ? `Connected: ${models.length} models; pick one under Model.`
+          ? t("Connected: {v0} models; pick one under Model.", {
+              v0: models.length,
+            })
           : "Connected, but the provider listed no models.",
       });
     } catch (e) {
@@ -498,8 +520,8 @@ function WhoWrites() {
 
   return (
     <section className="glass block stack">
-      <h3>Who writes the sentences</h3>
-      <div className="segmented two" role="radiogroup" aria-label="Key">
+      <h3>{t("Who writes the sentences")}</h3>
+      <div className="segmented two" role="radiogroup" aria-label={t("Key")}>
         <button
           role="radio"
           aria-checked={source === "service"}
@@ -510,8 +532,8 @@ function WhoWrites() {
             setSaved(true);
           }}
         >
-          <strong>The service</strong>
-          <small>Its key and model</small>
+          <strong>{t("The service")}</strong>
+          <small>{t("Its key and model")}</small>
         </button>
         <button
           role="radio"
@@ -522,27 +544,27 @@ function WhoWrites() {
             setSaved(false);
           }}
         >
-          <strong>My own key</strong>
-          <small>Any provider, paid by you</small>
+          <strong>{t("My own key")}</strong>
+          <small>{t("Any provider, paid by you")}</small>
         </button>
       </div>
       {source === "own" && (
         <>
           <label>
-            Provider
+            {t("Provider")}
             <select
               value={kind}
               onChange={(e) => changeKind(e.target.value as ProviderKind)}
             >
               {(Object.keys(PROVIDERS) as ProviderKind[]).map((k) => (
                 <option key={k} value={k}>
-                  {PROVIDERS[k].label}
+                  {t(PROVIDERS[k].label)}
                 </option>
               ))}
             </select>
           </label>
           <label>
-            Base URL
+            {t("Base URL")}
             <input
               value={baseUrl}
               spellCheck={false}
@@ -554,35 +576,30 @@ function WhoWrites() {
               }}
             />
           </label>
-          <label>
-            Model
-            <input
+          <div className="stack tight">
+            <label htmlFor="provider-model">{t("Model")}</label>
+            <ModelPicker
+              id="provider-model"
               value={model}
-              list="model-suggestions"
-              spellCheck={false}
+              options={found.length ? found : PROVIDERS[kind].models}
               placeholder={
                 kind === "openai"
-                  ? "e.g. the name your provider lists"
+                  ? t("e.g. the name your provider lists")
                   : "claude-opus-5-5"
               }
-              onChange={(e) => {
-                setModel(e.target.value);
+              onChange={(value) => {
+                setModel(value);
                 setSaved(false);
               }}
             />
-            <datalist id="model-suggestions">
-              {(found.length ? found : PROVIDERS[kind].models).map((m) => (
-                <option key={m} value={m} />
-              ))}
-            </datalist>
-          </label>
+          </div>
           <label>
-            API key
+            {t("API key")}
             <input
               type="password"
               autoComplete="off"
               spellCheck={false}
-              placeholder="Your key"
+              placeholder={t("Your key")}
               value={key}
               onChange={(e) => {
                 setKey(e.target.value);
@@ -596,7 +613,9 @@ function WhoWrites() {
               disabled={!key.trim() || !baseUrl.trim() || check === "checking"}
               onClick={checkConnection}
             >
-              {check === "checking" ? "Checking…" : "Check the connection"}
+              {check === "checking"
+                ? t("Checking…")
+                : t("Check the connection")}
             </button>
             {check && check !== "checking" && (
               <span className={check.ok ? "toast" : "error"}>
@@ -605,16 +624,17 @@ function WhoWrites() {
             )}
           </div>
           <p className="muted small">
-            {PROVIDERS[kind].hint} The key stays in this browser: it goes
-            straight to the provider and is never sent to our server, so we and
-            your teacher cannot read it.
+            {t(PROVIDERS[kind].hint)}{" "}
+            {t(
+              "The key stays in this browser: it goes straight to the provider and is never sent to our server, so we and your teacher cannot read it.",
+            )}
           </p>
         </>
       )}
       {source === "own" && (
         <div className="row-gap">
           <button className="btn primary" disabled={!ready} onClick={save}>
-            Save in this browser
+            {t("Save in this browser")}
           </button>
           {ownKey.get() && (
             <button
@@ -627,7 +647,7 @@ function WhoWrites() {
                 setSaved(true);
               }}
             >
-              Forget my key
+              {t("Forget my key")}
             </button>
           )}
         </div>
@@ -636,8 +656,10 @@ function WhoWrites() {
         <p className="toast">
           <Icon name="check" size={16} />{" "}
           {source === "own"
-            ? `New sentences will be written with your key, by ${model}.`
-            : "New sentences will be written by the service."}
+            ? t("New sentences will be written with your key, by {v0}.", {
+                v0: model,
+              })
+            : t("New sentences will be written by the service.")}
         </p>
       )}
     </section>

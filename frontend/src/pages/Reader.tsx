@@ -1,3 +1,4 @@
+import { t } from "../i18n";
 import { useEffect, useRef, useState } from "react";
 import {
   api,
@@ -44,13 +45,23 @@ export function Reader({ textId }: { textId: number }) {
         ),
       );
   useEffect(() => {
-    api.text(textId).then(setText, (e) => setError(e.message));
+    Promise.all([api.text(textId), api.decks()]).then(
+      ([detail, all]) => {
+        setText(detail);
+        setDecks(all);
+        const last = Number(local.get("generate-deck", "0"));
+        const matching = all.filter(
+          (deck) => deck.target_language === detail.language,
+        );
+        setDeckId(
+          matching.some((deck) => deck.id === last)
+            ? last
+            : (matching[0]?.id ?? null),
+        );
+      },
+      (error) => setError(error.message),
+    );
     loadCards();
-    api.decks().then((all) => {
-      setDecks(all);
-      const last = Number(local.get("generate-deck", "0"));
-      setDeckId(all.some((d) => d.id === last) ? last : (all[0]?.id ?? null));
-    });
   }, [textId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Close the word menu on a click anywhere else.
@@ -62,7 +73,7 @@ export function Reader({ textId }: { textId: number }) {
     return () => document.removeEventListener("mousedown", close);
   }, []);
 
-  if (!text) return <p className="muted">{error || "Loading…"}</p>;
+  if (!text) return <p className="muted">{error || t("Loading…")}</p>;
 
   // The same rules as the server: a learned word is marked per sentence, an ignored word for the whole text.
   const choose = async (
@@ -115,9 +126,12 @@ export function Reader({ textId }: { textId: number }) {
       local.set("generate-deck", value);
       return;
     }
-    const name = prompt("Name of the new deck");
+    const name = prompt(t("Name of the new deck"));
     if (!name?.trim()) return;
-    const deck = await api.createDeck({ name: name.trim() });
+    const deck = await api.createDeck({
+      name: name.trim(),
+      target_language: text.language,
+    });
     setDecks([...decks, deck]);
     setDeckId(deck.id);
     local.set("generate-deck", String(deck.id));
@@ -171,13 +185,16 @@ export function Reader({ textId }: { textId: number }) {
       <article className="paper">
         <div className="row-between">
           <a className="back" href="#/texts">
-            ← Texts
+            {t("← Texts")}
           </a>
           <button className="btn small" onClick={() => setEditing(true)}>
-            <Icon name="edit" size={14} /> Edit text
+            <Icon name="edit" size={14} /> {t("Edit text")}
           </button>
         </div>
         <h1>{text.title}</h1>
+        <p className="muted small">
+          {t("Text language")}: {t(LANGUAGES[text.language])}
+        </p>
         {(text.source_url || text.notes) && (
           <p className="muted small">
             {text.source_url && (
@@ -203,21 +220,26 @@ export function Reader({ textId }: { textId: number }) {
               setQuery(e.target.value);
               setFound(null);
             }}
-            placeholder="Type a word to find its sentences"
-            aria-label="Find a word"
+            placeholder={t("Type a word to find its sentences")}
+            aria-label={t("Find a word")}
           />
           <button className="btn" type="submit">
-            Find
+            {t("Find")}
           </button>
         </form>
         {found && (
           <div className="found glass">
             {found.length === 0 ? (
-              <p className="muted small">“{query}” is not in this text.</p>
+              <p className="muted small">
+                “{query}
+                {t("” is not in this text.")}
+              </p>
             ) : (
               <>
                 <p className="muted small">
-                  Pick the sentence that has the meaning you want to learn:
+                  {t(
+                    "Pick the sentence that has the meaning you want to learn:",
+                  )}
                 </p>
                 {found.map((sentence) => {
                   const word =
@@ -237,7 +259,9 @@ export function Reader({ textId }: { textId: number }) {
                           setQuery("");
                         }}
                       >
-                        Learn “{word}” here
+                        {t("Learn “")}
+                        {word}
+                        {t("” here")}
                       </button>
                     </div>
                   );
@@ -249,9 +273,9 @@ export function Reader({ textId }: { textId: number }) {
 
         <div className="row-between reader-tools">
           <p className="muted small">
-            Or click a word to learn it or ignore it. Words you leave alone
-            count as words you know. A word with two meanings can be learned in
-            each of its sentences.
+            {t(
+              "Or click a word to learn it or ignore it. Words you leave alone count as words you know. A word with two meanings can be learned in each of its sentences.",
+            )}
           </p>
           <label className="switch">
             <input
@@ -259,7 +283,7 @@ export function Reader({ textId }: { textId: number }) {
               checked={onlyMarked}
               onChange={(e) => setOnlyMarked(e.target.checked)}
             />{" "}
-            Only sentences with marked words
+            {t("Only sentences with marked words")}
           </label>
         </div>
         <div className="prose">
@@ -286,21 +310,21 @@ export function Reader({ textId }: { textId: number }) {
                           onClick={() => choose(word, sentence.text, "learn")}
                         >
                           {mark === "learn-elsewhere"
-                            ? "Learn in this meaning too"
-                            : "Learn"}
+                            ? t("Learn in this meaning too")
+                            : t("Learn")}
                         </button>
                         <button
                           role="menuitem"
                           onClick={() => choose(word, sentence.text, "ignore")}
                         >
-                          Ignore
+                          {t("Ignore")}
                         </button>
                         {(mark === "learn" || mark === "ignore") && (
                           <button
                             role="menuitem"
                             onClick={() => choose(word, sentence.text, "none")}
                           >
-                            Clear
+                            {t("Clear")}
                           </button>
                         )}
                       </span>
@@ -311,20 +335,22 @@ export function Reader({ textId }: { textId: number }) {
             </p>
           ))}
           {sentences.length === 0 && (
-            <p className="muted small">No sentence has a marked word yet.</p>
+            <p className="muted small">
+              {t("No sentence has a marked word yet.")}
+            </p>
           )}
         </div>
       </article>
 
       <aside className="tray glass">
-        <h3>Word tray</h3>
+        <h3>{t("Word tray")}</h3>
         <div className="chips-block">
           <p className="label">
-            To learn <span>{learn.length}</span>
+            {t("To learn")} <span>{learn.length}</span>
           </p>
           <div className="chips">
             {learn.length === 0 && (
-              <span className="muted small">Nothing picked yet.</span>
+              <span className="muted small">{t("Nothing picked yet.")}</span>
             )}
             {learn.map((m) => {
               const done = withCard.has(markKey(m.word, m.sentence));
@@ -332,7 +358,7 @@ export function Reader({ textId }: { textId: number }) {
                 <button
                   key={markKey(m.word, m.sentence)}
                   className={`chip learn ${done ? "done" : ""}`}
-                  title={`${m.sentence}${m.decks.length ? `\nAlready in: ${m.decks.join(", ")}` : ""}\n${done ? "Has a card from this sentence" : "Click to remove"}`}
+                  title={`${m.sentence}${m.decks.length ? `\nAlready in: ${m.decks.join(", ")}` : ""}\n${done ? t("Has a card from this sentence") : t("Click to remove")}`}
                   onClick={() => choose(m.word, m.sentence, "none")}
                 >
                   <span>
@@ -343,7 +369,7 @@ export function Reader({ textId }: { textId: number }) {
                   </span>
                   {m.decks.length > 0 && (
                     <span className="chip-decks">
-                      in{" "}
+                      {t("in")}{" "}
                       {m.decks.length === 1
                         ? m.decks[0]
                         : `${m.decks.length} decks`}
@@ -360,21 +386,23 @@ export function Reader({ textId }: { textId: number }) {
           </div>
           {learn.some((m) => m.decks.length > 0) && (
             <p className="muted small">
-              “in …” names the decks that already have a card for the word.
+              {t(
+                "“in …” names the decks that already have a card for the word.",
+              )}
             </p>
           )}
         </div>
         {ignore.length > 0 && (
           <div className="chips-block">
             <p className="label">
-              Ignored <span>{ignore.length}</span>
+              {t("Ignored")} <span>{ignore.length}</span>
             </p>
             <div className="chips">
               {ignore.map((m) => (
                 <button
                   key={m.word}
                   className="chip ignore"
-                  title="Remove"
+                  title={t("Remove")}
                   onClick={() => choose(m.word, m.sentence, "none")}
                 >
                   {m.word}
@@ -385,24 +413,30 @@ export function Reader({ textId }: { textId: number }) {
           </div>
         )}
         <label>
-          Generate into
+          {t("Generate into")}
           <select
             value={deckId ?? ""}
             onChange={(e) => pickDeck(e.target.value)}
           >
-            {decks.map((d) => (
-              <option key={d.id} value={d.id}>
-                {d.name}: {LANGUAGES[d.target_language]} from{" "}
-                {LANGUAGES[d.known_language]}
-              </option>
-            ))}
-            <option value="new">+ New deck…</option>
+            <option value="" disabled>
+              {t("Choose a deck")}
+            </option>
+            {decks
+              .filter((d) => d.target_language === text.language)
+              .map((d) => (
+                <option key={d.id} value={d.id}>
+                  {d.name}: {t(LANGUAGES[d.target_language])} {t("from")}{" "}
+                  {t(LANGUAGES[d.known_language])}
+                </option>
+              ))}
+            <option value="new">{t("+ New deck…")}</option>
           </select>
         </label>
         {deck && (
           <p className="muted small">
-            Sentences in {LANGUAGES[deck.target_language]}, translated into{" "}
-            {LANGUAGES[deck.known_language]}, at level {deck.effective_level}.
+            {t("Sentences in")} {t(LANGUAGES[deck.target_language])}
+            {t(", translated into")} {t(LANGUAGES[deck.known_language])}
+            {t(", at level")} {deck.effective_level}.
           </p>
         )}
         <button
@@ -411,23 +445,26 @@ export function Reader({ textId }: { textId: number }) {
           onClick={generate}
         >
           {busy
-            ? "Writing sentences…"
+            ? t("Writing sentences…")
             : pending === 0
-              ? "No new words to generate"
-              : `Generate ${pending} card${pending === 1 ? "" : "s"}`}
+              ? t("No new words to generate")
+              : t("Generate {v0} card{v1}", {
+                  v0: pending,
+                  v1: pending === 1 ? "" : "s",
+                })}
         </button>
         {made && (
           <div className="made">
             <a className="toast" href={`#/deck/${made.deck.id}`}>
               <Icon name="check" size={16} /> {made.cards.length}{" "}
-              {made.cards.length === 1 ? "card" : "cards"} added to{" "}
+              {made.cards.length === 1 ? t("card") : t("cards")} {t("added to")}{" "}
               {made.deck.name} →
             </a>
             {made.warning && <p className="warn-note">{made.warning}</p>}
             {made.cards.length > 0 && (
               <>
                 <p className="label">
-                  Just made <span>click one to change it</span>
+                  {t("Just made")} <span>{t("click one to change it")}</span>
                 </p>
                 <ul className="made-list">
                   {made.cards.map((card) => (
@@ -441,7 +478,9 @@ export function Reader({ textId }: { textId: number }) {
                         <span className="serif">{card.sentence}</span>
                         <span className="muted small">{card.translation}</span>
                         {card.status === "flagged" && (
-                          <span className="tag warn">failed a check</span>
+                          <span className="tag warn">
+                            {t("failed a check")}
+                          </span>
                         )}
                       </button>
                     </li>
@@ -484,17 +523,29 @@ export function Reader({ textId }: { textId: number }) {
       )}
 
       {editing && (
-        <Drawer title="Edit text" onClose={() => setEditing(false)}>
+        <Drawer title={t("Edit text")} onClose={() => setEditing(false)}>
           <TextForm
             initial={{
+              language: text.language,
               title: text.title,
               body: text.body,
               source_url: text.source_url,
               notes: text.notes,
             }}
-            submit="Save text"
+            submit={t("Save text")}
             onSave={async (fields) => {
-              setText(await api.updateText(text.id, fields));
+              const updated = await api.updateText(text.id, fields);
+              setText(updated);
+              if (
+                decks.find((deck) => deck.id === deckId)?.target_language !==
+                updated.language
+              ) {
+                setDeckId(
+                  decks.find(
+                    (deck) => deck.target_language === updated.language,
+                  )?.id ?? null,
+                );
+              }
               setEditing(false);
             }}
           />

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { confirmDiscardChanges } from "./unsaved";
 
 const read = () => location.hash.replace(/^#/, "") || "/";
 
@@ -7,7 +8,17 @@ const read = () => location.hash.replace(/^#/, "") || "/";
 export function useRoute(): [string, URLSearchParams, (to: string) => void] {
   const [route, setRoute] = useState(read);
   useEffect(() => {
-    const onChange = () => setRoute(read());
+    let current = read();
+    const onChange = () => {
+      const next = read();
+      if (next === current) return;
+      if (!confirmDiscardChanges()) {
+        history.replaceState(null, "", `#${current}`);
+        return;
+      }
+      current = next;
+      setRoute(next);
+    };
     window.addEventListener("hashchange", onChange);
     return () => window.removeEventListener("hashchange", onChange);
   }, []);

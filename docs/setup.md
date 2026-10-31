@@ -173,3 +173,14 @@ uv run alembic revision --autogenerate -m "what changed"
 - **No email arrives.** With the default settings it is in Mailpit at `http://localhost:8025`, not in your real inbox. A new link can be requested once a minute from the "Check your inbox" page.
 - **Generating fails with "The Claude API key is missing or invalid".** Set `ANTHROPIC_API_KEY` in `.env` and restart with `docker compose up`, enter your own key under Settings, or set `LLM_PROVIDER=fake`.
 - **The app shows old data after a schema change.** `docker compose down -v` deletes the database; the next start migrates a fresh one.
+
+## Text languages after upgrading
+
+The backend runs database migrations on startup.
+Existing texts get their language from their generated cards' decks when those decks agree on one language; otherwise, they use the owner's current learning language.
+After upgrading a multilingual account, open **Texts → Edit text** and check each text's **Text language** before generating more cards.
+New texts have their own language selector, and generation offers matching decks.
+
+Use the globe icon in the top-right corner of the sign-in screen, or **Interface language** in Settings, to choose English, German, or Russian.
+This preference is saved in the current browser independently of learning languages and playback voices.
+In Teaching, open a card, edit its fields, and choose **Save changes** to save and confirm it, or **Discard edits** to restore its saved fields.

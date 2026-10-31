@@ -1,6 +1,8 @@
+import { t } from "../i18n";
 import { useEffect, useState } from "react";
 import { api, type Card, type Language, type TaughtDeck } from "../api";
-import { Say } from "../components/Say";
+import { CardEditor } from "../components/CardEditor";
+import { Drawer } from "../components/Drawer";
 import { Icon } from "../components/Icon";
 
 /** The decks students shared with the signed-in teacher. */
@@ -9,24 +11,26 @@ export function Teaching() {
   useEffect(() => {
     api.teaching().then(setDecks);
   }, []);
-  if (!decks) return <p className="muted">Loading…</p>;
+  if (!decks) return <p className="muted">{t("Loading…")}</p>;
 
   return (
     <div className="page">
       <header className="page-head">
-        <p className="eyebrow">Teaching</p>
-        <h1>Your students' decks</h1>
+        <p className="eyebrow">{t("Teaching")}</p>
+        <h1>{t("Your students' decks")}</h1>
         <p className="muted">
-          A student shares a deck with you by your email. You see only the decks
-          they share, and you can correct every card in them.
+          {t(
+            "A student shares a deck with you by your email. You see only the decks they share, and you can correct every card in them.",
+          )}
         </p>
       </header>
       {decks.length === 0 ? (
         <div className="empty glass">
-          <strong>No shared decks yet</strong>
+          <strong>{t("No shared decks yet")}</strong>
           <span className="muted">
-            Ask your student to open a deck, choose Edit deck, and share it with
-            your email.
+            {t(
+              "Ask your student to open a deck, choose Edit deck, and share it with your email.",
+            )}
           </span>
         </div>
       ) : (
@@ -34,11 +38,11 @@ export function Teaching() {
           <table className="deck-table">
             <thead>
               <tr>
-                <th>Student</th>
-                <th>Deck</th>
-                <th className="num">Cards</th>
-                <th className="num">Asked</th>
-                <th className="num">Left to check</th>
+                <th>{t("Student")}</th>
+                <th>{t("Deck")}</th>
+                <th className="num">{t("Cards")}</th>
+                <th className="num">{t("Asked")}</th>
+                <th className="num">{t("Left to check")}</th>
               </tr>
             </thead>
             <tbody>
@@ -77,7 +81,7 @@ export function Teaching() {
                     {deck.to_check > 0 ? (
                       <strong>{deck.to_check}</strong>
                     ) : (
-                      <span className="tag ok">done</span>
+                      <span className="tag ok">{t("done")}</span>
                     )}
                   </td>
                 </tr>
@@ -90,8 +94,7 @@ export function Teaching() {
   );
 }
 
-/** One shared deck as a sheet: every card on one line, edited in place, so a teacher can go
- *  through hundreds of cards without opening each one. */
+/** A compact review queue; a card's full controls live in its detail panel. */
 export function TeachDeck({
   deckId,
   language,
@@ -103,313 +106,201 @@ export function TeachDeck({
   const [cards, setCards] = useState<Card[] | null>(null);
   const [error, setError] = useState("");
   const [onlyOpen, setOnlyOpen] = useState(false);
+  const [openId, setOpenId] = useState<number | null>(null);
+  const [hasDraft, setHasDraft] = useState(false);
+  const [cardBusy, setCardBusy] = useState(false);
 
   useEffect(() => {
-    api.teaching().then((all) => {
-      const found = all.find((d) => d.id === deckId);
-      if (!found) setError("This deck is not shared with you.");
-      setDeck(found ?? null);
-    });
-    api.taughtCards(deckId).then(setCards, (e) => setError(e.message));
+    let active = true;
+    Promise.all([api.teaching(), api.taughtCards(deckId)]).then(
+      ([all, loaded]) => {
+        if (!active) return;
+        const found = all.find((item) => item.id === deckId);
+        if (!found) {
+          setError(t("This deck is not shared with you."));
+          return;
+        }
+        setDeck(found);
+        setCards(loaded);
+      },
+      (failure) => {
+        if (active) setError(failure.message);
+      },
+    );
+    return () => {
+      active = false;
+    };
   }, [deckId]);
 
-  if (error) return <p className="error">{error}</p>;
-  if (!deck || !cards) return <p className="muted">Loading…</p>;
+  useEffect(() => {
+    if (!hasDraft && !cardBusy) return;
+    const warn = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [hasDraft, cardBusy]);
 
-  const replace = (card: Card) =>
-    setCards(cards.map((c) => (c.id === card.id ? card : c)));
-  // Every card is shown, the ones the student asked about first; the switch narrows to the
-  // cards still waiting for the teacher.
-  const shown = onlyOpen
-    ? cards.filter(
-        (c) =>
-          c.needs_check || (!c.teacher_checked_at && c.status !== "archived"),
-      )
-    : cards;
+  if (error) return <p className="error">{error}</p>;
+  if (!deck || !cards) return <p className="muted">{t("Loading…")}</p>;
+
+  const replace = (updated: Card) =>
+    setCards(
+      (current) =>
+        current?.map((card) => (card.id === updated.id ? updated : card)) ??
+        null,
+    );
+  const open = cards.find((card) => card.id === openId);
+  const shown = [...cards]
+    .filter(
+      (card) =>
+        !onlyOpen ||
+        card.needs_check ||
+        (!card.teacher_checked_at && card.status !== "archived"),
+    )
+    .sort((a, b) => Number(b.needs_check) - Number(a.needs_check));
   const left = cards.filter(
-    (c) => !c.teacher_checked_at && c.status !== "archived",
+    (card) =>
+      (card.needs_check || !card.teacher_checked_at) &&
+      card.status !== "archived",
   ).length;
+  const close = () => {
+    if (
+      cardBusy ||
+      (hasDraft && !window.confirm(t("Discard unsaved changes?")))
+    )
+      return;
+    setOpenId(null);
+    setHasDraft(false);
+    document
+      .querySelector<HTMLButtonElement>(`button[data-review-card="${openId}"]`)
+      ?.focus();
+  };
 
   return (
-    <div className="page wide">
+    <div className="page">
       <header className="page-head row-between">
         <div className="stack tight">
           <a className="back" href="#/teaching">
-            ← Teaching
+            {t("← Teaching")}
           </a>
           <h1>{deck.name}</h1>
           <p className="muted">
-            {deck.student_name || deck.student} ({deck.student}) · {left} of{" "}
-            {cards.length} left to check
-            {deck.instructions ? ` · next sentences: ${deck.instructions}` : ""}
+            {deck.student_name || deck.student} · {left} {t("of")}{" "}
+            {cards.length} {t("left to check")}
           </p>
         </div>
         <label className="switch">
           <input
             type="checkbox"
             checked={onlyOpen}
-            onChange={(e) => setOnlyOpen(e.target.checked)}
-          />{" "}
-          Only cards left to check
+            onChange={(event) => setOnlyOpen(event.target.checked)}
+          />
+          {t("Only cards left to check")}
         </label>
       </header>
-
-      <ul className="legend sheet-legend" aria-label="What the marks mean">
-        <li>
-          <span className="legend-asked" /> The student asked you about this
-          card
-        </li>
-        <li>
-          <Icon name="sound" size={14} /> Listen
-        </li>
-        <li>
-          <Icon name="check" size={14} /> Looks right: answers the question and
-          marks the card checked
-        </li>
-        <li>
-          <Icon name="refresh" size={14} /> Write a new sentence, with what is
-          wrong
-        </li>
-        <li>
-          <Icon name="archive" size={14} /> Archive: out of the student's study
-        </li>
-        <li>
-          <Icon name="trash" size={14} /> Delete
-        </li>
-      </ul>
-
-      <div className="sheet-wrap">
-        <table className="sheet">
+      <p className="muted">
+        {t(
+          "Open a card to listen, edit, or review it. Requests from the student appear first.",
+        )}
+      </p>
+      <div className="teacher-cards-wrap">
+        <table className="teacher-cards">
           <thead>
             <tr>
-              <th>Word</th>
-              <th>Meaning</th>
-              <th>Sentence</th>
-              <th>Translation</th>
-              <th>Student's note</th>
-              <th>New sentence</th>
-              <th />
+              <th>{t("Word and meaning")}</th>
+              <th>{t("Review")}</th>
+              <th>
+                <span className="sr-only">{t("Card details")}</span>
+              </th>
             </tr>
           </thead>
           <tbody>
             {shown.map((card) => (
-              <SheetRow
+              <tr
                 key={card.id}
-                card={card}
-                language={deck.target_language ?? language}
-                known={deck.known_language ?? "en"}
-                onSaved={replace}
-                onDeleted={(id) => setCards(cards.filter((c) => c.id !== id))}
-              />
+                className={card.needs_check ? "has-request" : ""}
+                onClick={() => setOpenId(card.id)}
+              >
+                <td>
+                  <strong className="teacher-word">
+                    {card.word_form || card.word}
+                  </strong>
+                  <span className="teacher-meaning muted">
+                    {card.word_translation || "—"}
+                  </span>
+                </td>
+                <td>
+                  <span
+                    className={`tag ${card.needs_check ? "teacher" : card.teacher_checked_at ? "ok" : ""}`}
+                  >
+                    {card.needs_check
+                      ? t("Asked to check")
+                      : card.teacher_checked_at
+                        ? t("Checked")
+                        : t("To check")}
+                  </span>
+                  {card.status === "archived" && (
+                    <span className="teacher-card-extra muted small">
+                      {t("Archived")}
+                    </span>
+                  )}
+                  {card.status === "flagged" && (
+                    <span className="teacher-card-extra error small">
+                      {t("Failed a check")}
+                    </span>
+                  )}
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    className="btn small teacher-card-open"
+                    data-review-card={card.id}
+                    aria-label={t("Open card: {v0}, {v1}", {
+                      v0: card.word,
+                      v1: card.word_translation,
+                    })}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setOpenId(card.id);
+                    }}
+                  >
+                    <span className="teacher-open-label">{t("Open card")}</span>
+                    <Icon name="edit" size={16} />
+                  </button>
+                </td>
+              </tr>
             ))}
           </tbody>
         </table>
         {shown.length === 0 && (
-          <p className="muted pad">Nothing to check here.</p>
+          <p className="muted pad">{t("Nothing to check here.")}</p>
         )}
       </div>
+      {open && (
+        <Drawer title={open.word_form || open.word} onClose={close}>
+          <CardEditor
+            key={open.id}
+            card={open}
+            decks={[]}
+            language={deck.target_language ?? language}
+            knownLanguage={deck.known_language ?? "en"}
+            teacher
+            onDirtyChange={setHasDraft}
+            onBusyChange={setCardBusy}
+            onSaved={replace}
+            onCreated={() => {}}
+            onDeleted={(id) => {
+              setCards(
+                (current) => current?.filter((card) => card.id !== id) ?? null,
+              );
+              setOpenId(null);
+              setHasDraft(false);
+            }}
+          />
+        </Drawer>
+      )}
     </div>
-  );
-}
-
-function SheetRow({
-  card,
-  language,
-  known,
-  onSaved,
-  onDeleted,
-}: {
-  card: Card;
-  language: Language;
-  known: Language;
-  onSaved: (card: Card) => void;
-  onDeleted: (id: number) => void;
-}) {
-  const [busy, setBusy] = useState(false);
-  const [reason, setReason] = useState("");
-  const [error, setError] = useState("");
-
-  const run = async (action: () => Promise<Card | void>) => {
-    setBusy(true);
-    setError("");
-    try {
-      const result = await action();
-      if (result) onSaved(result);
-    } catch (e) {
-      setError((e as Error).message);
-    } finally {
-      setBusy(false);
-    }
-  };
-  // Save a cell when the teacher leaves it, only if it changed.
-  const cell = (field: "word_translation" | "sentence" | "translation") => ({
-    defaultValue: card[field],
-    onBlur: (e: React.FocusEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-      const value = e.target.value.trim();
-      if (value && value !== card[field])
-        run(() => api.updateCard(card.id, { [field]: value }));
-    },
-  });
-
-  return (
-    <tr
-      className={`${card.status} ${card.needs_check ? "asks" : ""} ${busy ? "busy" : ""}`}
-    >
-      <td className="sheet-word" data-label="Word">
-        {card.word}
-        <Say
-          text={card.word_form || card.word}
-          language={language}
-          label="the word"
-        />
-      </td>
-      <td data-label="Meaning">
-        <span className="cell-say">
-          <input
-            key={card.word_translation}
-            {...cell("word_translation")}
-            aria-label={`Meaning of ${card.word}`}
-          />
-          <Say
-            text={card.word_translation}
-            language={known}
-            label="the meaning"
-          />
-        </span>
-      </td>
-      <td data-label="Sentence">
-        <span className="cell-say">
-          <textarea
-            key={card.sentence}
-            rows={2}
-            {...cell("sentence")}
-            aria-label={`Sentence for ${card.word}`}
-          />
-          <Say text={card.sentence} language={language} label="the sentence" />
-        </span>
-      </td>
-      <td data-label="Translation">
-        <span className="cell-say">
-          <textarea
-            key={card.translation}
-            rows={2}
-            {...cell("translation")}
-            aria-label={`Translation for ${card.word}`}
-          />
-          <Say
-            text={card.translation}
-            language={known}
-            label="the translation"
-          />
-        </span>
-      </td>
-      <td className="sheet-note" data-label="Student's note">
-        {card.needs_check ? (
-          <span className="note-open">
-            {card.note || "Please check this card"}
-          </span>
-        ) : card.note && card.teacher_checked_at ? (
-          <>
-            <span className="note-done" title="You answered this">
-              {card.note}
-            </span>
-            <button
-              className="btn small"
-              disabled={busy}
-              onClick={() =>
-                run(() =>
-                  api.updateCard(card.id, {
-                    needs_check: true,
-                    teacher_checked: false,
-                  }),
-                )
-              }
-            >
-              Reopen
-            </button>
-          </>
-        ) : card.status === "flagged" ? (
-          <span className="muted small">{card.problems.join("; ")}</span>
-        ) : null}
-      </td>
-      <td className="sheet-regen" data-label="New sentence">
-        <span className="cell-say">
-          <input
-            placeholder="What is wrong?"
-            value={reason}
-            onChange={(e) => setReason(e.target.value)}
-            aria-label="Reason"
-          />
-          <button
-            className="ghost icon-btn"
-            disabled={busy}
-            title="Write a new sentence"
-            aria-label="Write a new sentence"
-            onClick={() =>
-              run(async () => {
-                const c = await api.regenerateCard(card.id, reason);
-                setReason("");
-                return c;
-              })
-            }
-          >
-            <Icon name="refresh" size={16} />
-          </button>
-        </span>
-        {error && <span className="error small">{error}</span>}
-      </td>
-      <td className="sheet-actions">
-        {card.teacher_checked_at ? (
-          <span className="ghost icon-btn is-ok" title="You checked this card">
-            <Icon name="check" size={16} />
-          </span>
-        ) : (
-          <button
-            className="ghost icon-btn"
-            disabled={busy}
-            title="Looks right"
-            aria-label="Looks right"
-            onClick={() =>
-              run(() => api.updateCard(card.id, { teacher_checked: true }))
-            }
-          >
-            <Icon name="check" size={16} />
-          </button>
-        )}
-        <button
-          className={`ghost icon-btn ${card.status === "archived" ? "is-on" : ""}`}
-          disabled={busy}
-          title={
-            card.status === "archived" ? "Bring back into study" : "Archive"
-          }
-          aria-label={card.status === "archived" ? "Unarchive" : "Archive"}
-          onClick={() =>
-            run(() =>
-              api.updateCard(card.id, {
-                status: card.status === "archived" ? "active" : "archived",
-              }),
-            )
-          }
-        >
-          <Icon name="archive" size={16} />
-        </button>
-        <button
-          className="ghost icon-btn danger-icon"
-          disabled={busy}
-          aria-label="Delete"
-          title="Delete"
-          onClick={() =>
-            run(async () => {
-              if (confirm(`Delete the card for “${card.word}”?`)) {
-                await api.deleteCard(card.id);
-                onDeleted(card.id);
-              }
-            })
-          }
-        >
-          <Icon name="trash" size={16} />
-        </button>
-      </td>
-    </tr>
   );
 }

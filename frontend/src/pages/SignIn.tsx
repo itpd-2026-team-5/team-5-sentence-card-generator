@@ -1,4 +1,6 @@
+import { t } from "../i18n";
 import { useState } from "react";
+import { InterfaceLanguage } from "../components/InterfaceLanguage";
 import { api, type User } from "../api";
 
 export function SignIn({ onSignedIn }: { onSignedIn: (user: User) => void }) {
@@ -28,20 +30,29 @@ export function SignIn({ onSignedIn }: { onSignedIn: (user: User) => void }) {
 
   return (
     <div className="signin">
+      <div className="signin-language">
+        <InterfaceLanguage compact />
+      </div>
       <form className="glass block stack signin-card" onSubmit={submit}>
         <a className="brand" href="#/">
           <span className="logo" />
-          <span className="brand-name">Sentences</span>
+          <span className="brand-name">{t("Sentences")}</span>
         </a>
-        <h1>{mode === "in" ? "Welcome back." : "Create your account."}</h1>
+        <h1>
+          {mode === "in" ? t("Welcome back.") : t("Create your account.")}
+        </h1>
         <p className="muted">
           {mode === "in"
-            ? "Sign in to study your decks, or to check the decks your students shared with you."
-            : "Learners and teachers use the same account: a teacher sees only the decks a student shares."}
+            ? t(
+                "Sign in to study your decks, or to check the decks your students shared with you.",
+              )
+            : t(
+                "Learners and teachers use the same account: a teacher sees only the decks a student shares.",
+              )}
         </p>
         {mode === "up" && (
           <label>
-            Full name
+            {t("Full name")}
             <input
               required
               autoFocus
@@ -49,12 +60,12 @@ export function SignIn({ onSignedIn }: { onSignedIn: (user: User) => void }) {
               autoComplete="name"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              placeholder="e.g. Anna Schmidt"
+              placeholder={t("e.g. Anna Schmidt")}
             />
           </label>
         )}
         <label>
-          Email
+          {t("Email")}
           <input
             type="email"
             required
@@ -65,7 +76,7 @@ export function SignIn({ onSignedIn }: { onSignedIn: (user: User) => void }) {
           />
         </label>
         <label>
-          Password
+          {t("Password")}
           <input
             type="password"
             required
@@ -77,12 +88,13 @@ export function SignIn({ onSignedIn }: { onSignedIn: (user: User) => void }) {
         </label>
         {mode === "up" && (
           <p className="muted small">
-            At least 8 characters. We will email you a link to confirm your
-            address.
+            {t(
+              "At least 8 characters. We will email you a link to confirm your address.",
+            )}
           </p>
         )}
         <button className="btn primary" type="submit" disabled={busy}>
-          {mode === "in" ? "Sign in" : "Create account"}
+          {mode === "in" ? t("Sign in") : t("Create account")}
         </button>
         {error && <p className="error">{error}</p>}
         <button
@@ -94,8 +106,8 @@ export function SignIn({ onSignedIn }: { onSignedIn: (user: User) => void }) {
           }}
         >
           {mode === "in"
-            ? "New here? Create an account"
-            : "Have an account? Sign in"}
+            ? t("New here? Create an account")
+            : t("Have an account? Sign in")}
         </button>
       </form>
     </div>

@@ -1,0 +1,1790 @@
+{
+  "Sentence Cards": {
+    "de": "Satzkarten",
+    "ru": "Карточки с предложениями"
+  },
+  "Sentences": {
+    "de": "Sätze",
+    "ru": "Предложения"
+  },
+  "Loading…": {
+    "de": "Laden…",
+    "ru": "Загрузка…"
+  },
+  "← Decks": {
+    "de": "← Stapel",
+    "ru": "← Колоды"
+  },
+  "from": {
+    "de": "aus",
+    "ru": "из"
+  },
+  "· level": {
+    "de": "· Niveau",
+    "ru": "· уровень"
+  },
+  "new and": {
+    "de": "neue und",
+    "ru": "новых и"
+  },
+  "reviews a day": {
+    "de": "Wiederholungen pro Tag",
+    "ru": "повторений в день"
+  },
+  "Edit deck": {
+    "de": "Stapel bearbeiten",
+    "ru": "Изменить колоду"
+  },
+  "Study ·": {
+    "de": "Lernen ·",
+    "ru": "Учить ·"
+  },
+  "Rewriting…": {
+    "de": "Neu schreiben…",
+    "ru": "Переписываем…"
+  },
+  "Drag a card to change the order new cards come in. The ↻ mark collects cards to rewrite together.": {
+    "de": "Ziehe eine Karte, um die Reihenfolge neuer Karten zu ändern. ↻ sammelt Karten zum gemeinsamen Neuschreiben.",
+    "ru": "Перетащите карточку, чтобы изменить порядок новых карточек. Метка ↻ собирает карточки для совместной перегенерации."
+  },
+  "No cards in this deck yet": {
+    "de": "Noch keine Karten in diesem Stapel",
+    "ru": "В этой колоде пока нет карточек"
+  },
+  "No cards here": {
+    "de": "Hier sind keine Karten",
+    "ru": "Здесь нет карточек"
+  },
+  "Open a text, mark words to learn, and generate them into this deck.": {
+    "de": "Öffne einen Text, markiere Lernwörter und erstelle Karten für diesen Stapel.",
+    "ru": "Откройте текст, отметьте слова и создайте карточки в этой колоде."
+  },
+  "teacher": {
+    "de": "Lehrkraft",
+    "ru": "преподаватель"
+  },
+  "check": {
+    "de": "prüfen",
+    "ru": "проверить"
+  },
+  "edited": {
+    "de": "bearbeitet",
+    "ru": "изменено"
+  },
+  "Listen": {
+    "de": "Anhören",
+    "ru": "Прослушать"
+  },
+  "Marked for the next rewrite": {
+    "de": "Zum nächsten Neuschreiben markiert",
+    "ru": "Отмечено для следующей перегенерации"
+  },
+  "Mark to rewrite with the others": {
+    "de": "Zum gemeinsamen Neuschreiben markieren",
+    "ru": "Перегенерировать вместе с остальными"
+  },
+  "Mark to rewrite": {
+    "de": "Zum Neuschreiben markieren",
+    "ru": "Отметить для перегенерации"
+  },
+  "Rewrite now": {
+    "de": "Jetzt neu schreiben",
+    "ru": "Перегенерировать сейчас"
+  },
+  "Bring back into study": {
+    "de": "Wieder lernen",
+    "ru": "Вернуть в изучение"
+  },
+  "Archive: keep it, but stop studying it": {
+    "de": "Archivieren: behalten, aber nicht mehr lernen",
+    "ru": "В архив: сохранить, но больше не изучать"
+  },
+  "Unarchive": {
+    "de": "Wiederherstellen",
+    "ru": "Из архива"
+  },
+  "Archive": {
+    "de": "Archivieren",
+    "ru": "В архив"
+  },
+  "Save deck": {
+    "de": "Stapel speichern",
+    "ru": "Сохранить колоду"
+  },
+  "Delete deck": {
+    "de": "Stapel löschen",
+    "ru": "Удалить колоду"
+  },
+  "Share with a teacher": {
+    "de": "Mit einer Lehrkraft teilen",
+    "ru": "Поделиться с преподавателем"
+  },
+  "Your teacher sees this deck's cards and can fix them, mark them bad, rewrite them, or delete them. They see no other deck, and never your API key.": {
+    "de": "Deine Lehrkraft sieht und bearbeitet nur die Karten dieses Stapels. Andere Stapel und deinen API-Schlüssel sieht sie nie.",
+    "ru": "Преподаватель видит и исправляет только карточки этой колоды. Другие колоды и ваш API-ключ ему недоступны."
+  },
+  "Stop sharing": {
+    "de": "Freigabe beenden",
+    "ru": "Закрыть доступ"
+  },
+  "teacher@example.com": {
+    "de": "teacher@example.com",
+    "ru": "teacher@example.com"
+  },
+  "Teacher's email": {
+    "de": "E-Mail der Lehrkraft",
+    "ru": "Почта преподавателя"
+  },
+  "Share": {
+    "de": "Teilen",
+    "ru": "Поделиться"
+  },
+  "Decks": {
+    "de": "Stapel",
+    "ru": "Колоды"
+  },
+  "New deck": {
+    "de": "Neuer Stapel",
+    "ru": "Новая колода"
+  },
+  "Deck": {
+    "de": "Stapel",
+    "ru": "Колода"
+  },
+  "Learning": {
+    "de": "Lernsprache",
+    "ru": "Изучаемый язык"
+  },
+  "Translated into": {
+    "de": "Übersetzung in",
+    "ru": "Перевод на"
+  },
+  "Level": {
+    "de": "Niveau",
+    "ru": "Уровень"
+  },
+  "Cards": {
+    "de": "Karten",
+    "ru": "Карточки"
+  },
+  "Never studied": {
+    "de": "Noch nie gelernt",
+    "ru": "Ещё не изучались"
+  },
+  "New": {
+    "de": "Neu",
+    "ru": "Новые"
+  },
+  "Due for review": {
+    "de": "Zur Wiederholung fällig",
+    "ru": "Пора повторить"
+  },
+  "To review": {
+    "de": "Wiederholen",
+    "ru": "К повторению"
+  },
+  "Teacher": {
+    "de": "Lehrkraft",
+    "ru": "Преподаватель"
+  },
+  "Cards you asked the teacher to check": {
+    "de": "Karten, um deren Prüfung du gebeten hast",
+    "ru": "Карточки, отправленные на проверку"
+  },
+  "Asked": {
+    "de": "Angefragt",
+    "ru": "На проверке"
+  },
+  "active": {
+    "de": "aktiv",
+    "ru": "активных"
+  },
+  "archived": {
+    "de": "archiviert",
+    "ru": "в архиве"
+  },
+  "No teacher": {
+    "de": "Keine Lehrkraft",
+    "ru": "Нет преподавателя"
+  },
+  "Create deck": {
+    "de": "Stapel erstellen",
+    "ru": "Создать колоду"
+  },
+  "A2": {
+    "de": "A2",
+    "ru": "A2"
+  },
+  "Name": {
+    "de": "Name",
+    "ru": "Название"
+  },
+  "e.g. Verbs of motion": {
+    "de": "z. B. Bewegungsverben",
+    "ru": "Например, глаголы движения"
+  },
+  "Description": {
+    "de": "Beschreibung",
+    "ru": "Описание"
+  },
+  "(optional, for you)": {
+    "de": "(optional, für dich)",
+    "ru": "(необязательно, для себя)"
+  },
+  "e.g. Words from my train trips": {
+    "de": "z. B. Wörter von meinen Zugreisen",
+    "ru": "Например, слова из поездок на поезде"
+  },
+  "Mine (": {
+    "de": "Mein Niveau (",
+    "ru": "Мой уровень ("
+  },
+  "Instructions for the next sentences": {
+    "de": "Anweisungen für neue Sätze",
+    "ru": "Инструкции для новых предложений"
+  },
+  "(optional)": {
+    "de": "(optional)",
+    "ru": "(необязательно)"
+  },
+  "e.g. Sentences about football, in everyday spoken German.": {
+    "de": "z. B. Sätze über Fußball in gesprochener Alltagssprache.",
+    "ru": "Например, предложения о футболе на повседневном немецком."
+  },
+  "Each card keeps the instructions it was written with, so changing them affects only the cards you generate next.": {
+    "de": "Jede Karte behält ihre Anweisungen. Änderungen gelten nur für künftig erstellte Karten.",
+    "ru": "Каждая карточка сохраняет свои инструкции. Изменения действуют только для новых карточек."
+  },
+  "New cards a day": {
+    "de": "Neue Karten pro Tag",
+    "ru": "Новых карточек в день"
+  },
+  "Reviews a day": {
+    "de": "Wiederholungen pro Tag",
+    "ru": "Повторений в день"
+  },
+  "Late night": {
+    "de": "Späte Nacht",
+    "ru": "Доброй ночи"
+  },
+  "Good morning": {
+    "de": "Guten Morgen",
+    "ru": "Доброе утро"
+  },
+  "Good afternoon": {
+    "de": "Guten Tag",
+    "ru": "Добрый день"
+  },
+  "Good evening": {
+    "de": "Guten Abend",
+    "ru": "Добрый вечер"
+  },
+  "Today in the decks you ticked": {
+    "de": "Heute in den ausgewählten Stapeln",
+    "ru": "Сегодня в выбранных колодах"
+  },
+  "Tick at least one deck below to study it.": {
+    "de": "Wähle unten mindestens einen Stapel zum Lernen.",
+    "ru": "Выберите хотя бы одну колоду ниже."
+  },
+  "Study": {
+    "de": "Lernen",
+    "ru": "Учить"
+  },
+  "No cards to study in these decks yet. Add a text and pick words to make some.": {
+    "de": "Noch keine Lernkarten in diesen Stapeln. Füge einen Text hinzu und wähle Wörter aus.",
+    "ru": "В этих колодах пока нечего учить. Добавьте текст и выберите слова."
+  },
+  "Your decks": {
+    "de": "Deine Stapel",
+    "ru": "Ваши колоды"
+  },
+  "new": {
+    "de": "neu",
+    "ru": "новых"
+  },
+  "never studied ·": {
+    "de": "noch nie gelernt ·",
+    "ru": "ещё не изучались ·"
+  },
+  "review": {
+    "de": "wiederholen",
+    "ru": "повторить"
+  },
+  "due again": {
+    "de": "erneut fällig",
+    "ru": "пора повторить"
+  },
+  "Tick the decks to study together. New cards come in the order of this list; use the arrows to study a deck first.": {
+    "de": "Wähle Stapel zum gemeinsamen Lernen. Neue Karten folgen dieser Reihenfolge; ändere sie mit den Pfeilen.",
+    "ru": "Выберите колоды для совместного изучения. Новые карточки идут по порядку списка; меняйте его стрелками."
+  },
+  "to review": {
+    "de": "zu wiederholen",
+    "ru": "к повторению"
+  },
+  "Study earlier": {
+    "de": "Früher lernen",
+    "ru": "Учить раньше"
+  },
+  "Study later": {
+    "de": "Später lernen",
+    "ru": "Учить позже"
+  },
+  "Make your first cards": {
+    "de": "Erstelle deine ersten Karten",
+    "ru": "Создайте первые карточки"
+  },
+  "Add a text, mark the words you want to learn, and generate cards into a deck.": {
+    "de": "Füge einen Text hinzu, markiere Lernwörter und erstelle Karten in einem Stapel.",
+    "ru": "Добавьте текст, отметьте слова и создайте карточки в колоде."
+  },
+  "Texts": {
+    "de": "Texte",
+    "ru": "Тексты"
+  },
+  "Add text": {
+    "de": "Text hinzufügen",
+    "ru": "Добавить текст"
+  },
+  "A text is where you find words: paste one, mark the words you want to learn, and generate their cards into a deck. Drag a text by its handle, or use the arrows, to put the texts in the order you want to work through them.": {
+    "de": "In Texten findest du neue Wörter: Füge einen Text ein, markiere Lernwörter und erstelle Karten. Ziehe Texte am Griff oder nutze die Pfeile, um ihre Reihenfolge zu ändern.",
+    "ru": "Добавьте текст, отметьте слова и создайте карточки. Чтобы изменить порядок текстов, перетащите их за ручку или используйте стрелки."
+  },
+  "No texts yet": {
+    "de": "Noch keine Texte",
+    "ru": "Текстов пока нет"
+  },
+  "Add a text in the language you are learning.": {
+    "de": "Füge einen Text in deiner Lernsprache hinzu.",
+    "ru": "Добавьте текст на изучаемом языке."
+  },
+  "Drag to move": {
+    "de": "Zum Verschieben ziehen",
+    "ru": "Перетащить"
+  },
+  "to learn ·": {
+    "de": "zu lernen ·",
+    "ru": "к изучению ·"
+  },
+  "cards": {
+    "de": "Karten",
+    "ru": "карточек"
+  },
+  "source ↗": {
+    "de": "Quelle ↗",
+    "ru": "источник ↗"
+  },
+  "Move up": {
+    "de": "Nach oben",
+    "ru": "Вверх"
+  },
+  "Move down": {
+    "de": "Nach unten",
+    "ru": "Вниз"
+  },
+  "Add a text": {
+    "de": "Text hinzufügen",
+    "ru": "Добавить текст"
+  },
+  "Add and pick words": {
+    "de": "Hinzufügen und Wörter wählen",
+    "ru": "Добавить и выбрать слова"
+  },
+  "← Texts": {
+    "de": "← Texte",
+    "ru": "← Тексты"
+  },
+  "Edit text": {
+    "de": "Text bearbeiten",
+    "ru": "Изменить текст"
+  },
+  "Type a word to find its sentences": {
+    "de": "Wort eingeben, um seine Sätze zu finden",
+    "ru": "Введите слово для поиска предложений"
+  },
+  "Find a word": {
+    "de": "Wort suchen",
+    "ru": "Найти слово"
+  },
+  "Find": {
+    "de": "Suchen",
+    "ru": "Найти"
+  },
+  "” is not in this text.": {
+    "de": "“ ist nicht in diesem Text.",
+    "ru": "» нет в этом тексте."
+  },
+  "Pick the sentence that has the meaning you want to learn:": {
+    "de": "Wähle den Satz mit der gewünschten Bedeutung:",
+    "ru": "Выберите предложение с нужным значением:"
+  },
+  "Learn “": {
+    "de": "„",
+    "ru": "Учить «"
+  },
+  "” here": {
+    "de": "“ hier lernen",
+    "ru": "» здесь"
+  },
+  "Or click a word to learn it or ignore it. Words you leave alone count as words you know. A word with two meanings can be learned in each of its sentences.": {
+    "de": "Oder klicke auf ein Wort, um es zu lernen oder zu ignorieren. Nicht markierte Wörter gelten als bekannt. Mehrere Bedeutungen lassen sich getrennt lernen.",
+    "ru": "Нажмите на слово, чтобы учить или игнорировать его. Неотмеченные слова считаются известными. Разные значения можно учить отдельно."
+  },
+  "Only sentences with marked words": {
+    "de": "Nur Sätze mit markierten Wörtern",
+    "ru": "Только предложения с отмеченными словами"
+  },
+  "Learn in this meaning too": {
+    "de": "Auch diese Bedeutung lernen",
+    "ru": "Учить и это значение"
+  },
+  "Learn": {
+    "de": "Lernen",
+    "ru": "Учить"
+  },
+  "Ignore": {
+    "de": "Ignorieren",
+    "ru": "Игнорировать"
+  },
+  "Clear": {
+    "de": "Entfernen",
+    "ru": "Снять отметку"
+  },
+  "No sentence has a marked word yet.": {
+    "de": "Noch kein Satz mit markiertem Wort.",
+    "ru": "Пока нет предложений с отмеченными словами."
+  },
+  "Word tray": {
+    "de": "Wortablage",
+    "ru": "Выбранные слова"
+  },
+  "To learn": {
+    "de": "Zu lernen",
+    "ru": "К изучению"
+  },
+  "Nothing picked yet.": {
+    "de": "Noch nichts ausgewählt.",
+    "ru": "Пока ничего не выбрано."
+  },
+  "Has a card from this sentence": {
+    "de": "Hat eine Karte aus diesem Satz",
+    "ru": "Есть карточка из этого предложения"
+  },
+  "Click to remove": {
+    "de": "Zum Entfernen klicken",
+    "ru": "Нажмите, чтобы убрать"
+  },
+  "in": {
+    "de": "in",
+    "ru": "в"
+  },
+  "“in …” names the decks that already have a card for the word.": {
+    "de": "„in …“ nennt Stapel, die bereits eine Karte für dieses Wort haben.",
+    "ru": "«в …» показывает колоды, где уже есть карточка этого слова."
+  },
+  "Ignored": {
+    "de": "Ignoriert",
+    "ru": "Игнорируются"
+  },
+  "Remove": {
+    "de": "Entfernen",
+    "ru": "Убрать"
+  },
+  "Generate into": {
+    "de": "Erstellen in",
+    "ru": "Создать в"
+  },
+  "+ New deck…": {
+    "de": "+ Neuer Stapel…",
+    "ru": "+ Новая колода…"
+  },
+  "Sentences in": {
+    "de": "Sätze auf",
+    "ru": "Предложения на"
+  },
+  ", translated into": {
+    "de": ", übersetzt in",
+    "ru": ", перевод на"
+  },
+  ", at level": {
+    "de": ", auf Niveau",
+    "ru": ", уровень"
+  },
+  "Writing sentences…": {
+    "de": "Sätze werden geschrieben…",
+    "ru": "Создаём предложения…"
+  },
+  "No new words to generate": {
+    "de": "Keine neuen Wörter zum Erstellen",
+    "ru": "Нет новых слов для генерации"
+  },
+  "added to": {
+    "de": "hinzugefügt zu",
+    "ru": "добавлено в"
+  },
+  "Just made": {
+    "de": "Gerade erstellt",
+    "ru": "Только что созданы"
+  },
+  "click one to change it": {
+    "de": "zum Bearbeiten anklicken",
+    "ru": "нажмите, чтобы изменить"
+  },
+  "failed a check": {
+    "de": "Prüfung fehlgeschlagen",
+    "ru": "не прошли проверку"
+  },
+  "Save text": {
+    "de": "Text speichern",
+    "ru": "Сохранить текст"
+  },
+  "Welcome,": {
+    "de": "Willkommen,",
+    "ru": "Здравствуйте,"
+  },
+  "Before your first cards, tell us which language you speak, which one you are learning, and your level. Every sentence is written for them. Save, and you can start.": {
+    "de": "Wähle vor deinen ersten Karten deine Sprachen und dein Niveau. Speichere die Einstellungen, dann kann es losgehen.",
+    "ru": "Перед созданием карточек укажите родной и изучаемый языки и свой уровень. Сохраните настройки, чтобы начать."
+  },
+  "You are set up.": {
+    "de": "Alles eingerichtet.",
+    "ru": "Всё готово."
+  },
+  "Next, add a text and mark the words you want to learn.": {
+    "de": "Füge jetzt einen Text hinzu und markiere Lernwörter.",
+    "ru": "Добавьте текст и отметьте слова для изучения."
+  },
+  "Add your first text": {
+    "de": "Ersten Text hinzufügen",
+    "ru": "Добавить первый текст"
+  },
+  "Settings": {
+    "de": "Einstellungen",
+    "ru": "Настройки"
+  },
+  "Your languages": {
+    "de": "Deine Sprachen",
+    "ru": "Ваши языки"
+  },
+  "Sentences are written for your level, from words you already know. Each deck has its own language pair and instructions.": {
+    "de": "Sätze passen zu deinem Niveau und bekannten Wörtern. Jeder Stapel hat sein eigenes Sprachpaar und eigene Anweisungen.",
+    "ru": "Предложения учитывают ваш уровень и известные слова. У каждой колоды свои языки и инструкции."
+  },
+  "Languages for new decks": {
+    "de": "Sprachen für neue Stapel",
+    "ru": "Языки для новых колод"
+  },
+  "I speak": {
+    "de": "Ich spreche",
+    "ru": "Я говорю на"
+  },
+  "Swap languages": {
+    "de": "Sprachen tauschen",
+    "ru": "Поменять языки"
+  },
+  "Swap": {
+    "de": "Tauschen",
+    "ru": "Поменять"
+  },
+  "I am learning": {
+    "de": "Ich lerne",
+    "ru": "Я изучаю"
+  },
+  "Also learning:": {
+    "de": "Weitere Lernsprachen:",
+    "ru": "Также изучаю:"
+  },
+  "Stop learning": {
+    "de": "Nicht mehr lernen",
+    "ru": "Перестать изучать"
+  },
+  "Add another language to learn": {
+    "de": "Weitere Lernsprache hinzufügen",
+    "ru": "Добавить изучаемый язык"
+  },
+  "+ Add another language to learn": {
+    "de": "+ Weitere Lernsprache hinzufügen",
+    "ru": "+ Добавить изучаемый язык"
+  },
+  "no other language": {
+    "de": "keine weitere Sprache",
+    "ru": "нет других языков"
+  },
+  "New decks use the pair above; a deck can use any language you learn.": {
+    "de": "Neue Stapel verwenden dieses Paar; ein Stapel kann jede deiner Lernsprachen nutzen.",
+    "ru": "Новые колоды используют эти языки; для каждой колоды можно выбрать любой изучаемый язык."
+  },
+  "Your level in each language": {
+    "de": "Dein Niveau je Sprache",
+    "ru": "Ваш уровень по языкам"
+  },
+  "New sentences in each language are written at this level. A deck can set a level of its own, which then wins for that deck. Changing a level here affects only cards generated from now on, not the cards you already have.": {
+    "de": "Neue Sätze richten sich nach diesem Niveau. Das eigene Niveau eines Stapels hat Vorrang. Änderungen gelten nur für künftig erstellte Karten.",
+    "ru": "Новые предложения учитывают этот уровень. Собственный уровень колоды имеет приоритет. Изменения касаются только новых карточек."
+  },
+  "The language new decks start with": {
+    "de": "Die Standardsprache neuer Stapel",
+    "ru": "Язык по умолчанию для новых колод"
+  },
+  "Main language": {
+    "de": "Hauptsprache",
+    "ru": "Основной язык"
+  },
+  "Not sure?": {
+    "de": "Nicht sicher?",
+    "ru": "Не уверены?"
+  },
+  "Take a free placement test ↗": {
+    "de": "Kostenlosen Einstufungstest machen ↗",
+    "ru": "Пройти бесплатный тест ↗"
+  },
+  " (it asks for your email)": {
+    "de": " (fragt nach deiner E-Mail)",
+    "ru": " (потребуется почта)"
+  },
+  "No placement test linked yet.": {
+    "de": "Noch kein Einstufungstest verlinkt.",
+    "ru": "Ссылка на тест пока не добавлена."
+  },
+  "Sentence length": {
+    "de": "Satzlänge",
+    "ru": "Длина предложений"
+  },
+  "Shortest (words)": {
+    "de": "Minimum (Wörter)",
+    "ru": "Минимум слов"
+  },
+  "to": {
+    "de": "bis",
+    "ru": "до"
+  },
+  "Longest (words)": {
+    "de": "Maximum (Wörter)",
+    "ru": "Максимум слов"
+  },
+  "Shortest (characters)": {
+    "de": "Minimum (Zeichen)",
+    "ru": "Минимум символов"
+  },
+  "No minimum": {
+    "de": "Kein Minimum",
+    "ru": "Без минимума"
+  },
+  "Longest (characters)": {
+    "de": "Maximum (Zeichen)",
+    "ru": "Максимум символов"
+  },
+  "No maximum": {
+    "de": "Kein Maximum",
+    "ru": "Без максимума"
+  },
+  "German words can be long, so bounds in characters keep a session predictable, and a minimum keeps sentences from being too simple.": {
+    "de": "Zeichengrenzen helfen bei langen Wörtern; ein Minimum verhindert zu einfache Sätze.",
+    "ru": "Ограничение символов помогает с длинными словами, а минимум не даёт предложениям быть слишком простыми."
+  },
+  "Statistics": {
+    "de": "Statistik",
+    "ru": "Статистика"
+  },
+  "kept as generated": {
+    "de": "unverändert behalten",
+    "ru": "без изменений"
+  },
+  "regenerated": {
+    "de": "neu generiert",
+    "ru": "перегенерировано"
+  },
+  "edited by hand": {
+    "de": "von Hand bearbeitet",
+    "ru": "изменено вручную"
+  },
+  "deleted": {
+    "de": "gelöscht",
+    "ru": "удалено"
+  },
+  "Tokens, as the provider reported them:": {
+    "de": "Token laut Anbieter:",
+    "ru": "Токены по данным провайдера:"
+  },
+  "in,": {
+    "de": "Eingabe,",
+    "ru": "входящих,"
+  },
+  "out.": {
+    "de": "Ausgabe.",
+    "ru": "исходящих."
+  },
+  "Your provider's own dashboard shows what you were billed.": {
+    "de": "Die tatsächlichen Kosten stehen im Dashboard deines Anbieters.",
+    "ru": "Фактические расходы указаны в кабинете вашего провайдера."
+  },
+  "Account": {
+    "de": "Konto",
+    "ru": "Аккаунт"
+  },
+  "Sign out": {
+    "de": "Abmelden",
+    "ru": "Выйти"
+  },
+  "You have unsaved changes": {
+    "de": "Du hast ungespeicherte Änderungen",
+    "ru": "Есть несохранённые изменения"
+  },
+  "Check your languages and level, then save": {
+    "de": "Prüfe Sprachen und Niveau und speichere",
+    "ru": "Проверьте языки и уровень и сохраните"
+  },
+  "Save changes": {
+    "de": "Änderungen speichern",
+    "ru": "Сохранить изменения"
+  },
+  "Sound": {
+    "de": "Ton",
+    "ru": "Звук"
+  },
+  "Read each sentence aloud when a card appears": {
+    "de": "Jeden neuen Satz automatisch vorlesen",
+    "ru": "Читать каждое новое предложение вслух"
+  },
+  "You can also switch it during study, with the speaker button.": {
+    "de": "Auch während des Lernens über die Lautsprechertaste umschaltbar.",
+    "ru": "Также можно переключить кнопкой динамика во время изучения."
+  },
+  "Connected, but the provider listed no models.": {
+    "de": "Verbunden, aber der Anbieter hat keine Modelle aufgelistet.",
+    "ru": "Подключено, но провайдер не вернул список моделей."
+  },
+  "Who writes the sentences": {
+    "de": "Wer die Sätze schreibt",
+    "ru": "Кто создаёт предложения"
+  },
+  "Key": {
+    "de": "Schlüssel",
+    "ru": "Ключ"
+  },
+  "The service": {
+    "de": "Der Dienst",
+    "ru": "Сервис"
+  },
+  "Its key and model": {
+    "de": "Schlüssel und Modell des Dienstes",
+    "ru": "Ключ и модель сервиса"
+  },
+  "My own key": {
+    "de": "Mein eigener Schlüssel",
+    "ru": "Мой ключ"
+  },
+  "Any provider, paid by you": {
+    "de": "Beliebiger Anbieter, von dir bezahlt",
+    "ru": "Любой провайдер, оплата с вашей стороны"
+  },
+  "Provider": {
+    "de": "Anbieter",
+    "ru": "Провайдер"
+  },
+  "Base URL": {
+    "de": "Basis-URL",
+    "ru": "Базовый URL"
+  },
+  "Model": {
+    "de": "Modell",
+    "ru": "Модель"
+  },
+  "e.g. the name your provider lists": {
+    "de": "z. B. der Modellname beim Anbieter",
+    "ru": "Название модели у провайдера"
+  },
+  "API key": {
+    "de": "API-Schlüssel",
+    "ru": "API-ключ"
+  },
+  "Your key": {
+    "de": "Dein Schlüssel",
+    "ru": "Ваш ключ"
+  },
+  "Checking…": {
+    "de": "Prüfen…",
+    "ru": "Проверяем…"
+  },
+  "Check the connection": {
+    "de": "Verbindung prüfen",
+    "ru": "Проверить подключение"
+  },
+  "The key stays in this browser: it goes straight to the provider and is never sent to our server, so we and your teacher cannot read it.": {
+    "de": "Der Schlüssel bleibt in diesem Browser und geht direkt an den Anbieter, nie an unseren Server. Weder wir noch deine Lehrkraft können ihn lesen.",
+    "ru": "Ключ хранится в этом браузере и отправляется напрямую провайдеру, минуя наш сервер. Мы и преподаватель не можем его прочитать."
+  },
+  "Save in this browser": {
+    "de": "In diesem Browser speichern",
+    "ru": "Сохранить в этом браузере"
+  },
+  "Forget my key": {
+    "de": "Meinen Schlüssel vergessen",
+    "ru": "Забыть мой ключ"
+  },
+  "New sentences will be written by the service.": {
+    "de": "Neue Sätze werden vom Dienst geschrieben.",
+    "ru": "Новые предложения создаёт сервис."
+  },
+  "Welcome back.": {
+    "de": "Willkommen zurück.",
+    "ru": "С возвращением."
+  },
+  "Create your account.": {
+    "de": "Konto erstellen.",
+    "ru": "Создайте аккаунт."
+  },
+  "Sign in to study your decks, or to check the decks your students shared with you.": {
+    "de": "Melde dich an, um zu lernen oder die freigegebenen Stapel deiner Lernenden zu prüfen.",
+    "ru": "Войдите, чтобы учить карточки или проверять колоды учеников."
+  },
+  "Learners and teachers use the same account: a teacher sees only the decks a student shares.": {
+    "de": "Lernende und Lehrkräfte nutzen denselben Kontotyp. Lehrkräfte sehen nur freigegebene Stapel.",
+    "ru": "Ученики и преподаватели используют одинаковые аккаунты. Преподаватель видит только открытые ему колоды."
+  },
+  "Full name": {
+    "de": "Vollständiger Name",
+    "ru": "Полное имя"
+  },
+  "e.g. Anna Schmidt": {
+    "de": "z. B. Anna Schmidt",
+    "ru": "Например, Анна Шмидт"
+  },
+  "Email": {
+    "de": "E-Mail",
+    "ru": "Почта"
+  },
+  "Password": {
+    "de": "Passwort",
+    "ru": "Пароль"
+  },
+  "At least 8 characters. We will email you a link to confirm your address.": {
+    "de": "Mindestens 8 Zeichen. Wir senden dir einen Link zur Bestätigung deiner E-Mail.",
+    "ru": "Не менее 8 символов. Мы отправим ссылку для подтверждения почты."
+  },
+  "Sign in": {
+    "de": "Anmelden",
+    "ru": "Войти"
+  },
+  "Create account": {
+    "de": "Konto erstellen",
+    "ru": "Создать аккаунт"
+  },
+  "New here? Create an account": {
+    "de": "Neu hier? Konto erstellen",
+    "ru": "Впервые здесь? Создать аккаунт"
+  },
+  "Have an account? Sign in": {
+    "de": "Schon ein Konto? Anmelden",
+    "ru": "Уже есть аккаунт? Войти"
+  },
+  "Marked: it will be rewritten with the deck’s other marked cards.": {
+    "de": "Markiert: wird mit den anderen markierten Karten neu geschrieben.",
+    "ru": "Отмечено: будет перегенерировано вместе с остальными карточками колоды."
+  },
+  "Leave session": {
+    "de": "Lernen beenden",
+    "ru": "Завершить занятие"
+  },
+  "New cards": {
+    "de": "Neue Karten",
+    "ru": "Новые карточки"
+  },
+  "Reviews from earlier days": {
+    "de": "Wiederholungen früherer Tage",
+    "ru": "Повторения прошлых дней"
+  },
+  "To see again today": {
+    "de": "Heute noch einmal",
+    "ru": "Ещё раз сегодня"
+  },
+  "Sentences play aloud": {
+    "de": "Sätze werden vorgelesen",
+    "ru": "Предложения читаются вслух"
+  },
+  "Sentences are silent": {
+    "de": "Sätze sind stumm",
+    "ru": "Предложения без звука"
+  },
+  "Play sentences aloud": {
+    "de": "Sätze vorlesen",
+    "ru": "Читать предложения вслух"
+  },
+  "Session complete": {
+    "de": "Lernen abgeschlossen",
+    "ru": "Занятие завершено"
+  },
+  "Nothing to study": {
+    "de": "Nichts zu lernen",
+    "ru": "Нечего учить"
+  },
+  "Generate cards into these decks to begin.": {
+    "de": "Erstelle zunächst Karten in diesen Stapeln.",
+    "ru": "Сначала создайте карточки в этих колодах."
+  },
+  "Check again": {
+    "de": "Erneut prüfen",
+    "ru": "Проверить снова"
+  },
+  "Back to Today": {
+    "de": "Zurück zu Heute",
+    "ru": "Вернуться к сегодняшнему дню"
+  },
+  "Card": {
+    "de": "Karte",
+    "ru": "Карточка"
+  },
+  "Show the answer": {
+    "de": "Antwort anzeigen",
+    "ru": "Показать ответ"
+  },
+  "Review": {
+    "de": "Prüfung",
+    "ru": "Проверка"
+  },
+  "the word": {
+    "de": "das Wort",
+    "ru": "слово"
+  },
+  "the word's translation": {
+    "de": "die Wortübersetzung",
+    "ru": "перевод слова"
+  },
+  "the sentence": {
+    "de": "den Satz",
+    "ru": "предложение"
+  },
+  "the translation": {
+    "de": "die Übersetzung",
+    "ru": "перевод"
+  },
+  "Where the word came from": {
+    "de": "Woher das Wort stammt",
+    "ru": "Откуда взято слово"
+  },
+  "Tap to show the answer": {
+    "de": "Tippen, um die Antwort zu sehen",
+    "ru": "Нажмите, чтобы увидеть ответ"
+  },
+  "or press": {
+    "de": "oder drücke",
+    "ru": "или нажмите"
+  },
+  "Space": {
+    "de": "Leertaste",
+    "ru": "Пробел"
+  },
+  "Rewrite this sentence": {
+    "de": "Diesen Satz neu schreiben",
+    "ru": "Перегенерировать предложение"
+  },
+  "Rewrite later": {
+    "de": "Später neu schreiben",
+    "ru": "Перегенерировать позже"
+  },
+  "Too hard": {
+    "de": "Zu schwer",
+    "ru": "Слишком сложно"
+  },
+  "T": {
+    "de": "T",
+    "ru": "T"
+  },
+  "Teaching": {
+    "de": "Unterrichten",
+    "ru": "Преподавание"
+  },
+  "Your students' decks": {
+    "de": "Stapel deiner Lernenden",
+    "ru": "Колоды учеников"
+  },
+  "A student shares a deck with you by your email. You see only the decks they share, and you can correct every card in them.": {
+    "de": "Lernende teilen Stapel über deine E-Mail-Adresse. Du siehst und korrigierst nur die freigegebenen Stapel.",
+    "ru": "Ученики открывают доступ по вашей почте. Вы видите и исправляете только открытые вам колоды."
+  },
+  "No shared decks yet": {
+    "de": "Noch keine freigegebenen Stapel",
+    "ru": "Открытых колод пока нет"
+  },
+  "Ask your student to open a deck, choose Edit deck, and share it with your email.": {
+    "de": "Bitte deine Lernenden, einen Stapel zu bearbeiten und ihn mit deiner E-Mail zu teilen.",
+    "ru": "Попросите ученика открыть настройки колоды и поделиться ею с вашей почтой."
+  },
+  "Student": {
+    "de": "Lernende",
+    "ru": "Ученик"
+  },
+  "Left to check": {
+    "de": "Noch zu prüfen",
+    "ru": "Осталось проверить"
+  },
+  "done": {
+    "de": "fertig",
+    "ru": "готово"
+  },
+  "← Teaching": {
+    "de": "← Unterrichten",
+    "ru": "← Преподавание"
+  },
+  "of": {
+    "de": "von",
+    "ru": "из"
+  },
+  "left to check": {
+    "de": "noch zu prüfen",
+    "ru": "осталось проверить"
+  },
+  "Only cards left to check": {
+    "de": "Nur ungeprüfte Karten",
+    "ru": "Только непроверенные карточки"
+  },
+  "What the marks mean": {
+    "de": "Bedeutung der Markierungen",
+    "ru": "Значения отметок"
+  },
+  "The student asked you about this card": {
+    "de": "Die lernende Person hat um Prüfung dieser Karte gebeten",
+    "ru": "Ученик попросил проверить карточку"
+  },
+  "Edit the fields, then Save changes or Discard. Other actions are available after saving or discarding.": {
+    "de": "Bearbeite die Felder und wähle Änderungen speichern oder Verwerfen. Danach stehen weitere Aktionen zur Verfügung.",
+    "ru": "Измените поля и нажмите «Сохранить изменения» или «Отменить». После этого будут доступны остальные действия."
+  },
+  "Looks right: answers the question and marks the card checked": {
+    "de": "Sieht richtig aus: beantwortet die Frage und markiert die Karte als geprüft",
+    "ru": "Всё верно: отвечает на вопрос и отмечает карточку проверенной"
+  },
+  "Write a new sentence, with what is wrong": {
+    "de": "Neuen Satz schreiben und den Fehler angeben",
+    "ru": "Создать предложение с учётом указанной ошибки"
+  },
+  "Archive: out of the student's study": {
+    "de": "Archivieren: nicht mehr lernen",
+    "ru": "В архив: исключить из изучения"
+  },
+  "Delete": {
+    "de": "Löschen",
+    "ru": "Удалить"
+  },
+  "Word": {
+    "de": "Wort",
+    "ru": "Слово"
+  },
+  "Meaning": {
+    "de": "Bedeutung",
+    "ru": "Значение"
+  },
+  "Sentence": {
+    "de": "Satz",
+    "ru": "Предложение"
+  },
+  "Translation": {
+    "de": "Übersetzung",
+    "ru": "Перевод"
+  },
+  "Student's note": {
+    "de": "Notiz der lernenden Person",
+    "ru": "Заметка ученика"
+  },
+  "New sentence": {
+    "de": "Neuer Satz",
+    "ru": "Новое предложение"
+  },
+  "Nothing to check here.": {
+    "de": "Hier gibt es nichts zu prüfen.",
+    "ru": "Здесь нечего проверять."
+  },
+  "the meaning": {
+    "de": "die Bedeutung",
+    "ru": "значение"
+  },
+  "Please check this card": {
+    "de": "Bitte prüfe diese Karte",
+    "ru": "Пожалуйста, проверьте карточку"
+  },
+  "You answered this": {
+    "de": "Du hast dies beantwortet",
+    "ru": "Вы уже ответили"
+  },
+  "Reopen": {
+    "de": "Erneut öffnen",
+    "ru": "Открыть снова"
+  },
+  "What is wrong?": {
+    "de": "Was ist falsch?",
+    "ru": "Что не так?"
+  },
+  "Reason": {
+    "de": "Grund",
+    "ru": "Причина"
+  },
+  "Write a new sentence": {
+    "de": "Neuen Satz schreiben",
+    "ru": "Создать новое предложение"
+  },
+  "Discard": {
+    "de": "Verwerfen",
+    "ru": "Отменить"
+  },
+  "Unsaved changes": {
+    "de": "Ungespeicherte Änderungen",
+    "ru": "Несохранённые изменения"
+  },
+  "You checked this card": {
+    "de": "Du hast diese Karte geprüft",
+    "ru": "Вы проверили карточку"
+  },
+  "Looks right": {
+    "de": "Sieht richtig aus",
+    "ru": "Всё верно"
+  },
+  "Check your inbox.": {
+    "de": "Prüfe dein Postfach.",
+    "ru": "Проверьте почту."
+  },
+  "Hello": {
+    "de": "Hallo",
+    "ru": "Здравствуйте"
+  },
+  ". We sent a link to": {
+    "de": ". Wir haben einen Link gesendet an",
+    "ru": ". Мы отправили ссылку на"
+  },
+  ". Open it to confirm your email address and start.": {
+    "de": ". Öffne ihn, um deine E-Mail zu bestätigen und zu beginnen.",
+    "ru": ". Откройте её, чтобы подтвердить почту и начать."
+  },
+  "Running on your own computer? The email is in the local inbox at": {
+    "de": "Lokal auf deinem Computer? Die E-Mail liegt im lokalen Postfach auf",
+    "ru": "При локальном запуске письмо находится в почтовом ящике на"
+  },
+  "port 8025 ↗": {
+    "de": "Port 8025 ↗",
+    "ru": "порт 8025 ↗"
+  },
+  "Send the link again": {
+    "de": "Link erneut senden",
+    "ru": "Отправить ссылку снова"
+  },
+  "I have confirmed": {
+    "de": "Ich habe bestätigt",
+    "ru": "Я подтвердил почту"
+  },
+  "Use another account": {
+    "de": "Anderes Konto verwenden",
+    "ru": "Другой аккаунт"
+  },
+  "This link did not work.": {
+    "de": "Dieser Link funktioniert nicht.",
+    "ru": "Ссылка не сработала."
+  },
+  "Confirming your email…": {
+    "de": "E-Mail wird bestätigt…",
+    "ru": "Подтверждаем почту…"
+  },
+  "Go to sign in": {
+    "de": "Zur Anmeldung",
+    "ru": "Перейти ко входу"
+  },
+  "in study": {
+    "de": "im Lernen",
+    "ru": "изучается"
+  },
+  "marked to rewrite": {
+    "de": "zum Neuschreiben markiert",
+    "ru": "отмечено для перегенерации"
+  },
+  "checked by the teacher": {
+    "de": "von der Lehrkraft geprüft",
+    "ru": "проверено преподавателем"
+  },
+  "The word as it appears": {
+    "de": "Das Wort im Satz",
+    "ru": "Форма слова в предложении"
+  },
+  "Its meaning here": {
+    "de": "Seine Bedeutung hier",
+    "ru": "Значение в этом контексте"
+  },
+  "(the text was deleted):": {
+    "de": "(Text gelöscht):",
+    "ru": "(текст удалён):"
+  },
+  "What was wrong": {
+    "de": "Was war falsch",
+    "ru": "Что было не так"
+  },
+  "e.g. too formal, wrong meaning, too many new words": {
+    "de": "z. B. zu förmlich, falsche Bedeutung, zu viele neue Wörter",
+    "ru": "Например, слишком формально, неверное значение, много новых слов"
+  },
+  "Instructions this card is written with": {
+    "de": "Anweisungen für diese Karte",
+    "ru": "Инструкции для этой карточки"
+  },
+  "None: only your level and the words you know": {
+    "de": "Keine: nur dein Niveau und bekannte Wörter",
+    "ru": "Нет: только ваш уровень и известные слова"
+  },
+  "Writing…": {
+    "de": "Schreiben…",
+    "ru": "Создаём…"
+  },
+  "Unmark": {
+    "de": "Markierung entfernen",
+    "ru": "Снять отметку"
+  },
+  "Mark to rewrite later": {
+    "de": "Für späteres Neuschreiben markieren",
+    "ru": "Отметить для перегенерации позже"
+  },
+  "Add": {
+    "de": "Hinzufügen",
+    "ru": "Добавить"
+  },
+  "How many cards": {
+    "de": "Anzahl der Karten",
+    "ru": "Количество карточек"
+  },
+  "more": {
+    "de": "weitere",
+    "ru": "ещё"
+  },
+  "for this word, each with its own sentence": {
+    "de": "für dieses Wort, jede mit eigenem Satz",
+    "ru": "для этого слова, каждая со своим предложением"
+  },
+  "Added": {
+    "de": "Hinzugefügt",
+    "ru": "Добавлено"
+  },
+  "Ask your teacher": {
+    "de": "Deine Lehrkraft fragen",
+    "ru": "Спросить преподавателя"
+  },
+  "Note for the teacher": {
+    "de": "Notiz für die Lehrkraft",
+    "ru": "Заметка преподавателю"
+  },
+  "e.g. Is this how people say it?": {
+    "de": "z. B. Sagt man das so?",
+    "ru": "Например, так действительно говорят?"
+  },
+  "Update the note": {
+    "de": "Notiz aktualisieren",
+    "ru": "Обновить заметку"
+  },
+  "Ask the teacher to check": {
+    "de": "Lehrkraft um Prüfung bitten",
+    "ru": "Отправить на проверку"
+  },
+  "Resolved": {
+    "de": "Erledigt",
+    "ru": "Решено"
+  },
+  "None of this card's decks has a teacher. Share the deck with your teacher (Edit deck → Share with a teacher) to ask them about a card.": {
+    "de": "Kein Stapel dieser Karte ist freigegeben. Teile einen Stapel über Stapel bearbeiten → Mit einer Lehrkraft teilen.",
+    "ru": "Ни одна колода этой карточки не открыта преподавателю. Откройте доступ через «Изменить колоду → Поделиться с преподавателем»."
+  },
+  "Delete for good": {
+    "de": "Endgültig löschen",
+    "ru": "Удалить навсегда"
+  },
+  "Archive keeps the card and its history but stops studying it. Delete removes it for good.": {
+    "de": "Archivieren behält Karte und Verlauf, beendet aber das Lernen. Löschen entfernt sie endgültig.",
+    "ru": "Архив сохраняет карточку и историю, но исключает из изучения. Удаление стирает её навсегда."
+  },
+  "Close": {
+    "de": "Schließen",
+    "ru": "Закрыть"
+  },
+  "Title": {
+    "de": "Titel",
+    "ru": "Заголовок"
+  },
+  "e.g. Chapter 5": {
+    "de": "z. B. Kapitel 5",
+    "ru": "Например, глава 5"
+  },
+  "Text language": {
+    "de": "Textsprache",
+    "ru": "Язык текста"
+  },
+  "Choose a language": {
+    "de": "Sprache wählen",
+    "ru": "Выберите язык"
+  },
+  "Text": {
+    "de": "Text",
+    "ru": "Текст"
+  },
+  "Paste a song, an article, or a chapter in the language you are learning.": {
+    "de": "Lied, Artikel oder Kapitel in deiner Lernsprache einfügen.",
+    "ru": "Вставьте песню, статью или главу на изучаемом языке."
+  },
+  "Or load it from a .txt file": {
+    "de": "Oder eine .txt-Datei laden",
+    "ru": "Или загрузите файл .txt"
+  },
+  "Where it is from": {
+    "de": "Quelle",
+    "ru": "Источник"
+  },
+  "https://…": {
+    "de": "https://…",
+    "ru": "https://…"
+  },
+  "Notes": {
+    "de": "Notizen",
+    "ru": "Заметки"
+  },
+  "(optional, never turned into cards)": {
+    "de": "(optional, wird nie zu Karten)",
+    "ru": "(необязательно, не превращается в карточки)"
+  },
+  "e.g. Episode 3, from minute 10": {
+    "de": "z. B. Folge 3, ab Minute 10",
+    "ru": "Например, серия 3, с 10-й минуты"
+  },
+  "Interface language": {
+    "de": "Sprache der Oberfläche",
+    "ru": "Язык интерфейса"
+  },
+  "Saved in this browser. Your learning languages and card voices stay the same.": {
+    "de": "In diesem Browser gespeichert. Lernsprachen und Kartenstimmen bleiben gleich.",
+    "ru": "Сохраняется в этом браузере. Языки обучения и озвучивания карточек не меняются."
+  },
+  "Discard unsaved changes?": {
+    "de": "Ungespeicherte Änderungen verwerfen?",
+    "ru": "Отменить несохранённые изменения?"
+  },
+  "Meaning, sentence, and translation cannot be empty.": {
+    "de": "Bedeutung, Satz und Übersetzung dürfen nicht leer sein.",
+    "ru": "Значение, предложение и перевод не могут быть пустыми."
+  },
+  "Today": {
+    "de": "Heute",
+    "ru": "Сегодня"
+  },
+  "English": {
+    "de": "Englisch",
+    "ru": "Английский"
+  },
+  "German": {
+    "de": "Deutsch",
+    "ru": "Немецкий"
+  },
+  "Russian": {
+    "de": "Russisch",
+    "ru": "Русский"
+  },
+  "Again": {
+    "de": "Noch einmal",
+    "ru": "Ещё раз"
+  },
+  "Hard": {
+    "de": "Schwer",
+    "ru": "Трудно"
+  },
+  "Good": {
+    "de": "Gut",
+    "ru": "Хорошо"
+  },
+  "Easy": {
+    "de": "Einfach",
+    "ru": "Легко"
+  },
+  "Saved": {
+    "de": "Gespeichert",
+    "ru": "Сохранено"
+  },
+  "Beginner": {
+    "de": "Anfänger",
+    "ru": "Начальный"
+  },
+  "Elementary": {
+    "de": "Grundkenntnisse",
+    "ru": "Базовый"
+  },
+  "Intermediate": {
+    "de": "Mittelstufe",
+    "ru": "Средний"
+  },
+  "Upper intermediate": {
+    "de": "Gehobene Mittelstufe",
+    "ru": "Выше среднего"
+  },
+  "Advanced": {
+    "de": "Fortgeschritten",
+    "ru": "Продвинутый"
+  },
+  "Proficient": {
+    "de": "Kompetent",
+    "ru": "Свободный"
+  },
+  "In study": {
+    "de": "Im Lernen",
+    "ru": "Изучаются"
+  },
+  "To rewrite": {
+    "de": "Neu schreiben",
+    "ru": "Перегенерировать"
+  },
+  "For the teacher": {
+    "de": "Für die Lehrkraft",
+    "ru": "Преподавателю"
+  },
+  "Failed a check": {
+    "de": "Prüfung fehlgeschlagen",
+    "ru": "Не прошли проверку"
+  },
+  "Deck not found": {
+    "de": "Stapel nicht gefunden",
+    "ru": "Колода не найдена"
+  },
+  "Name of the new deck": {
+    "de": "Name des neuen Stapels",
+    "ru": "Название новой колоды"
+  },
+  "in a moment": {
+    "de": "gleich",
+    "ru": "через мгновение"
+  },
+  "This browser cannot read the sentence aloud, so read it on the card.": {
+    "de": "Dieser Browser kann den Satz nicht vorlesen. Lies ihn auf der Karte.",
+    "ru": "Браузер не может прочитать предложение вслух. Прочитайте его на карточке."
+  },
+  "Found while studying.": {
+    "de": "Beim Lernen gefunden.",
+    "ru": "Обнаружено при изучении."
+  },
+  "Rewritten. Here is the new sentence.": {
+    "de": "Neu geschrieben. Hier ist der neue Satz.",
+    "ru": "Готово. Вот новое предложение."
+  },
+  "Sent. Check your inbox and your spam folder.": {
+    "de": "Gesendet. Prüfe Posteingang und Spamordner.",
+    "ru": "Отправлено. Проверьте входящие и спам."
+  },
+  "Not confirmed yet.": {
+    "de": "Noch nicht bestätigt.",
+    "ru": "Ещё не подтверждено."
+  },
+  "A card stays in at least one deck.": {
+    "de": "Eine Karte bleibt in mindestens einem Stapel.",
+    "ru": "Карточка должна оставаться хотя бы в одной колоде."
+  },
+  "The text is empty. Paste a text or choose a .txt file.": {
+    "de": "Der Text ist leer. Füge einen Text ein oder wähle eine .txt-Datei.",
+    "ru": "Текст пуст. Вставьте текст или выберите файл .txt."
+  },
+  "This deck is not shared with you.": {
+    "de": "Dieser Stapel wurde nicht mit dir geteilt.",
+    "ru": "Эта колода вам недоступна."
+  },
+  "new studied today": {
+    "de": "heute neu gelernt",
+    "ru": "новых изучено сегодня"
+  },
+  "reviews done today": {
+    "de": "heute wiederholt",
+    "ru": "повторений сегодня"
+  },
+  "new left": {
+    "de": "neue übrig",
+    "ru": "новых осталось"
+  },
+  "reviews left": {
+    "de": "Wiederholungen übrig",
+    "ru": "повторений осталось"
+  },
+  "Listen to {v0}": {
+    "de": "{v0} anhören",
+    "ru": "Прослушать: {v0}"
+  },
+  "Meaning of {v0}": {
+    "de": "Bedeutung von {v0}",
+    "ru": "Значение слова {v0}"
+  },
+  "Sentence for {v0}": {
+    "de": "Satz für {v0}",
+    "ru": "Предложение со словом {v0}"
+  },
+  "Translation for {v0}": {
+    "de": "Übersetzung für {v0}",
+    "ru": "Перевод для слова {v0}"
+  },
+  "Delete the card for “{v0}”?": {
+    "de": "Karte für „{v0}“ löschen?",
+    "ru": "Удалить карточку для слова «{v0}»?"
+  },
+  "Delete the card for “{v0}” for good? Archiving keeps it.": {
+    "de": "Karte für „{v0}“ endgültig löschen? Archivieren behält sie.",
+    "ru": "Удалить карточку «{v0}» навсегда? Архив сохраняет её."
+  },
+  "Delete “{v0}”? Its cards stay in their decks.": {
+    "de": "„{v0}“ löschen? Die Karten bleiben in ihren Stapeln.",
+    "ru": "Удалить «{v0}»? Карточки останутся в колодах."
+  },
+  "Delete the deck “{v0}”? Cards that are in no other deck are deleted with it.": {
+    "de": "Stapel „{v0}“ löschen? Karten ohne anderen Stapel werden mitgelöscht.",
+    "ru": "Удалить колоду «{v0}»? Карточки, которых нет в других колодах, тоже будут удалены."
+  },
+  "Delete {v0}": {
+    "de": "{v0} löschen",
+    "ru": "Удалить {v0}"
+  },
+  "Move {v0} up": {
+    "de": "{v0} nach oben",
+    "ru": "Поднять {v0}"
+  },
+  "Move {v0} down": {
+    "de": "{v0} nach unten",
+    "ru": "Опустить {v0}"
+  },
+  "Stop learning {v0}": {
+    "de": "{v0} nicht mehr lernen",
+    "ru": "Перестать изучать: {v0}"
+  },
+  "Level in {v0}": {
+    "de": "Niveau in {v0}",
+    "ru": "Уровень языка: {v0}"
+  },
+  " · next sentences: {v0}": {
+    "de": " · nächste Sätze: {v0}",
+    "ru": " · следующие предложения: {v0}"
+  },
+  " · shared with {v0}": {
+    "de": " · geteilt mit {v0}",
+    "ru": " · доступ у {v0}"
+  },
+  "in {v0} min": {
+    "de": "in {v0} Min.",
+    "ru": "через {v0} мин"
+  },
+  "in {v0} h": {
+    "de": "in {v0} Std.",
+    "ru": "через {v0} ч"
+  },
+  "on {v0}": {
+    "de": "am {v0}",
+    "ru": "{v0}"
+  },
+  "Nothing to study in these decks now. The next card returns {v0}.": {
+    "de": "Jetzt nichts zu lernen. Die nächste Karte kommt {v0}.",
+    "ru": "Сейчас в этих колодах нечего учить. Следующая карточка — {v0}."
+  },
+  "The next card returns {v0}.": {
+    "de": "Die nächste Karte kommt {v0}.",
+    "ru": "Следующая карточка — {v0}."
+  },
+  "{v0} of {v1} done today": {
+    "de": "Heute {v0} von {v1} erledigt",
+    "ru": "Сегодня выполнено {v0} из {v1}"
+  },
+  "{v0} new, {v1} to review, {v2} to see again": {
+    "de": "{v0} neue, {v1} wiederholen, {v2} erneut ansehen",
+    "ru": "Новых: {v0}, повторить: {v1}, ещё раз: {v2}"
+  },
+  "You studied {v0} card{v1} today. ": {
+    "de": "Heute gelernte Karten: {v0}. ",
+    "ru": "Изучено карточек сегодня: {v0}. "
+  },
+  "Generate {v0} card{v1}": {
+    "de": "Karten erstellen: {v0}",
+    "ru": "Создать карточки: {v0}"
+  },
+  "Rewrite {v0} marked {v1}": {
+    "de": "Markierte Karten neu schreiben: {v0}",
+    "ru": "Перегенерировать отмеченные карточки: {v0}"
+  },
+  "{v0} is empty.": {
+    "de": "{v0} ist leer.",
+    "ru": "Файл {v0} пуст."
+  },
+  "Connected: {v0} models; pick one under Model.": {
+    "de": "Verbunden: {v0} Modelle; wähle eines unter Modell.",
+    "ru": "Подключено: моделей — {v0}; выберите одну в поле «Модель»."
+  },
+  "New sentences will be written with your key, by {v0}.": {
+    "de": "Neue Sätze werden mit deinem Schlüssel von {v0} geschrieben.",
+    "ru": "Новые предложения создаёт {v0} с вашим ключом."
+  },
+  " ({v0} times in all)": {
+    "de": " (insgesamt {v0}-mal)",
+    "ru": " (всего {v0} раз)"
+  },
+  " {v0} cards still failed a check after the retries.": {
+    "de": " {v0} Karten bestehen die Prüfung auch nach Wiederholungen nicht.",
+    "ru": " Не прошли проверку после повторных попыток: {v0}."
+  },
+  "The model's answer held no cards; try again.": {
+    "de": "Die Antwort enthielt keine Karten. Versuche es erneut.",
+    "ru": "В ответе нет карточек. Попробуйте ещё раз."
+  },
+  "The model's answer was not valid JSON; try again.": {
+    "de": "Die Antwort war kein gültiges JSON. Versuche es erneut.",
+    "ru": "Неверный формат ответа. Попробуйте ещё раз."
+  },
+  "Your API key was not accepted. Check it in Settings.": {
+    "de": "Dein API-Schlüssel wurde abgelehnt. Prüfe ihn in den Einstellungen.",
+    "ru": "API-ключ отклонён. Проверьте его в настройках."
+  },
+  "Your API key may not use this model.": {
+    "de": "Dein API-Schlüssel hat keinen Zugriff auf dieses Modell.",
+    "ru": "Ваш ключ не даёт доступа к этой модели."
+  },
+  "The provider does not know the model “{v0}”.": {
+    "de": "Der Anbieter kennt das Modell „{v0}“ nicht.",
+    "ru": "Провайдер не знает модель «{v0}»."
+  },
+  "The provider is rate limiting your key; try again in a minute.": {
+    "de": "Der Anbieter begrenzt die Anfragen. Versuche es in einer Minute erneut.",
+    "ru": "Провайдер ограничил запросы. Попробуйте через минуту."
+  },
+  "Could not reach the provider from this browser.": {
+    "de": "Der Anbieter ist von diesem Browser aus nicht erreichbar.",
+    "ru": "Не удалось подключиться к провайдеру из браузера."
+  },
+  "The provider returned an error ({v0}).": {
+    "de": "Der Anbieter meldete einen Fehler ({v0}).",
+    "ru": "Провайдер вернул ошибку ({v0})."
+  },
+  "The provider answered with an error ({v0}).": {
+    "de": "Der Anbieter antwortete mit einem Fehler ({v0}).",
+    "ru": "Провайдер ответил с ошибкой ({v0})."
+  },
+  "The model declined to write these sentences.": {
+    "de": "Das Modell hat die Sätze abgelehnt.",
+    "ru": "Модель отказалась создавать эти предложения."
+  },
+  "The answer was cut off; try fewer words at once.": {
+    "de": "Die Antwort wurde abgeschnitten. Versuche weniger Wörter auf einmal.",
+    "ru": "Ответ обрезан. Попробуйте выбрать меньше слов."
+  },
+  "The model returned no sentences.": {
+    "de": "Das Modell hat keine Sätze geliefert.",
+    "ru": "Модель не вернула предложений."
+  },
+  "The key was not accepted.": {
+    "de": "Der Schlüssel wurde abgelehnt.",
+    "ru": "Ключ отклонён."
+  },
+  "Could not reach this base URL from the browser.": {
+    "de": "Die Basis-URL ist von diesem Browser aus nicht erreichbar.",
+    "ru": "Не удалось подключиться к этому URL из браузера."
+  },
+  "Wrong email or password": {
+    "de": "Falsche E-Mail oder falsches Passwort",
+    "ru": "Неверная почта или пароль"
+  },
+  "The text and deck must use the same learning language": {
+    "de": "Text und Stapel müssen dieselbe Lernsprache verwenden",
+    "ru": "Язык текста должен совпадать с изучаемым языком колоды"
+  },
+  "Anthropic (Claude), or a gateway that speaks its API": {
+    "de": "Anthropic (Claude) oder kompatibles Gateway",
+    "ru": "Anthropic (Claude) или совместимый шлюз"
+  },
+  "Leave the base URL as it is for a key from Anthropic; change it for a gateway.": {
+    "de": "Für Anthropic den URL beibehalten; für ein Gateway ändern.",
+    "ru": "Для ключа Anthropic оставьте URL как есть; для шлюза измените его."
+  },
+  "OpenRouter, or another OpenAI-compatible provider": {
+    "de": "OpenRouter oder anderer OpenAI-kompatibler Anbieter",
+    "ru": "OpenRouter или другой OpenAI-совместимый провайдер"
+  },
+  "Any provider with an OpenAI-style /chat/completions endpoint and JSON-schema output. Type the model name exactly as your provider lists it.": {
+    "de": "Anbieter mit OpenAI-kompatiblem /chat/completions und JSON-Schema-Ausgabe. Modellnamen exakt wie beim Anbieter eingeben.",
+    "ru": "Провайдер с OpenAI-совместимым /chat/completions и JSON Schema. Введите точное название модели у провайдера."
+  },
+  "Choose a deck": {
+    "de": "Stapel wählen",
+    "ru": "Выберите колоду"
+  },
+  "card": {
+    "de": "Karte",
+    "ru": "карточка"
+  },
+  "text": {
+    "de": "Text",
+    "ru": "текст"
+  },
+  "texts": {
+    "de": "Texte",
+    "ru": "текстов"
+  },
+  "Word and meaning": {
+    "de": "Wort und Bedeutung",
+    "ru": "Слово и значение"
+  },
+  "Card details": {
+    "de": "Kartendetails",
+    "ru": "Подробности карточки"
+  },
+  "Open card": {
+    "de": "Karte öffnen",
+    "ru": "Открыть карточку"
+  },
+  "Open card to listen, edit, or review it. Requests from the student appear first.": {
+    "de": "Öffne eine Karte zum Anhören, Bearbeiten oder Prüfen. Anfragen der Lernenden stehen zuerst.",
+    "ru": "Откройте карточку, чтобы прослушать, изменить или проверить её. Запросы ученика показаны первыми."
+  },
+  "Open a card to listen, edit, or review it. Requests from the student appear first.": {
+    "de": "Öffne eine Karte zum Anhören, Bearbeiten oder Prüfen. Anfragen der Lernenden stehen zuerst.",
+    "ru": "Откройте карточку, чтобы прослушать, изменить или проверить её. Запросы ученика показаны первыми."
+  },
+  "Asked to check": {
+    "de": "Prüfung angefragt",
+    "ru": "Проверить по запросу"
+  },
+  "Checked": {
+    "de": "Geprüft",
+    "ru": "Проверено"
+  },
+  "To check": {
+    "de": "Zu prüfen",
+    "ru": "Проверить"
+  },
+  "Archived": {
+    "de": "Archiviert",
+    "ru": "В архиве"
+  },
+  "Student's request": {
+    "de": "Anfrage der lernenden Person",
+    "ru": "Запрос ученика"
+  },
+  "No note from the student.": {
+    "de": "Keine Notiz von der lernenden Person.",
+    "ru": "Ученик не оставил заметку."
+  },
+  "Reopen review": {
+    "de": "Prüfung erneut öffnen",
+    "ru": "Открыть проверку снова"
+  },
+  "Discard edits": {
+    "de": "Änderungen verwerfen",
+    "ru": "Отменить правки"
+  },
+  "The card's fields cannot be empty.": {
+    "de": "Die Kartenfelder dürfen nicht leer sein.",
+    "ru": "Поля карточки не могут быть пустыми."
+  },
+  "No matching models. You can type a model name.": {
+    "de": "Kein passendes Modell. Du kannst einen Modellnamen eingeben.",
+    "ru": "Нет подходящих моделей. Можно ввести название вручную."
+  },
+  "Show model suggestions": {
+    "de": "Modellvorschläge anzeigen",
+    "ru": "Показать модели"
+  },
+  "Models": {
+    "de": "Modelle",
+    "ru": "Модели"
+  },
+  "Open card: {v0}, {v1}": {
+    "de": "Karte öffnen: {v0}, {v1}",
+    "ru": "Открыть карточку: {v0}, {v1}"
+  }
+}

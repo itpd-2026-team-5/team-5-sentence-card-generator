@@ -314,7 +314,12 @@ def seed(db: Session, reset: bool = False) -> bool:
 
         title, source_url, body = spec["text"]
         text = SourceText(
-            profile_id=profile.id, title=title, source_url=source_url, body=body, position=index
+            profile_id=profile.id,
+            title=title,
+            source_url=source_url,
+            body=body,
+            position=index,
+            language=spec["target"],
         )
         db.add(text)
         db.flush()

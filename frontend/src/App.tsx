@@ -1,3 +1,4 @@
+import { t, useLocale } from "./i18n";
 import { useEffect, useState } from "react";
 import { api, session, type Language, type User } from "./api";
 import { Icon } from "./components/Icon";
@@ -22,6 +23,7 @@ const NAV = [
 ];
 
 export default function App() {
+  useLocale();
   const [path, query, go] = useRoute();
   const [language, setLanguage] = useState<Language>("de");
   const [known, setKnown] = useState<Language>("en");
@@ -105,9 +107,9 @@ export default function App() {
   return (
     <div className="shell">
       <nav className="rail">
-        <a className="brand" href="#/" aria-label="Sentence Cards">
+        <a className="brand" href="#/" aria-label={t("Sentence Cards")}>
           <span className="logo" />
-          <span className="brand-name">Sentences</span>
+          <span className="brand-name">{t("Sentences")}</span>
         </a>
         <div className="rail-links">
           {NAV.map((item) => (
@@ -117,7 +119,7 @@ export default function App() {
               className={active === item.path ? "active" : ""}
             >
               <Icon name={item.icon} />
-              <span>{item.label}</span>
+              <span>{t(item.label)}</span>
             </a>
           ))}
         </div>
