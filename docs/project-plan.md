@@ -82,7 +82,7 @@ Individual-card reordering remains deferred under [DEC-094](decisions.md#dec-094
 
 - **Due:** 2026-11-08
 - **Sprint Backlog:** [SPRINT-06 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/4)
-- **Planned Velocity:** 29; the story points of the five stories scheduled here: [US-14](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/141) (5), [US-08](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/41) (3), [US-10](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/36) (13), and the product-analyst and system-operator stories (3 and 5).
+- **Planned Velocity:** 8; the story points of the two internal stories scheduled here: [US-16](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/190) (3) and [US-17](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) (5).
 
 #### REL-06
 
