@@ -2,6 +2,7 @@
 
 This is the runbook for deploying Sentence Cards to the university VM, where staging and production run side by side.
 How to build, configure, and run the product on your own machine is in [Set up and run](setup.md); this page covers only what the deployment adds.
+The product's analytics metrics are defined in the [analytics plan](analytics.md).
 
 ## The four environments
 

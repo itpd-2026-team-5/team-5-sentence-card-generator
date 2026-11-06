@@ -111,3 +111,29 @@ A learner's or a teacher's own LLM API key, kept in their browser and sent only 
 The product's own LLM API key, held by the backend and used when a learner has not chosen their own key.
 
 **Defined by:** [`ADR-001`](architecture/adr/ADR-001.md) and [`DEC-028`](decisions.md#dec-028).
+
+## Product Analytics
+
+### Focus Metric
+
+The one number from which the product's value is read.
+
+**Defined by:** [the analytics plan](analytics.md#the-metric-tree).
+
+### Input Metric
+
+A metric for a product step the team can change and use to explain movement in the focus metric.
+
+**Defined by:** [the analytics plan](analytics.md#the-metric-tree).
+
+### Counter-Metric
+
+A metric that guards the focus metric against increasing it at the user's expense.
+
+**Defined by:** [the analytics plan](analytics.md#the-metric-tree).
+
+### Metric Tree
+
+A nested view of the focus metric, its counter-metric, and the input metrics that explain it.
+
+**Defined by:** [the analytics plan](analytics.md#the-metric-tree).
