@@ -7,6 +7,7 @@
 - [Definition of done](definition-of-done.md)
 - [Product vision](product-vision.md)
 - [Features](features.md)
+- [Product analytics](analytics.md)
 - [Threshold of success](threshold-of-success.md)
 - [Glossary](glossary.md)
 - [Decisions](decisions.md)
