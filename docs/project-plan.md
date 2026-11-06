@@ -74,13 +74,15 @@ A learner can complete the core text-to-card-and-study flow from the university 
 
 ### SPRINT-06
 
-Provisional: the team can observe product use and present a running product with evidence of its behavior.
+The team can observe how learners use the core task and whether the deployed product meets its quality targets, with the analytics and observability pipelines and their four dashboards running for staging and production, and the Customer's review of the product's mobile and desktop usability and deployed pronunciation and LLM access verified.
 
 The Customer review prioritizes improving desktop and especially mobile usability under [DEC-100](decisions.md#dec-100), and verifying deployed pronunciation and LLM access under [DEC-101](decisions.md#dec-101).
 Alternative provider trials carry into this sprint under [DEC-103](decisions.md#dec-103); no provider or external-VM migration has been selected.
 Individual-card reordering remains deferred under [DEC-094](decisions.md#dec-094), with separate order and identifiers required if it is later implemented under [DEC-093](decisions.md#dec-093).
 
-- **Due:** 2026-11-07
+- **Due:** 2026-11-08
+- **Sprint Backlog:** [SPRINT-06 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/4)
+- **Planned Velocity:** 8; the story points of the two internal stories scheduled here: [US-16](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/190) (3) and [US-17](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) (5).
 
 #### REL-06
 
