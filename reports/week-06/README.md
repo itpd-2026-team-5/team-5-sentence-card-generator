@@ -1,5 +1,7 @@
 # Week 06 report — Sentence Card Generator, Team 5
 
+The [OpenPanel evidence](openpanel-evidence.md) shows the staging smoke event, its exclusion filter, and the staging and production product dashboards.
+
 The [OpenObserve dashboard evidence](openobserve-dashboard-evidence.md) records the staging and production SLI-01 panels, production request-log delivery, and a staging request ID absent from the production organization. QR-10 QRT-01 remains open pending a timed failed core-task check.
 
 ## Summary
