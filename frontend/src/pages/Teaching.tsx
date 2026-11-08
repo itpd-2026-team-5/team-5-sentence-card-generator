@@ -1,6 +1,12 @@
 import { t } from "../i18n";
 import { useEffect, useState } from "react";
-import { api, type Card, type Language, type TaughtDeck } from "../api";
+import {
+  api,
+  LANGUAGES,
+  type Card,
+  type Language,
+  type TaughtDeck,
+} from "../api";
 import { CardEditor } from "../components/CardEditor";
 import { Drawer } from "../components/Drawer";
 import { Icon } from "../components/Icon";
@@ -34,61 +40,93 @@ export function Teaching() {
           </span>
         </div>
       ) : (
-        <div className="table-wrap">
-          <table className="deck-table">
-            <thead>
-              <tr>
-                <th>{t("Student")}</th>
-                <th>{t("Deck")}</th>
-                <th className="num">{t("Cards")}</th>
-                <th className="num">{t("Asked")}</th>
-                <th className="num">{t("Left to check")}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {decks.map((deck) => (
-                <tr
-                  key={deck.id}
-                  onClick={() => {
-                    location.hash = `/teach/${deck.id}`;
-                  }}
-                >
-                  <td>
-                    <strong>{deck.student_name || deck.student}</strong>
-                    <span className="muted small deck-desc">
-                      {deck.student}
+        <>
+          <ul className="mobile-list" aria-label={t("Your students' decks")}>
+            {decks.map((deck) => (
+              <li key={deck.id}>
+                <a href={`#/teach/${deck.id}`}>
+                  <span className="mobile-list-main">
+                    <strong>{deck.name}</strong>
+                    <span className="mobile-list-meta">
+                      {deck.student_name || deck.student} ·{" "}
+                      {t(LANGUAGES[deck.target_language])} {t("from")}{" "}
+                      {t(LANGUAGES[deck.known_language])} · {deck.cards}{" "}
+                      {t("Cards")}
                     </span>
-                  </td>
-                  <td>
-                    <a href={`#/teach/${deck.id}`} className="deck-name">
-                      {deck.name}
-                    </a>
-                    {deck.description && (
-                      <span className="muted small deck-desc">
-                        {deck.description}
-                      </span>
-                    )}
-                  </td>
-                  <td className="num">{deck.cards}</td>
-                  <td className="num">
-                    {deck.needs_check > 0 ? (
-                      <span className="tag teacher">{deck.needs_check}</span>
-                    ) : (
-                      <span className="muted">0</span>
-                    )}
-                  </td>
-                  <td className="num">
+                  </span>
+                  <span className="mobile-list-counts">
                     {deck.to_check > 0 ? (
-                      <strong>{deck.to_check}</strong>
+                      <span className="tag teacher">
+                        {deck.to_check} {t("Left to check")}
+                      </span>
                     ) : (
                       <span className="tag ok">{t("done")}</span>
                     )}
-                  </td>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <div className="table-wrap desktop-table">
+            <table className="deck-table">
+              <thead>
+                <tr>
+                  <th>{t("Student")}</th>
+                  <th>{t("Deck")}</th>
+                  <th className="num">{t("Cards")}</th>
+                  <th className="num">{t("Asked")}</th>
+                  <th className="num">{t("Left to check")}</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {decks.map((deck) => (
+                  <tr
+                    key={deck.id}
+                    onClick={() => {
+                      location.hash = `/teach/${deck.id}`;
+                    }}
+                  >
+                    <td>
+                      <strong>{deck.student_name || deck.student}</strong>
+                      <span className="muted small deck-desc">
+                        {deck.student}
+                      </span>
+                    </td>
+                    <td>
+                      <a href={`#/teach/${deck.id}`} className="deck-name">
+                        {deck.name}
+                      </a>
+                      {deck.description && (
+                        <span className="muted small deck-desc">
+                          {deck.description}
+                        </span>
+                      )}
+                      <span className="muted small deck-desc">
+                        {t(LANGUAGES[deck.target_language])} {t("from")}{" "}
+                        {t(LANGUAGES[deck.known_language])}
+                      </span>
+                    </td>
+                    <td className="num">{deck.cards}</td>
+                    <td className="num">
+                      {deck.needs_check > 0 ? (
+                        <span className="tag teacher">{deck.needs_check}</span>
+                      ) : (
+                        <span className="muted">0</span>
+                      )}
+                    </td>
+                    <td className="num">
+                      {deck.to_check > 0 ? (
+                        <strong>{deck.to_check}</strong>
+                      ) : (
+                        <span className="tag ok">{t("done")}</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
     </div>
   );
@@ -205,11 +243,18 @@ export function TeachDeck({
           "Open a card to listen, edit, or review it. Requests from the student appear first.",
         )}
       </p>
+      <p className="muted small">
+        {t(
+          "Asked to check: the student requested help. To check: the teacher has not approved this card yet. Checked: the teacher approved the current card.",
+        )}
+      </p>
       <div className="teacher-cards-wrap">
         <table className="teacher-cards">
           <thead>
             <tr>
               <th>{t("Word and meaning")}</th>
+              <th>{t("Sentence")}</th>
+              <th>{t("Translation")}</th>
               <th>{t("Review")}</th>
               <th>
                 <span className="sr-only">{t("Card details")}</span>
@@ -231,6 +276,13 @@ export function TeachDeck({
                     {card.word_translation || "—"}
                   </span>
                 </td>
+                <td className="teacher-sentence">{card.sentence}</td>
+                <td className="teacher-translation">
+                  <span className="mobile-translation-label">
+                    {t("Translation")}:{" "}
+                  </span>
+                  {card.translation}
+                </td>
                 <td>
                   <span
                     className={`tag ${card.needs_check ? "teacher" : card.teacher_checked_at ? "ok" : ""}`}
@@ -250,6 +302,27 @@ export function TeachDeck({
                     <span className="teacher-card-extra error small">
                       {t("Failed a check")}
                     </span>
+                  )}
+                  {card.status !== "archived" && !card.teacher_checked_at && (
+                    <button
+                      type="button"
+                      className="btn small"
+                      disabled={cardBusy}
+                      onClick={async (event) => {
+                        event.stopPropagation();
+                        try {
+                          replace(
+                            await api.updateCard(card.id, {
+                              teacher_checked: true,
+                            }),
+                          );
+                        } catch (error) {
+                          setError((error as Error).message);
+                        }
+                      }}
+                    >
+                      {t("Approve")}
+                    </button>
                   )}
                 </td>
                 <td>

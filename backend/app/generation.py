@@ -5,7 +5,8 @@ import json
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from app.llm import LLMError, LLMProvider
+from app.analytics import track
+from app.llm import BrowserProvider, LLMError, LLMProvider
 from app.models import Card, Deck, GenerationLog, Profile, ReviewState, SourceText, TextWord
 from app.tokenize import context_for, split_words, tokenize
 
@@ -105,9 +106,9 @@ def too_hard_examples(db: Session, profile_id: int, limit: int = 5) -> list[str]
     )
 
 
-def deck_level(profile: Profile, deck: Deck) -> str:
-    """The deck's own level, or the learner's level in the deck's target language."""
-    return deck.level or (profile.levels or {}).get(deck.target_language) or DEFAULT_LEVEL
+def deck_level(deck: Deck) -> str:
+    """Use the level saved on this deck, independent of Settings."""
+    return deck.level or DEFAULT_LEVEL
 
 
 def build_prompt(
@@ -122,7 +123,7 @@ def build_prompt(
     request = {
         "target_language": LANGUAGES[deck.target_language],
         "known_language": LANGUAGES[deck.known_language],
-        "level": deck_level(profile, deck),
+        "level": deck_level(deck),
         "deck_instructions": deck.instructions if instructions is None else instructions,
         "sentence_length_in_words": [profile.sentence_min_words, profile.sentence_max_words],
         "sentence_min_characters": profile.sentence_min_chars or None,
@@ -323,6 +324,14 @@ def _request(db, provider, profile, deck, items, known, avoid, instructions=None
         profile, deck, items, known, avoid, too_hard_examples(db, profile.id), instructions
     )
     result = provider.generate_json(SYSTEM, prompt, CARD_SCHEMA)
+    if result.input_tokens or result.output_tokens:
+        track(
+            "llm_usage_recorded",
+            task="cards",
+            billing_scope="user_key" if isinstance(provider, BrowserProvider) else "service",
+            input_tokens=result.input_tokens,
+            output_tokens=result.output_tokens,
+        )
     db.add(
         GenerationLog(
             profile_id=profile.id,
@@ -452,6 +461,14 @@ def gloss_marks(db: Session, provider: LLMProvider, profile: Profile, text: Sour
     }
     prompt = "Translate each word in this request.\n" + json.dumps(request, ensure_ascii=False)
     result = provider.generate_json(GLOSS_SYSTEM, prompt, GLOSS_SCHEMA)
+    if result.input_tokens or result.output_tokens:
+        track(
+            "llm_usage_recorded",
+            task="gloss",
+            billing_scope="user_key" if isinstance(provider, BrowserProvider) else "service",
+            input_tokens=result.input_tokens,
+            output_tokens=result.output_tokens,
+        )
     db.add(
         GenerationLog(
             profile_id=profile.id,

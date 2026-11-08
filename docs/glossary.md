@@ -111,3 +111,59 @@ A learner's or a teacher's own LLM API key, kept in their browser and sent only 
 The product's own LLM API key, held by the backend and used when a learner has not chosen their own key.
 
 **Defined by:** [`ADR-001`](architecture/adr/ADR-001.md) and [`DEC-028`](decisions.md#dec-028).
+
+## Telemetry
+
+### Telemetry
+
+Limited data the product emits about use or operation for the two self-hosted pipelines.
+
+**Defined by:** [the analytics plan](analytics.md) and [the observability plan](observability.md).
+
+### Signal
+
+A metric, log, or trace that reports how the product operates.
+
+**Defined by:** [the observability plan](observability.md#the-signals).
+
+### Observability
+
+Using operating signals to understand the product's runtime behavior and diagnose a failure.
+
+**Defined by:** [the observability plan](observability.md).
+
+### SLI
+
+A service level indicator: a defined, queryable measure of runtime quality, such as request duration P95.
+
+**Defined by:** [SLI-01](observability.md#sli-01).
+
+### Service level indicator
+
+See [SLI](#sli).
+
+## Product Analytics
+
+### Focus Metric
+
+The one number from which the product's value is read.
+
+**Defined by:** [the analytics plan](analytics.md#the-metric-tree).
+
+### Input Metric
+
+A metric for a product step the team can change and use to explain movement in the focus metric.
+
+**Defined by:** [the analytics plan](analytics.md#the-metric-tree).
+
+### Counter-Metric
+
+A metric that guards the focus metric against increasing it at the user's expense.
+
+**Defined by:** [the analytics plan](analytics.md#the-metric-tree).
+
+### Metric Tree
+
+A nested view of the focus metric, its counter-metric, and the input metrics that explain it.
+
+**Defined by:** [the analytics plan](analytics.md#the-metric-tree).

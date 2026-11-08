@@ -28,7 +28,7 @@ export function Decks() {
     return <p className="muted">{error || t("Loading…")}</p>;
 
   return (
-    <div className="page">
+    <div className="page decks-page">
       <header className="page-head row-between">
         <div>
           <p className="eyebrow">
@@ -41,7 +41,32 @@ export function Decks() {
         </button>
       </header>
 
-      <div className="table-wrap">
+      <ul className="mobile-list" aria-label={t("Decks")}>
+        {decks.map((deck) => (
+          <li key={deck.id}>
+            <a href={`#/deck/${deck.id}`}>
+              <span className="mobile-list-main">
+                <strong>{deck.name}</strong>
+                <span className="mobile-list-meta">
+                  {t(LANGUAGES[deck.target_language])} {t("from")}{" "}
+                  {t(LANGUAGES[deck.known_language])} · {deck.effective_level} ·{" "}
+                  {deck.cards - deck.archived} {t("active")}
+                </span>
+              </span>
+              <span className="mobile-list-counts">
+                <span className="count new" title={t("Never studied")}>
+                  {deck.new} {t("new")}
+                </span>
+                <span className="count due" title={t("Due for review")}>
+                  {deck.due} {t("To review")}
+                </span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <div className="table-wrap desktop-table">
         <table className="deck-table">
           <thead>
             <tr>
@@ -140,11 +165,13 @@ export function Decks() {
 export function DeckForm({
   deck,
   profile,
+  initialPair,
   submit,
   onSave,
 }: {
   deck?: Deck;
   profile: Profile;
+  initialPair?: { known_language: Language; target_language: Language };
   submit: string;
   onSave: (fields: DeckFields) => Promise<unknown>;
 }) {
@@ -152,8 +179,14 @@ export function DeckForm({
     name: deck?.name ?? "",
     description: deck?.description ?? "",
     instructions: deck?.instructions ?? "",
-    known_language: deck?.known_language ?? profile.known_language,
-    target_language: deck?.target_language ?? profile.target_language,
+    known_language:
+      deck?.known_language ??
+      initialPair?.known_language ??
+      profile.known_language,
+    target_language:
+      deck?.target_language ??
+      initialPair?.target_language ??
+      profile.target_language,
     level: deck?.level ?? "",
     new_per_day: deck?.new_per_day ?? 10,
     reviews_per_day: deck?.reviews_per_day ?? 200,
@@ -162,7 +195,6 @@ export function DeckForm({
   const [busy, setBusy] = useState(false);
   const set = <K extends keyof DeckFields>(key: K, value: DeckFields[K]) =>
     setFields({ ...fields, [key]: value });
-  const learnerLevel = profile.levels[fields.target_language] ?? "A2";
 
   const save = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -225,14 +257,14 @@ export function DeckForm({
           </select>
         </label>
         <label>
-          {t("Level")}
+          {t("Level for new cards")}
           <select
+            required
             value={fields.level}
             onChange={(e) => set("level", e.target.value as Level | "")}
           >
-            <option value="">
-              {t("Mine (")}
-              {learnerLevel})
+            <option value="" disabled>
+              {t("Choose a level")}
             </option>
             {LEVELS.map((level) => (
               <option key={level} value={level}>
@@ -281,6 +313,11 @@ export function DeckForm({
           />
         </label>
       </div>
+      <p className="muted small">
+        {t(
+          "Daily limits apply to this deck's study queue. Changing them keeps existing card progress.",
+        )}
+      </p>
       <button className="btn primary" type="submit" disabled={busy}>
         {submit}
       </button>

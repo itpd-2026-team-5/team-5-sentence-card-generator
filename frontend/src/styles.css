@@ -193,6 +193,22 @@ mark {
   color: var(--text);
   box-shadow: inset 0 0 0 1px var(--line);
 }
+.sound-global {
+  position: fixed;
+  top: calc(0.75rem + env(safe-area-inset-top, 0px));
+  right: 0.75rem;
+  z-index: 26;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: 12px;
+  color: var(--text);
+  background: var(--bg-2);
+}
+.sound-global:hover {
+  background: var(--surface);
+}
 .rail-study {
   display: flex;
   align-items: center;
@@ -227,6 +243,35 @@ mark {
 }
 .page.narrow {
   max-width: 680px;
+}
+.page.decks-page {
+  max-width: 1400px;
+}
+@media (min-width: 861px) and (max-width: 1599px) {
+  .decks-page .deck-table th:nth-child(3),
+  .decks-page .deck-table td:nth-child(3),
+  .decks-page .deck-table th:nth-child(8),
+  .decks-page .deck-table td:nth-child(8),
+  .decks-page .deck-table th:nth-child(9),
+  .decks-page .deck-table td:nth-child(9) {
+    display: none;
+  }
+}
+@media (min-width: 861px) and (max-width: 1100px) {
+  .decks-page .deck-table th:nth-child(5),
+  .decks-page .deck-table td:nth-child(5) {
+    display: none;
+  }
+  .decks-page .deck-table th,
+  .decks-page .deck-table td {
+    padding-inline: 0.5rem;
+  }
+}
+@media (min-width: 861px) and (max-width: 950px) {
+  .decks-page .deck-table th:nth-child(2),
+  .decks-page .deck-table td:nth-child(2) {
+    display: none;
+  }
 }
 .page-head {
   display: flex;
@@ -833,6 +878,7 @@ a.empty:hover {
 }
 .paper {
   padding: 0.5rem 0;
+  min-width: 0;
 }
 .paper h1 {
   margin: 0.5rem 0 0.4rem;
@@ -1611,6 +1657,7 @@ kbd {
 }
 .finder input {
   flex: 1;
+  min-width: 0;
 }
 .found {
   padding: 1rem;
@@ -1806,6 +1853,8 @@ kbd {
 /* ---------- teaching: a compact card overview ---------- */
 .teacher-cards-wrap {
   min-width: 0;
+  max-height: min(70vh, 48rem);
+  overflow-y: auto;
   border: 1px solid var(--line);
   border-radius: 16px;
   background: var(--surface);
@@ -1873,6 +1922,31 @@ kbd {
 .teacher-review p {
   overflow-wrap: anywhere;
 }
+.source-context {
+  padding: 0.9rem 1rem;
+  border-left: 3px solid var(--cyan);
+  background: var(--surface-2);
+  border-radius: 0 10px 10px 0;
+}
+.source-context h3 {
+  margin: 0 0 0.35rem;
+  font-size: 0.9rem;
+}
+.source-context p {
+  margin: 0 0 0.35rem;
+  overflow-wrap: anywhere;
+}
+.deck-pair {
+  display: block;
+  font-weight: normal;
+}
+.generation-settings {
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+}
+.mobile-translation-label {
+  display: none;
+}
 .drawer-body .lang-row {
   flex-wrap: wrap;
 }
@@ -1908,7 +1982,7 @@ kbd {
     padding: 0.7rem 0.55rem;
   }
   .teacher-cards th:nth-child(2) {
-    width: 34%;
+    width: auto;
   }
   .teacher-cards th:last-child {
     width: 3.5rem;
@@ -2206,7 +2280,7 @@ kbd {
     align-items: center;
     justify-content: space-around;
     gap: 0.5rem;
-    padding: 0.4rem 0.6rem;
+    padding: 0.4rem 0.6rem calc(0.4rem + env(safe-area-inset-bottom, 0px));
     border-right: none;
     border-top: 1px solid var(--line);
     background: var(--bg-2);
@@ -2226,6 +2300,12 @@ kbd {
     gap: 0.1rem;
     padding: 0.35rem 0.4rem;
     font-size: 0.72rem;
+  }
+  .sound-global {
+    padding: 0.5rem;
+  }
+  .sound-global span {
+    display: none;
   }
   .rail-study span {
     display: none;
@@ -2264,7 +2344,7 @@ kbd {
     padding-bottom: 6rem;
   }
   .reader-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .tray {
     position: static;
@@ -2321,7 +2401,15 @@ kbd {
     align-items: flex-start;
   }
   .segmented {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 520px) {
+  .segmented {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .segmented button {
+    min-width: 0;
   }
 }
 .muted a {
@@ -2551,4 +2639,290 @@ kbd {
 /* Field headings must be able to shrink beside their pronunciation button. */
 .drawer-body .card-field-heading label {
   min-width: 0;
+}
+
+/* Phone layouts use the few fields needed for each task. Full tables remain on larger screens. */
+.mobile-list,
+.mobile-tray-jump {
+  display: none;
+}
+
+@media (max-width: 860px) {
+  .stage {
+    padding: 3.5rem 1rem calc(6rem + env(safe-area-inset-bottom, 0px));
+  }
+  .page {
+    gap: 1.25rem;
+  }
+  .page-head h1 {
+    font-size: clamp(1.7rem, 7vw, 2.1rem);
+    overflow-wrap: anywhere;
+  }
+  .page-head.row-between {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .page-head.row-between > .row-gap {
+    width: 100%;
+  }
+  .page-head.row-between > .row-gap > .btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+  .page-head.row-between > .btn.primary {
+    align-self: flex-start;
+  }
+  .desktop-table {
+    display: none;
+  }
+  .mobile-list {
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+  .mobile-list li {
+    border-bottom: 1px solid var(--line);
+  }
+  .mobile-list a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0.95rem 0.2rem;
+    color: inherit;
+    text-decoration: none;
+    min-width: 0;
+  }
+  .mobile-list-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+  }
+  .mobile-list-main strong {
+    font-size: 1.05rem;
+    overflow-wrap: anywhere;
+  }
+  .mobile-list-meta {
+    color: var(--muted);
+    font-size: 0.88rem;
+    overflow-wrap: anywhere;
+  }
+  .mobile-list-counts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    align-items: center;
+  }
+  .mobile-list a:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: -2px;
+  }
+  .segmented.small-seg {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    max-width: none;
+    overflow: visible;
+  }
+  .small-seg button {
+    min-width: 0;
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
+    min-height: 2.75rem;
+  }
+  .card-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.4rem 0.65rem;
+    padding: 0.85rem;
+  }
+  .card-row .row-word {
+    grid-column: 1 / -1;
+    flex-wrap: wrap;
+  }
+  .card-row .row-text {
+    grid-column: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .card-row .row-text .muted {
+    display: none;
+  }
+  .card-row .row-actions {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .text-row {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .text-row .row-word {
+    grid-column: auto;
+  }
+  .text-row .row-text {
+    grid-column: 2;
+  }
+  .text-row .row-actions {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+  .teacher-cards-wrap {
+    border: 0;
+    background: transparent;
+  }
+  .teacher-cards,
+  .teacher-cards tbody,
+  .teacher-cards tr,
+  .teacher-cards td {
+    display: block;
+    width: 100%;
+  }
+  .teacher-cards thead {
+    display: none;
+  }
+  .teacher-cards .teacher-translation {
+    color: var(--muted);
+    overflow-wrap: anywhere;
+  }
+  .mobile-translation-label {
+    display: inline;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .teacher-cards tr {
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .teacher-cards td {
+    border: 0;
+    padding: 0.15rem 0;
+    text-align: left;
+  }
+  .teacher-cards td:last-child {
+    text-align: left;
+  }
+  .teacher-card-open {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+  }
+  .teacher-cards .teacher-sentence {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    color: var(--muted);
+  }
+  .teacher-cards td:nth-child(4) {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.35rem 0;
+  }
+  .teacher-cards td:nth-child(4) .teacher-card-extra {
+    margin: 0;
+  }
+  .reader-layout {
+    gap: 1rem;
+  }
+  .mobile-tray-jump {
+    display: inline-flex;
+    align-self: flex-start;
+    margin-top: 0.5rem;
+  }
+  .tray {
+    scroll-margin-top: 1rem;
+  }
+  .reader-tools .switch {
+    width: 100%;
+  }
+  .lang-row {
+    flex-wrap: wrap;
+  }
+  .lang-row > label,
+  .lang-row > .card-field {
+    flex: 1 1 100%;
+  }
+  .start {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
+  }
+  .pick-row .pick {
+    min-width: 0;
+    width: 0;
+    flex: 1 1 0;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    padding: 0.7rem;
+  }
+  .pick-row {
+    min-width: 0;
+    width: 100%;
+  }
+  .pick-counts {
+    padding-left: 0;
+    flex-wrap: wrap;
+  }
+  .pick-name {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .focus {
+    padding: 0.8rem 0.8rem max(1rem, env(safe-area-inset-bottom, 0px));
+  }
+  .study-card {
+    min-width: 0;
+    padding: 1.2rem 0.85rem;
+    gap: 0.65rem;
+  }
+  .card-word {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .card-word,
+  .card-sentence,
+  .card-translation,
+  .source-note {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  .focus-actions .row-gap {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .focus-actions .row-gap .flag {
+    justify-content: center;
+    text-align: center;
+    min-width: 0;
+    white-space: normal;
+  }
+  .rate {
+    min-height: 3.5rem;
+  }
+  .rate kbd,
+  .focus-actions > .flag kbd {
+    display: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .stage {
+    padding-inline: 0.75rem;
+  }
+  .rail-links a {
+    padding-inline: 0.2rem;
+    font-size: 0.68rem;
+  }
+  .card-row .row-actions {
+    gap: 0;
+  }
+  .rate {
+    font-size: 0.82rem;
+  }
 }

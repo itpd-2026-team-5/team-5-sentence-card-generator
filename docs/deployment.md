@@ -2,6 +2,7 @@
 
 This is the runbook for deploying Sentence Cards to the university VM, where staging and production run side by side.
 How to build, configure, and run the product on your own machine is in [Set up and run](setup.md); this page covers only what the deployment adds.
+The product's analytics metrics are defined in the [analytics plan](analytics.md).
 
 ## The four environments
 
@@ -192,3 +193,32 @@ Each deploy that failed its check is recorded here: the date, the check that sho
 - **Customer submission decision:** [DEC-102](decisions.md#dec-102) accepts the demonstrated deployed version for the Week 5 submission despite blocked generation, and [DEC-103](decisions.md#dec-103) carries alternative-provider trials into the next sprint.
   This limited submission decision leaves the generation check outstanding; the runbook's verification steps and quality targets still apply.
   Check any proposed replacement provider from the VM and from the client path that will actually use it; an external VM or a particular provider has not been selected.
+
+## Telemetry pipelines
+
+[Product analytics](analytics.md) and [observability](observability.md) are optional at runtime. On the university VM, install one self-hosted OpenPanel instance and one OpenObserve instance with persistent storage and private credentials. Follow the [OpenPanel 2.x self-hosting guide](https://openpanel.dev/docs/self-hosting/v2/get-started) and [OpenObserve self-hosting guide](https://openobserve.ai/docs/getting-started/) for the selected versions. Check that both stacks fit the VM's 4.5 GB RAM and 58 GB disk before starting them beside two product deployments. Keep both service addresses and dashboard addresses private. The product's `compose.deploy.yml` consumes their addresses and credentials; it does not start either service.
+
+Create separate `staging` and `production` OpenPanel projects with separate write clients. Create separate OpenObserve organizations with separate ingestion and query access. Add the following to each VM env file, with that environment's actual values; do not put them in the repository:
+
+```text
+TELEMETRY_ENABLED=true
+TELEMETRY_ENVIRONMENT=staging
+OPENPANEL_URL=<private OpenPanel base URL>
+OPENPANEL_CLIENT_ID=<staging write client ID>
+OPENPANEL_CLIENT_SECRET=<staging write client secret>
+OPENOBSERVE_URL=<private OpenObserve base URL>
+OPENOBSERVE_ORGANIZATION=<staging organization>
+OPENOBSERVE_USER=<staging ingestion user>
+OPENOBSERVE_PASSWORD=<staging ingestion password>
+```
+
+Use `TELEMETRY_ENVIRONMENT=production` and production-specific credentials in `prod.env`. The backend posts product events to OpenPanel `/track` and OTLP/HTTP protobuf to OpenObserve `/api/<organization>/v1/metrics` and `/v1/logs`. It exports metrics every 10 seconds, batches logs every 1 second, and uses a three-second OTLP timeout. An OpenObserve query user needs access to the same organization to run the [SLI-01 queries](observability.md#sli-01). Set retention to at least seven days for analytics and at least one day for operating signals. Set `TELEMETRY_ENABLED=false` to disable both pipelines.
+
+After staging is deployed, send a staging `source=smoke` event from the backend:
+
+```sh
+docker compose -p cards-staging --env-file ~/cards/staging.env -f compose.deploy.yml exec -T backend \
+  uv run --no-dev python -c 'from app.analytics import track; track("text_added", source="smoke", language="de")'
+```
+
+Verify it in the staging OpenPanel event list and confirm the [analytics chart](analytics.md#the-dashboard) excludes it. Request `GET /api/diagnostics/fail` on staging; this route exists only when staging telemetry is enabled and returns a controlled 500. Query its `x-request-id` in the staging `http_requests` log stream, and run the [P95 query](observability.md#sli-01). Build equivalent dashboards in the production scopes without sending test traffic there. Record only sanitized screenshots and query results in the week's evidence. The dashboards and live verification remain deployment tasks; they have not been completed by editing this runbook.
