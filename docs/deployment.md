@@ -222,3 +222,23 @@ docker compose -p cards-staging --env-file ~/cards/staging.env -f compose.deploy
 ```
 
 Verify it in the staging OpenPanel event list and confirm the [analytics chart](analytics.md#the-dashboard) excludes it. Request `GET /api/diagnostics/fail` on staging; this route exists only when staging telemetry is enabled and returns a controlled 500. Query its `x-request-id` in the staging `http_requests` log stream, and run the [P95 query](observability.md#sli-01). Build equivalent dashboards in the production scopes without sending test traffic there. Record only sanitized screenshots and query results in the week's evidence. The dashboards and live verification remain deployment tasks; they have not been completed by editing this runbook.
+
+### Provision the operator dashboards
+
+After creating the two OpenPanel projects and OpenObserve organizations and filling the VM env files, run the dashboard provisioner from the deployed repository checkout. It creates four ordered OpenPanel dashboards (27 reports) and two OpenObserve dashboards (15 panels) in **each** environment. Product reports filter out `source=smoke`; the OpenObserve operator overview groups traffic and reliability, generation requests, and authentication and access. It does not generate any test traffic or insert product events.
+
+The script uses the OpenPanel 2.x self-hosted PostgreSQL schema because this installation has no supported dashboard-write API. Back up that database first. On the VM, from `~/cards/app`:
+
+```sh
+umask 077
+docker compose -f ~/cards/telemetry/openpanel/self-hosting/docker-compose.yml exec -T op-db \
+  sh -lc 'pg_dump -U "${POSTGRES_USER:-postgres}" "${POSTGRES_DB:-postgres}"' \
+  > ~/cards/telemetry/openpanel-before-dashboards-$(date +%F-%H%M).sql
+
+python3 scripts/provision-telemetry-dashboards.py
+python3 scripts/provision-telemetry-dashboards.py --apply
+```
+
+The first command only lists what will be created. `--apply` checks that staging and production use separate clients, projects, organizations, and credentials before it writes either environment. To provision only one environment, pass `--env-file ~/cards/staging.env --apply` or `--env-file ~/cards/prod.env --apply`. The script reads each environment's existing OpenPanel write-client ID to locate the correct project and uses that environment's OpenObserve organization and service account. No credential is printed or written to the repository. Re-running updates the named OpenPanel reports and leaves existing OpenObserve dashboards with the same titles untouched. If an OpenObserve service account cannot create dashboards, grant it dashboard permission in that organization.
+
+Check all dashboard names in the correct project or organization. Staging should show the controlled-failure `server_error` series on the **SLI-01 Backend request duration P95 (5 minutes)** panel. The `Texts added` report should exclude the staging `source=smoke` event already visible in the event list. The production dashboards may be empty until real production traffic arrives. Save sanitized screenshots of the four environment-specific dashboards for the Week 6 report. Dashboard creation does not replace the deployed diagnosability test or its timed evidence.
