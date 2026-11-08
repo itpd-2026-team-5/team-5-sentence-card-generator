@@ -1,0 +1,7 @@
+# OpenPanel analytics evidence
+
+The application event registry and the analytics plan use the same bounded event fields. The backend adds `source` and `environment` to every event, and the dashboard provisioner applies `properties.source is not smoke` to the metric reports.
+
+The [staging product overview](images/openpanel-staging-overview.png) shows the **Weekly completed study reviews** chart with activity over the seven-day range. The [staging Events detail](images/openpanel-staging-smoke-event.png) shows a `text_added` event with `Source: smoke`, `Environment: staging`, and `Language: de`. The [staging Texts added report editor](images/openpanel-staging-texts-filter.png) shows `properties.source` filtered with `Is not smoke`, matching the [Texts added query](../../docs/analytics.md#texts-added). The editor also shows the same exclusion as a global filter. These views establish that the test event arrived in staging and the report is configured to exclude smoke traffic; they do not by themselves prove a numeric before-and-after count for that single event.
+
+The [production product overview](images/openpanel-production-overview.png) shows the **Weekly completed study reviews** report in the production project with a seven-day range. The same report definition is provisioned in both projects. It has no matching data at the time of the screenshot, which is consistent with an unexercised production report and is not evidence of a completed review. No smoke event was intentionally sent to production.
