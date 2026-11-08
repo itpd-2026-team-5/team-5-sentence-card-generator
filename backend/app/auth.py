@@ -64,7 +64,7 @@ def signed_in_user(request: Request, response: Response, db: DbSession = Depends
     if session is None and not token:
         legacy_token = request.cookies.get(LEGACY_COOKIE)
         session = db.get(Session, _token_hash(legacy_token)) if legacy_token else None
-        if session is not None:
+        if session is not None and legacy_token is not None:
             response.set_cookie(
                 COOKIE,
                 legacy_token,
