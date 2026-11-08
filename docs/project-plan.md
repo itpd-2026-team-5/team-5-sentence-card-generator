@@ -83,6 +83,7 @@ Individual-card reordering remains deferred under [DEC-094](decisions.md#dec-094
 - **Due:** 2026-11-08
 - **Sprint Backlog:** [SPRINT-06 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/4)
 - **Planned Velocity:** 8; the story points of the two internal stories scheduled here: [US-16](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/190) (3) and [US-17](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) (5).
+- **Actual Velocity:** 3; [US-16](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/190) is completed, and [US-17](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) moved to SPRINT-07 because its QR-10 QRT-01 had not passed on a failed core-task request by the due date.
 
 #### REL-06
 
