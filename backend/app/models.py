@@ -89,8 +89,8 @@ class Deck(Base):
     instructions: Mapped[str] = mapped_column(Text, default="")
     known_language: Mapped[str] = mapped_column(String(2), default="en")
     target_language: Mapped[str] = mapped_column(String(2), default="de")
-    # A level for this deck only; empty means the learner's level in the target language.
-    level: Mapped[str] = mapped_column(String(2), default="")
+    # The level used for new cards in this deck.
+    level: Mapped[str] = mapped_column(String(2), default="A2")
     # How many new cards and reviews a day this deck contributes to a session.
     new_per_day: Mapped[int] = mapped_column(default=10)
     reviews_per_day: Mapped[int] = mapped_column(default=200)

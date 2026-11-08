@@ -6,7 +6,6 @@ import {
   api,
   LANGUAGES,
   LEVELS,
-  local,
   type Language,
   type Level,
   type Profile,
@@ -14,6 +13,7 @@ import {
   type User,
 } from "../api";
 import { Icon } from "../components/Icon";
+import { onSoundChange, setSoundEnabled, soundEnabled } from "../sound";
 import { listModels, ownKey, PROVIDERS, type ProviderKind } from "../llm";
 
 const LEVEL_NOTES: Record<Level, string> = {
@@ -102,7 +102,7 @@ export function Settings({
           </h2>
           <p>
             {t(
-              "Before your first cards, tell us which language you speak, which one you are learning, and your level. Every sentence is written for them. Save, and you can start.",
+              "Tell us which languages you speak and learn, and record your current level. Choose the level for new cards in each deck.",
             )}
           </p>
         </section>
@@ -121,7 +121,7 @@ export function Settings({
         <h1>{t("Your languages")}</h1>
         <p className="muted">
           {t(
-            "Sentences are written for your level, from words you already know. Each deck has its own language pair and instructions.",
+            "Keep track of your level in each language here. Each deck has its own level for new cards.",
           )}
         </p>
       </header>
@@ -135,7 +135,7 @@ export function Settings({
         </p>
       </section>
       <section className="glass block">
-        <h3>{t("Languages for new decks")}</h3>
+        <h3>{t("Your level in each language")}</h3>
         <div className="lang-row">
           <label>
             {t("I speak")}
@@ -215,18 +215,9 @@ export function Settings({
             )
           )}
         </div>
-        <p className="muted small spaced">
-          {t(
-            "New decks use the pair above; a deck can use any language you learn.",
-          )}
-        </p>
-      </section>
-
-      <section className="glass block">
-        <h3>{t("Your level in each language")}</h3>
         <p className="muted small level-intro">
           {t(
-            "New sentences in each language are written at this level. A deck can set a level of its own, which then wins for that deck. Changing a level here affects only cards generated from now on, not the cards you already have.",
+            "These levels are for your reference. Changing one here does not change any deck or its cards.",
           )}
         </p>
         <div className="level-list">
@@ -446,7 +437,8 @@ export function Settings({
 
 /** Reading sentences aloud, switched in the app so the device need not be muted. */
 function ReadAloud() {
-  const [on, setOn] = useState(local.get("autoplay", "on") === "on");
+  const [on, setOn] = useState(soundEnabled);
+  useEffect(() => onSoundChange(() => setOn(soundEnabled())), []);
   return (
     <section className="glass block">
       <h3>{t("Sound")}</h3>
@@ -456,7 +448,7 @@ function ReadAloud() {
           checked={on}
           onChange={(e) => {
             setOn(e.target.checked);
-            local.set("autoplay", e.target.checked ? "on" : "off");
+            setSoundEnabled(e.target.checked);
           }}
         />
         {t("Read each sentence aloud when a card appears")}

@@ -10,7 +10,7 @@ const root = fileURLToPath(new URL('../', import.meta.url))
 const output = mkdtempSync(join(root, 'node_modules/.client-tests-'))
 buildSync({
   stdin: {
-    contents: "export * from './api'; export * from './llm'",
+    contents: "export * from './api'; export * from './llm'; export * from './deckOrder'",
     resolveDir: join(root, 'src'),
     loader: 'ts',
   },
@@ -29,7 +29,7 @@ const storage = {
 }
 globalThis.localStorage = storage
 globalThis.document = { documentElement: { lang: 'en' } }
-const { api, session, local, ownKey, parseJson, callLLM, listModels, languageName } =
+const { api, session, local, ownKey, parseJson, callLLM, listModels, languageName, moveDecksTogether } =
   await import(pathToFileURL(join(output, 'client.mjs')).href)
 
 let calls
@@ -65,6 +65,13 @@ test('legacy and unrecognized text languages have a display label without guessi
   assert.equal(languageName('en'), 'English')
   assert.equal(languageName('de'), 'German')
   assert.equal(languageName('ru'), 'Russian')
+})
+
+test('dragging selected decks moves them together without changing their internal order', () => {
+  const decks = [1, 2, 3, 4].map((id) => ({ id }))
+  assert.deepEqual(moveDecksTogether(decks, [2, 3], 2, 1, 'before').map((d) => d.id), [2, 3, 1, 4])
+  assert.deepEqual(moveDecksTogether(decks, [2, 3], 2, 4, 'after').map((d) => d.id), [1, 4, 2, 3])
+  assert.deepEqual(moveDecksTogether(decks, [2, 3], 2, 3, 'before'), decks)
 })
 
 test('preferences survive unavailable or full browser storage', () => {

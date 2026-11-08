@@ -17,3 +17,5 @@ A story names the requirements that specify it in its `### Specified by` section
 | [FR-010](fr/FR-010.md) | Read A Sentence Aloud | `frontend` | Active |
 | [FR-011](fr/FR-011.md) | Let A Teacher Correct A Shared Deck | `frontend`, `backend` | Active |
 | [FR-012](fr/FR-012.md) | Configure Interface And Learning Preferences | `frontend`, `backend` | Active |
+| [FR-013](fr/FR-013.md) | Record Core Task Events | `backend` | Active |
+| [FR-014](fr/FR-014.md) | Expose Operating Signals | `backend` | Active |

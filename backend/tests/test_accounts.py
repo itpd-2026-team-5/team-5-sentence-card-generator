@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
 
+from app.auth import COOKIE
 from app.main import app
 from tests.conftest import verify_link_token
 from tests.helpers import first_deck
@@ -26,6 +27,20 @@ def test_sign_up_sign_out_and_sign_in(client):
     right = {"email": "Learner@Example.com", "password": "correct horse"}
     assert client.post("/api/auth/login", json=right).status_code == 200
     assert client.get("/api/decks").status_code == 200
+
+
+def test_openpanel_session_cookie_does_not_sign_out_learner(client):
+    assert client.cookies.get(COOKIE)
+    client.cookies.set("session", "openpanel-session")
+    assert client.get("/api/decks").status_code == 200
+
+
+def test_existing_session_cookie_is_migrated(client):
+    token = client.cookies.get(COOKIE)
+    client.cookies.delete(COOKIE)
+    client.cookies.set("session", token)
+    assert client.get("/api/auth/me").status_code == 200
+    assert client.cookies.get(COOKIE) == token
 
 
 def test_an_email_has_one_account(client):
@@ -98,9 +113,40 @@ def test_a_teacher_corrects_only_the_shared_deck(client, teacher):
     assert fresh.status_code == 200
     assert client.get("/api/cards").json()[0]["sentence"] == fresh.json()["sentence"]
 
+    # A teacher can archive a shared card but cannot replace the learner's
+    # generation instructions or permanently delete the learner's card.
+    assert teacher.post(f"{url}/regenerate", json={"instructions": "override"}).status_code == 403
+    assert teacher.patch(url, json={"status": "archived"}).status_code == 200
+    assert teacher.delete(url).status_code == 403
+
     client.delete(f"/api/decks/{deck}/shares/teacher@example.com")
     assert teacher.get("/api/teaching").json() == []
     assert teacher.patch(url, json={"status": "archived"}).status_code == 404
+
+
+def test_teacher_word_correction_keeps_card_identity_and_review(client, teacher):
+    card = one_card(client)
+    deck = first_deck(client)
+    second = client.post("/api/decks", json={"name": "More practice"}).json()["id"]
+    client.put(f"/api/cards/{card['id']}/decks", json={"deck_ids": [deck, second]})
+    review = client.post(f"/api/cards/{card['id']}/review", json={"rating": "good"}).json()
+    client.post(f"/api/decks/{deck}/shares", json={"email": "teacher@example.com"})
+
+    corrected = teacher.patch(
+        f"/api/cards/{card['id']}",
+        json={"word_form": "das Geld", "word_translation": "the money"},
+    ).json()
+
+    assert corrected["id"] == card["id"]
+    assert corrected["source_sentence"] == card["source_sentence"]
+    assert set(corrected["deck_ids"]) == {deck, second}
+    assert corrected["word_form"] == "das Geld"
+    assert corrected["word_translation"] == "the money"
+    assert client.get(f"/api/cards?deck_id={second}").json()[0]["id"] == card["id"]
+    assert (
+        client.post(f"/api/cards/{card['id']}/review", json={"rating": "good"}).json()["reps"]
+        == review["reps"] + 1
+    )
 
 
 def test_own_key_in_the_browser(client):

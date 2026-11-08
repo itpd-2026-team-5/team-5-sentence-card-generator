@@ -1,76 +1,102 @@
 # Product analytics
 
-## The Value And The Metrics
+The focus metric is **weekly completed study reviews**. It expresses [VP-02](research/value-proposition.md#vp-02): learners study the sentence cards made from their chosen words. It may have no value until real users create traffic.
 
-**Focus metric:** the unedited card retention rate measures the share of generated sentences the learner keeps without editing. This metric expresses [VP-01](research/value-proposition.md#vp-01).
+## The Value And The Metrics
 
 ### The Metric Tree
 
-Each label names the metric's level in the tree.
+The label marks each metric's level.
 
-- **Focus:** [Unedited card retention rate](#unedited-card-retention-rate)
-  - **L1 (counter-metric):** [Flagged card rate](#flagged-card-rate)
-  - **L1:** [First-attempt validation pass rate](#first-attempt-validation-pass-rate)
-    - **L2:** [Target-word validation pass rate](#target-word-validation-pass-rate)
-    - **L2:** [Sentence-constraints validation pass rate](#sentence-constraints-validation-pass-rate)
+- **Focus:** [Weekly completed study reviews](#weekly-completed-study-reviews)
+  - **L1 (counter-metric):** [Generation failure rate](#generation-failure-rate)
+  - **L1:** [Generated cards](#generated-cards)
+    - **L2:** [Marked words](#marked-words)
+    - **L2:** [Texts added](#texts-added)
 
 ### Why This Focus Metric
 
-- **It expresses value:** learners get sentences they can use as cards without spending time correcting them.
-- **It represents the vision and strategy:** the product vision's goal is for learners to keep generated sentences without editing, and this is the first measure named by VP-01.
-- **It is a leading indicator:** an unchanged card is an early signal that generation fits the learner, before the learner studies it.
-- **It is actionable:** the team can investigate changes to generation prompts, validation, and learner context when the rate falls.
-- **It is understandable:** it is the share of generated cards kept unchanged.
-- **It is measurable:** generation, edit, and archive events can be matched by an opaque card identifier and timestamp.
-- **It is not a vanity metric:** it reflects a learner's decision about a generated sentence rather than visits, registrations, or the volume of generation.
+- **Expresses value:** a review is the learner using a generated card.
+- **Represents the vision and strategy:** it measures the study loop after choosing words and generating cards.
+- **Leading indicator:** repeated reviews precede learning outcomes.
+- **Actionable:** the team can improve generation and study entry points.
+- **Understandable:** one completed rating is one review.
+- **Measurable:** the backend emits an event after saving a rating.
+- **Not a vanity metric:** it requires use of the core task, not a page view.
 
-Rejected as a vanity metric: total generated cards, because volume does not show whether learners find the sentences useful.
+Rejected as a vanity metric: account registrations, because registration alone creates no studied card. The focus may depend on several inputs and can be empty before real use.
 
-The focus metric may have no value as a product measure until people outside the team use the product. The Customer and the team's test traffic are not end users; any value from usability or smoke traffic is not evidence of real-user value.
-The focus metric depends on several input metrics, which help the team diagnose a change in the focus metric.
+### Weekly completed study reviews
 
-### Unedited card retention rate
+**Definition:** Count of saved study ratings in the trailing seven days, in reviews.
 
-**Definition:** Of generated cards old enough to have a complete seven-day observation window, the share still active and neither edited nor archived in the seven days after generation. The cohort covers the 30 days before the query, excluding the most recent seven days.
+**Source:** [`study_review_completed`](#the-events).
 
-**Source:** [card_generated](#the-events), [card_edited](#the-events), and [card_archived](#the-events).
+**Query:** OpenPanel event count for `study_review_completed`, trailing seven days, filter `source != smoke`, grouped by day. The dashboard computes this query.
 
-**Query:** For generation events in the trailing 30-day cohort that are at least seven days old, use `source IN ("web", "usability-test")`. Divide the distinct `card_id` count for cards with no matching `card_edited` or `card_archived` event in the seven days after generation by the distinct `card_id` count of all eligible `card_generated` events. Apply the same source filter to each event.
+### Generation failure rate
 
-### Flagged card rate
+**Definition:** Failed generation attempts divided by all completed or failed generation attempts in the trailing seven days, as a percentage; empty when there are no attempts.
 
-**Definition:** Of cards generated in the cohort, the share still flagged after the automatic generation checks have used all three attempts.
+**Source:** [`generation_failed`](#the-events), [`generation_completed`](#the-events).
 
-**Source:** [card_generated](#the-events) and [card_flagged](#the-events).
+**Query:** OpenPanel event counts, trailing seven days, filter `source != smoke`; divide `generation_failed` by the sum of `generation_failed` and `generation_completed`, multiplied by 100.
 
-**Query:** For `card_generated` events in the trailing 30 days with `source IN ("web", "usability-test")`, divide the distinct generated `card_id` count with a matching `card_flagged` event from the same generation by the distinct generated `card_id` count. Apply the same source filter to both events.
+### Generated cards
 
-### First-attempt validation pass rate
+**Definition:** Sum of new cards in completed batches in the trailing seven days, in cards.
 
-**Definition:** Of cards with validation on their first generation attempt, the share that passes every required automatic check on that attempt, measured over the trailing 30 days.
+**Source:** [`generation_completed`](#the-events).
 
-**Source:** [card_validation](#the-events).
+**Query:** OpenPanel sum of `card_count` on `generation_completed`, trailing seven days, filter `source != smoke`.
 
-**Query:** For `card_validation` events in the trailing 30 days with `source IN ("web", "usability-test")`, divide the distinct `card_id` count whose required checks all have `attempt = 1` and `passed = true` by the distinct `card_id` count with a first-attempt validation event.
+### Marked words
 
-This rate is computed by the query from validation events, not tallied by hand.
+**Definition:** Count of marks set to learn in the trailing seven days, in mark actions. Repeated changes can count again.
 
-### Target-word validation pass rate
+**Source:** [`word_marked`](#the-events).
 
-**Definition:** Of target-word checks on a card's first generation attempt, the share that pass, measured over the trailing 30 days.
+**Query:** OpenPanel event count for `word_marked`, trailing seven days, filters `action = learn` and `source != smoke`.
 
-**Source:** [card_validation](#the-events).
+### Texts added
 
-**Query:** For `card_validation` events with `check = "target_word"` and `attempt = 1` in the trailing 30 days and `source IN ("web", "usability-test")`, divide the distinct `card_id` count with `passed = true` by the distinct `card_id` count checked.
+**Definition:** Count of committed new texts in the trailing seven days, in texts.
 
-### Sentence-constraints validation pass rate
+**Source:** [`text_added`](#the-events).
 
-**Definition:** Of sentence-constraint checks on a card's first generation attempt, the share that pass, measured over the trailing 30 days. Sentence constraints cover the configured length bounds and avoiding words the learner chose to ignore.
-
-**Source:** [card_validation](#the-events).
-
-**Query:** For `card_validation` events with `check = "sentence_constraints"` and `attempt = 1` in the trailing 30 days and `source IN ("web", "usability-test")`, divide the distinct `card_id` count with `passed = true` by the distinct `card_id` count checked.
+**Query:** OpenPanel event count for `text_added`, trailing seven days, filter `source != smoke`.
 
 ## The Events
 
-The event names cited above are proposed inputs for these queries. Part 3 will define the event registry, payload fields, and collection points before instrumentation; these names do not yet define an event schema. Events must use opaque card identifiers and must not contain sentence text or other personal data.
+Names use `object_action` in snake case. Every row also carries `source` (enum `web`, `usability-test`, `smoke`, required) and `environment` (enum `staging`, `production`, `development`, required). The backend registry in `backend/app/analytics.py` enforces event-specific keys.
+
+| Event | Fires when | Fields | Collected at |
+| --- | --- | --- | --- |
+| `text_added` | A learner saves a new text. | `language` (enum, required) | `backend`, staging and production |
+| `word_marked` | A learner sets a word's mark. | `language` (enum, required), `action` (enum, required) | `backend`, staging and production |
+| `generation_completed` | A generation request saves its cards. | `language` (enum, required), `card_count` (integer, required), `rewritten_count` (integer, required) | `backend`, staging and production |
+| `generation_failed` | A generation request fails. | `language` (enum, required), `failure` (enum, required) | `backend`, staging and production |
+| `card_rewrite_requested` | A learner or teacher first marks a card for rewriting. | `language` (enum, required), `actor` (`learner` or `teacher`, required) | `backend`, staging and production |
+| `card_regeneration_completed` | An individual or batch rewrite saves replacement cards. | `language` (enum, required), `actor` (`learner` or `teacher`, required), `mode` (`single` or `batch`, required), `card_count` (integer, required) | `backend`, staging and production |
+| `card_regeneration_failed` | An individual or batch rewrite fails at the provider. | `language` (enum, required), `actor` (`learner` or `teacher`, required), `mode` (`single` or `batch`, required) | `backend`, staging and production |
+| `llm_usage_recorded` | A model response reports token usage, including retries and word glosses. | `task` (`cards` or `gloss`, required), `billing_scope` (`service` or `user_key`, required), `input_tokens` and `output_tokens` (integers, required) | `backend`, staging and production |
+| `study_review_completed` | A learner saves a study rating. | `rating` (enum, required), `is_new` (boolean, required) | `backend`, staging and production |
+| `teacher_card_approved` | A teacher approves a shared card. | No event-specific fields | `backend`, staging and production |
+
+## The Pipeline
+
+The backend posts allowlisted events to a self-hosted OpenPanel instance on the university VM. Staging and production use different OpenPanel projects and write credentials. Collection is disabled by `TELEMETRY_ENABLED=false`; missing configuration also disables export. Retain events for at least seven days. See [deployment](deployment.md#telemetry-pipelines) for configuration. A `source=smoke` event checks staging only; production must not receive test traffic. Addresses and credentials stay in private VM configuration.
+
+## The Dashboard
+
+Each project needs a dashboard with a **Weekly completed study reviews** chart using the query above and the same seven-day window. Add **Generated cards** when reviews have no data. The staging event list must show a smoke event while chart filters exclude it. Dashboard creation and live values require VM access and are not established by this repository change.
+
+### Local operator views
+
+The local OpenPanel project groups reports as **01 · Product overview**, **02 · Learning journey**, **03 · Generation quality**, and **04 · LLM usage (tokens, not cost)**. The learning view shows activity by step, review ratings, new versus repeat reviews, and generated cards by language. The quality view shows cards regenerated, cards marked for rewriting, rewrite attempts and failures, and learner versus teacher rewrites. It also sums `rewritten_count` from initial generation batches and divides it by generated cards to show automatic rewrites per card. The usage view separates calls made with the service's key from learners' own keys and shows input and output tokens. Reports exclude `source=smoke` and use a 30-day range; operators can change the dashboard time picker.
+
+Regeneration is a **quality signal**, not a satisfaction score. A rewrite may reflect a typo, a teacher's preference, or a request for variety. Compare it with the number of generated cards, failure rate, and study reviews before drawing conclusions. Older events have no `rewritten_count`; the automatic rewrite report starts when the updated backend emits it. Empty charts mean there were no matching events in the selected time range.
+
+## Collected Data
+
+Events contain only the enumerated fields, their source, and environment. No text body, word, sentence, translation, email, name, account ID, IP address, request header, or key is forwarded by the product event sender. Data lives in the corresponding OpenPanel project. Disable collection with `TELEMETRY_ENABLED=false`.

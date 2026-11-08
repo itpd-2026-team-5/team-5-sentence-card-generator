@@ -39,8 +39,7 @@ class DeckIn(BaseModel):
     instructions: str = Field(default="", max_length=2000)
     known_language: Language | None = None
     target_language: Language | None = None
-    # Empty means the learner's level in the target language.
-    level: Level | Literal[""] = ""
+    level: Level = "A2"
     new_per_day: int = Field(default=10, ge=0, le=999)
     reviews_per_day: int = Field(default=200, ge=0, le=9999)
 
@@ -51,7 +50,7 @@ class DeckUpdate(BaseModel):
     instructions: str | None = Field(default=None, max_length=2000)
     known_language: Language | None = None
     target_language: Language | None = None
-    level: Level | Literal[""] | None = None
+    level: Level | None = None
     new_per_day: int | None = Field(default=None, ge=0, le=999)
     reviews_per_day: int | None = Field(default=None, ge=0, le=9999)
 
@@ -64,7 +63,7 @@ class DeckOut(BaseModel):
     known_language: str
     target_language: str
     level: str
-    # The level generation uses: the deck's own, or the learner's in the target language.
+    # The level used for new cards in this deck.
     effective_level: str
     new_per_day: int
     reviews_per_day: int

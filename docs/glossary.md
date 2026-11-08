@@ -112,6 +112,36 @@ The product's own LLM API key, held by the backend and used when a learner has n
 
 **Defined by:** [`ADR-001`](architecture/adr/ADR-001.md) and [`DEC-028`](decisions.md#dec-028).
 
+## Telemetry
+
+### Telemetry
+
+Limited data the product emits about use or operation for the two self-hosted pipelines.
+
+**Defined by:** [the analytics plan](analytics.md) and [the observability plan](observability.md).
+
+### Signal
+
+A metric, log, or trace that reports how the product operates.
+
+**Defined by:** [the observability plan](observability.md#the-signals).
+
+### Observability
+
+Using operating signals to understand the product's runtime behavior and diagnose a failure.
+
+**Defined by:** [the observability plan](observability.md).
+
+### SLI
+
+A service level indicator: a defined, queryable measure of runtime quality, such as request duration P95.
+
+**Defined by:** [SLI-01](observability.md#sli-01).
+
+### Service level indicator
+
+See [SLI](#sli).
+
 ## Product Analytics
 
 ### Focus Metric
