@@ -1,8 +1,9 @@
 import { t } from "../i18n";
 import { useEffect, useState } from "react";
-import { api, type Deck, type Study } from "../api";
+import { api, LANGUAGES, type Deck, type Study } from "../api";
 import { Icon } from "../components/Icon";
 import { Progress } from "../components/Progress";
+import { moveDecksTogether } from "../deckOrder";
 
 function greeting() {
   const hour = new Date().getHours();
@@ -30,6 +31,7 @@ export function Home() {
   const [decks, setDecks] = useState<Deck[] | null>(null);
   const [chosen, setChosen] = useState<number[]>([]);
   const [study, setStudy] = useState<Study | null>(null);
+  const [dragging, setDragging] = useState<number | null>(null);
 
   useEffect(() => {
     Promise.all([api.decks(), api.profile()]).then(([all, profile]) => {
@@ -63,15 +65,39 @@ export function Home() {
 
   // New cards come in the order of the decks, so moving a deck up studies it first.
   const move = (index: number, by: number) => {
-    const next = [...decks];
-    const [deck] = next.splice(index, 1);
-    next.splice(index + by, 0, deck);
+    const group = chosen.includes(decks[index].id)
+      ? decks.filter((deck) => chosen.includes(deck.id))
+      : [decks[index]];
+    const boundary =
+      by < 0 ? decks.indexOf(group[0]) : decks.indexOf(group[group.length - 1]);
+    const target =
+      by < 0
+        ? [...decks.slice(0, boundary)]
+            .reverse()
+            .find((deck) => !group.includes(deck))
+        : decks.slice(boundary + 1).find((deck) => !group.includes(deck));
+    if (!target) return;
+    const next = moveDecksTogether(
+      decks,
+      chosen,
+      decks[index].id,
+      target.id,
+      by < 0 ? "before" : "after",
+    );
     setDecks(next);
     api.reorderDecks(next.map((d) => d.id));
   };
 
+  const dropBefore = (beforeId: number) => {
+    if (dragging === null) return;
+    const next = moveDecksTogether(decks, chosen, dragging, beforeId, "before");
+    if (next === decks) return;
+    setDecks(next);
+    api.reorderDecks(next.map((deck) => deck.id));
+    setDragging(null);
+  };
+
   const left = study ? study.new + study.review + study.again : 0;
-  const names = decks.filter((d) => chosen.includes(d.id)).map((d) => d.name);
 
   return (
     <div className="page">
@@ -97,9 +123,11 @@ export function Home() {
             className="btn primary start"
             href={`#/study?decks=${chosen.join(",")}`}
           >
-            <Icon name="play" size={16} /> {t("Study")}{" "}
-            {names.length === 1 ? names[0] : `${names.length} decks`} · {left}{" "}
-            {left === 1 ? t("card") : t("cards")}
+            <Icon name="play" size={16} />{" "}
+            {chosen.length === 1
+              ? t("Study one deck")
+              : t("Study {v0} decks", { v0: chosen.length })}{" "}
+            · {left} {left === 1 ? t("card") : t("cards")}
           </a>
         ) : (
           <p className="muted">
@@ -133,19 +161,36 @@ export function Home() {
         </div>
         <p className="muted small">
           {t(
-            "Tick the decks to study together. New cards come in the order of this list; use the arrows to study a deck first.",
+            "Tick the decks to study together. Drag a selected deck to move all selected decks together; use the arrows to adjust their order.",
           )}
         </p>
         <ul className="deck-picks scroll-list">
           {decks.map((deck, index) => (
-            <li key={deck.id} className="pick-row">
+            <li
+              key={deck.id}
+              className="pick-row"
+              draggable
+              onDragStart={() => setDragging(deck.id)}
+              onDragEnd={() => setDragging(null)}
+              onDragOver={(event) => event.preventDefault()}
+              onDrop={(event) => {
+                event.preventDefault();
+                dropBefore(deck.id);
+              }}
+            >
               <label className={`pick ${chosen.includes(deck.id) ? "on" : ""}`}>
                 <input
                   type="checkbox"
                   checked={chosen.includes(deck.id)}
                   onChange={() => toggle(deck.id)}
                 />
-                <span className="pick-name">{deck.name}</span>
+                <span className="pick-name">
+                  {deck.name}
+                  <span className="muted small deck-pair">
+                    {t(LANGUAGES[deck.target_language])} {t("from")}{" "}
+                    {t(LANGUAGES[deck.known_language])}
+                  </span>
+                </span>
                 <span className="pick-counts">
                   <span className="count new" title={t("Never studied")}>
                     {deck.new} {t("new")}

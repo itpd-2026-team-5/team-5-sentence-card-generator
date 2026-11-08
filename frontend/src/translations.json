@@ -167,6 +167,14 @@
     "de": "Niveau",
     "ru": "Уровень"
   },
+  "Level for new cards": {
+    "de": "Niveau für neue Karten",
+    "ru": "Уровень для новых карточек"
+  },
+  "Choose a level": {
+    "de": "Niveau wählen",
+    "ru": "Выберите уровень"
+  },
   "Cards": {
     "de": "Karten",
     "ru": "Карточки"
@@ -551,6 +559,10 @@
     "de": "Wähle vor deinen ersten Karten deine Sprachen und dein Niveau. Speichere die Einstellungen, dann kann es losgehen.",
     "ru": "Перед созданием карточек укажите родной и изучаемый языки и свой уровень. Сохраните настройки, чтобы начать."
   },
+  "Tell us which languages you speak and learn, and record your current level. Choose the level for new cards in each deck.": {
+    "de": "Trage ein, welche Sprachen du sprichst und lernst, und halte dein aktuelles Niveau fest. Das Niveau für neue Karten wählst du in jedem Stapel.",
+    "ru": "Укажите языки, на которых говорите и которые изучаете, и отметьте свой текущий уровень. Уровень новых карточек выбирается в каждой колоде."
+  },
   "You are set up.": {
     "de": "Alles eingerichtet.",
     "ru": "Всё готово."
@@ -574,6 +586,10 @@
   "Sentences are written for your level, from words you already know. Each deck has its own language pair and instructions.": {
     "de": "Sätze passen zu deinem Niveau und bekannten Wörtern. Jeder Stapel hat sein eigenes Sprachpaar und eigene Anweisungen.",
     "ru": "Предложения учитывают ваш уровень и известные слова. У каждой колоды свои языки и инструкции."
+  },
+  "Keep track of your level in each language here. Each deck has its own level for new cards.": {
+    "de": "Hier hältst du dein Niveau in jeder Sprache fest. Jeder Stapel hat ein eigenes Niveau für neue Karten.",
+    "ru": "Здесь можно отслеживать свой уровень по каждому языку. У каждой колоды свой уровень для новых карточек."
   },
   "Languages for new decks": {
     "de": "Sprachen für neue Stapel",
@@ -626,6 +642,10 @@
   "New sentences in each language are written at this level. A deck can set a level of its own, which then wins for that deck. Changing a level here affects only cards generated from now on, not the cards you already have.": {
     "de": "Neue Sätze richten sich nach diesem Niveau. Das eigene Niveau eines Stapels hat Vorrang. Änderungen gelten nur für künftig erstellte Karten.",
     "ru": "Новые предложения учитывают этот уровень. Собственный уровень колоды имеет приоритет. Изменения касаются только новых карточек."
+  },
+  "These levels are for your reference. Changing one here does not change any deck or its cards.": {
+    "de": "Diese Niveaus dienen dir zur Orientierung. Eine Änderung hier verändert weder einen Stapel noch seine Karten.",
+    "ru": "Эти уровни нужны для ориентира. Их изменение здесь не влияет на колоды и карточки."
   },
   "The language new decks start with": {
     "de": "Die Standardsprache neuer Stapel",
@@ -1790,5 +1810,61 @@
   "Open card: {v0}, {v1}": {
     "de": "Karte öffnen: {v0}, {v1}",
     "ru": "Открыть карточку: {v0}, {v1}"
+  },
+  "Study one deck": {
+    "de": "Einen Stapel lernen",
+    "ru": "Изучать одну колоду"
+  },
+  "Study {v0} decks": {
+    "de": "{v0} Stapel lernen",
+    "ru": "Изучать {v0} колоды"
+  },
+  "Tick the decks to study together. Drag a selected deck to move all selected decks together; use the arrows to adjust their order.": {
+    "de": "Wähle Stapel zum gemeinsamen Lernen. Ziehe einen gewählten Stapel, um alle gewählten Stapel gemeinsam zu verschieben; mit den Pfeilen änderst du die Reihenfolge.",
+    "ru": "Отметьте колоды для совместного изучения. Перетащите выбранную колоду, чтобы переместить все выбранные вместе; стрелками меняйте порядок."
+  },
+  "Select a card to open its editor. Cards can belong to more than one deck, and removing a deck does not erase their study history.": {
+    "de": "Wähle eine Karte, um sie zu bearbeiten. Karten können zu mehreren Stapeln gehören; das Entfernen aus einem Stapel löscht den Lernverlauf nicht.",
+    "ru": "Нажмите на карточку, чтобы открыть редактор. Карточка может быть в нескольких колодах; удаление из одной колоды не стирает историю изучения."
+  },
+  "Selected words": {
+    "de": "Ausgewählte Wörter",
+    "ru": "Выбранные слова"
+  },
+  "Generate cards": {
+    "de": "Karten erstellen",
+    "ru": "Создать карточки"
+  },
+  "Choose a translation language and destination deck for the selected words above.": {
+    "de": "Wähle Übersetzungssprache und Zielstapel für die oben ausgewählten Wörter.",
+    "ru": "Выберите язык перевода и целевую колоду для выбранных выше слов."
+  },
+  "Original source sentence": {
+    "de": "Ursprünglicher Satz",
+    "ru": "Исходное предложение"
+  },
+  "Regeneration": {
+    "de": "Neu erzeugen",
+    "ru": "Перегенерация"
+  },
+  "Feedback tells the model what to correct. The saved card instructions guide its next sentence and translation.": {
+    "de": "Dein Feedback sagt dem Modell, was zu verbessern ist. Die gespeicherten Kartenanweisungen steuern den nächsten Satz und seine Übersetzung.",
+    "ru": "Отзыв сообщает модели, что исправить. Сохранённые инструкции карточки определяют новое предложение и перевод."
+  },
+  "Latest regenerated result": {
+    "de": "Letztes neu erzeugtes Ergebnis",
+    "ru": "Последний результат перегенерации"
+  },
+  "Archive keeps the card and its history but stops studying it.": {
+    "de": "Archivieren bewahrt die Karte und ihren Lernverlauf, nimmt sie aber aus dem Lernen.",
+    "ru": "Архивирование сохраняет карточку и её историю, но исключает её из изучения."
+  },
+  "Asked to check: the student requested help. To check: the teacher has not approved this card yet. Checked: the teacher approved the current card.": {
+    "de": "Um Prüfung gebeten: Die lernende Person braucht Hilfe. Zu prüfen: Die Lehrkraft hat die Karte noch nicht bestätigt. Geprüft: Die Lehrkraft hat die aktuelle Karte bestätigt.",
+    "ru": "Попросили проверить: ученик запросил помощь. Проверить: преподаватель ещё не одобрил карточку. Проверено: преподаватель одобрил текущую карточку."
+  },
+  "Daily limits apply to this deck's study queue. Changing them keeps existing card progress.": {
+    "de": "Die Tagesgrenzen gelten für die Lernliste dieses Stapels. Änderungen bewahren den bisherigen Lernfortschritt.",
+    "ru": "Дневные лимиты относятся к очереди изучения этой колоды. Их изменение сохраняет текущий прогресс карточек."
   }
 }

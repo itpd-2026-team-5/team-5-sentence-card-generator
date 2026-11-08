@@ -307,7 +307,7 @@ def seed(db: Session, reset: bool = False) -> bool:
         deck.name, deck.position = spec["name"], index
         deck.description, deck.instructions = spec["description"], spec["instructions"]
         deck.known_language, deck.target_language = "en", spec["target"]
-        deck.level = spec.get("level", "")
+        deck.level = spec.get("level") or profile.levels.get(spec["target"], "A2")
         db.add(deck)
         if spec["teacher"]:
             deck.shares.append(DeckShare(teacher_id=teachers[spec["teacher"]].id))

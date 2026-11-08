@@ -36,6 +36,7 @@ export function CardEditor({
   });
   const [draft, setDraft] = useState(fields(card));
   const [feedback, setFeedback] = useState("");
+  const [regenerated, setRegenerated] = useState<Card | null>(null);
   const [instructions, setInstructions] = useState(card.instructions);
   const [note, setNote] = useState(card.note);
   const [count, setCount] = useState(1);
@@ -45,12 +46,39 @@ export function CardEditor({
   const changed = (Object.keys(draft) as (keyof typeof draft)[]).some(
     (k) => draft[k] !== card[k],
   );
+  const sourceIndex = card.source_sentence
+    .toLocaleLowerCase()
+    .indexOf(card.word.toLocaleLowerCase());
+  const sourceContext =
+    sourceIndex < 0 ? (
+      card.source_sentence
+    ) : (
+      <>
+        {card.source_sentence.slice(0, sourceIndex)}
+        <mark>
+          {card.source_sentence.slice(
+            sourceIndex,
+            sourceIndex + card.word.length,
+          )}
+        </mark>
+        {card.source_sentence.slice(sourceIndex + card.word.length)}
+      </>
+    );
 
   useEffect(() => {
     onDirtyChange?.(
-      changed || instructions !== card.instructions || !!feedback.trim(),
+      changed ||
+        (!teacher && instructions !== card.instructions) ||
+        !!feedback.trim(),
     );
-  }, [changed, instructions, card.instructions, feedback, onDirtyChange]);
+  }, [
+    changed,
+    instructions,
+    card.instructions,
+    feedback,
+    teacher,
+    onDirtyChange,
+  ]);
   useEffect(() => {
     onBusyChange?.(!!busy);
   }, [busy, onBusyChange]);
@@ -72,7 +100,10 @@ export function CardEditor({
         onSaved(result);
         setDraft(fields(result));
         setInstructions(result.instructions);
-        if (label === "regenerate") setFeedback("");
+        if (label === "regenerate") {
+          setFeedback("");
+          setRegenerated(result);
+        }
       }
     } catch (e) {
       setError((e as Error).message);
@@ -161,6 +192,14 @@ export function CardEditor({
 
       {card.problems.length > 0 && (
         <p className="error">{card.problems.join("; ")}</p>
+      )}
+
+      {teacher && (
+        <section className="source-context">
+          <h3>{t("Original source sentence")}</h3>
+          <p>{sourceContext}</p>
+          <span className="muted small">{card.text_title}</span>
+        </section>
       )}
 
       <div className="card-field">
@@ -283,26 +322,28 @@ export function CardEditor({
         </button>
       )}
 
-      <details className="source-note">
-        <summary>{t("Where the word came from")}</summary>
-        <p>
-          {card.text_title &&
-            (card.text_exists && !teacher ? (
-              <>
-                <a className="link" href={`#/text/${card.text_id}`}>
-                  <Icon name="link" size={13} /> {card.text_title}
-                </a>
-                :{" "}
-              </>
-            ) : (
-              <>
-                <strong>{card.text_title}</strong>
-                {!card.text_exists && " (the text was deleted)"}:{" "}
-              </>
-            ))}
-          “{card.source_sentence}”
-        </p>
-      </details>
+      {!teacher && (
+        <details className="source-note">
+          <summary>{t("Where the word came from")}</summary>
+          <p>
+            {card.text_title &&
+              (card.text_exists && !teacher ? (
+                <>
+                  <a className="link" href={`#/text/${card.text_id}`}>
+                    <Icon name="link" size={13} /> {card.text_title}
+                  </a>
+                  :{" "}
+                </>
+              ) : (
+                <>
+                  <strong>{card.text_title}</strong>
+                  {!card.text_exists && " (the text was deleted)"}:{" "}
+                </>
+              ))}
+            “{sourceContext}”
+          </p>
+        </details>
+      )}
 
       {!teacher && (
         <>
@@ -327,7 +368,12 @@ export function CardEditor({
       )}
 
       <div className="divider" />
-      <h3>{t("New sentence")}</h3>
+      <h3>{t("Regeneration")}</h3>
+      <p className="muted small">
+        {t(
+          "Feedback tells the model what to correct. The saved card instructions guide its next sentence and translation.",
+        )}
+      </p>
       <label>
         {t("What was wrong")} <span className="muted">{t("(optional)")}</span>
         <input
@@ -340,7 +386,7 @@ export function CardEditor({
       <label>
         {t("Instructions this card is written with")}
         <textarea
-          disabled={!!busy}
+          disabled={!!busy || teacher}
           rows={2}
           value={instructions}
           onChange={(e) => setInstructions(e.target.value)}
@@ -356,7 +402,9 @@ export function CardEditor({
               api.regenerateCard(
                 card.id,
                 feedback,
-                instructions !== card.instructions ? instructions : undefined,
+                !teacher && instructions !== card.instructions
+                  ? instructions
+                  : undefined,
               ),
             )
           }
@@ -378,6 +426,13 @@ export function CardEditor({
           {card.needs_regeneration ? t("Unmark") : t("Mark to rewrite later")}
         </button>
       </div>
+      {regenerated && (
+        <div className="glass block stack tight" aria-live="polite">
+          <strong>{t("Latest regenerated result")}</strong>
+          <p className="serif">{regenerated.sentence}</p>
+          <p className="muted">{regenerated.translation}</p>
+        </div>
+      )}
       {!teacher && (
         <>
           <div className="more-row">
@@ -502,32 +557,36 @@ export function CardEditor({
             <Icon name="archive" size={16} /> {t("Archive")}
           </button>
         )}
-        <button
-          className="btn danger"
-          disabled={!!busy || changed}
-          onClick={() =>
-            run("delete", async () => {
-              if (
-                !confirm(
-                  t(
-                    "Delete the card for “{v0}” for good? Archiving keeps it.",
-                    { v0: card.word },
-                  ),
+        {!teacher && (
+          <button
+            className="btn danger"
+            disabled={!!busy || changed}
+            onClick={() =>
+              run("delete", async () => {
+                if (
+                  !confirm(
+                    t(
+                      "Delete the card for “{v0}” for good? Archiving keeps it.",
+                      { v0: card.word },
+                    ),
+                  )
                 )
-              )
-                return;
-              await api.deleteCard(card.id);
-              onDeleted(card.id);
-            })
-          }
-        >
-          <Icon name="trash" size={16} /> {t("Delete for good")}
-        </button>
+                  return;
+                await api.deleteCard(card.id);
+                onDeleted(card.id);
+              })
+            }
+          >
+            <Icon name="trash" size={16} /> {t("Delete for good")}
+          </button>
+        )}
       </div>
       <p className="muted small">
-        {t(
-          "Archive keeps the card and its history but stops studying it. Delete removes it for good.",
-        )}
+        {teacher
+          ? t("Archive keeps the card and its history but stops studying it.")
+          : t(
+              "Archive keeps the card and its history but stops studying it. Delete removes it for good.",
+            )}
       </p>
       {error && (
         <p className="error" role="alert">

@@ -13,7 +13,8 @@ from app.config import settings
 from app.db import get_db
 from app.models import Session, User
 
-COOKIE = "session"
+COOKIE = "sentence_cards_session"
+LEGACY_COOKIE = "session"
 # scrypt parameters: about 16 MiB of memory per hash, which slows down guessing.
 _N, _R, _P = 2**14, 8, 1
 
@@ -47,7 +48,7 @@ def start_session(db: DbSession, user: User, response: Response) -> None:
 
 
 def end_session(db: DbSession, request: Request, response: Response) -> None:
-    token = request.cookies.get(COOKIE)
+    token = request.cookies.get(COOKIE) or request.cookies.get(LEGACY_COOKIE)
     if token:
         session = db.get(Session, _token_hash(token))
         if session:
@@ -56,10 +57,22 @@ def end_session(db: DbSession, request: Request, response: Response) -> None:
     response.delete_cookie(COOKIE, path="/")
 
 
-def signed_in_user(request: Request, db: DbSession = Depends(get_db)) -> User:
+def signed_in_user(request: Request, response: Response, db: DbSession = Depends(get_db)) -> User:
     """The signed-in user, verified or not: for the account endpoints themselves."""
     token = request.cookies.get(COOKIE)
     session = db.get(Session, _token_hash(token)) if token else None
+    if session is None and not token:
+        legacy_token = request.cookies.get(LEGACY_COOKIE)
+        session = db.get(Session, _token_hash(legacy_token)) if legacy_token else None
+        if session is not None and legacy_token is not None:
+            response.set_cookie(
+                COOKIE,
+                legacy_token,
+                httponly=True,
+                samesite="lax",
+                max_age=60 * 60 * 24 * 30,
+                path="/",
+            )
     if session is None:
         raise HTTPException(401, "Sign in first")
     return session.user

@@ -12,11 +12,12 @@ This document records what the Sentence Cards Generator is made of, and [the pro
 ## Container View
 
 The product runs as the containers below, and [`ADR-001`](adr/ADR-001.md) decides that split and the stack it runs on.
+The team self-hosts OpenPanel and OpenObserve but does not build them.
 
-![Container view](container.png)
+![Container view](container.svg)
 
 The `frontend`, `backend`, and `database` are the product's containers.
-The LLM provider and the email provider are external systems the product calls.
+The LLM provider, email provider, OpenPanel, and OpenObserve are external systems the product calls.
 Mailpit, which `docker-compose.yml` also starts, is a development-only inbox that stands in for the email provider on a laptop; it is not part of the product, so the view draws it as the email provider.
 
 ### Container Responsibilities
@@ -30,8 +31,9 @@ Mailpit, which `docker-compose.yml` also starts, is a development-only inbox tha
 ## Diagrams And Legends
 
 In the container view, solid boxes are the containers, the cylinder is a data store, and dashed boxes are external systems the product calls; each arrow is one exchange, labelled with what crosses it, and points from the caller.
+The team self-hosts OpenPanel and OpenObserve but does not build them; both are external systems and the product works when their collection is off.
 The two arrows into the LLM provider are the two ways a sentence is written: with the service's key from the `backend`, or with the learner's own key from the `frontend`, per [`ADR-002`](adr/ADR-002.md).
-The image is [`container.png`](container.png), rendered with Mermaid CLI 11.4.2 from its source [`container.mmd`](container.mmd).
+The view is [`container.svg`](container.svg), with the exchange list maintained in [`container.mmd`](container.mmd).
 The system context diagram is in [the product vision](../product-vision.md#system-context).
 
 ## Architectural Decisions
@@ -43,5 +45,7 @@ The system context diagram is in [the product vision](../product-vision.md#syste
 | [ADR-003](adr/ADR-003.md) | Accepted | [FR-003](../functional-requirements/fr/FR-003.md), [FR-004](../functional-requirements/fr/FR-004.md), [QR-03](../quality-requirements/qr/QR-03.md), [QR-04](../quality-requirements/qr/QR-04.md), [QR-05](../quality-requirements/qr/QR-05.md) | Check each sentence and ask again with the reason, up to three attempts |
 | [ADR-004](adr/ADR-004.md) | Accepted | [FR-011](../functional-requirements/fr/FR-011.md), [QR-01](../quality-requirements/qr/QR-01.md) | Share a deck through an explicit share record |
 | [ADR-005](adr/ADR-005.md) | Accepted | [FR-008](../functional-requirements/fr/FR-008.md), [FR-009](../functional-requirements/fr/FR-009.md), [QR-02](../quality-requirements/qr/QR-02.md) | Schedule reviews with the FSRS library in the backend |
+| [ADR-006](adr/ADR-006.md) | Proposed | [FR-013](../functional-requirements/fr/FR-013.md) | Export product events to OpenPanel |
+| [ADR-007](adr/ADR-007.md) | Proposed | [FR-014](../functional-requirements/fr/FR-014.md), [QR-10](../quality-requirements/qr/QR-10.md) | Export request signals to OpenObserve |
 
 New records start from [the template](adr/TEMPLATE.md).
