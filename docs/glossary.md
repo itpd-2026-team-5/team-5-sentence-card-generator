@@ -120,6 +120,36 @@ Limited data the product emits about use or operation for the two self-hosted pi
 
 **Defined by:** [the analytics plan](analytics.md) and [the observability plan](observability.md).
 
+### Event
+
+A named record of a product action, with a timestamp and the allowed fields for that action.
+
+**Defined by:** [the event registry](analytics.md#the-events) and [`FR-013`](functional-requirements/fr/FR-013.md).
+
+### Instrumentation
+
+Code that captures product events or runtime signals and sends them to the configured analytics or observability backend.
+
+**Defined by:** [`FR-013`](functional-requirements/fr/FR-013.md) and [`FR-014`](functional-requirements/fr/FR-014.md).
+
+### Analytics Backend
+
+A service that receives and stores allowlisted product events for analysis; this project uses separate OpenPanel projects for staging and production.
+
+**Defined by:** [the analytics pipeline](analytics.md#the-pipeline) and [`ADR-006`](architecture/adr/ADR-006.md).
+
+### Observability Backend
+
+A service that receives runtime metrics and structured logs for operators to query; this project uses separate OpenObserve organizations for staging and production.
+
+**Defined by:** [the observability pipeline](observability.md#the-pipeline) and [`ADR-007`](architecture/adr/ADR-007.md).
+
+### Dashboard
+
+A visual view of selected analytics events or runtime signals, charted for a chosen environment and time range.
+
+**Defined by:** [the analytics dashboard](analytics.md#the-dashboard) and [the observability dashboard](observability.md#the-dashboard).
+
 ### Signal
 
 A metric, log, or trace that reports how the product operates.
