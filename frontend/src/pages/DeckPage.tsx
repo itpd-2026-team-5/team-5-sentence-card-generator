@@ -170,6 +170,12 @@ export function DeckPage({
       </header>
       {error && <p className="error">{error}</p>}
 
+      <p className="muted small">
+        {t(
+          "Select a card to open its editor. Cards can belong to more than one deck, and removing a deck does not erase their study history.",
+        )}
+      </p>
+
       <div className="row-between">
         <div className="segmented small-seg">
           {FILTERS.map((f) => (

@@ -2,7 +2,6 @@ import { t } from "../i18n";
 import { useCallback, useEffect, useState } from "react";
 import {
   api,
-  local,
   speak,
   type Deck,
   type Language,
@@ -11,6 +10,7 @@ import {
 } from "../api";
 import { Icon } from "../components/Icon";
 import { Say } from "../components/Say";
+import { soundEnabled } from "../sound";
 
 const RATINGS: { rating: Rating; label: string; key: string }[] = [
   { rating: "again", label: "Again", key: "1" },
@@ -43,9 +43,7 @@ export function Study({
   const [study, setStudy] = useState<StudyData | null>(null);
   const [revealed, setRevealed] = useState(false);
   const [tooHard, setTooHard] = useState(false);
-  const [autoplay, setAutoplay] = useState(
-    local.get("autoplay", "on") === "on",
-  );
+  const [autoplay, setAutoplay] = useState(soundEnabled);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const decks = deckIds.join(",");
@@ -89,7 +87,6 @@ export function Study({
   }, [cardId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const toggleAutoplay = () => {
-    local.set("autoplay", autoplay ? "off" : "on");
     if (autoplay) speechSynthesis.cancel();
     setAutoplay(!autoplay);
   };
