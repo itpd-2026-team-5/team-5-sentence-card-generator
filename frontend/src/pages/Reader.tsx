@@ -7,7 +7,9 @@ import {
   local,
   type Card,
   type Deck,
+  type Language,
   type Mark,
+  type Profile,
   type TextDetail,
   type WordMark,
 } from "../api";
@@ -15,17 +17,21 @@ import { CardEditor } from "../components/CardEditor";
 import { Drawer } from "../components/Drawer";
 import { Icon } from "../components/Icon";
 import { TextForm } from "../components/TextForm";
+import { DeckForm } from "./Decks";
 
 export function Reader({ textId }: { textId: number }) {
   const [text, setText] = useState<TextDetail | null>(null);
   const [decks, setDecks] = useState<Deck[]>([]);
+  const [profile, setProfile] = useState<Profile | null>(null);
   const [deckId, setDeckId] = useState<number | null>(null);
+  const [knownLanguage, setKnownLanguage] = useState<Language>("en");
   const [withCard, setWithCard] = useState<Set<string>>(new Set());
   const [active, setActive] = useState<string | null>(null);
   const [onlyMarked, setOnlyMarked] = useState(false);
   const [query, setQuery] = useState("");
   const [found, setFound] = useState<string[] | null>(null);
   const [editing, setEditing] = useState(false);
+  const [addingDeck, setAddingDeck] = useState(false);
   const [busy, setBusy] = useState(false);
   const [made, setMade] = useState<{
     cards: Card[];
@@ -46,13 +52,23 @@ export function Reader({ textId }: { textId: number }) {
         ),
       );
   useEffect(() => {
-    Promise.all([api.text(textId), api.decks()]).then(
-      ([detail, all]) => {
+    Promise.all([api.text(textId), api.decks(), api.profile()]).then(
+      ([detail, all, profile]) => {
         setText(detail);
+        setProfile(profile);
         setDecks(all);
+        const known =
+          profile.known_language === detail.language
+            ? (Object.keys(LANGUAGES) as Language[]).find(
+                (code) => code !== detail.language,
+              )!
+            : profile.known_language;
+        setKnownLanguage(known);
         const last = Number(local.get("generate-deck", "0"));
         const matching = all.filter(
-          (deck) => deck.target_language === detail.language,
+          (deck) =>
+            deck.target_language === detail.language &&
+            deck.known_language === known,
         );
         setDeckId(
           matching.some((deck) => deck.id === last)
@@ -74,7 +90,8 @@ export function Reader({ textId }: { textId: number }) {
     return () => document.removeEventListener("mousedown", close);
   }, []);
 
-  if (!text) return <p className="muted">{error || t("Loading…")}</p>;
+  if (!text || !profile)
+    return <p className="muted">{error || t("Loading…")}</p>;
 
   // The same rules as the server: a learned word is marked per sentence, an ignored word for the whole text.
   const choose = async (
@@ -121,21 +138,13 @@ export function Reader({ textId }: { textId: number }) {
     if (query.trim()) setFound(await api.find(textId, query.trim()));
   };
 
-  const pickDeck = async (value: string) => {
+  const pickDeck = (value: string) => {
     if (value !== "new") {
       setDeckId(Number(value));
       local.set("generate-deck", value);
       return;
     }
-    const name = prompt(t("Name of the new deck"));
-    if (!name?.trim()) return;
-    const deck = await api.createDeck({
-      name: name.trim(),
-      target_language: text.language,
-    });
-    setDecks([...decks, deck]);
-    setDeckId(deck.id);
-    local.set("generate-deck", String(deck.id));
+    setAddingDeck(true);
   };
 
   const generate = async () => {
@@ -196,6 +205,17 @@ export function Reader({ textId }: { textId: number }) {
         <p className="muted small">
           {t("Text language")}: {t(languageName(text.language))}
         </p>
+        <button
+          type="button"
+          className="btn mobile-tray-jump"
+          onClick={() =>
+            document
+              .getElementById("word-tray")
+              ?.scrollIntoView({ behavior: "smooth" })
+          }
+        >
+          {t("Selected words")} · {learn.length}
+        </button>
         {(text.source_url || text.notes) && (
           <p className="muted small">
             {text.source_url && (
@@ -343,8 +363,10 @@ export function Reader({ textId }: { textId: number }) {
         </div>
       </article>
 
-      <aside className="tray glass">
-        <h3>{t("Word tray")}</h3>
+      <aside className="tray glass" id="word-tray">
+        <h3>
+          {t("Selected words")} · {learn.length}
+        </h3>
         <div className="chips-block">
           <p className="label">
             {t("To learn")} <span>{learn.length}</span>
@@ -413,86 +435,154 @@ export function Reader({ textId }: { textId: number }) {
             </div>
           </div>
         )}
-        <label>
-          {t("Generate into")}
-          <select
-            value={deckId ?? ""}
-            onChange={(e) => pickDeck(e.target.value)}
-          >
-            <option value="" disabled>
-              {t("Choose a deck")}
-            </option>
-            {decks
-              .filter((d) => d.target_language === text.language)
-              .map((d) => (
-                <option key={d.id} value={d.id}>
-                  {d.name}: {t(LANGUAGES[d.target_language])} {t("from")}{" "}
-                  {t(LANGUAGES[d.known_language])}
-                </option>
-              ))}
-            <option value="new">{t("+ New deck…")}</option>
-          </select>
-        </label>
-        {deck && (
+        <section className="generation-settings stack">
+          <h3>{t("Generate cards")}</h3>
           <p className="muted small">
-            {t("Sentences in")} {t(LANGUAGES[deck.target_language])}
-            {t(", translated into")} {t(LANGUAGES[deck.known_language])}
-            {t(", at level")} {deck.effective_level}.
-          </p>
-        )}
-        <button
-          className="btn primary wide"
-          disabled={busy || pending === 0 || deckId === null}
-          onClick={generate}
-        >
-          {busy
-            ? t("Writing sentences…")
-            : pending === 0
-              ? t("No new words to generate")
-              : t("Generate {v0} card{v1}", {
-                  v0: pending,
-                  v1: pending === 1 ? "" : "s",
-                })}
-        </button>
-        {made && (
-          <div className="made">
-            <a className="toast" href={`#/deck/${made.deck.id}`}>
-              <Icon name="check" size={16} /> {made.cards.length}{" "}
-              {made.cards.length === 1 ? t("card") : t("cards")} {t("added to")}{" "}
-              {made.deck.name} →
-            </a>
-            {made.warning && <p className="warn-note">{made.warning}</p>}
-            {made.cards.length > 0 && (
-              <>
-                <p className="label">
-                  {t("Just made")} <span>{t("click one to change it")}</span>
-                </p>
-                <ul className="made-list">
-                  {made.cards.map((card) => (
-                    <li key={card.id}>
-                      <button
-                        className={`made-card ${card.status === "flagged" ? "flagged" : ""}`}
-                        onClick={() => setOpen(card)}
-                      >
-                        <strong>{card.word_form}</strong>{" "}
-                        {card.word_translation}
-                        <span className="serif">{card.sentence}</span>
-                        <span className="muted small">{card.translation}</span>
-                        {card.status === "flagged" && (
-                          <span className="tag warn">
-                            {t("failed a check")}
-                          </span>
-                        )}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </>
+            {t(
+              "Choose a translation language and destination deck for the selected words above.",
             )}
+          </p>
+          <div className="lang-row">
+            <label>
+              {t("I am learning")}
+              <select value={text.language} disabled>
+                <option value={text.language}>
+                  {t(LANGUAGES[text.language])}
+                </option>
+              </select>
+            </label>
+            <label>
+              {t("Translate into")}
+              <select
+                value={knownLanguage}
+                onChange={(event) => {
+                  const language = event.target.value as Language;
+                  setKnownLanguage(language);
+                  const matching = decks.find(
+                    (deck) =>
+                      deck.target_language === text.language &&
+                      deck.known_language === language,
+                  );
+                  setDeckId(matching?.id ?? null);
+                }}
+              >
+                {(Object.keys(LANGUAGES) as Language[])
+                  .filter((code) => code !== text.language)
+                  .map((code) => (
+                    <option key={code} value={code}>
+                      {t(LANGUAGES[code])}
+                    </option>
+                  ))}
+              </select>
+            </label>
           </div>
-        )}
-        {error && <p className="error">{error}</p>}
+          <label>
+            {t("Generate into")}
+            <select
+              value={deckId ?? ""}
+              onChange={(e) => pickDeck(e.target.value)}
+            >
+              <option value="" disabled>
+                {t("Choose a deck")}
+              </option>
+              {decks
+                .filter(
+                  (d) =>
+                    d.target_language === text.language &&
+                    d.known_language === knownLanguage,
+                )
+                .map((d) => (
+                  <option key={d.id} value={d.id}>
+                    {d.name}: {t(LANGUAGES[d.target_language])} {t("from")}{" "}
+                    {t(LANGUAGES[d.known_language])}
+                  </option>
+                ))}
+              <option value="new">{t("+ New deck…")}</option>
+            </select>
+          </label>
+          {deck && (
+            <p className="muted small">
+              {t("Sentences in")} {t(LANGUAGES[deck.target_language])}
+              {t(", translated into")} {t(LANGUAGES[deck.known_language])}
+              {t(", at level")} {deck.effective_level}.
+            </p>
+          )}
+          <button
+            className="btn primary wide"
+            disabled={busy || pending === 0 || deckId === null}
+            onClick={generate}
+          >
+            {busy
+              ? t("Writing sentences…")
+              : pending === 0
+                ? t("No new words to generate")
+                : t("Generate {v0} card{v1}", {
+                    v0: pending,
+                    v1: pending === 1 ? "" : "s",
+                  })}
+          </button>
+          {made && (
+            <div className="made">
+              <a className="toast" href={`#/deck/${made.deck.id}`}>
+                <Icon name="check" size={16} /> {made.cards.length}{" "}
+                {made.cards.length === 1 ? t("card") : t("cards")}{" "}
+                {t("added to")} {made.deck.name} →
+              </a>
+              {made.warning && <p className="warn-note">{made.warning}</p>}
+              {made.cards.length > 0 && (
+                <>
+                  <p className="label">
+                    {t("Just made")} <span>{t("click one to change it")}</span>
+                  </p>
+                  <ul className="made-list">
+                    {made.cards.map((card) => (
+                      <li key={card.id}>
+                        <button
+                          className={`made-card ${card.status === "flagged" ? "flagged" : ""}`}
+                          onClick={() => setOpen(card)}
+                        >
+                          <strong>{card.word_form}</strong>{" "}
+                          {card.word_translation}
+                          <span className="serif">{card.sentence}</span>
+                          <span className="muted small">
+                            {card.translation}
+                          </span>
+                          {card.status === "flagged" && (
+                            <span className="tag warn">
+                              {t("failed a check")}
+                            </span>
+                          )}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </div>
+          )}
+          {error && <p className="error">{error}</p>}
+        </section>
       </aside>
+
+      {addingDeck && (
+        <Drawer title={t("New deck")} onClose={() => setAddingDeck(false)}>
+          <DeckForm
+            profile={profile}
+            initialPair={{
+              target_language: text.language,
+              known_language: knownLanguage,
+            }}
+            submit={t("Create deck")}
+            onSave={async (fields) => {
+              const deck = await api.createDeck(fields);
+              setDecks((current) => [...current, deck]);
+              setDeckId(deck.id);
+              local.set("generate-deck", String(deck.id));
+              setAddingDeck(false);
+            }}
+          />
+        </Drawer>
+      )}
 
       {open && made && (
         <Drawer title={open.word_form} onClose={() => setOpen(null)}>

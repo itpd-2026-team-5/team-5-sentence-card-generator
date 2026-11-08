@@ -26,6 +26,15 @@ class Settings(BaseSettings):
     smtp_password: str = ""
     smtp_starttls: bool = True
     mail_from: str = "Sentence Cards <no-reply@sentence-cards.local>"
+    telemetry_enabled: bool = False
+    telemetry_environment: str = "development"
+    openpanel_url: str = ""
+    openpanel_client_id: str = ""
+    openpanel_client_secret: str = ""
+    openobserve_url: str = ""
+    openobserve_organization: str = ""
+    openobserve_user: str = ""
+    openobserve_password: str = ""
 
 
 settings = Settings()

@@ -6,6 +6,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- Record privacy-limited core-task events and request duration signals when telemetry is configured.
+- Choose a generation language pair in the reader and approve cards directly in the teacher table.
+- Preview a rewritten card beside the rewrite controls in its editor.
+- Show a persistent global sound control and keep study overrides within one session.
+
+### Changed
+
+- Apply the Week 6 Customer review: show source context and translations in teacher review, explain review and regeneration states, separate reader selection from generation settings, and show both deck languages and a count-based study action.
+- Move selected decks together on Today while keeping their saved order and study history, and keep teacher-list guidance visible while its cards scroll.
+- Label OpenObserve P95 series with their actual route and outcome, and order local monitoring dashboards for operators.
+- Track reported LLM input and output tokens by service versus user key and show them in a separate operator dashboard without estimating money spent.
+- Group local OpenPanel product, learning, and generation-quality reports and OpenObserve reliability, generation, and access panels for operators.
+- Record card rewrite requests, completed and failed regenerations, automatic generation rewrites, and HTTP status codes for telemetry dashboards.
+- Use the level selected in each deck for new cards; Settings language levels now record progress without changing deck generation.
+- Let the deck table use the available desktop width so its columns fit without unnecessary horizontal scrolling.
+- Keep Sentence Cards signed in when another local service such as OpenPanel uses its own session cookie.
+- Give phone screens dedicated deck and teaching lists, simpler card rows, touch-sized study controls, and a direct link to the reader's word tray without horizontal scrolling.
+- Fit Settings level choices and the text reader within narrow phone screens so the bottom navigation stays visible.
+- Keep the global sound button at the top right on desktop and mobile.
+- Teachers may archive shared cards but only learners may delete cards or change their generation instructions.
+- Put learning languages and their levels together in Settings.
+
 ## [0.3.0] - 2026-10-31
 
 ### Added

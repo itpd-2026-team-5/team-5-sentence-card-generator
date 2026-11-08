@@ -15,4 +15,5 @@ Each requirement's tests are in its file, and what they last found is in the [qu
 | [QR-04](qr/QR-04.md) | Cards for five marked words appear within 60 seconds of the learner pressing generate. | Medium | Medium | Performance Efficiency | Time Behaviour | Active |
 | [QR-08](qr/QR-08.md) | An operator can install and run the core workflow on a Linux virtual machine using the documented prerequisites and configuration. | Medium | Medium | Flexibility | Installability | Active |
 | [QR-09](qr/QR-09.md) | The learner sees a warning when 30% or more of the cards in a generation batch require regeneration. | Medium | Medium | Reliability | Fault Tolerance | Active |
+| [QR-10](qr/QR-10.md) | An operator diagnoses a failed staging request from its log point and five-minute P95 series. | Medium | Medium | Maintainability | Analysability | Active |
 | [QR-05](qr/QR-05.md) | When the LLM provider fails or answers with something that is not cards, the learner sees a message, no broken card is saved, and the marked words stay marked for a retry. | Medium | Low | Reliability | Fault Tolerance | Active |

@@ -7,7 +7,8 @@ from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from app import study
+from app import observability, study
+from app.analytics import track
 from app.auth import (
     check_password,
     current_user,
@@ -85,6 +86,8 @@ from app.tokenize import find_sentences, tokenize
 
 # The schema is managed by Alembic: run `alembic upgrade head` before starting the server.
 app = FastAPI(title="Sentence Cards Generator")
+observability.configure()
+app.add_middleware(observability.RequestSignals)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins,
@@ -94,6 +97,14 @@ app.add_middleware(
 )
 
 FIRST_DECK = "My first deck"
+
+
+if settings.telemetry_enabled and settings.telemetry_environment == "staging":
+
+    @app.get("/api/diagnostics/fail", include_in_schema=False)
+    def staging_diagnostic_failure():
+        """Produce a controlled 500 for the deployed diagnosability check."""
+        raise HTTPException(500, "Staging diagnostic request")
 
 
 def create_profile(db: Session, user: User) -> Profile:
@@ -111,6 +122,7 @@ def create_profile(db: Session, user: User) -> Profile:
                 position=1,
                 known_language=profile.known_language or "en",
                 target_language=profile.target_language or "de",
+                level="A2",
             )
         )
         db.commit()
@@ -312,7 +324,7 @@ def deck_out(db: Session, deck: Deck) -> DeckOut:
         known_language=deck.known_language,
         target_language=deck.target_language,
         level=deck.level,
-        effective_level=deck_level(deck.profile, deck),
+        effective_level=deck_level(deck),
         new_per_day=deck.new_per_day,
         reviews_per_day=deck.reviews_per_day,
         cards=_count(db, in_deck),
@@ -439,6 +451,7 @@ def create_text(
     )
     db.add(text)
     db.commit()
+    track("text_added", language=text.language)
     return TextSummary(
         id=text.id,
         language=cast(Language, text.language),
@@ -570,6 +583,7 @@ def mark_word(
             if w.status == "ignore" or w.sentence == data.sentence:
                 text.words.remove(w)
     db.commit()
+    track("word_marked", language=text.language, action=data.status)
 
 
 @app.post("/api/texts/{text_id}/generate", response_model=GenerateOut)
@@ -599,7 +613,19 @@ def generate(
             created=[CardOut.model_validate(c) for c in cards], rewritten=rewritten, warning=warning
         )
 
-    return llm_call(db, run)
+    try:
+        result = llm_call(db, run)
+    except HTTPException:
+        track("generation_failed", language=text.language, failure="provider")
+        raise
+    if isinstance(result, GenerateOut):
+        track(
+            "generation_completed",
+            language=text.language,
+            card_count=len(result.created),
+            rewritten_count=result.rewritten,
+        )
+    return result
 
 
 @app.post("/api/texts/{text_id}/glosses", response_model=TextDetail)
@@ -677,6 +703,7 @@ def update_card(
     card = reachable_card(card_id, db, user)
     owner = db.get_one(Profile, card.profile_id)
     is_teacher = owner.user_id != user.id
+    was_marked_for_regeneration = card.needs_regeneration
     flags = {"status", "needs_check", "note", "needs_regeneration", "teacher_checked"}
     changes = data.model_dump(exclude_unset=True, exclude=flags)
     for key, value in changes.items():
@@ -705,6 +732,14 @@ def update_card(
         if data.teacher_checked:
             card.needs_check = False
     db.commit()
+    if data.needs_regeneration and not was_marked_for_regeneration:
+        track(
+            "card_rewrite_requested",
+            language=card.decks[0].target_language,
+            actor="teacher" if is_teacher else "learner",
+        )
+    if is_teacher and data.teacher_checked:
+        track("teacher_card_approved")
     return card
 
 
@@ -734,13 +769,30 @@ def regenerate(
     sentence is still written for the student's level and the deck's instructions."""
     card = reachable_card(card_id, db, user)
     owner = db.get_one(Profile, card.profile_id)
+    if owner.user_id != user.id and data.instructions is not None:
+        raise HTTPException(403, "Only the learner can change generation instructions")
     provider = pick_provider(request, data.llm_output)
-    return llm_call(
-        db,
-        lambda: CardOut.model_validate(
-            regenerate_card(db, provider, owner, card, data.feedback, data.instructions)
-        ),
-    )
+    language = card.decks[0].target_language
+    actor = "teacher" if owner.user_id != user.id else "learner"
+    try:
+        result = llm_call(
+            db,
+            lambda: CardOut.model_validate(
+                regenerate_card(db, provider, owner, card, data.feedback, data.instructions)
+            ),
+        )
+    except HTTPException:
+        track("card_regeneration_failed", language=language, actor=actor, mode="single")
+        raise
+    if isinstance(result, CardOut):
+        track(
+            "card_regeneration_completed",
+            language=language,
+            actor=actor,
+            card_count=1,
+            mode="single",
+        )
+    return result
 
 
 @app.post("/api/decks/{deck_id}/regenerate-marked", response_model=BatchRegenerateOut)
@@ -762,7 +814,22 @@ def regenerate_marked_cards(
             regenerated=[CardOut.model_validate(c) for c in done], remaining=remaining
         )
 
-    return llm_call(db, run)
+    try:
+        result = llm_call(db, run)
+    except HTTPException:
+        track(
+            "card_regeneration_failed", language=deck.target_language, actor="learner", mode="batch"
+        )
+        raise
+    if isinstance(result, BatchRegenerateOut) and result.regenerated:
+        track(
+            "card_regeneration_completed",
+            language=deck.target_language,
+            actor="learner",
+            card_count=len(result.regenerated),
+            mode="batch",
+        )
+    return result
 
 
 @app.post("/api/cards/{card_id}/more", response_model=GenerateOut)
@@ -791,6 +858,8 @@ def more(
 def delete_card(card_id: int, db: Session = Depends(get_db), user: User = Depends(current_user)):
     card = reachable_card(card_id, db, user)
     owner = db.get_one(Profile, card.profile_id)
+    if owner.user_id != user.id:
+        raise HTTPException(403, "Only the learner can delete a card")
     owner.cards_deleted += 1
     db.delete(card)
     db.commit()
@@ -952,5 +1021,7 @@ def review_card(
     card = own_card(card_id, db, profile)
     if card.status != "active":
         raise HTTPException(409, "Only checked cards can be studied")
+    is_new = card.review is None
     state = study.review(db, card, data.rating, data.too_hard, study.now_utc())
+    track("study_review_completed", rating=data.rating, is_new=is_new)
     return ReviewOut(card_id=card.id, due=state.due, reps=state.reps)

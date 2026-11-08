@@ -4,5 +4,7 @@ graph LR
     Backend -->|"HTTPS, Messages API<br/>with the service's key"| LLM["LLM provider<br/>(Anthropic or a compatible gateway)"]
     Frontend -->|"HTTPS, generation request<br/>with the learner's own key"| LLM
     Backend -->|"SMTP, verification email"| Email["email provider<br/>(SMTP; Mailpit locally)"]
+    Backend -->|"HTTPS, product events"| OpenPanel["OpenPanel<br/>(analytics backend)"]
+    Backend -->|"OTLP/HTTP, metrics and logs"| OpenObserve["OpenObserve<br/>(observability backend)"]
     classDef external stroke-dasharray: 5 5
-    class LLM,Email external
+    class LLM,Email,OpenPanel,OpenObserve external

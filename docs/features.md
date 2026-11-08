@@ -61,3 +61,18 @@ A [learner](glossary.md#learner) can share a [deck](glossary.md#deck) with a [te
 - **Stories:** [US-11](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/35), [US-12](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/34)
 - **Behavior:** [FR-011](functional-requirements/fr/FR-011.md)
 - **Decisions:** [ADR-004](architecture/adr/ADR-004.md)
+
+## Understand product use
+
+A product analyst can read the [core-task metrics](analytics.md) from privacy-limited events in separate staging and production scopes.
+
+- **Behavior:** [FR-013](functional-requirements/fr/FR-013.md)
+- **Decision:** [ADR-006](architecture/adr/ADR-006.md)
+
+## Diagnose runtime failures
+
+A system operator can read the [request duration SLI](observability.md#sli-01) and find a failed request's log point from its response ID.
+
+- **Behavior:** [FR-014](functional-requirements/fr/FR-014.md)
+- **Quality:** [QR-10](quality-requirements/qr/QR-10.md)
+- **Decision:** [ADR-007](architecture/adr/ADR-007.md)

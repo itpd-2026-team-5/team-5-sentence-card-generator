@@ -36,20 +36,31 @@ def generate(client, text_id, deck_id):
 
 
 def test_each_deck_has_its_own_languages_and_level(client):
-    """DEC-024, DEC-025: a language pair per deck, a level per language, a deck override."""
+    """A deck keeps its chosen level when the learner updates their language levels."""
     profile = client.get("/api/profile").json()
     del profile["placement_tests"], profile["set_up"], profile["study_deck_ids"]
     client.put("/api/profile", json={**profile, "levels": {"de": "B1", "ru": "A1"}})
     russian = client.post(
-        "/api/decks", json={"name": "Russian", "known_language": "en", "target_language": "ru"}
+        "/api/decks",
+        json={"name": "Russian", "known_language": "en", "target_language": "ru", "level": "A1"},
     ).json()
     assert (russian["target_language"], russian["effective_level"]) == ("ru", "A1")
+    client.put("/api/profile", json={**profile, "levels": {"de": "C2", "ru": "C2"}})
+    assert (
+        next(d for d in client.get("/api/decks").json() if d["id"] == russian["id"])[
+            "effective_level"
+        ]
+        == "A1"
+    )
     hard = client.patch(f"/api/decks/{russian['id']}", json={"level": "B2"}).json()
     assert (hard["level"], hard["effective_level"]) == ("B2", "B2")
+    assert client.patch(f"/api/decks/{russian['id']}", json={"level": ""}).status_code == 422
+    defaulted = client.post("/api/decks", json={"name": "Default level"}).json()
+    assert (defaulted["level"], defaulted["effective_level"]) == ("A2", "A2")
     same = {"name": "X", "known_language": "de", "target_language": "de"}
     assert client.post("/api/decks", json=same).status_code == 422
 
-    deck = Deck(known_language="en", target_language="ru", level="", instructions="")
+    deck = Deck(known_language="en", target_language="ru", level="A1", instructions="")
     learner = Profile(levels={"ru": "A1"}, sentence_min_words=5, sentence_max_words=12)
     learner.sentence_min_chars = learner.sentence_max_chars = 0
     prompt = build_prompt(learner, deck, [], [], [], [])

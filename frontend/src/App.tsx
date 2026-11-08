@@ -1,6 +1,7 @@
 import { t, useLocale } from "./i18n";
 import { useEffect, useState } from "react";
 import { api, session, type Language, type User } from "./api";
+import { onSoundChange, setSoundEnabled, soundEnabled } from "./sound";
 import { Icon } from "./components/Icon";
 import { DeckPage } from "./pages/DeckPage";
 import { Decks } from "./pages/Decks";
@@ -27,8 +28,13 @@ export default function App() {
   const [path, query, go] = useRoute();
   const [language, setLanguage] = useState<Language>("de");
   const [known, setKnown] = useState<Language>("en");
+  const [soundOn, setSoundOn] = useState(soundEnabled);
   // undefined while checking the session, null when nobody is signed in.
   const [user, setUser] = useState<User | null | undefined>(undefined);
+
+  useEffect(() => {
+    return onSoundChange(() => setSoundOn(soundEnabled()));
+  }, []);
 
   useEffect(() => {
     session.onSignedOut = () => setUser(null);
@@ -106,7 +112,7 @@ export default function App() {
 
   return (
     <div className="shell">
-      <nav className="rail">
+      <nav className="rail" aria-label={t("Main navigation")}>
         <a className="brand" href="#/" aria-label={t("Sentence Cards")}>
           <span className="logo" />
           <span className="brand-name">{t("Sentences")}</span>
@@ -124,6 +130,17 @@ export default function App() {
           ))}
         </div>
       </nav>
+      <button
+        type="button"
+        className="ghost sound-global"
+        aria-label={t(soundOn ? "Turn sound off" : "Turn sound on")}
+        aria-pressed={soundOn}
+        title={t(soundOn ? "Sound on" : "Sound off")}
+        onClick={() => setSoundEnabled(!soundOn)}
+      >
+        <Icon name={soundOn ? "sound" : "mute"} />
+        <span>{t(soundOn ? "Sound on" : "Sound off")}</span>
+      </button>
       <main className="stage">
         {text ? (
           <Reader key={text[1]} textId={Number(text[1])} />
