@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Provision separate staging and production OpenPanel and OpenObserve operator dashboards with a repeatable script.
 - Record privacy-limited core-task events and request duration signals when telemetry is configured.
 - Choose a generation language pair in the reader and approve cards directly in the teacher table.
 - Preview a rewritten card beside the rewrite controls in its editor.
