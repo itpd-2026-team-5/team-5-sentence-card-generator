@@ -2,6 +2,8 @@
 
 The [OpenPanel evidence](openpanel-evidence.md) shows the staging smoke event, its exclusion filter, and the staging and production product dashboards.
 
+The [OpenObserve evidence](openobserve-dashboard-evidence.md) shows the staging and production SLI-01 dashboards and a plotted staging diagnostic failure series. QR-10 QRT-01 still needs a timed failure in the learner core task.
+
 The [OpenObserve dashboard evidence](openobserve-dashboard-evidence.md) records the staging and production SLI-01 panels, production request-log delivery, and a staging request ID absent from the production organization. QR-10 QRT-01 remains open pending a timed failed core-task check.
 
 ## Summary
