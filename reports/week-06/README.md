@@ -30,4 +30,3 @@ For TOS-03, no revised measure is proposed because event counts cannot replace t
 
 All three measures land in Week 8, and the available record supplies neither a settled outcome nor evidence that a goal is already impossible.
 No numerical analytics target is added: the [focus metric](../../docs/analytics.md#weekly-completed-study-reviews) remains an activity indicator, and this review has no verified external-user baseline from which to justify a separate success threshold.
-
