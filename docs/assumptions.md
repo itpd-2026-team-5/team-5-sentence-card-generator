@@ -5,8 +5,9 @@
 An LLM writes natural sentences in Russian, English, and German at a fixed length while keeping to the learner's known words.
 
 - **Status:** Open
-- **How to check:** In Week 5, a fluent reviewer of each language checks the 30 sentences per language from the [real-model check](../reports/week-04/llm-cost-and-quality-check.md) as [`TOS-02`](threshold-of-success.md#tos-02) describes, the Russian and English ones by reviewers the team knows and the German ones by an outside reviewer; the unknown words are counted again once the known-word list keeps to the deck's language.
+- **How to check:** In Week 7, carried from Week 6, a fluent reviewer of each language checks the 30 sentences per language from the [real-model check](../reports/week-04/llm-cost-and-quality-check.md) as [`TOS-02`](threshold-of-success.md#tos-02) describes, the Russian and English ones by reviewers the team knows and the German ones by an outside reviewer; the unknown words are counted again once the known-word list keeps to the deck's language.
   The first real run kept every sentence within the length bounds, and the German sentences had 0.8 unknown words on average, but the Russian and English ones had about 6, because the list mixed the learner's languages.
+  The [previous-action review](../reports/week-06/meeting-report.md#previous-action-points) found no new controlled real-provider language-quality sample or reviewer verdict. ASM-01 remains Open; the carried action assigns KaramKhaddour to supply the missing checks by 2026-11-13, Week 7.
 
 ## ASM-02
 
@@ -21,7 +22,8 @@ The token cost per card is low enough for the course budget and for a learner wh
 A learner's level can be determined well enough, by asking them or by a placement test.
 
 - **Status:** Open
-- **How to check:** Open question from the kickoff; compare both approaches with two learners in Week 3.
+- **How to check:** Open question from the kickoff; compare both approaches with two learners in Week 7, carried from Week 6.
+  Placement tests were described as guidance, but no learner comparison settled level reliability. ASM-03 remains Open; Byakko-san carries the comparison to 2026-11-13, Week 7, in the [previous-action review](../reports/week-06/meeting-report.md#previous-action-points).
 
 ## ASM-04
 

@@ -32,3 +32,22 @@ For TOS-03, no revised measure is proposed because event counts cannot replace t
 
 All three measures land in Week 8, and the available record supplies neither a settled outcome nor evidence that a goal is already impossible.
 No numerical analytics target is added: the [focus metric](../../docs/analytics.md#weekly-completed-study-reviews) remains an activity indicator, and this review has no verified external-user baseline from which to justify a separate success threshold.
+
+## Week 5 follow-up
+
+The Part 11 review accounts for all 16 Week 5 actions due in Week 6 and all 13 previous open questions in the [previous-action outcomes](meeting-report.md#previous-action-points) and [previous-question outcomes](meeting-report.md#previous-open-questions).
+Each incomplete action names its missing evidence and the next step, owner, and Week 7 planning deadline; each unresolved question remains in [Open questions](meeting-report.md#open-questions).
+The follow-up incorporates repository evidence available after the meeting while preserving the Week 5 record and the meeting's actual decisions.
+
+The [Product checks run](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/42501364765) passes on main at `3cde59f27dd68f2e7839c0b6fa918c4dca46dcf2`.
+Those fake-provider and mocked-request checks support the implementation review; deployed/runtime test statuses remain in the [quality requirement testing plan](../../docs/project-plan.md#quality-requirement-testing-plan).
+The [driver-to-container map](architecture-review.md#driver-to-container-review-map) is prepared for Customer review, and the [follow-up preparation](follow-up-tasks.md#implementation-evidence-used-to-scope-follow-up-tasks) now distinguishes existing implementation from remaining checks.
+[ASM-01 and ASM-03](../../docs/assumptions.md) retain their Open status with explicit Week 6 follow-ups.
+The [pronunciation comparison](pronunciation-options.md) covers the three TTS approaches and proposes playback/failure checks; no listening or deployment result is claimed.
+
+## Deviations
+
+Several Week 5 actions due before the Week 6 meeting remain only partly verified, and the transcript does not answer every previous open question.
+The team confirmed that no additional external validation or Customer answers are available beyond the transcripts.
+The missing checks and Customer responses are carried to the existing Week 7 owner/deadline assignments; the report does not treat partial demonstrations, code inspection, or passing CI as completion of those obligations.
+The [publication record](follow-up-tasks.md#task-and-comment-publication-record) links the nine created tasks, story change comments, and dashboard-task updates; Task-type assignment and clearing the old milestone on reopened #31/#32 still require metadata correction.

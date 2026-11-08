@@ -6,19 +6,38 @@ GitHub issues remain the source of truth for stories and scheduled work.
 
 ## Current state and publication order
 
-- The linked functional requirements and QR-06 are updated in this working tree; product implementation and test outcomes are unchanged.
-- The new decision entries are not yet on `main`. Merge the meeting records and specification updates through the task's reviewed pull request before publishing issue links to them.
+- [PR #203](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/203) merged the meeting records, DEC-104–DEC-124, the linked functional-requirement updates, and QR-06 into `main`.
+- [PR #206](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/206) merged product changes and telemetry. [Product checks on main](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/42501364765) pass, but do not replace live-provider, deployed, phone-layout, or Customer-acceptance evidence. The issue-link publication prerequisite is now satisfied.
 - [The course issue-link rule](https://github.com/inno-itpd/itpd/blob/main/requirements/issue-tracking-requirements.md#linking-a-file-from-an-issue-or-a-pull-request) requires files in issues and comments to be linked on `main`; do not publish branch links as substitutes.
 - Before applying the drafts, reread each live issue and use the next free AC number if another member has added criteria. Preserve existing criteria, verdict comments, and edit history.
 - For each changed story, add a change comment describing the new criteria and links to the decisions. Reopen a closed story when a new related implementation task is linked; do not infer new acceptance from this meeting.
 - Create implementation issues through the Task form, one unit of work per future pull request. Leave them unscheduled until planning assigns the milestone, Responsible, Accountable, and matching assignees.
 - The task drafts below are prospective work. A passing test or completed checkbox requires actual evidence.
 
+## Implementation evidence used to scope follow-up tasks
+
+This 2026-11-08 follow-up separates merged implementation from remaining verification.
+The drafts below are retained as acceptance-check preparation; do not create duplicate implementation issues for behavior already delivered in PR #206.
+The published tasks below were scoped as bounded verification or remaining-change work against the live stories and existing implementation.
+No draft checkbox or story criterion is marked complete by this audit.
+
+| Draft | Existing repository evidence | Remaining evidence or decision |
+| --- | --- | --- |
+| Text language and reader controls | [TextForm](../../frontend/src/components/TextForm.tsx), [Reader](../../frontend/src/pages/Reader.tsx), and [language tests](../../backend/tests/test_text_languages.py). | Check the complete input/count/grouping/destination flow; exact panel placement and direct-removal shortcuts remain open. |
+| Teacher summaries and source context | [Teaching](../../frontend/src/pages/Teaching.tsx) and [CardEditor](../../frontend/src/components/CardEditor.tsx). | Run long-content phone-width checks and verify field ordering and control reachability. |
+| Teacher lexical corrections | [Account tests](../../backend/tests/test_accounts.py) cover corrected card identity, source context, memberships, and the continued review counter. | Verify unchanged due dates and history contents, explicit-save browser behavior, and the actual shared-account workflow; the existing test does not assert every field in the proposed criterion. |
+| Regeneration and archive guidance | [CardEditor](../../frontend/src/components/CardEditor.tsx) contains regeneration help and result display; [account tests](../../backend/tests/test_accounts.py) refuse teacher instruction replacement and permanent deletion. | Verify the browser preview/save behavior and guidance against every FR-011 criterion; retain the unresolved instruction-permission question. |
+| Teacher list states | [Teaching](../../frontend/src/pages/Teaching.tsx) contains state explanations and request-first filtering. | Check scrolling, fixed instructions/actions, and comprehension; retaining or removing the Open button still needs its own answer. |
+| Study labels and group order | [Today](../../frontend/src/pages/Home.tsx) uses Study one deck; [frontend tests](../../frontend/tests/client.test.mjs) cover the group-move function. | Verify persisted selection/order and unchanged card data through the complete browser/backend workflow. |
+| Deck summaries and memberships | [Decks](../../frontend/src/pages/Decks.tsx), [DeckPage](../../frontend/src/pages/DeckPage.tsx), and [membership tests](../../backend/tests/test_decks.py). | Verify visible language pairs, editing guidance, preserved history, and the final-membership behavior in the UI. |
+| Daily study limits | [Decks](../../frontend/src/pages/Decks.tsx) exposes both limits; [study tests](../../backend/tests/test_study.py) cover the daily new-card cap. | Verify separate deck persistence, due-review admission, same-day relearning, and preservation of the existing schedule. |
+| External-user checks | [QR-06](../../docs/quality-requirements/qr/QR-06.md) supplies phone cases and [DEC-124](../../docs/decisions.md#dec-124) records the Customer's usability direction. | Prepare and conduct the outside-user work with observations and assistance; no participant outcome exists in the reviewed evidence. |
+
 ## Decision mapping
 
 | Decisions | Specification | Related stories | Follow-up |
 | --- | --- | --- | --- |
-| DEC-104 | `FR-014` (planned identifier; specification pending) | [US-17 #191](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) | Extend existing dashboard tasks #196 and #197 after FR-014 and ADR-007 are available. |
+| DEC-104 | [FR-014](../../docs/functional-requirements/fr/FR-014.md), [ADR-007](../../docs/architecture/adr/ADR-007.md) | [US-17 #191](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) | Extend existing dashboard tasks #196 and #197 with the label/window checks; both specifications are on main. |
 | DEC-105 | Feasibility investigation; no cost-reporting behavior is committed. | An implementation story is needed only if the team decides to build the cost view. | Investigate provider data; retain the conditional scope. |
 | DEC-106–DEC-114 | [FR-011](../../docs/functional-requirements/fr/FR-011.md); [QR-06](../../docs/quality-requirements/qr/QR-06.md) | [US-12 #34](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/34) | Teacher summary/editor, lexical-edit safety, regeneration flow, and review-list tasks below. |
 | DEC-115 | [FR-001](../../docs/functional-requirements/fr/FR-001.md) | [US-01 #30](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/30) | Reader/input task below; reopen the closed story when its new task is linked. |
@@ -28,7 +47,52 @@ GitHub issues remain the source of truth for stories and scheduled work.
 | DEC-121 | [FR-009](../../docs/functional-requirements/fr/FR-009.md) | [US-10 #36](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/36) | Learner-controlled daily-limit task below. |
 | DEC-124 | [QR-06](../../docs/quality-requirements/qr/QR-06.md), plus the reader, study, and teacher workflow requirements. | [US-15 #142](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/142) and the stories exercised by each usability task. | External-user usability preparation below; no passing test or story acceptance is claimed. |
 
-## Story changes to apply after the merge
+## Story body publication record
+
+On 2026-11-08, the eight story bodies below were updated on GitHub and read back for verification.
+The update added 18 unchecked criteria and the prepared decision traces, preserving every existing criterion and checkbox.
+FR-014 and ADR-007 now have main-file links in US-17's Specified by section.
+The bodies were initially updated without changing issue states; the subsequent publication below links the new tasks, reopens US-01–US-03, and records the change comments.
+The detailed deltas below retain the preparation text as the record of what was applied; GitHub remains the source of truth.
+
+| Story | Criteria added | Decision traces added |
+| --- | --- | --- |
+| [US-01 #30](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/30) | AC-04 | DEC-115 |
+| [US-02 #31](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/31) | AC-04, AC-05 | DEC-116, DEC-117 |
+| [US-03 #32](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/32) | AC-05 | DEC-117 |
+| [US-12 #34](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/34) | AC-04, AC-05, AC-06, AC-07, AC-08 | DEC-106, DEC-107, DEC-108, DEC-109, DEC-110, DEC-111, DEC-112, DEC-113, DEC-114 |
+| [US-04 #37](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/37) | AC-04, AC-05, AC-06 | DEC-120, DEC-122, DEC-123 |
+| [US-09 #42](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/42) | AC-03, AC-04, AC-05 | DEC-118, DEC-119 |
+| [US-10 #36](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/36) | AC-04, AC-05 | DEC-121 |
+| [US-17 #191](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) | AC-03 | DEC-104 |
+
+## Task and comment publication record
+
+On 2026-11-08, the nine follow-up issues below were created and linked in both directions with their stories.
+The work is scoped to remaining verification or confirmed corrections of the merged implementation; no repeated feature implementation or completed check is claimed.
+The new tasks have no sprint milestone or assignees pending planning.
+US-01 #30, US-02 #31, and US-03 #32 were reopened when the new related task was linked; their earlier verdicts and checked criteria are retained.
+
+| Task | Scope | Stories |
+| --- | --- | --- |
+| [#213](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/213) | Verify text language and reader selection controls | [#30](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/30), [#31](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/31), [#32](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/32) |
+| [#214](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/214) | Verify teacher summaries and source context on phones | [#34](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/34) |
+| [#215](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/215) | Verify card identity and progress after teacher word corrections | [#34](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/34) |
+| [#216](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/216) | Verify teacher regeneration saving and archive guidance | [#34](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/34) |
+| [#217](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/217) | Verify teacher review states and fixed list controls | [#34](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/34) |
+| [#218](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/218) | Verify study labels and persisted group deck ordering | [#42](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/42) |
+| [#219](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/219) | Verify deck summaries and card membership preservation | [#37](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/37) |
+| [#220](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/220) | Verify per-deck daily study limits and schedule preservation | [#36](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/36) |
+| [#221](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/221) | Prepare external-user checks for reader, study, and teacher flows | [#31](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/31), [#42](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/42), [#34](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/34), [#142](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/142) |
+
+Change comments: [#30](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/30#issuecomment-6725541686), [#31](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/31#issuecomment-6725571083), [#32](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/32#issuecomment-6725571889), [#34](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/34#issuecomment-6725572291), [#36](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/36#issuecomment-6725572790), [#37](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/37#issuecomment-6725573244), [#42](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/42#issuecomment-6725573768), [#191](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191#issuecomment-6725574171).
+Existing dashboard tasks [#196](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/196) and [#197](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/197) now carry AC-04 for actual route/outcome values, the SLI/window, and the documented query, with main-file FR-014 and ADR-007 links.
+
+The available connector did not expose issue-type assignment or clearing an existing milestone, and local noninteractive GitHub authorization was unavailable.
+The new issues currently carry the existing Task form's task label; applying the Task issue type to #213–#221 remains a metadata follow-up.
+The old milestone on reopened #31 and #32 must also be cleared before these stories are treated as unscheduled refinement; no new sprint assignment or velocity is inferred here.
+
+## Applied story deltas
 
 ### US-01: issue #30
 
@@ -178,13 +242,13 @@ Append these unchecked acceptance criteria without renumbering the existing ones
 
 Change comment to post with the body update:
 
-> Added AC-03 and decision trace links following the Week 6 Customer review. Make the existing operational quality charts identifiable; coordinate the FR-014 and ADR-007 specifications with their owners before publication. The cited functional requirements define the detailed checks. Existing criteria and previous acceptance records are preserved; this update is not a new acceptance verdict. Decisions: [DEC-104](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/blob/main/docs/decisions.md#dec-104).
+> Added AC-03 and decision trace links following the Week 6 Customer review. Make the existing operational quality charts identifiable; FR-014 and ADR-007 are available on main for the specification links. The cited functional requirements define the detailed checks. Existing criteria and previous acceptance records are preserved; this update is not a new acceptance verdict. Decisions: [DEC-104](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/blob/main/docs/decisions.md#dec-104).
 
-## Implementation task drafts
+## Published task acceptance snapshots
 
-Each Description cites the [Week 6 action points](meeting-report.md#action-points) it carries forward and the listed decisions.
-The Story references use the proposed criteria above; apply the story changes before opening these task issues.
-The Requirements links below use full URLs on `main` for the issue form; publish them after the specification changes are merged.
+The snapshots below record the acceptance checks used to publish the nine issues above; GitHub owns their current scope and state.
+The story changes and main-file publication prerequisite are satisfied.
+The issue titles and descriptions were narrowed to remaining verification or correction after reconciling the merged implementation.
 
 ### 1. Clarify text language and reader selection controls
 
@@ -392,7 +456,7 @@ Carry forward the corresponding [Week 6 action point](meeting-report.md#action-p
 
 ## Existing telemetry tasks and conditional investigation
 
-- [DEC-104](../../docs/decisions.md#dec-104) belongs to [US-17 #191](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) and the existing [staging dashboard task #196](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/196) and [production dashboard task #197](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/197). Append the next free task criterion to each: the P95 series legend identifies actual route and outcome values, the chart states its SLI and window, and its query matches the observability plan. Keep each task's existing environment isolation checks. Coordinate the planned FR-014 and ADR-007 with their owners and publish their links only after those files exist on `main`.
+- [DEC-104](../../docs/decisions.md#dec-104) belongs to [US-17 #191](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) and the existing [staging dashboard task #196](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/196) and [production dashboard task #197](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/197). AC-04 was added to each task: the P95 series legend identifies actual route and outcome values, the chart states its SLI and window, and its query matches the observability plan. Keep each task's existing environment isolation checks. FR-014 and ADR-007 now exist on `main`; use their main-file links and retain the existing tasks' scope and environment checks.
 - The analytics task [#200](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/200) and [US-16 #190](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/190) already cover the metric plan and event capability. The meeting did not select a focus metric, so no new metric definition or Customer threshold approval is inserted here.
 - [DEC-105](../../docs/decisions.md#dec-105) authorizes checking whether provider responses expose usable usage and cost information. Prepare a bounded investigation that lists available fields, limits, and whether cross-provider aggregation is justified; do not commit to a cost feature, a provider change, or average-price billing. If implementation is chosen, first express the operator's need as a story and supply its specification.
 - Keep exact selected-word panel placement, direct-removal shortcuts, the separate Open button, and any change to learner-authored generation-instruction permissions as open questions from the [meeting report](meeting-report.md#open-questions).
