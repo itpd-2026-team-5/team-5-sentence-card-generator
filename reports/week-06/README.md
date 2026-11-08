@@ -6,6 +6,8 @@ The [OpenObserve evidence](openobserve-dashboard-evidence.md) shows the staging 
 
 The [OpenObserve dashboard evidence](openobserve-dashboard-evidence.md) records the staging and production SLI-01 panels, production request-log delivery, and a staging request ID absent from the production organization. QR-10 QRT-01 remains open pending a timed failed core-task check.
 
+The [AI usage report](ai-usage.md) records the tools used for this week's work and how the output was reviewed.
+
 ## Summary
 
 This update covers the Part 10 threshold review for [SPRINT-06](../../docs/project-plan.md#sprint-06), prepared on 2026-11-08 from the [analytics plan](../../docs/analytics.md), the [observability plan](../../docs/observability.md), and the [Customer review record](meeting-report.md#decisions).
