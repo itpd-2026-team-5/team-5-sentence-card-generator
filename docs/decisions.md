@@ -1036,3 +1036,213 @@ Carry trials of alternative LLM API providers into the next sprint instead of re
 - **Made by:** Customer
 - **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
 - **Why:** At 01:01:13–01:01:29 and 01:03:25–01:03:31, the Customer allowed other providers to be tried the following week after accepting the current deployed version for submission; a free-provider aggregator and a Chinese provider were possibilities, and neither was selected.
+
+## DEC-104
+
+Show actual route and outcome values in the P95 latency chart labels.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Customer
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 00:06:49–00:08:01, the Customer could not identify which route or outcome the series represented because the chart showed placeholders; the displayed values must identify the requests being measured.
+
+## DEC-105
+
+Investigate provider-reported LLM usage and expense data for an operator view spanning provider changes.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Team, not contested
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 00:08:11–00:14:32, the Customer recognized the value of aggregating costs when an operator switches providers, and KaramKhaddour agreed to check whether that information can be obtained; availability across providers and implementation scope remain open.
+
+## DEC-106
+
+Show sentence translations in mobile card summaries and place teacher review controls so long words and translations do not overlap them.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Customer
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 00:16:17–00:18:20 and 01:04:34–01:05:19, the translation was missing from the mobile summary, and moving Approve and Edit toward the upper-right corner would free space for it; long content must wrap around the controls. This extends the direct-review direction recorded in [DEC-095](#dec-095).
+
+## DEC-107
+
+Keep the generated sentence and its translation before the word-editing fields in the teacher editor.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Customer
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 00:19:31–00:22:06, after considering word-first editing, the Customer explicitly retained the current sentence-first direction because fixing a sentence is the teacher's usual task and the word is already visible at the top.
+
+## DEC-108
+
+Show the original source sentence as read-only context above the generated sentence and highlight the selected word in it.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Customer
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 00:22:50–00:24:29, the teacher needs to compare the generated use with the word's original meaning without searching a lower panel or changing the source evidence.
+
+## DEC-109
+
+Name the card-rewriting section as regeneration and explain how its prompt fields affect the regenerated card.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Customer
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 00:25:11–00:26:33, the New sentence heading did not explain that both language versions are regenerated or how What was wrong and the existing instructions contribute to the prompt.
+
+## DEC-110
+
+Place the latest regenerated result below the regeneration button.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Customer
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 00:26:44–00:27:21, the Customer refined [DEC-099](#dec-099): the natural sequence is entering the prompt, selecting Regenerate, and inspecting the result immediately below it.
+
+## DEC-111
+
+Remove permanent-deletion guidance from the teacher editor while retaining the explanation of archiving.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Customer
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 00:27:30–00:27:55, the teacher view no longer has a Delete button, so its explanation was misleading; the Archive explanation was useful. The archive-versus-delete permissions in [DEC-098](#dec-098) remain in force.
+
+## DEC-112
+
+Allow teachers to correct a shared card's word and meaning, with checks that editing preserves card identity and learning progress.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Customer
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 00:28:28–00:32:24, a missing German article demonstrated why a teacher must be able to correct lexical content, and the Customer accepted trusting the teacher while asking about disappearing cards, sorting, and progress. KaramKhaddour said those cases still need review; this discussion does not establish passing checks or reverse the separate protection of learner-authored generation instructions in [DEC-097](#dec-097).
+
+## DEC-113
+
+Explain Checked, To check, and Asked to check in the teacher list's legend or introductory instruction.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Customer
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 00:32:47–00:36:33, the Customer confirmed the distinction between unchecked cards and explicit learner requests but still requested a short explanation of the labels and request-first ordering.
+
+## DEC-114
+
+Keep useful teacher-list instructions and actions fixed while the card list scrolls.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Customer
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 00:36:47–00:39:39, the Customer accepted the loss of some visible card space so instructions remain discoverable after scrolling; no final removal of the separate Open button was decided.
+
+## DEC-115
+
+Trust the language selected by the user when adding a text rather than require automatic language validation.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Customer
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 00:42:15–00:43:40, the Customer confirmed trusting the user after the team noted that language identification is difficult and a text may contain words from several languages; this retains the selected-language direction.
+
+## DEC-116
+
+Clarify that the Word tray count represents selected words.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Customer
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 00:44:23–00:44:56, the Customer could not infer the count's meaning and requested clearer wording; Words selected was an example rather than a finalized label.
+
+## DEC-117
+
+Separate selected-word controls from language-pair and destination-deck generation settings.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Customer
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 00:53:29–00:54:39, the Customer identified To learn and Ignore as different information from I'm learning, Translate into, and Generate into; the precise placement and usefulness of the selected-word list remain unresolved.
+
+## DEC-118
+
+Use Study one deck for a single selected deck instead of inserting its title into the study button.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Customer
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 00:56:26–00:57:32, long deck titles could make the action span several lines; the Customer proposed a count-based label consistent with the multiple-deck case, and KaramKhaddour agreed.
+
+## DEC-119
+
+Support dragging several selected decks together to reorder them on Today.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Customer
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 01:00:06–01:02:23, the Customer preferred consistency with the Decks interface and accepted reusing selection for studying and group reordering. This concerns deck order, not the individual-card reordering deferred in [DEC-094](#dec-094).
+
+## DEC-120
+
+Show both the learning and translation languages in each deck summary.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Customer
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 01:02:55–01:03:10, the Customer identified the second language as missing: a German–English deck is not described fully by German alone.
+
+## DEC-121
+
+Let the learner set per-deck daily new-card and review limits.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Customer
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 01:03:35–01:04:19, the presenter suggested operator-set limits, but the Customer directed that the user choose them because exam preparation and self-paced study require different daily loads.
+
+## DEC-122
+
+Explain that clicking a card opens its editor where no separate Edit button is shown.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Customer
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 01:05:54–01:06:27, the Customer found opening the editor useful but requested an instruction so users do not miss the clickable-card behavior.
+
+## DEC-123
+
+Keep every card in at least one deck while allowing it to belong to additional decks.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Customer
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 01:06:53–01:07:41, the Customer confirmed the current direction after checking the final-deck constraint and adding other decks; this is confirmation of the demonstrated membership behavior, not a new deletion rule.
+
+## DEC-124
+
+Check the revised interface with users outside the team during Week 7 usability work.
+
+- **Status:** Active
+- **Date:** 2026-11-08
+- **Made by:** Customer
+- **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
+- **Why:** At 01:08:01–01:08:40, the Customer recognized that many requested features were present but parts of the interface were overwhelming, and confirmed external usability work as the next way to identify unintuitive steps.
