@@ -141,3 +141,29 @@ A service level indicator: a defined, queryable measure of runtime quality, such
 ### Service level indicator
 
 See [SLI](#sli).
+
+## Product Analytics
+
+### Focus Metric
+
+The one number from which the product's value is read.
+
+**Defined by:** [the analytics plan](analytics.md#the-metric-tree).
+
+### Input Metric
+
+A metric for a product step the team can change and use to explain movement in the focus metric.
+
+**Defined by:** [the analytics plan](analytics.md#the-metric-tree).
+
+### Counter-Metric
+
+A metric that guards the focus metric against increasing it at the user's expense.
+
+**Defined by:** [the analytics plan](analytics.md#the-metric-tree).
+
+### Metric Tree
+
+A nested view of the focus metric, its counter-metric, and the input metrics that explain it.
+
+**Defined by:** [the analytics plan](analytics.md#the-metric-tree).
