@@ -10,8 +10,39 @@ The [AI usage report](ai-usage.md) records the tools used for this week's work a
 
 ## Summary
 
-This update covers the Part 10 threshold review for [SPRINT-06](../../docs/project-plan.md#sprint-06), prepared on 2026-11-08 from the [analytics plan](../../docs/analytics.md), the [observability plan](../../docs/observability.md), and the [Customer review record](meeting-report.md#decisions).
-All three success goals remain Open with their existing Week 8 measures; this review recommends no change to the success bar.
+The [SPRINT-06 plan](../../docs/project-plan.md#sprint-06) delivered analytics and observability definitions, instrumented events and request signals, and staging and production dashboards. The [analytics plan](../../docs/analytics.md#weekly-completed-study-reviews) defines the focus metric as the count of saved study ratings over seven days, excluding `source=smoke`; the [observability plan](../../docs/observability.md#sli-01) defines the five-minute request-duration P95. The focus-metric query produces the **Weekly completed study reviews** chart: the [staging dashboard](images/openpanel-staging-overview.png) plots activity, while the [production dashboard](images/openpanel-production-overview.png) has no matching reviews in the captured range. The screenshots do not establish a verified numeric total or completion by outside learners; those need real study ratings and a queryable count for the chosen period.
+
+The [testing plan](../../docs/project-plan.md#quality-requirement-testing-plan) records QR-10 as passing on 2026-11-09, after the sprint deadline, and gives the reasons QR-01, QR-03, and QR-06 moved to SPRINT-07. The [same-commit redeployment](part13-deployment-evidence.md) restored staging and production health, but production card generation still returned HTTP 502 because the Claude API was unreachable. All three success goals remain Open with their existing Week 8 measures. `REL-06` and its `v0.6.0` tag have not been cut; the Customer's written acceptance and release decision remain pending.
+
+## Dashboard evidence
+
+These four sanitized screenshots show separate staging and production scopes. The OpenPanel views use the [weekly completed study reviews metric](../../docs/analytics.md#weekly-completed-study-reviews); the OpenObserve views show [SLI-01, backend request duration P95 over five minutes](../../docs/observability.md#sli-01).
+
+### Product analytics, staging
+
+Weekly completed study reviews are plotted over seven days. The [smoke-event and exclusion evidence](openpanel-evidence.md) is recorded separately.
+
+![OpenPanel staging dashboard with weekly completed study reviews](images/openpanel-staging-overview.png)
+
+### Product analytics, production
+
+The same weekly review report has no matching data in the captured range.
+
+![OpenPanel production dashboard with no matching weekly reviews](images/openpanel-production-overview.png)
+
+### System observability, staging
+
+The SLI-01 request-duration panel plots staging series. The [separate core-task failure check](qr10-evidence.md) supplies the timed failure result.
+
+![OpenObserve staging dashboard with SLI-01 request-duration series](images/observability-staging.png)
+
+### System observability, production
+
+The SLI-01 panels include a production `/api/health · ok` series; [the matching request log](images/observability-production-health-log.png) confirms delivery to production.
+
+![OpenObserve production dashboard with SLI-01 request-duration series](images/observability-production.png)
+
+The late [QR-10 staging result](qr10-evidence.md#timed-result) found request `9f05b93a-6dac-40f3-8b1f-77e97b0e9246` on `/api/texts/{text_id}/generate`, labelled `server_error` with HTTP 502. Its matching log appeared in 0.861 seconds and its numeric SLI-01 P95 appeared in 9.175 seconds. This verifies failure visibility for that run; card generation itself failed.
 
 ## Threshold review
 
@@ -38,6 +69,59 @@ For TOS-03, no revised measure is proposed because event counts cannot replace t
 
 All three measures land in Week 8, and the available record supplies neither a settled outcome nor evidence that a goal is already impossible.
 No numerical analytics target is added: the [focus metric](../../docs/analytics.md#weekly-completed-study-reviews) remains an activity indicator, and this review has no verified external-user baseline from which to justify a separate success threshold.
+The Customer's decision on keeping these measures is still pending from the written follow-up; no changed threshold or acceptance verdict is inferred.
+
+## Customer meeting outcome
+
+The [Week 6 meeting report](meeting-report.md#decisions) records the Customer's feedback on mobile and desktop usability and deployed provider access, including [DEC-100](../../docs/decisions.md#dec-100) and [DEC-101](../../docs/decisions.md#dec-101). It does not record an accept or reject verdict against the criteria of the stories presented or carried into the review:
+
+| Story | Recorded outcome |
+| --- | --- |
+| [US-16](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/190) | No criterion-by-criterion acceptance verdict. |
+| [US-17](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) | No criterion-by-criterion acceptance verdict; the later QR-10 pass does not supply one. |
+| [US-10](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/36) | Remains open; no criterion-by-criterion acceptance verdict. |
+| [US-08](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/41) | Remains open; no criterion-by-criterion acceptance verdict. |
+| [US-14](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/141) | Remains open; no criterion-by-criterion acceptance verdict. |
+
+The supplemental written dashboard, test, threshold, and release questions remain unanswered. The [US-01 through US-03 MUP candidate](../week-02/README.md#minimum-usable-product-candidate) also lacks the exact confirmation carried forward in the [open questions](meeting-report.md#open-questions).
+
+## Coverage
+
+| Deliverable | Artifact and current result |
+| --- | --- |
+| Sprint plan and new stories | [docs/project-plan.md#sprint-06](../../docs/project-plan.md#sprint-06), [US-16](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/190), and [US-17](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) in the [sprint milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/4). |
+| Analytics plan | [docs/analytics.md#the-value-and-the-metrics](../../docs/analytics.md#the-value-and-the-metrics). |
+| Events and instrumentation | [docs/analytics.md#the-events](../../docs/analytics.md#the-events), [backend/app/analytics.py](../../backend/app/analytics.py), and [reports/week-06/openpanel-evidence.md](openpanel-evidence.md). |
+| Analytics dashboards | [reports/week-06/images/openpanel-staging-overview.png](images/openpanel-staging-overview.png) and [reports/week-06/images/openpanel-production-overview.png](images/openpanel-production-overview.png), showing weekly completed study reviews; production had no matching data. |
+| Observability plan and `SLI`s | [docs/observability.md#the-slis](../../docs/observability.md#the-slis). |
+| Observability dashboards | [reports/week-06/images/observability-staging.png](images/observability-staging.png) and [reports/week-06/images/observability-production.png](images/observability-production.png), showing SLI-01 P95 panels. |
+| Feature documentation | [docs/features.md](../../docs/features.md). |
+| Functional requirements | [docs/functional-requirements/README.md](../../docs/functional-requirements/README.md), [docs/functional-requirements/fr/FR-013.md](../../docs/functional-requirements/fr/FR-013.md), and [docs/functional-requirements/fr/FR-014.md](../../docs/functional-requirements/fr/FR-014.md). |
+| ADRs and container view | [docs/architecture/README.md#architectural-decisions](../../docs/architecture/README.md#architectural-decisions), [docs/architecture/adr/ADR-006.md](../../docs/architecture/adr/ADR-006.md), [docs/architecture/adr/ADR-007.md](../../docs/architecture/adr/ADR-007.md), and [docs/architecture/README.md#container-view](../../docs/architecture/README.md#container-view). |
+| Observability requirement | [docs/quality-requirements/qr/QR-10.md#qrt-01](../../docs/quality-requirements/qr/QR-10.md#qrt-01) and [reports/week-06/qr10-evidence.md](qr10-evidence.md). |
+| Runtime test re-run | [docs/project-plan.md#quality-requirement-testing-plan](../../docs/project-plan.md#quality-requirement-testing-plan) and [reports/week-06/part13-deployment-evidence.md](part13-deployment-evidence.md), including the initial failure and later pass. |
+| Threshold review | [reports/week-06/README.md#threshold-review](#threshold-review); Customer decision pending. |
+| Week 5 action points | [reports/week-06/meeting-report.md#previous-action-points](meeting-report.md#previous-action-points). |
+| Week 5 open questions | [reports/week-06/meeting-report.md#previous-open-questions](meeting-report.md#previous-open-questions). |
+| Meeting script | [reports/week-06/meeting-script.md](meeting-script.md). |
+| Meeting transcript | [reports/week-06/meeting-transcript.md](meeting-transcript.md); the supplemental written Customer response is pending. |
+| Customer validation | [reports/week-06/meeting-report.md](meeting-report.md); the supplemental dashboard, test, threshold, and release verdicts are pending. |
+| `REL-06` | Pending Customer release decision; no `v0.6.0` tag or released changelog section exists. [docs/project-plan.md#rel-06](../../docs/project-plan.md#rel-06) remains incomplete. |
+| Sprint retrospective | [reports/week-06/sprint-retrospective.md](sprint-retrospective.md) and [docs/project-plan.md#sprint-06](../../docs/project-plan.md#sprint-06). |
+| AI usage | [reports/week-06/ai-usage.md](ai-usage.md); additional member entries are on the [Part 16 branch](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/tree/204-Part-16-Report-On-Your-AI-Usage) awaiting merge. |
+
+## Contribution
+
+| Member | Week 6 work |
+| --- | --- |
+| Byakko-san | Planned SPRINT-06 ([#199](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/199)), wrote the analytics plan ([#201](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/201)), and documented the analytics and observability features ([#231](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/231)). |
+| Horokk1 | Prepared the Customer meeting record ([#203](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/203)), threshold review ([#209](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/209)), and Week 5 follow-up record ([#222](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/222)). |
+| KaramKhaddour | Integrated the Week 6 product and telemetry code ([#206](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/206)), provisioned dashboards ([#212](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/212)), and recorded dashboard, QR-10, and redeployment evidence ([#224](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/224), [#226](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/226), [#228](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/228), [#233](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/233), [#234](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/234), [#236](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/236)). |
+| saleemasekrea000 | Recorded the Sprint 06 retrospective and Actual Velocity ([#232](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/232)). |
+
+## Repository evidence
+
+[PR #236](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/236) merged the late deployment record and closed [task #235](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/235). The latest successful `main` runs checked at commit `2b08001ef73f4e2df26c8cf40c378c79dae42cee` are [link check](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/42612049409), [Markdown check](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/42612049518), [`actionlint`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/42612049408), and [Product checks](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/42612049430). These links record the checked commit; the final submission still needs checks on its final `main` commit.
 
 ## Week 5 follow-up
 
@@ -61,3 +145,7 @@ Several Week 5 actions due before the Week 6 meeting remain only partly verified
 The team confirmed that no additional external validation or Customer answers are available beyond the transcripts.
 The missing checks and Customer responses are carried to the existing Week 7 owner/deadline assignments; the report does not treat partial demonstrations, code inspection, or passing CI as completion of those obligations.
 The [publication record](follow-up-tasks.md#task-and-comment-publication-record) links the nine created tasks, story change comments, and dashboard-task updates; Task-type assignment and clearing the old milestone on reopened #31/#32 still require metadata correction.
+
+## Privacy
+
+No private-only material was committed to this repository.
