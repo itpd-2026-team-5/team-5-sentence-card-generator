@@ -87,7 +87,14 @@ Individual-card reordering remains deferred under [DEC-094](decisions.md#dec-094
 
 #### REL-06
 
-The Customer approved releasing the deployed version with the production Claude API connection limitation disclosed and its fix carried to SPRINT-07, per [DEC-126](decisions.md#dec-126). The release record remains open until the final production commit is tagged and verified.
+The Customer approved releasing the deployed version with the production Claude API connection limitation disclosed and its fix carried to SPRINT-07, per [DEC-126](decisions.md#dec-126). The tag points to the [verified production commit](../reports/week-06/part13-deployment-evidence.md) `a658ea49dc767cd7579e38949369a4880ecaa51d` on `main`; the release note states the limitation.
+
+- **Released:** [v0.6.0](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.6.0) on 2026-11-09.
+- **Checked QRs:**
+  - [QR-02](quality-requirements/qr/QR-02.md): CI duration check, recorded in SPRINT-06.
+  - [QR-10](quality-requirements/qr/QR-10.md): staging failure diagnosability check passed on 2026-11-09, after the SPRINT-06 deadline.
+
+  Each test's result and date are in the [Quality Requirement Testing Plan](#quality-requirement-testing-plan). QR-01, QR-03, and QR-06 moved to SPRINT-07 with reasons recorded there.
 
 ### SPRINT-07
 
