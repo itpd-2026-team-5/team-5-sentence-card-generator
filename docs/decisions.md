@@ -1246,3 +1246,23 @@ Check the revised interface with users outside the team during Week 7 usability 
 - **Made by:** Customer
 - **Source:** [the Week 6 validation meeting](../reports/week-06/meeting-report.md#decisions), with [transcript evidence](../reports/week-06/meeting-transcript.md).
 - **Why:** At 01:08:01–01:08:40, the Customer recognized that many requested features were present but parts of the interface were overwhelming, and confirmed external usability work as the next way to identify unintuitive steps.
+
+## DEC-125
+
+Validate the learner workflow with four learners outside the team, assigning one separate account to each desktop/Firefox, desktop/Chrome, mobile/Firefox, and mobile/Chrome combination.
+
+- **Status:** Active
+- **Date:** 2026-11-09
+- **Made by:** Customer
+- **Source:** [the supplemental written review](../reports/week-06/written-review-transcript.md#success-goals).
+- **Why:** In response to the proposed three-learner success condition, the Customer requested four learners and coverage of all four platform/browser combinations. The other TOS-01 workflow and return requirements remain in the measure.
+
+## DEC-126
+
+Accept REL-06 with the production Claude API connection limitation stated and the provider connection fix carried to SPRINT-07.
+
+- **Status:** Active
+- **Date:** 2026-11-09
+- **Made by:** Customer
+- **Source:** [the supplemental written review](../reports/week-06/written-review-transcript.md#release-decision).
+- **Why:** The Customer answered yes to releasing the deployed version with production generation returning HTTP 502 while existing cards open. This approves release scope; it does not establish that the release tag, changelog, or final production verification has been completed.

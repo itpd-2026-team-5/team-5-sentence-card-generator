@@ -4,13 +4,16 @@ The project counts as successful only when all three goals are achieved.
 
 ## TOS-01
 
-By the end of Week 8, at least three learners outside the team independently turn their own texts into cards and study their chosen decks in the application.
+By the end of Week 8, four learners outside the team independently turn their own texts into cards and study their chosen decks in the application across desktop and mobile, using Firefox and Chrome.
 
 - **Status:** Open
-- **Measure:** By the end of Week 8, each of three learners outside the team imports a text they chose, marks at least 10 words, generates a card for each marked word using a real LLM, and completes a study session using only the deck or decks they selected, without step-by-step assistance from the team.
+- **Measure:** By the end of Week 8, each of four learners outside the team, using a separate account, imports a text they chose, marks at least 10 words, generates a card for each marked word using a real LLM, and completes a study session using only the deck or decks they selected, without step-by-step assistance from the team.
   Each learner returns on a later day and completes a review scheduled by the application's spaced-repetition algorithm, with their previous progress preserved.
-  An anonymized validation report records the application version, selected decks, task completion, assistance, failures, and review results for all three learners.
-  The goal passes only if all three learners complete both sessions under these conditions.
+  Assign at least one learner to each desktop/Firefox, desktop/Chrome, mobile/Firefox, and mobile/Chrome combination.
+  An anonymized validation report records the application version, assigned platform and browser, selected decks, task completion, assistance, failures, and review results for all four learners.
+  The goal passes only if all four learners complete both sessions under these conditions.
+- **Changed:**
+  - Increased the validation cohort from three to four learners, with separate accounts and one learner for each desktop/mobile and Firefox/Chrome combination, per [DEC-125](decisions.md#dec-125).
 
 ## TOS-02
 
