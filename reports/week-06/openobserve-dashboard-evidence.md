@@ -15,3 +15,19 @@ Production initially had no `http_requests` stream. After the production backend
 The [production query for a staging-only request ID](images/qrt-01-production-no-match.png) returned zero rows over the surrounding two hours. That check supports separation for that request ID. No deliberate failure request was sent to production.
 
 These screenshots establish that both organizations can query their own request data and display an SLI-01 series, including a numeric staging diagnostic failure series. These 2026-11-08 screenshots alone do not complete [QR-10 QRT-01](../../docs/quality-requirements/qr/QR-10.md#qrt-01). The separate [late Week 6 core-task check](qr10-evidence.md) supplies the failed request, matching log, numeric `server_error` P95, and measured arrival times on 2026-11-09. The running container image still needs to be independently tied to the recorded application commit.
+
+## Screenshots
+
+![Staging operator dashboard with SLI-01 request-duration series](images/observability-staging.png)
+
+![Staging SLI-01 hover values for core-task routes](images/observability-staging-sli-tooltip.png)
+
+![Staging generation request with server_error outcome](images/observability-staging-generation-error.png)
+
+![Staging diagnostic failure series and server-error count](images/observability-staging-failure-series.png)
+
+![Production operator dashboard with health request series](images/observability-production.png)
+
+![Production request log with health request ID](images/observability-production-health-log.png)
+
+![Production search with no staging-only request ID match](images/qrt-01-production-no-match.png)

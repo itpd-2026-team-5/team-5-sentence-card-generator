@@ -87,6 +87,8 @@ Individual-card reordering remains deferred under [DEC-094](decisions.md#dec-094
 
 #### REL-06
 
+The Customer approved releasing the deployed version with the production Claude API connection limitation disclosed and its fix carried to SPRINT-07, per [DEC-126](decisions.md#dec-126). The release record remains open until the final production commit is tagged and verified.
+
 ### SPRINT-07
 
 Provisional: the product and study tasks are ready for structured usability testing with external learners.
