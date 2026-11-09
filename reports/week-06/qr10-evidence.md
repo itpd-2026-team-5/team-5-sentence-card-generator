@@ -1,6 +1,6 @@
 # QR-10 deployed staging check
 
-On 2026-11-09, the team ran the core-task failure check against the staging deployment on the university VM. This is Week 7 follow-up: the earlier 2026-11-08 run found its log within 1.086 seconds but did not observe a numeric P95 within one minute, so it was not a Week 6 pass. No test request was sent to production.
+On 2026-11-09, the team ran the core-task failure check against the staging deployment on the university VM. This is late evidence for the Week 6 assignment: the earlier 2026-11-08 run found its log within 1.086 seconds but did not observe a numeric P95 within one minute. The passing check occurred after the 2026-11-08 deadline. No test request was sent to production.
 
 ## Timed result
 
@@ -37,4 +37,4 @@ The [production log search](images/qr10-production-no-match.png) for the same st
 
 ![Production log search with no event for the staging request ID](images/qr10-production-no-match.png)
 
-**Verdict:** QR-10 QRT-01 passes for the 2026-11-09 staging run at the reported checkout commit. The result is a Week 7 check and does not change the failed or incomplete Week 6 deadline result.
+**Verdict:** QR-10 QRT-01 passes for the 2026-11-09 staging run at the reported checkout commit. It is submitted with Week 6 work, late; it does not establish that the test passed by the 2026-11-08 deadline.

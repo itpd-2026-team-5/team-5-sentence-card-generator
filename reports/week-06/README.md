@@ -2,9 +2,7 @@
 
 The [OpenPanel evidence](openpanel-evidence.md) shows the staging smoke event, its exclusion filter, and the staging and production product dashboards.
 
-The [OpenObserve evidence](openobserve-dashboard-evidence.md) shows the staging and production SLI-01 dashboards and a plotted staging diagnostic failure series. QR-10 QRT-01 still needs a timed failure in the learner core task.
-
-The [OpenObserve dashboard evidence](openobserve-dashboard-evidence.md) records the staging and production SLI-01 panels, production request-log delivery, and a staging request ID absent from the production organization. QR-10 QRT-01 remains open pending a timed failed core-task check.
+The [OpenObserve dashboard evidence](openobserve-dashboard-evidence.md) records the staging and production SLI-01 panels, production request-log delivery, and a staging diagnostic failure series. The [late QR-10 core-task check](qr10-evidence.md) records the 2026-11-09 passing staging result, including a matching log within 0.861 seconds and numeric P95 within 9.175 seconds. This evidence was produced after the 2026-11-08 deadline and is included in the Week 6 late submission.
 
 The [AI usage report](ai-usage.md) records the tools used for this week's work and how the output was reviewed.
 
@@ -52,6 +50,8 @@ The [driver-to-container map](architecture-review.md#driver-to-container-review-
 The [pronunciation comparison](pronunciation-options.md) covers the three TTS approaches and proposes playback/failure checks; no listening or deployment result is claimed.
 
 ## Deviations
+
+The QR-10 core-task check passed on 2026-11-09, one day after the SPRINT-06 deadline. Its actual date, response ID, timings, and checkout commit are retained in the [late Week 6 evidence](qr10-evidence.md); the Week 6 submission will incur the applicable late penalty. This does not replace the missing Customer acceptance verdict for US-17.
 
 Several Week 5 actions due before the Week 6 meeting remain only partly verified, and the transcript does not answer every previous open question.
 The team confirmed that no additional external validation or Customer answers are available beyond the transcripts.
