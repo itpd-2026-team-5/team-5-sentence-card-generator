@@ -4,6 +4,8 @@ The [OpenPanel evidence](openpanel-evidence.md) shows the staging smoke event, i
 
 The [OpenObserve dashboard evidence](openobserve-dashboard-evidence.md) records the staging and production SLI-01 panels, production request-log delivery, and a staging diagnostic failure series. The [late QR-10 core-task check](qr10-evidence.md) records the 2026-11-09 passing staging result, including a matching log within 0.861 seconds and numeric P95 within 9.175 seconds. This evidence was produced after the 2026-11-08 deadline and is included in the Week 6 late submission.
 
+The [late Part 13 deployment record](part13-deployment-evidence.md) documents the same-commit staging and production redeployment, a passing staging QR-10 retry, and the still-unreachable Claude API during production generation. Production health and an existing deck worked; new card generation did not.
+
 The [AI usage report](ai-usage.md) records the tools used for this week's work and how the output was reviewed.
 
 ## Summary
@@ -52,6 +54,8 @@ The [pronunciation comparison](pronunciation-options.md) covers the three TTS ap
 ## Deviations
 
 The QR-10 core-task check passed on 2026-11-09, one day after the SPRINT-06 deadline. Its actual date, response ID, timings, and checkout commit are retained in the [late Week 6 evidence](qr10-evidence.md); the Week 6 submission will incur the applicable late penalty. This does not replace the missing Customer acceptance verdict for US-17.
+
+The [Part 13 redeployment](part13-deployment-evidence.md) occurred after the deadline. Its first staging QR-10 run failed to yield a numeric P95; a later retry passed on the same commit, after the production deploy. Production card generation still returned a provider connection error, so the complete production core task and test-before-production sequence are not claimed as passed. The team carries provider access and any Customer-requested rework forward.
 
 Several Week 5 actions due before the Week 6 meeting remain only partly verified, and the transcript does not answer every previous open question.
 The team confirmed that no additional external validation or Customer answers are available beyond the transcripts.
