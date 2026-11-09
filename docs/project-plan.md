@@ -89,6 +89,13 @@ Individual-card reordering remains deferred under [DEC-094](decisions.md#dec-094
 
 The Customer approved releasing the deployed version with the production Claude API connection limitation disclosed and its fix carried to SPRINT-07, per [DEC-126](decisions.md#dec-126). The release record remains open until the final production commit is tagged and verified.
 
+- **Released:** Pending final production verification and the `v0.6.0` tag on `main`.
+- **Checked QRs:**
+  - [QR-02](quality-requirements/qr/QR-02.md): CI duration check, recorded in SPRINT-06.
+  - [QR-10](quality-requirements/qr/QR-10.md): staging failure diagnosability check passed on 2026-11-09, after the SPRINT-06 deadline.
+
+  Each test's result and date are in the [Quality Requirement Testing Plan](#quality-requirement-testing-plan). QR-01, QR-03, and QR-06 moved to SPRINT-07 with reasons recorded there.
+
 ### SPRINT-07
 
 Provisional: the product and study tasks are ready for structured usability testing with external learners.
