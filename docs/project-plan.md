@@ -83,7 +83,7 @@ Individual-card reordering remains deferred under [DEC-094](decisions.md#dec-094
 - **Due:** 2026-11-08
 - **Sprint Backlog:** [SPRINT-06 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/4)
 - **Planned Velocity:** 8; the story points of the two internal stories scheduled here: [US-16](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/190) (3) and [US-17](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) (5).
-- **Actual Velocity:** 3; [US-16](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/190) is completed, and [US-17](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) moved to SPRINT-07 because its QR-10 QRT-01 had not passed on a failed core-task request by the due date.
+- **Actual Velocity:** 3 at the 2026-11-08 deadline; [US-16](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/190) is recorded as completed. [US-17](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) is not counted without an explicit acceptance verdict. Its QR-10 QRT-01 passed on 2026-11-09 and is submitted as late SPRINT-06 evidence.
 
 #### REL-06
 
@@ -123,7 +123,7 @@ The tests themselves are in their requirements' files.
 | [QR-02](quality-requirements/qr/QR-02.md) | [QR-02 QRT-01](quality-requirements/qr/QR-02.md#qrt-01) | Passes | [SPRINT-06](#sprint-06) | [SPRINT-05](#sprint-05) | [2026-11-08 Product checks on main at `3cde59f`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/42501364765), CI: backend Test 15 s + frontend Type check 1 s + Build 2 s = 18 s, below 3 minutes; both jobs passed |
 | [QR-06](quality-requirements/qr/QR-06.md) | [QR-06 QRT-01](quality-requirements/qr/QR-06.md#qrt-01) | Not verified | None | [SPRINT-07](#sprint-07) | Moved from SPRINT-06: the complete phone-width workflow inspection was not recorded by the deadline. |
 | [QR-07](quality-requirements/qr/QR-07.md) | [QR-07 QRT-01](quality-requirements/qr/QR-07.md#qrt-01) | Passes | [SPRINT-05](#sprint-05) | [SPRINT-05](#sprint-05) | [Staging run of `scripts/check-restart.sh` on `b904ab3`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/blob/main/reports/week-05/README.md#qr-07-qrt-01-on-the-release-commit) |
-| [QR-10](quality-requirements/qr/QR-10.md) | [QR-10 QRT-01](quality-requirements/qr/QR-10.md#qrt-01) | Passes | [SPRINT-07](#sprint-07) | [SPRINT-07](#sprint-07) | [2026-11-09 staging core-task failure check](../reports/week-07/qr10-evidence.md): log 0.861 s, numeric SLI-01 P95 24.704 ms after 9.175 s. Moved from SPRINT-06 because the 2026-11-08 run did not observe P95 within one minute. |
+| [QR-10](quality-requirements/qr/QR-10.md) | [QR-10 QRT-01](quality-requirements/qr/QR-10.md#qrt-01) | Passes | [SPRINT-06](#sprint-06) | [SPRINT-06](#sprint-06) | [Late Week 6 staging core-task failure check on 2026-11-09](../reports/week-06/qr10-evidence.md): log 0.861 s, numeric SLI-01 P95 24.704 ms after 9.175 s. The 2026-11-08 run did not observe P95 within one minute; this pass occurred after the sprint deadline. |
 
 ## Progress Monitoring
 
