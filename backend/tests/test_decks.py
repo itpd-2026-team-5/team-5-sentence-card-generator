@@ -104,6 +104,31 @@ def test_find_a_word_and_send_its_neighbours_as_context(client):
     assert find_sentences(TEXT, "Sonn") == ["Die Sonne scheint."]
 
 
+def test_invalid_browser_provider_result_fails_generation_without_saving_card(client):
+    text = client.post("/api/texts", json={"title": "Park", "body": TEXT}).json()
+    sentence = find_sentences(TEXT, "Geld")[0]
+    client.put(
+        f"/api/texts/{text['id']}/marks",
+        json={"word": "Geld", "sentence": sentence, "status": "learn"},
+    )
+    response = client.post(
+        f"/api/texts/{text['id']}/generate",
+        headers={"x-llm": "browser"},
+        json={
+            "deck_id": first_deck(client),
+            "llm_output": {
+                "data": {},
+                "model": "qrt-invalid-output",
+                "input_tokens": 0,
+                "output_tokens": 0,
+            },
+        },
+    )
+    assert response.status_code == 502
+    assert client.get("/api/cards").json() == []
+    assert client.get(f"/api/texts/{text['id']}").json()["marks"][0]["status"] == "learn"
+
+
 def test_more_cards_for_the_same_word(client):
     _, cards = cards_in(client, first_deck(client), words=("Geld",))
     more = client.post(f"/api/cards/{cards[0]['id']}/more", json={"count": 2}).json()["created"]

@@ -30,7 +30,7 @@ The backend sends OTLP/HTTP protobuf metrics every 10 seconds and batches logs e
 
 ## The Dashboard
 
-Each organization needs a **SLI-01 Backend request duration P95** chart with the exact query above, showing separate outcome series. The staging organization must contain a failed request's numeric P95 and matching log point. Production uses the same chart without staging test traffic. The [Week 6 OpenObserve evidence](../reports/week-06/openobserve-dashboard-evidence.md) records the deployed dashboards, a numeric staging diagnostic failure series, and production request-log delivery. The separate QR-10 core-task failure test remains open.
+Each organization needs a **SLI-01 Backend request duration P95** chart with the exact query above, showing separate outcome series. The staging organization must contain a failed request's numeric P95 and matching log point. Production uses the same chart without staging test traffic. The [Week 6 OpenObserve evidence](../reports/week-06/openobserve-dashboard-evidence.md) records the deployed dashboards, a numeric staging diagnostic failure series, and production request-log delivery. The [Week 7 QR-10 evidence](../reports/week-07/qr10-evidence.md) records the separate timed core-task failure check.
 
 The local **01 · Sentence Cards · Operator overview** groups panels into traffic and reliability, generation requests, and authentication and access. **02 · Sentence Cards · Backend route detail** keeps the focused route charts. The access tab counts 401 responses by time and route using `status_code`. Generation request panels measure backend HTTP calls; card counts and rewrite quality are in OpenPanel. Older log points lack `status_code`, so the 401 series begins when the updated backend starts exporting it.
 

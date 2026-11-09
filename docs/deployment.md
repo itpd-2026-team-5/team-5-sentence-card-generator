@@ -221,7 +221,18 @@ docker compose -p cards-staging --env-file ~/cards/staging.env -f compose.deploy
   uv run --no-dev python -c 'from app.analytics import track; track("text_added", source="smoke", language="de")'
 ```
 
-Verify it in the staging OpenPanel event list and confirm the [analytics chart](analytics.md#the-dashboard) excludes it. Request `GET /api/diagnostics/fail` on staging; this route exists only when staging telemetry is enabled and returns a controlled 500. Query its `x-request-id` in the staging `http_requests` log stream, and run the [P95 query](observability.md#sli-01). Build equivalent dashboards in the production scopes without sending test traffic there. Record only sanitized screenshots and query results in the week's evidence. The dashboards and live verification remain deployment tasks; they have not been completed by editing this runbook.
+Verify it in the staging OpenPanel event list and confirm the [analytics chart](analytics.md#the-dashboard) excludes it. Request `GET /api/diagnostics/fail` on staging; this route exists only when staging telemetry is enabled and returns a controlled 500. Query its `x-request-id` in the staging `http_requests` log stream, and run the [P95 query](observability.md#sli-01). Build equivalent dashboards in the production scopes without sending test traffic there. Record only sanitized screenshots and query results in the week's evidence. The [Week 6 dashboard record](../reports/week-06/openobserve-dashboard-evidence.md) documents the diagnostic check; the [Week 7 QR-10 record](../reports/week-07/qr10-evidence.md) documents the core-task test.
+
+For the deployed [QR-10 QRT-01](quality-requirements/qr/QR-10.md#qrt-01) core-task check, use a verified staging learner account and run from the VM checkout:
+
+```sh
+umask 077
+set -o pipefail
+python3 scripts/check-sli.py --staging-url "$STAGING_URL" --env-file ~/cards/staging.env \
+  | tee ~/cards/qr10-core-$(date -u +%Y%m%dT%H%M%SZ).txt
+```
+
+The script prompts for the learner credentials, creates and removes temporary staging content, makes card generation return HTTP 502 without calling an external LLM, and polls the staging log and exact SLI-01 query. It prints the request ID, checkout commit, first-seen times, numeric P95, and pass booleans. Search the production organization for that request ID without sending any test request to production. The earlier diagnostic-route check confirms the pipeline but does not substitute for this core-task test.
 
 ### Provision the operator dashboards
 
