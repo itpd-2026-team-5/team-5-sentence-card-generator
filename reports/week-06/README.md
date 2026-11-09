@@ -6,7 +6,7 @@ The [OpenObserve dashboard evidence](openobserve-dashboard-evidence.md) records 
 
 The [late Part 13 deployment record](part13-deployment-evidence.md) documents the same-commit staging and production redeployment, a passing staging QR-10 retry, and the still-unreachable Claude API during production generation. Production health and an existing deck worked; new card generation did not.
 
-The [AI usage report](ai-usage.md) records the tools used for this week's work and how the output was reviewed.
+The [AI usage report](ai-usage.md) records all four team members' Week 6 AI use and how each reviewed the output.
 
 ## Summary
 
@@ -90,7 +90,7 @@ The Customer also approved the disclosed provider limitation for REL-06 in [DEC-
 | Deliverable | Artifact and current result |
 | --- | --- |
 | Sprint plan and new stories | [docs/project-plan.md#sprint-06](../../docs/project-plan.md#sprint-06), [US-16](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/190), and [US-17](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) in the [sprint milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/4). |
-| Analytics plan | [docs/analytics.md#the-value-and-the-metrics](../../docs/analytics.md#the-value-and-the-metrics). |
+| Analytics plan | [docs/analytics.md](../../docs/analytics.md), including its [metric tree](../../docs/analytics.md#the-metric-tree) and a section for each metric. |
 | Events and instrumentation | [docs/analytics.md#the-events](../../docs/analytics.md#the-events), [backend/app/analytics.py](../../backend/app/analytics.py), and [reports/week-06/openpanel-evidence.md](openpanel-evidence.md). |
 | Analytics dashboards | [reports/week-06/images/openpanel-staging-overview.png](images/openpanel-staging-overview.png) and [reports/week-06/images/openpanel-production-overview.png](images/openpanel-production-overview.png), showing weekly completed study reviews; production had no matching data. |
 | Observability plan and `SLI`s | [docs/observability.md#the-slis](../../docs/observability.md#the-slis). |
@@ -106,15 +106,15 @@ The Customer also approved the disclosed provider limitation for REL-06 in [DEC-
 | Meeting script | [reports/week-06/meeting-script.md](meeting-script.md). |
 | Meeting transcript | [reports/week-06/meeting-transcript.md](meeting-transcript.md) and the [anonymized supplemental written response](written-review-transcript.md); anonymous publication was permitted. |
 | Customer validation | [reports/week-06/meeting-report.md](meeting-report.md) and [reports/week-06/written-review-report.md](written-review-report.md), with the dashboard, feature-evidence, threshold, and release outcomes. |
-| `REL-06` | [v0.6.0](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.6.0) was published on the [verified production commit](part13-deployment-evidence.md); the [release plan](../../docs/project-plan.md#rel-06) lists QR-02 and the late QR-10 check. |
+| `REL-06` | The [v0.6.0 release and deployment note](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.6.0) records the verified production commit; [CHANGELOG.md](../../CHANGELOG.md) has the released section, and the [REL-06 plan](../../docs/project-plan.md#rel-06) records `Released` and checked QR-02 and QR-10. |
 | Sprint retrospective | [reports/week-06/sprint-retrospective.md](sprint-retrospective.md) and [docs/project-plan.md#sprint-06](../../docs/project-plan.md#sprint-06). |
-| AI usage | [reports/week-06/ai-usage.md](ai-usage.md); additional member entries are on the [Part 16 branch](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/tree/204-Part-16-Report-On-Your-AI-Usage) awaiting merge. |
+| AI usage | [reports/week-06/ai-usage.md](ai-usage.md), with disclosures for all four team members. |
 
 ## Contribution
 
 | Member | Week 6 work |
 | --- | --- |
-| Byakko-san | Planned SPRINT-06 ([#199](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/199)), wrote the analytics plan ([#201](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/201)), and documented the analytics and observability features ([#231](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/231)). |
+| Byakko-san | Planned SPRINT-06 ([#199](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/199)), wrote the analytics plan ([#201](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/201)), documented the analytics and observability features ([#231](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/231)), and completed the AI-use disclosure in [#208](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/208). |
 | Horokk1 | Prepared the Customer meeting record ([#203](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/203)), threshold review ([#209](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/209)), and Week 5 follow-up record ([#222](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/222)). |
 | KaramKhaddour | Integrated the Week 6 product and telemetry code ([#206](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/206)), provisioned dashboards ([#212](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/212)), and recorded dashboard, QR-10, and redeployment evidence ([#224](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/224), [#226](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/226), [#228](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/228), [#233](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/233), [#234](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/234), [#236](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/236)). |
 | saleemasekrea000 | Recorded the Sprint 06 retrospective and Actual Velocity ([#232](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/232)). |
