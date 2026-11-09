@@ -83,8 +83,20 @@ Individual-card reordering remains deferred under [DEC-094](decisions.md#dec-094
 - **Due:** 2026-11-08
 - **Sprint Backlog:** [SPRINT-06 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/4)
 - **Planned Velocity:** 8; the story points of the two internal stories scheduled here: [US-16](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/190) (3) and [US-17](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) (5).
+- **Actual Velocity:** 0 at the 2026-11-08 deadline: no story had recorded Customer acceptance and all [Definition of Done](definition-of-done.md#story) checks completed by then. [US-16](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/190) contributes 0 of its 3 planned points and [US-17](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) contributes 0 of its 5 planned points; their outstanding completion checks carry forward to SPRINT-07.
+
+Correction recorded on 2026-11-09: the earlier value of 3 incorrectly counted US-16 as completed by the deadline. The [supplemental written review received on 2026-11-09](../reports/week-06/written-review-report.md#outcomes) accepts the presented criterion evidence for both US-16 and US-17, so neither is described as still lacking that response. It does not establish completion of every Definition of Done check, including closure of the linked tasks through merged pull requests and the accountable member's clean-checkout verification. No additional completed points are recorded from this response alone. The [passing QR-10 check on 2026-11-09](../reports/week-06/qr10-evidence.md) is late SPRINT-06 evidence and does not change the deadline velocity; the [retrospective correction](../reports/week-06/sprint-retrospective.md) records the same distinction.
 
 #### REL-06
+
+The Customer approved releasing the deployed version with the production Claude API connection limitation disclosed and its fix carried to SPRINT-07, per [DEC-126](decisions.md#dec-126). The tag points to the [verified production commit](../reports/week-06/part13-deployment-evidence.md) `a658ea49dc767cd7579e38949369a4880ecaa51d` on `main`; the release note states the limitation.
+
+- **Released:** [v0.6.0](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.6.0) on 2026-11-09.
+- **Checked QRs:**
+  - [QR-02](quality-requirements/qr/QR-02.md): CI duration check, recorded in SPRINT-06.
+  - [QR-10](quality-requirements/qr/QR-10.md): staging failure diagnosability check passed on 2026-11-09, after the SPRINT-06 deadline.
+
+  Each test's result and date are in the [Quality Requirement Testing Plan](#quality-requirement-testing-plan). QR-01, QR-03, and QR-06 moved to SPRINT-07 with reasons recorded there.
 
 ### SPRINT-07
 
@@ -117,12 +129,12 @@ The tests themselves are in their requirements' files.
 
 | QR | QRT | Status | Checked | Planned for sprint | Evidence |
 | --- | --- | --- | --- | --- | --- |
-| [QR-03](quality-requirements/qr/QR-03.md) | [QR-03 QRT-01](quality-requirements/qr/QR-03.md#qrt-01) | Not verified | None | [SPRINT-06](#sprint-06) | None |
-| [QR-01](quality-requirements/qr/QR-01.md) | [QR-01 QRT-01](quality-requirements/qr/QR-01.md#qrt-01) | Not verified | None | [SPRINT-06](#sprint-06) | None |
-| [QR-02](quality-requirements/qr/QR-02.md) | [QR-02 QRT-01](quality-requirements/qr/QR-02.md#qrt-01) | Passes | [SPRINT-05](#sprint-05) | [SPRINT-05](#sprint-05) | [`Product checks` run on `main` at `b904ab3`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/41224928507) |
-| [QR-06](quality-requirements/qr/QR-06.md) | [QR-06 QRT-01](quality-requirements/qr/QR-06.md#qrt-01) | Not verified | None | [SPRINT-06](#sprint-06) | None |
+| [QR-03](quality-requirements/qr/QR-03.md) | [QR-03 QRT-01](quality-requirements/qr/QR-03.md#qrt-01) | Not verified | None | [SPRINT-07](#sprint-07) | Moved from SPRINT-06: the real-provider multilingual sample and reviewer verdicts were not available by the deadline. |
+| [QR-01](quality-requirements/qr/QR-01.md) | [QR-01 QRT-01](quality-requirements/qr/QR-01.md#qrt-01) | Not verified | None | [SPRINT-07](#sprint-07) | Moved from SPRINT-06: the deployed learner, teacher, and real-key isolation check was not run by the deadline. |
+| [QR-02](quality-requirements/qr/QR-02.md) | [QR-02 QRT-01](quality-requirements/qr/QR-02.md#qrt-01) | Passes | [SPRINT-06](#sprint-06) | [SPRINT-05](#sprint-05) | [2026-11-08 Product checks on main at `3cde59f`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/42501364765), CI: backend Test 15 s + frontend Type check 1 s + Build 2 s = 18 s, below 3 minutes; both jobs passed |
+| [QR-06](quality-requirements/qr/QR-06.md) | [QR-06 QRT-01](quality-requirements/qr/QR-06.md#qrt-01) | Not verified | None | [SPRINT-07](#sprint-07) | Moved from SPRINT-06: the complete phone-width workflow inspection was not recorded by the deadline. |
 | [QR-07](quality-requirements/qr/QR-07.md) | [QR-07 QRT-01](quality-requirements/qr/QR-07.md#qrt-01) | Passes | [SPRINT-05](#sprint-05) | [SPRINT-05](#sprint-05) | [Staging run of `scripts/check-restart.sh` on `b904ab3`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/blob/main/reports/week-05/README.md#qr-07-qrt-01-on-the-release-commit) |
-| [QR-10](quality-requirements/qr/QR-10.md) | [QR-10 QRT-01](quality-requirements/qr/QR-10.md#qrt-01) | Not verified | None | [SPRINT-06](#sprint-06) | Awaiting staging OpenObserve deployment and dashboard |
+| [QR-10](quality-requirements/qr/QR-10.md) | [QR-10 QRT-01](quality-requirements/qr/QR-10.md#qrt-01) | Passes | [SPRINT-06](#sprint-06) | [SPRINT-06](#sprint-06) | [Late Week 6 staging core-task failure check on 2026-11-09](../reports/week-06/qr10-evidence.md): log 0.861 s, numeric SLI-01 P95 24.704 ms after 9.175 s. The 2026-11-08 run did not observe P95 within one minute; this pass occurred after the sprint deadline. |
 
 ## Progress Monitoring
 

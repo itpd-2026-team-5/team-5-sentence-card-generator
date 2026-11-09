@@ -64,15 +64,16 @@ A [learner](glossary.md#learner) can share a [deck](glossary.md#deck) with a [te
 
 ## Understand product use
 
-A product analyst can read the [core-task metrics](analytics.md) from privacy-limited events in separate staging and production scopes.
+A product analyst can explore aggregated [events](glossary.md#event) in a [dashboard](glossary.md#dashboard) to understand how learners use the core task.
 
+- **Stories:** [US-16](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/190)
 - **Behavior:** [FR-013](functional-requirements/fr/FR-013.md)
-- **Decision:** [ADR-006](architecture/adr/ADR-006.md)
+- **Decisions:** [ADR-006](architecture/adr/ADR-006.md)
 
 ## Diagnose runtime failures
 
-A system operator can read the [request duration SLI](observability.md#sli-01) and find a failed request's log point from its response ID.
+A system operator can investigate runtime quality using [operating signals](glossary.md#signal) from the [observability backend](glossary.md#observability-backend).
 
+- **Stories:** [US-17](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191)
 - **Behavior:** [FR-014](functional-requirements/fr/FR-014.md)
-- **Quality:** [QR-10](quality-requirements/qr/QR-10.md)
-- **Decision:** [ADR-007](architecture/adr/ADR-007.md)
+- **Decisions:** [ADR-007](architecture/adr/ADR-007.md)
