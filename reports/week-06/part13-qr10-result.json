@@ -1,0 +1,14 @@
+{
+  "response_time_utc": "2026-11-09T11:30:51.119388+00:00",
+  "request_id": "2d9a295e-3dd8-4178-8e40-5a01b4bfd764",
+  "route": "/api/texts/{text_id}/generate",
+  "status_code": 502,
+  "environment": "staging",
+  "checkout_commit": "a658ea49dc767cd7579e38949369a4880ecaa51d",
+  "log_first_seen_seconds": 0.443,
+  "log_duration_ms": 22.404480958357453,
+  "p95_first_seen_seconds": 2.016,
+  "p95_ms": 24.68938259363553,
+  "log_within_5_seconds": true,
+  "p95_within_60_seconds": true
+}
