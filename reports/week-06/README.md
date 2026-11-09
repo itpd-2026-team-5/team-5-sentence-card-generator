@@ -106,7 +106,7 @@ The Customer also approved the disclosed provider limitation for REL-06 in [DEC-
 | Meeting script | [reports/week-06/meeting-script.md](meeting-script.md). |
 | Meeting transcript | [reports/week-06/meeting-transcript.md](meeting-transcript.md) and the [anonymized supplemental written response](written-review-transcript.md); anonymous publication was permitted. |
 | Customer validation | [reports/week-06/meeting-report.md](meeting-report.md) and [reports/week-06/written-review-report.md](written-review-report.md), with the dashboard, feature-evidence, threshold, and release outcomes. |
-| `REL-06` | [v0.6.0](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.6.0) was published on the [verified production commit](part13-deployment-evidence.md); the [release plan](../../docs/project-plan.md#rel-06) lists QR-02 and the late QR-10 check. The SPRINT-06 milestone closeout remains pending. |
+| `REL-06` | [v0.6.0](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.6.0) was published on the [verified production commit](part13-deployment-evidence.md); the [release plan](../../docs/project-plan.md#rel-06) lists QR-02 and the late QR-10 check. |
 | Sprint retrospective | [reports/week-06/sprint-retrospective.md](sprint-retrospective.md) and [docs/project-plan.md#sprint-06](../../docs/project-plan.md#sprint-06). |
 | AI usage | [reports/week-06/ai-usage.md](ai-usage.md); additional member entries are on the [Part 16 branch](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/tree/204-Part-16-Report-On-Your-AI-Usage) awaiting merge. |
 
