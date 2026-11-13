@@ -48,6 +48,7 @@
   - [QR-08: Run A Self-Hosted Deployment On Linux](quality-requirements/qr/QR-08.md)
   - [QR-09: Warn About Problematic Generation Batches](quality-requirements/qr/QR-09.md)
   - [QR-10: Diagnose A Failed Request](quality-requirements/qr/QR-10.md)
+  - [QR-11: Make Cards From A Text On First Use](quality-requirements/qr/QR-11.md)
 - [Usability tests](usability-tests/README.md)
   - [UT-01: Create A Sentence Card From A Chosen Text](usability-tests/ut-01/README.md)
   - [UT-01 surveys](usability-tests/ut-01/surveys.md)

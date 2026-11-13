@@ -139,6 +139,7 @@ The tests themselves are in their requirements' files.
 | [QR-06](quality-requirements/qr/QR-06.md) | [QR-06 QRT-01](quality-requirements/qr/QR-06.md#qrt-01) | Not verified | None | [SPRINT-07](#sprint-07) | Moved from SPRINT-06: the complete phone-width workflow inspection was not recorded by the deadline. |
 | [QR-07](quality-requirements/qr/QR-07.md) | [QR-07 QRT-01](quality-requirements/qr/QR-07.md#qrt-01) | Passes | [SPRINT-05](#sprint-05) | [SPRINT-05](#sprint-05) | [Staging run of `scripts/check-restart.sh` on `b904ab3`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/blob/main/reports/week-05/README.md#qr-07-qrt-01-on-the-release-commit) |
 | [QR-10](quality-requirements/qr/QR-10.md) | [QR-10 QRT-01](quality-requirements/qr/QR-10.md#qrt-01) | Passes | [SPRINT-06](#sprint-06) | [SPRINT-06](#sprint-06) | [Late Week 6 staging core-task failure check on 2026-11-09](../reports/week-06/qr10-evidence.md): log 0.861 s, numeric SLI-01 P95 24.704 ms after 9.175 s. The 2026-11-08 run did not observe P95 within one minute; this pass occurred after the sprint deadline. |
+| [QR-11](quality-requirements/qr/QR-11.md) | [QR-11 QRT-01](quality-requirements/qr/QR-11.md#qrt-01) | Not verified | None | [SPRINT-08](#sprint-08) | None |
 
 ## Progress Monitoring
 
