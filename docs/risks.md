@@ -8,6 +8,10 @@ The team reads this register during every Friday 15:00 weekly review. When evide
 | [RISK-02](#risk-02) | Open | High | Medium | The prototype used mocked generation and generation quality and cost remain untested, so the chosen LLM may fail to produce usable sentences within the available budget, which would block the core card-generation flow. |
 | [RISK-03](#risk-03) | Open | High | Medium | The team has one semester and several cross-cutting product flows to build, so integration may take longer than planned, which would leave the MUP incomplete at its deadline. |
 | [RISK-04](#risk-04) | Open | Medium | Medium | Personal API-key handling and teacher regeneration are unresolved, so a learner's key may be exposed or unusable by the teacher, which would block safe shared-deck review. |
+| [RISK-05](#risk-05) | Open | High | Medium | Recruiting is limited to adults learning Russian who are not on the team, so fewer than three participants may complete a counted session by the end of SPRINT-08, which would leave `UT-01` and the `QR-11` test without a result. |
+| [RISK-06](#risk-06) | Open | Medium | Low | A participant may withdraw or refuse the recording or the sanitized public results, so their session cannot be counted, which would reduce the counted sample and force its data to be removed. |
+| [RISK-07](#risk-07) | Open | Medium | Medium | The private usability-data repository and the recordings folder need instructor access, so an instructor may be unable to open them, which would leave the raw usability evidence unverifiable. |
+| [RISK-08](#risk-08) | Open | High | Medium | The sessions depend on staging card generation, verified instrumentation, and participants' dates in a one-week run sprint, so `UT-01` may not finish by 2026-11-21, which would leave its results and the `QR-11` verdict missing from Submission 8. |
 
 ## RISK-01
 
@@ -64,3 +68,59 @@ Personal API-key handling and teacher regeneration are unresolved, so a learner'
 - **Window:** SPRINT-04 through SPRINT-06, before shared-deck review is released.
 - **Mitigation:** Prototype and review the key flow before implementing teacher regeneration; keep learner and teacher credentials separate and out of shared-deck data.
 - **Contingency:** Disable teacher regeneration until the teacher can use a separate personal key without access to the learner's key.
+
+## RISK-05
+
+Recruiting is limited to adults learning Russian who are not on the team, so fewer than three participants may complete a counted session by the end of SPRINT-08, which would leave `UT-01` and the `QR-11` test without a result.
+
+- **Status:** Open
+- **Impact:** High
+  - Without three counted sessions the test cannot settle `QR-11`, and the Week 8 results submission claims no result.
+- **Likelihood:** Medium
+  - The [participant profile](usability-tests/ut-01/README.md#participant-profile) narrows the pool to Russian learners at A1 to B1, and no participant is recruited yet.
+- **Trigger:** Fewer than three participants have agreed to a session date by 2026-11-17, or a session date falls through without a replacement booked.
+- **Window:** SPRINT-07 and SPRINT-08, until the last counted session.
+- **Mitigation:** Recruit towards the design target of five rather than the minimum of three, ask through several channels at once, and arrange sessions as soon as the design is merged.
+- **Contingency:** Recruit replacements under the next free code; when three counted sessions still cannot be completed, keep the `QR-11` testing-plan row `Not verified` in SPRINT-08 or move it to SPRINT-09, declare the shortfall in the weekly report, and claim no result.
+
+## RISK-06
+
+A participant may withdraw or refuse the recording or the sanitized public results, so their session cannot be counted, which would reduce the counted sample and force its data to be removed.
+
+- **Status:** Open
+- **Impact:** Medium
+  - An uncounted session costs the team a participant slot and its data cannot be used or published.
+- **Likelihood:** Low
+  - The [consent](usability-tests/ut-01/README.md#consent-and-data) requires the recording and the sanitized public results, and participants may withdraw at any time.
+- **Trigger:** A participant declines a required consent clause, asks to stop, or asks for their data to be removed.
+- **Window:** From the first counted session until the course is graded.
+- **Mitigation:** Send the consent template before the session so the participant reads it in advance, and confirm the signed consent before the recording starts.
+- **Contingency:** Do not count the session, remove the participant's raw text from the private repository and the recording from the folder, retire the code, and recruit a replacement under the next free code.
+
+## RISK-07
+
+The private usability-data repository and the recordings folder need instructor access, so an instructor may be unable to open them, which would leave the raw usability evidence unverifiable.
+
+- **Status:** Open
+- **Impact:** Medium
+  - The instructors could not check the consent records, the raw notes, or the recordings behind the public results.
+- **Likelihood:** Medium
+  - The private repository has not been created yet, and each instructor's GitHub account and cloud-folder access must be set up by the team, per [#248](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/248).
+- **Trigger:** An instructor reports that they cannot open the private repository or the recordings folder, or an access invitation is still pending at submission.
+- **Window:** SPRINT-07 and SPRINT-08, before each submission.
+- **Mitigation:** Create the repository and the folder in SPRINT-07 with the team and the instructors as readers, and confirm that each instructor can open both before the first counted session.
+- **Contingency:** Create the repository and the folder with the team and the instructors; when an instructor cannot use GitHub, give them the private text through a Moodle-only archive and declare the deviation in the weekly report.
+
+## RISK-08
+
+The sessions depend on staging card generation, verified instrumentation, and participants' dates in a one-week run sprint, so `UT-01` may not finish by 2026-11-21, which would leave its results and the `QR-11` verdict missing from Submission 8.
+
+- **Status:** Open
+- **Impact:** High
+  - The run week's submission would carry no usability result, and the `QR-11` row would stay unsettled.
+- **Likelihood:** Medium
+  - Card generation has failed to reach a model provider from the university VM before, per [the deployment log](deployment.md), and the instrumentation is not yet implemented or verified.
+- **Trigger:** The instrumentation is not verified, or staging generation does not work, by 2026-11-17, or fewer than three sessions are complete by 2026-11-20.
+- **Window:** SPRINT-08.
+- **Mitigation:** Finish the instrumentation and the dry run in SPRINT-07, check staging generation before each session, and arrange the sessions early in SPRINT-08.
+- **Contingency:** Move the `QR-11` testing-plan row to SPRINT-09 with a reason, declare the open window in the weekly report, and claim no result.
