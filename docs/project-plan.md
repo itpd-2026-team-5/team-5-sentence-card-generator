@@ -100,17 +100,21 @@ The Customer approved releasing the deployed version with the production Claude 
 
 ### SPRINT-07
 
-Provisional: the product and study tasks are ready for structured usability testing with external learners.
+The `UT-01` usability test is designed and prepared, and the team's recruitment target is five representative participants for Week 8.
 
-- **Due:** 2026-11-14
+- **Due:** 2026-11-15
+- **Sprint Backlog:** [SPRINT-07 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/5)
+- **Planned Velocity:** 8; the story points of the two stories scheduled here: [US-16](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/190) (3) and [US-17](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) (5).
 
 #### REL-07
 
 ### SPRINT-08
 
-Provisional: the product's configuration and dependencies support a reproducible final build and release.
+The usability sessions run, the results are analyzed, and the findings are triaged into the product backlog.
 
 - **Due:** 2026-11-21
+- **Sprint Backlog:** [SPRINT-08 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/6)
+- **Planned Velocity:** 0; the sprint carries usability tasks, not stories.
 
 #### REL-08
 
