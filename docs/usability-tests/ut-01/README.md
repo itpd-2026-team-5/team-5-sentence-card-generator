@@ -14,8 +14,8 @@ Assess whether a representative language learner can turn a word they chose from
 
 ## The Requirement
 
-The test serves `QR-11`, the usability quality requirement whose manual `QRT-01` will name `UT-01` in `**Runs at:**`.
-It is written under [#250](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/250), and this section links its file when it is merged.
+The test serves [`QR-11`](../../quality-requirements/qr/QR-11.md), whose manual [`QRT-01`](../../quality-requirements/qr/QR-11.md#qrt-01) names `UT-01` in `**Runs at:**`.
+It reads the main task's SEQ: the bar is a median of at least 5 of 7 across at least three counted participants, set before the first session.
 
 ## Participant Profile
 
@@ -173,7 +173,7 @@ This plan is written before the first session, and no measure is added to it aft
 - **Main-task time:** the median time on the main task, with the minimum and maximum.
 - **SEQ:** the median SEQ for each task, the main task and the two secondary tasks.
 - **SUS:** the mean and the median, reported with `n=<count>`, because a small sample supports no claim about a population.
-- **`QR-11`'s measure:** the statistic and the bar `QR-11` sets, computed from the same table; the verdict goes in the testing plan, not in the results.
+- **`QR-11`'s measure:** the main task's median SEQ against the bar of at least 5 of 7 that [`QR-11`](../../quality-requirements/qr/QR-11.md) sets, computed from the same table; the verdict goes in the testing plan, not in the results.
 - **Thematic analysis:** the observations, the think-aloud remarks, and the post-test answers grouped into a small set of themes, each with the sessions it came from; a single participant's remark is not reported as a theme.
 - **Severity:** each finding rated `Critical`, `Major`, or `Minor` with its reason:
   - `Critical`: it stops a participant from reaching a task's end state, or it exposes another person's data or key;

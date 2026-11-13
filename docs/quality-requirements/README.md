@@ -13,6 +13,7 @@ Each requirement's tests are in its file, and what they last found is in the [qu
 | [QR-06](qr/QR-06.md) | A learner or teacher completes their main card workflow on a phone without zooming or scrolling sideways. | High | Medium | Interaction Capability | Operability | Active |
 | [QR-07](qr/QR-07.md) | Committed texts, word selections, decks, cards, sharing permissions, and study progress survive a service shutdown and restart without database corruption. | High | Medium | Reliability | Recoverability | Active |
 | [QR-10](qr/QR-10.md) | An operator diagnoses a failed staging core-task request from its log point and five-minute P95 series. | High | Medium | Maintainability | Analysability | Active |
+| [QR-11](qr/QR-11.md) | A learner who has never used the product finds it easy to turn words from their own text into sentence cards, on first use and without help. | High | Medium | Interaction Capability | Learnability | Active |
 | [QR-04](qr/QR-04.md) | Cards for five marked words appear within 60 seconds of the learner pressing generate. | Medium | Medium | Performance Efficiency | Time Behaviour | Active |
 | [QR-08](qr/QR-08.md) | An operator can install and run the core workflow on a Linux virtual machine using the documented prerequisites and configuration. | Medium | Medium | Flexibility | Installability | Active |
 | [QR-09](qr/QR-09.md) | The learner sees a warning when 30% or more of the cards in a generation batch require regeneration. | Medium | Medium | Reliability | Fault Tolerance | Active |
