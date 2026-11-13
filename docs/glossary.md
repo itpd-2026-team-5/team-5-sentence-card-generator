@@ -174,6 +174,12 @@ See [SLI](#sli).
 
 ## Product Analytics
 
+### Metric
+
+A product-analytics number computed from the product's events, such as the weekly count of completed study reviews, and never from what a usability session records.
+
+**Defined by:** [the analytics plan](analytics.md#the-metric-tree).
+
 ### Focus Metric
 
 The one number from which the product's value is read.
@@ -197,3 +203,59 @@ A metric that guards the focus metric against increasing it at the user's expens
 A nested view of the focus metric, its counter-metric, and the input metrics that explain it.
 
 **Defined by:** [the analytics plan](analytics.md#the-metric-tree).
+
+## Usability Testing
+
+### Usability Test
+
+A planned check of whether representative participants outside the team can reach a goal in the product without help, run from one test record such as `UT-01`.
+
+**Defined by:** [the usability tests](usability-tests/README.md).
+
+### Participant
+
+A person aged 18 or older, outside the team and not the Customer, the instructor, or the course staff, who attempts a usability test's tasks under a code such as `P-01`.
+
+**Defined by:** [`UT-01`'s participant profile](usability-tests/ut-01/README.md#participant-profile).
+
+### Usability Session
+
+One participant's run of a usability test's tasks, surveys, and debrief, counted only when it was consented to, recorded, and completed.
+
+**Defined by:** [`UT-01`'s protocol](usability-tests/ut-01/README.md#protocol).
+
+### Consent
+
+A participant's durable, signed agreement, given before their usability session, to take part, to be recorded, and to have sanitized results published.
+
+**Defined by:** [`UT-01`'s consent and data](usability-tests/ut-01/README.md#consent-and-data).
+
+### Recording
+
+The private screen and voice capture of a usability session, kept in the team's cloud recordings folder and deleted after the course is graded.
+
+**Defined by:** [`UT-01`'s consent and data](usability-tests/ut-01/README.md#consent-and-data).
+
+### Measure
+
+A quantity one usability session records for one participant, such as a task's outcome, its time on task, an SEQ answer, or a SUS score.
+
+**Defined by:** [`UT-01`'s measures](usability-tests/ut-01/README.md#measures).
+
+### Statistic
+
+A summary computed across participants from one measure's recorded values, such as a count, a proportion, a median, or a mean.
+
+**Defined by:** [`UT-01`'s analysis plan](usability-tests/ut-01/README.md#analysis-plan).
+
+### SUS
+
+The System Usability Scale: ten standard statements a participant rates from 1 to 5 after all the tasks, scored from 0 to 100 as `2.5 × (20 + sum(odd) - sum(even))`.
+
+**Defined by:** [`UT-01`'s surveys](usability-tests/ut-01/surveys.md#sus-after-all-the-tasks).
+
+### SEQ
+
+The Single Ease Question a participant answers after each task, rating how difficult or easy it was from 1, very difficult, to 7, very easy.
+
+**Defined by:** [`UT-01`'s surveys](usability-tests/ut-01/surveys.md#seq-after-each-task).
