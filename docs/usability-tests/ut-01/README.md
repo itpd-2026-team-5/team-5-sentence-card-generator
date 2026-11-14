@@ -133,8 +133,9 @@ The test reuses these Week 6 events from [the event table](../../analytics.md#th
 ### What it adds
 
 The test adds no new event.
-During a session the reused events carry `source=usability-test` instead of `source=web`, and an added field, `participant_code` (string, optional, staging test only), holding the session's `P-nn` code.
-The field is added to the reused events' rows in [the event table](../../analytics.md#the-events) in the same pull request as the code that emits it, under [#253](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/253).
+During a session the reused events carry `source=usability-test` instead of `source=web`, and an added field, `participant_code` (string, staging test only), holding the session's `P-nn` code. The shared event registry still checks each event's required fields; the request context adds the code only after that check.
+
+In the private staging browser window, after signing in and before the participant sits down, the facilitator runs `localStorage.setItem("ut-01-code", "P-01")` in the browser console, replacing `P-01` with the session's assigned code. The app sends that code only to its own backend in `X-UT-01-Code`. The staging backend accepts `P-` followed by two or three digits, tags events from that browser window, and leaves events from other windows as `source=web`. Production ignores the header. At the end of the session the facilitator runs `localStorage.removeItem("ut-01-code")` and closes the private window. No name or contact detail is entered in this field.
 
 ### Environment and store
 
@@ -142,11 +143,11 @@ The field is added to the reused events' rows in [the event table](../../analyti
 - **Emitted by:** the staging backend, as for every Week 6 event.
 - **Store:** the staging OpenPanel project.
   After the sessions, a filtered text export of the test's events, with the event name, the time, `source`, `participant_code`, and the event's own fields, and no IP address, location, user agent, referrer, or free text, is kept in the private usability-data repository.
-- **Metrics:** every dashboard and metric query excludes `source=usability-test`, as it already excludes `source=smoke`.
+- **Metrics:** the dashboard provisioning script filters out both `source=usability-test` and `source=smoke`; the metric definitions in [the analytics plan](../../analytics.md#the-value-and-the-metrics) use the same exclusions. Re-provision the staging and production dashboards after deploying the instrumentation so existing charts get the updated filter.
 
 ### How one session's records are told apart
 
-Each session uses the staging learner account reset from the seed before it, and the facilitator sets the session's `P-nn` code on staging before the participant sits down; the backend then tags that account's events with `source=usability-test` and that `participant_code`.
+Each session uses the staging learner account reset from the seed before it, and the facilitator sets the session's `P-nn` code in that session's private browser window before the participant sits down; the backend then tags that window's events with `source=usability-test` and that `participant_code`.
 The observer also writes each task's start and end time on the observation sheet, so a session's events can be cut into tasks by time window.
 The `P-nn` code is the exception to the opaque-identifier rule; the mapping from code to person stays in the private repository.
 

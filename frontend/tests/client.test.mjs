@@ -149,6 +149,16 @@ test('service generation makes no browser LLM request', async () => {
   assert.equal(calls[0].headers['X-LLM'], undefined)
 })
 
+test('UT-01 code goes only to the app API and not the model provider', async () => {
+  browserKey()
+  local.set('ut-01-code', 'P-01')
+  responses.push(json([]), json({ choices: [{ message: { content: '{"cards":[]}' } }] }))
+  await api.decks()
+  await callLLM(request)
+  assert.equal(calls[0].headers['X-UT-01-Code'], 'P-01')
+  assert.equal(calls[1].headers['X-UT-01-Code'], undefined)
+})
+
 test('own-key generation sends the key only to the provider and returns checked output to the API', async () => {
   browserKey()
   responses.push(

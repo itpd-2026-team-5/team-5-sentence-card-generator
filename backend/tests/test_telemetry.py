@@ -66,6 +66,62 @@ def test_usage_event_keeps_only_counts_and_billing_scope():
     }
 
 
+def test_staging_browser_code_tags_only_that_request(client):
+    with (
+        patch.object(analytics.settings, "telemetry_enabled", True),
+        patch.object(analytics.settings, "telemetry_environment", "staging"),
+        patch.object(analytics.settings, "openpanel_url", "https://example.invalid"),
+        patch.object(analytics.settings, "openpanel_client_id", "id"),
+        patch.object(analytics.settings, "openpanel_client_secret", "secret"),
+        patch.object(analytics._worker, "submit") as submit,
+    ):
+        body = {"title": "Practice", "body": "Hallo Welt."}
+        assert (
+            client.post("/api/texts", json=body, headers={"X-UT-01-Code": "P-01"}).status_code
+            == 201
+        )
+        assert submit.call_args.args[2] == {
+            "source": "usability-test",
+            "environment": "staging",
+            "language": "de",
+            "participant_code": "P-01",
+        }
+
+        assert client.post("/api/texts", json=body).status_code == 201
+        assert submit.call_args.args[2]["source"] == "web"
+        assert "participant_code" not in submit.call_args.args[2]
+
+        assert (
+            client.post(
+                "/api/texts", json=body, headers={"X-UT-01-Code": "name@example.com"}
+            ).status_code
+            == 400
+        )
+        assert submit.call_count == 2
+
+
+def test_production_ignores_usability_header(client):
+    with (
+        patch.object(analytics.settings, "telemetry_enabled", True),
+        patch.object(analytics.settings, "telemetry_environment", "production"),
+        patch.object(analytics.settings, "openpanel_url", "https://example.invalid"),
+        patch.object(analytics.settings, "openpanel_client_id", "id"),
+        patch.object(analytics.settings, "openpanel_client_secret", "secret"),
+        patch.object(analytics._worker, "submit") as submit,
+    ):
+        response = client.post(
+            "/api/texts",
+            json={"title": "Practice", "body": "Hallo Welt."},
+            headers={"X-UT-01-Code": "P-01"},
+        )
+        assert response.status_code == 201
+        assert submit.call_args.args[2] == {
+            "source": "web",
+            "environment": "production",
+            "language": "de",
+        }
+
+
 def test_request_signal_records_failed_response():
     records = []
     logs = []
