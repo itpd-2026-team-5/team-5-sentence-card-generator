@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Update the UT-01 schedule risk to distinguish merged instrumentation from staging verification.
 - Link the private UT-01 evidence repository from the public test record.
+- Clarify that deployed analytics dashboards exclude UT-01 test events after reprovisioning.
 
 ### Fixed
 
