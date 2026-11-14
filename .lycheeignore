@@ -7,5 +7,6 @@
 ^https://www\.figma\.com/board/BNB6VIlMsWQBvprl1BtgjX/
 
 # UT-01 raw-data repository requires GitHub authentication, so the link checker cannot open it.
-# Manual instructor access check pending (2026-11-14); replace with the verified date before merge.
+# Authenticated Git SSH read succeeded on 2026-11-14. Browser and instructor checks pending;
+# record the browser verification date before merging this change.
 ^https://github\.com/itpd-2026-team-5/team-5-sentence-card-generator-usability-data(?:/.*)?$
