@@ -116,4 +116,17 @@ After each counted session, the keeper writes `sessions/P-nn.md` from this templ
 ## Dry run
 
 The dry run under [#252](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/252) follows this sheet with a teammate as the participant, to check the wording, the time limits, generation on staging, and the instrumentation.
-It is not evidence, it is not counted, and it gets no `P-nn` code; its date and the changes it caused are recorded here when it has run.
+It is readiness evidence, not a usability result or a counted participant session, and it gets no `P-nn` code; its date and the changes it caused are recorded here when it has run.
+Because the first counted session is planned for SPRINT-08, this rehearsal does not replace the separate [instrumentation verification](../README.md#verification-before-the-first-counted-session) before that session.
+
+**Dry-run status:** Not run. Replace this status and complete the record below after the rehearsal; do not infer a pass from a healthy staging endpoint alone.
+
+| Check | Observed result and evidence |
+| --- | --- |
+| Date, staging commit, facilitator, observer, and teammate playing the participant | Pending |
+| Consent and recording explanation, private storage, and cleanup of working copies | Pending |
+| Main and secondary scenario wording, start and end states, and time limits | Pending |
+| Think-aloud, help rule, observation sheet, SEQ after each task, SUS, and post-test flow | Pending |
+| Staging generation and telemetry capture, without counting the run as participant data | Pending |
+| Defects found, changes required, and retest results | Pending |
+| Readiness decision before the first counted session, with owner for each remaining blocker | Pending |

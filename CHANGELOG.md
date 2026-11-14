@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Update the UT-01 schedule risk to distinguish merged instrumentation from staging verification.
 - Link the private UT-01 evidence repository from the public test record.
+- Add a dry-run readiness record to the UT-01 session sheet.
 
 ### Fixed
 
