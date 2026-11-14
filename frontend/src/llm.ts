@@ -36,7 +36,7 @@ export const PROVIDERS: Record<
     defaultUrl: "https://openrouter.ai/api/v1",
     // Model names differ per provider; the learner types the one their provider lists.
     models: [],
-    hint: "Any provider with an OpenAI-style /chat/completions endpoint and JSON-schema output. Type the model name exactly as your provider lists it.",
+    hint: "Any provider with an OpenAI-style /chat/completions endpoint. Type the model name exactly as your provider lists it.",
   },
 };
 
@@ -223,27 +223,54 @@ export async function listModels(
 /** OpenRouter and other providers with an OpenAI-style chat completions endpoint. */
 async function callOpenAICompatible(request: LLMRequest): Promise<LLMOutput> {
   const base = ownKey.baseUrl().replace(/\/+$/, "");
-  let response: Response;
-  try {
-    response = await fetch(`${base}/chat/completions`, {
+  const requestBody = {
+    model: ownKey.model(),
+    max_tokens: 16000,
+    messages: [
+      { role: "system", content: request.system },
+      { role: "user", content: request.prompt },
+    ],
+  };
+  const send = (structured: boolean) =>
+    fetch(`${base}/chat/completions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${ownKey.get()}`,
       },
       body: JSON.stringify({
-        model: ownKey.model(),
-        max_tokens: 16000,
-        messages: [
-          { role: "system", content: request.system },
-          { role: "user", content: request.prompt },
-        ],
-        response_format: {
-          type: "json_schema",
-          json_schema: { name: "cards", strict: true, schema: request.schema },
-        },
+        ...requestBody,
+        ...(structured
+          ? {
+              response_format: {
+                type: "json_schema",
+                json_schema: {
+                  name: "cards",
+                  strict: true,
+                  schema: request.schema,
+                },
+              },
+            }
+          : {}),
       }),
     });
+  let response: Response;
+  try {
+    response = await send(true);
+    if (response.status === 400 || response.status === 422) {
+      const error = await response
+        .clone()
+        .json()
+        .catch(() => ({}));
+      const message = error?.error?.message;
+      const param = error?.error?.param;
+      if (
+        (typeof message === "string" && message.includes("response_format")) ||
+        param === "response_format"
+      ) {
+        response = await send(false);
+      }
+    }
   } catch {
     throw new Error(t("Could not reach the provider from this browser."));
   }
