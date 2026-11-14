@@ -116,7 +116,7 @@ After each counted session, the keeper writes `sessions/P-nn.md` from this templ
 ## Dry run
 
 The dry run under [#252](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/252) follows this sheet with a teammate as the participant, to check the wording, the time limits, generation on staging, and the instrumentation.
-It is readiness evidence, not a usability result or a counted participant session, and it gets no `P-nn` code; its date and the changes it caused are recorded here when it has run.
+It is readiness evidence, not a usability result or a counted participant session. Reserve `P-998` solely as a synthetic dry-run telemetry code; never assign it to a real participant. In the private staging browser window, set `localStorage.setItem("ut-01-code", "P-998")` before rehearsal actions, then run `localStorage.removeItem("ut-01-code")` and close the window afterward. This marks rehearsal events `source=usability-test` so they do not enter product metrics. Its date and the changes it caused are recorded here when it has run.
 Because the first counted session is planned for SPRINT-08, this rehearsal does not replace the separate [instrumentation verification](../README.md#verification-before-the-first-counted-session) before that session.
 
 **Dry-run status:** Not run. Replace this status and complete the record below after the rehearsal; do not infer a pass from a healthy staging endpoint alone.
