@@ -161,7 +161,7 @@ The `P-nn` code is the exception to the opaque-identifier rule; the mapping from
 ### Verification before the first counted session
 
 Under [#254](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/254), a teammate runs the main task on staging with a test code, and the team confirms that the events reach the staging OpenPanel project with `source=usability-test`, that filtering by `participant_code` returns that run and nothing else, and that the production project received none.
-The date and the result are recorded here before the first counted session.
+This separate check is scheduled at the start of [SPRINT-08](../../project-plan.md#sprint-08), after dashboard reprovisioning and before the first counted session. It moved from SPRINT-07 to test the deployed setup immediately before execution. The date and the result are recorded here before the first counted session.
 Not yet verified.
 
 ## Analysis Plan

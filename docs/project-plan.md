@@ -111,6 +111,7 @@ The `UT-01` usability test is designed and prepared, and the team's recruitment 
 ### SPRINT-08
 
 The usability sessions run, the results are analyzed, and the findings are triaged into the product backlog.
+The separate [UT-01 instrumentation verification](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/254) moves from SPRINT-07 to the start of SPRINT-08 so it can check the deployed staging events and re-provisioned dashboards immediately before the first counted session. No counted session starts until that check passes.
 
 - **Due:** 2026-11-21
 - **Sprint Backlog:** [SPRINT-08 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/6)
