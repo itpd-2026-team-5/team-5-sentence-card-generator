@@ -12,6 +12,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Tag staging usability-test events with a participant code and keep them out of product metrics.
 - Define the UT-01 first-use usability requirement and its manual test before counted sessions.
 
+### Changed
+
+- Update the UT-01 schedule risk to distinguish merged instrumentation from staging verification.
+
 ### Fixed
 
 - Retry browser-key card generation without structured output when an OpenAI-compatible gateway rejects `response_format`.
