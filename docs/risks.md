@@ -119,8 +119,8 @@ The sessions depend on staging card generation, verified instrumentation, and pa
 - **Impact:** High
   - The run week's submission would carry no usability result, and the `QR-11` row would stay unsettled.
 - **Likelihood:** Medium
-  - Card generation has failed to reach a model provider from the university VM before, per [the deployment log](deployment.md), and the instrumentation is not yet implemented or verified.
+  - Card generation has failed to reach a model provider from the university VM before, per [the deployment log](deployment.md). The instrumentation implementation is merged, but its behavior is not yet verified on staging.
 - **Trigger:** The instrumentation is not verified, or staging generation does not work, by 2026-11-17, or fewer than three sessions are complete by 2026-11-20.
 - **Window:** SPRINT-08.
-- **Mitigation:** Finish the instrumentation and the dry run in SPRINT-07, check staging generation before each session, and arrange the sessions early in SPRINT-08.
+- **Mitigation:** Verify the deployed instrumentation and complete the dry run before counted sessions, check staging generation before each session, and arrange the sessions early in SPRINT-08.
 - **Contingency:** Move the `QR-11` testing-plan row to SPRINT-09 with a reason, declare the open window in the weekly report, and claim no result.
