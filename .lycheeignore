@@ -5,3 +5,7 @@
 # Figma research board: returns 403 to automated requests, so it cannot be checked mechanically.
 # Opened manually in a private browser window on 2026-10-02: loads without login.
 ^https://www\.figma\.com/board/BNB6VIlMsWQBvprl1BtgjX/
+
+# UT-01 raw-data repository requires GitHub authentication, so the link checker cannot open it.
+# Manual instructor access check pending (2026-11-14); replace with the verified date before merge.
+^https://github\.com/itpd-2026-team-5/team-5-sentence-card-generator-usability-data(?:/.*)?$
