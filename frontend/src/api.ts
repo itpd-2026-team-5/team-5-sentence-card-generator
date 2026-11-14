@@ -1,5 +1,6 @@
 import { t } from "./i18n";
 import { callLLM, ownKey, type LLMRequest } from "./llm";
+import { local } from "./storage";
 
 export type Language = "en" | "de" | "ru";
 export type Level = "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
@@ -209,10 +210,13 @@ async function request<T>(
   body?: unknown,
   headers: Record<string, string> = {},
 ): Promise<T> {
+  // The facilitator sets this only in the private staging browser window for UT-01.
+  const participantCode = local.get("ut-01-code", "");
   const response = await fetch(`/api${path}`, {
     method,
     headers: {
       ...headers,
+      ...(participantCode ? { "X-UT-01-Code": participantCode } : {}),
       ...(body === undefined ? {} : { "Content-Type": "application/json" }),
     },
     body: body === undefined ? undefined : JSON.stringify(body),

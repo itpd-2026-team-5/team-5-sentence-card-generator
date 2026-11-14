@@ -28,7 +28,7 @@ SLI_QUERY = (
 SOURCE_FILTER = {
     "name": "properties.source",
     "operator": "isNot",
-    "value": ["smoke"],
+    "value": ["smoke", "usability-test"],
     "type": "string",
 }
 

@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - Prepare the UT-01 consent form for recorded, sanitized usability sessions.
+- Tag staging usability-test events with a participant code and keep them out of product metrics.
+- Define the UT-01 first-use usability requirement and its manual test before counted sessions.
 
 ### Fixed
 
