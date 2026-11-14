@@ -1,3 +1,4 @@
+import re
 from typing import cast
 
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response
@@ -8,7 +9,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app import observability, study
-from app.analytics import track
+from app.analytics import participant_code_context, track
 from app.auth import (
     check_password,
     current_user,
@@ -95,6 +96,35 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+class UsabilityEventTagger:
+    """Tag only the facilitator's staging browser, never production or other users."""
+
+    def __init__(self, wrapped_app):
+        self.wrapped_app = wrapped_app
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] != "http" or settings.telemetry_environment != "staging":
+            return await self.wrapped_app(scope, receive, send)
+        raw_code = dict(scope["headers"]).get(b"x-ut-01-code")
+        if not raw_code:
+            return await self.wrapped_app(scope, receive, send)
+        try:
+            code = raw_code.decode("ascii")
+        except UnicodeDecodeError:
+            code = ""
+        if not re.fullmatch(r"P-\d{2,3}", code):
+            response = JSONResponse({"detail": "Invalid UT-01 participant code"}, status_code=400)
+            return await response(scope, receive, send)
+        token = participant_code_context.set(code)
+        try:
+            return await self.wrapped_app(scope, receive, send)
+        finally:
+            participant_code_context.reset(token)
+
+
+app.add_middleware(UsabilityEventTagger)
 
 FIRST_DECK = "My first deck"
 

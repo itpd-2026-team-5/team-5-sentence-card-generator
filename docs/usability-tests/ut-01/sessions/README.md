@@ -10,7 +10,7 @@ No counted session has run, and this directory carries no session note yet.
 - [ ] The participant's signed consent is in the private usability-data repository, covering the recording and the sanitized public results.
 - [ ] The instrumentation was verified before the first counted session, per [Instrumentation](../README.md#verification-before-the-first-counted-session).
 - [ ] The staging demo data is reset with `python -m app.seed --reset`.
-- [ ] The session's `P-nn` code is set on staging, and a test action shows an event with `source=usability-test` and that code.
+- [ ] In the private staging browser window, set `localStorage.setItem("ut-01-code", "P-01")` in the console, using this session's code; a test action shows an event with `source=usability-test` and that code. Clear it and close the window after the session.
 - [ ] Card generation works on staging: a teammate generated one card after the reset and deleted it.
 - [ ] The team's laptop is on the university network, the browser shows the sign-in page in a private window, and the session account's sign-in is ready.
 - [ ] The recorder captures the screen and the voice, and the printed text and scenario cards are on the desk.

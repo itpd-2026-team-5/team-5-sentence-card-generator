@@ -3,12 +3,15 @@
 import json
 import logging
 from concurrent.futures import ThreadPoolExecutor
+from contextvars import ContextVar
 from urllib.request import Request, urlopen
 
 from app.config import settings
 
 log = logging.getLogger(__name__)
 _worker = ThreadPoolExecutor(max_workers=1, thread_name_prefix="analytics")
+# Set only for a staging request from the facilitator's UT-01 browser window.
+participant_code_context: ContextVar[str | None] = ContextVar("ut01_participant_code", default=None)
 EVENTS = {
     "text_added": {"language"},
     "word_marked": {"language", "action"},
@@ -48,10 +51,14 @@ def track(name: str, *, source: str = "web", **fields: str | int | bool) -> None
         raise ValueError("Unknown analytics event or source")
     if set(fields) != EVENTS[name]:
         raise ValueError("Analytics event fields differ from the registry")
+    code = participant_code_context.get() if settings.telemetry_environment == "staging" else None
+    if code and source == "web":
+        source = "usability-test"
+    properties = {"source": source, "environment": settings.telemetry_environment, **fields}
+    if code and source == "usability-test":
+        properties["participant_code"] = code
     if not settings.telemetry_enabled or not all(
         (settings.openpanel_url, settings.openpanel_client_id, settings.openpanel_client_secret)
     ):
         return
-    _worker.submit(
-        _send, name, {"source": source, "environment": settings.telemetry_environment, **fields}
-    )
+    _worker.submit(_send, name, properties)

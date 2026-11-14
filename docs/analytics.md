@@ -32,7 +32,7 @@ Rejected as a vanity metric: account registrations, because registration alone c
 
 **Source:** [`study_review_completed`](#the-events).
 
-**Query:** OpenPanel event count for `study_review_completed`, trailing seven days, filter `source != smoke`, grouped by day. The dashboard computes this query.
+**Query:** OpenPanel event count for `study_review_completed`, trailing seven days, filter `source` out of `smoke` and `usability-test`, grouped by day. The dashboard computes this query.
 
 ### Generation failure rate
 
@@ -40,7 +40,7 @@ Rejected as a vanity metric: account registrations, because registration alone c
 
 **Source:** [`generation_failed`](#the-events), [`generation_completed`](#the-events).
 
-**Query:** OpenPanel event counts, trailing seven days, filter `source != smoke`; divide `generation_failed` by the sum of `generation_failed` and `generation_completed`, multiplied by 100.
+**Query:** OpenPanel event counts, trailing seven days, filter `source` out of `smoke` and `usability-test`; divide `generation_failed` by the sum of `generation_failed` and `generation_completed`, multiplied by 100.
 
 ### Generated cards
 
@@ -48,7 +48,7 @@ Rejected as a vanity metric: account registrations, because registration alone c
 
 **Source:** [`generation_completed`](#the-events).
 
-**Query:** OpenPanel sum of `card_count` on `generation_completed`, trailing seven days, filter `source != smoke`.
+**Query:** OpenPanel sum of `card_count` on `generation_completed`, trailing seven days, filter `source` out of `smoke` and `usability-test`.
 
 ### Marked words
 
@@ -56,7 +56,7 @@ Rejected as a vanity metric: account registrations, because registration alone c
 
 **Source:** [`word_marked`](#the-events).
 
-**Query:** OpenPanel event count for `word_marked`, trailing seven days, filters `action = learn` and `source != smoke`.
+**Query:** OpenPanel event count for `word_marked`, trailing seven days, filters `action = learn` and `source` out of `smoke` and `usability-test`.
 
 ### Texts added
 
@@ -64,11 +64,11 @@ Rejected as a vanity metric: account registrations, because registration alone c
 
 **Source:** [`text_added`](#the-events).
 
-**Query:** OpenPanel event count for `text_added`, trailing seven days, filter `source != smoke`.
+**Query:** OpenPanel event count for `text_added`, trailing seven days, filter `source` out of `smoke` and `usability-test`.
 
 ## The Events
 
-Names use `object_action` in snake case. Every row also carries `source` (enum `web`, `usability-test`, `smoke`, required) and `environment` (enum `staging`, `production`, `development`, required). The backend registry in `backend/app/analytics.py` enforces event-specific keys.
+Names use `object_action` in snake case. Every row also carries `source` (enum `web`, `usability-test`, `smoke`, required) and `environment` (enum `staging`, `production`, `development`, required). A staging usability-test event also carries `participant_code` (`P-` followed by two or three digits), which links events from one private browser window without naming a person. The backend registry in `backend/app/analytics.py` enforces event-specific keys.
 
 | Event | Fires when | Fields | Collected at |
 | --- | --- | --- | --- |
@@ -93,7 +93,7 @@ Each project needs a dashboard with a **Weekly completed study reviews** chart u
 
 ### Local operator views
 
-The local OpenPanel project groups reports as **01 · Product overview**, **02 · Learning journey**, **03 · Generation quality**, and **04 · LLM usage (tokens, not cost)**. The learning view shows activity by step, review ratings, new versus repeat reviews, and generated cards by language. The quality view shows cards regenerated, cards marked for rewriting, rewrite attempts and failures, and learner versus teacher rewrites. It also sums `rewritten_count` from initial generation batches and divides it by generated cards to show automatic rewrites per card. The usage view separates calls made with the service's key from learners' own keys and shows input and output tokens. Reports exclude `source=smoke` and use a 30-day range; operators can change the dashboard time picker.
+The local OpenPanel project groups reports as **01 · Product overview**, **02 · Learning journey**, **03 · Generation quality**, and **04 · LLM usage (tokens, not cost)**. The learning view shows activity by step, review ratings, new versus repeat reviews, and generated cards by language. The quality view shows cards regenerated, cards marked for rewriting, rewrite attempts and failures, and learner versus teacher rewrites. It also sums `rewritten_count` from initial generation batches and divides it by generated cards to show automatic rewrites per card. The usage view separates calls made with the service's key from learners' own keys and shows input and output tokens. Reports exclude `source=smoke` and `source=usability-test` and use a 30-day range; operators can change the dashboard time picker.
 
 Regeneration is a **quality signal**, not a satisfaction score. A rewrite may reflect a typo, a teacher's preference, or a request for variety. Compare it with the number of generated cards, failure rate, and study reviews before drawing conclusions. Older events have no `rewritten_count`; the automatic rewrite report starts when the updated backend emits it. Empty charts mean there were no matching events in the selected time range.
 
