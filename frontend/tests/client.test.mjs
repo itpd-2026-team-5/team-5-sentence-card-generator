@@ -170,6 +170,30 @@ test('own-key generation sends the key only to the provider and returns checked 
   })
 })
 
+test('generation retries without response_format when a gateway rejects it', async () => {
+  browserKey()
+  responses.push(
+    json({ detail: 'needs_llm', llm_request: request }, 409),
+    json({ error: { type: 'invalid_request_error', message: 'This response_format type is unavailable now' } }, 400),
+    json({ choices: [{ message: { content: '{"cards":[]}' } }] }),
+    json({ created: [{ id: 1 }] }),
+  )
+  assert.deepEqual(await api.generate(1, 2), { created: [{ id: 1 }] })
+  assert.ok(JSON.parse(calls[1].body).response_format)
+  assert.equal(JSON.parse(calls[2].body).response_format, undefined)
+  assert.equal(JSON.parse(calls[2].body).messages[1].content, request.prompt)
+  assert.equal(calls[2].headers.Authorization, 'Bearer test-key-only')
+  assert.equal(calls[3].url, '/api/texts/1/generate')
+  assert.equal(JSON.stringify(calls[3]).includes('test-key-only'), false)
+})
+
+test('generation does not retry unrelated invalid requests', async () => {
+  browserKey()
+  responses.push(json({ error: { message: 'Model does not support this request' } }, 400))
+  await assert.rejects(callLLM(request), /error \(400\)/)
+  assert.equal(calls.length, 1)
+})
+
 for (const [status, message] of [[401, /not accepted/], [403, /not accepted/], [429, /rate limiting/], [503, /error \(503\)/]]) {
   test(`provider HTTP ${status} is actionable and does not submit a failed answer`, async () => {
     browserKey()
