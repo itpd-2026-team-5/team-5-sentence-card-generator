@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- Prepare the UT-01 consent form for recorded, sanitized usability sessions.
+
 ### Fixed
 
 - Retry browser-key card generation without structured output when an OpenAI-compatible gateway rejects `response_format`.
