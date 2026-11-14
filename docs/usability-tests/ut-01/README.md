@@ -215,7 +215,7 @@ The results are due with Submission 8 on 21 November 2026.
 ## Consent And Data
 
 - **Before each session:** the participant signs the consent from the [consent template](consent.md); the recording and the sanitized public results are required, and an anonymized quote is optional.
-- **Private:** the signed consent records, the identity mapping from `P-nn` to person, the raw notes, the test's filtered telemetry export, and the working analysis are kept in the private repository `itpd-2026-team-5/team-5-sentence-card-generator-usability-data`, set up under [#248](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/248), with the team and the instructors as readers.
+- **Private:** the signed consent records, the identity mapping from `P-nn` to person, the raw notes, the test's filtered telemetry export, and the working analysis are kept in the [private usability-data repository](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator-usability-data). The team and instructors are intended readers; their access checks remain under [#248](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/248).
 - **Recordings:** kept in a team-owned cloud folder shared with the instructors; its link and access are in the private repository and the Moodle submission only.
 - **Public:** this record, the surveys, the consent template, the session sheet, the sanitized session notes, the results, and sanitized images.
 - **Retention:** after the course is graded the team deletes the private repository, its history, and the recordings; the sanitized public record stays.
