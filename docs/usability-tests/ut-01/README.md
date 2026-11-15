@@ -14,14 +14,14 @@ Assess whether a representative language learner can turn a word they chose from
 
 ## The Requirement
 
-The test serves [QR-11](../../quality-requirements/qr/QR-11.md), whose [manual QRT-01](../../quality-requirements/qr/QR-11.md#qrt-01) reads the main task's unaided-completion proportion against the pre-session 60% bar.
+The test serves [QR-11](../../quality-requirements/qr/QR-11.md), whose [manual QRT-01](../../quality-requirements/qr/QR-11.md#qrt-01) reads the main task's unaided-completion proportion against the [pre-session 80% threshold](../../quality-requirements/qr/QR-11.md#response-measure). [DEC-146](../../decisions.md#dec-146) rejects the former 60% bar and gives an 80–90% expectation; the Customer reportedly confirmed the exact 80% target in the [Telegram follow-up](../../../reports/week-07/customer-follow-up.md#confirmed-questions).
 
 ## Participant Profile
 
-- **Role:** an adult who is learning Russian as a foreign language and studies vocabulary from texts they read.
-- **Familiarity:** has used at least one flashcard or vocabulary app, such as Anki or Quizlet, but has not used this product.
+- **Role:** an adult aged 18 or older who is learning Russian or German as a foreign language and studies vocabulary from texts they read. The sample covers both learning languages, following [DEC-143](../../decisions.md#dec-143).
+- **Familiarity:** has not used this product. Prior Anki or other flashcard-app experience is optional; recruit newcomers as well as experienced users, following [DEC-144](../../decisions.md#dec-144). Screening records familiarity and understanding of cards and decks without teaching those concepts or excluding someone who does not know the English terms.
 - **Device:** the team's laptop with a mouse, in a desktop browser, so every session runs on the same device.
-- **Relation to the target user:** a learner of the kind the [product vision](../../product-vision.md) names, at about A1 to B1 in Russian, who reads English, the language the interface and the cards' translations use.
+- **Relation to the target user:** a learner of the kind the [product vision](../../product-vision.md) names, at about A1 to B1 in their chosen learning language, Russian or German, who can read the fixed English interface, card translations, task cards, and standard SEQ/SUS items. Spoken fluency in English is not required; the pre-test and open-ended interview may be conducted in Russian under [Survey language](surveys.md#survey-language).
 - **Excluded:** anyone under 18, a teammate, the Customer, the instructor, and the course staff.
   A classmate who is not on the team may take part when they match the profile.
 
@@ -30,7 +30,7 @@ A session with someone outside the profile is exploratory: it is not counted, an
 ### Recruitment target
 
 - **Target:** five representative participants, the design target, and at least three completed counted sessions.
-- **How the team finds them:** the team asks international students and staff at the university who study Russian, through the team's own contacts and the university's student chats, and checks each volunteer against the profile with the pre-test's screening questions before arranging a session.
+- **How the team finds them:** the team asks university students and staff learning Russian or German through its contacts and learning-language chats, including the German-learning channel offered by the Customer. Screening does not require prior flashcard-app use. Byakko-san recruits across both languages and experience groups. The Customer reportedly accepted the five-adult plan including both languages and a flashcard-app newcomer in the [Telegram follow-up](../../../reports/week-07/customer-follow-up.md#confirmed-questions). The team requires at least one Russian learner, one German learner, and one flashcard-app newcomer among counted participants; one person can meet more than one condition. No exact language split was agreed. Record recruitment progress and any coverage shortfall without participant identity.
 - **Codes:** `P-01`, `P-02`, and so on, assigned in the order the sessions are arranged.
   A participant who withdraws, refuses the recording, or does not consent to the sanitized public results is not counted, the code is retired, and a replacement is recruited under the next free code.
 - **Public status:** only the count of arranged and completed sessions is public; names and contact details stay in the private usability-data repository.
@@ -38,24 +38,24 @@ A session with someone outside the profile is exploratory: it is not counted, an
 ## The Tasks
 
 Every participant does the same three usability test tasks in this fixed order, with the main task first.
-The facilitator reads each scenario verbatim from [the session sheet](sessions/README.md#scenario-cards) and hands the participant the printed card.
+The facilitator reads each scenario verbatim from [the session sheet](sessions/README.md#scenario-cards) and hands the participant the printed card. Before printing, replace only `[learning language]` with `Russian` or `German`, chosen during screening. All other wording, task order, end states, time limits, and help rules are identical; the matching supplied text and deck are prepared before the participant sits down.
 
 ### Main task: turn words from a text into cards
 
-> You are reading a short Russian text about a weekend at home, and there are words in it you want to remember.
-> Keep this text in the app, choose two words from it that you would like to learn, and get study cards for them in your Russian deck.
+> You are reading a short text in [learning language] about a weekend at home, and there are words in it you want to remember.
+> Keep this text in the app, choose two words from it that you would like to learn, and get study cards for them in your [learning language] deck.
 
 - **Start point:** signed in as the session's learner account, on the first screen after sign-in, with the printed text beside the laptop.
-- **End state:** the Russian deck holds at least two new cards whose words the participant chose from the provided text.
+- **End state:** the session's chosen-language deck holds at least two new cards whose words the participant chose from the matching provided text.
 - **Time limit:** 10 minutes.
 
 ### Secondary task 1: study a chosen deck
 
-> You have a few minutes before class and want to practise only your Russian words.
+> You have a few minutes before class and want to practise only your [learning language] words.
 > Practise them until you have answered at least three cards.
 
 - **Start point:** where the main task ended.
-- **End state:** at least three study answers are saved for cards of the Russian deck, and no other deck was studied.
+- **End state:** at least three study answers are saved for cards of the session's chosen-language deck, and no other deck was studied.
 - **Time limit:** 5 minutes.
 
 ### Secondary task 2: replace a sentence you do not like
@@ -78,7 +78,7 @@ Each task's outcome is one of these, decided by the observer against the task's 
 ### Help rule
 
 Help is any action or words from a team member that point the participant towards the end state: naming or pointing at a control, a screen, or a step; confirming a choice before it is made; or doing a step for them.
-Re-reading the scenario on request and answering a question about the scenario itself, such as which deck is the Russian one, are not help.
+Re-reading the scenario on request and answering a question about the scenario itself, such as which learning language the scenario names, are not help.
 The facilitator gives help only when the participant asks for it or has been stuck for two minutes with no progress, and the observer records the time and the words of every help.
 
 ## Protocol
@@ -95,7 +95,7 @@ Every session runs in this order, from the facilitation script in [the session s
 8. **Debrief:** the facilitator answers the participant's questions about the product, thanks them, and repeats how to withdraw.
 
 The facilitator answers only questions about the scenario, never about the interface, and does not solve a task for the participant; help follows the [help rule](#help-rule).
-At least two team members run every session, and the same facilitator runs every counted session.
+At least two team members run every session, and the same facilitator runs every counted session. Use the [survey-language rules](surveys.md#survey-language) consistently; a Russian-speaking teammate may conduct the pre-test and post-test, while the named facilitator remains responsible for the task protocol and no-help rule. No one translates or explains interface controls during a timed task.
 
 **Stop rule:** the facilitator stops the session when the participant asks to stop, or when the team sees a critical or security-sensitive problem, such as another account's data on screen; the stop and its reason are recorded in the session note and in the results, and a session stopped before its data is complete is not counted as completed.
 
@@ -168,19 +168,19 @@ Not yet verified.
 
 This plan is written before the first session, and no measure is added to it after the data.
 
-- **Per-participant table:** one row per counted participant with each task's outcome, the help given, the time on task, each task's SEQ, and the SUS score.
+- **Per-participant table:** one row per counted participant with the chosen learning language, prior flashcard-app experience (including None), interview language, each task's outcome, the help given, the time on task, each task's SEQ, and the SUS score.
 - **Main-task completion:** the count and proportion of participants who reached the end state, and the count and proportion who reached it `Unaided`.
 - **Main-task time:** the median time on the main task, with the minimum and maximum.
 - **SEQ:** the median SEQ for each task, the main task and the two secondary tasks.
 - **SUS:** the mean and the median, reported with `n=<count>`, because a small sample supports no claim about a population.
-- **`QR-11`'s measure:** the count of `Unaided` main-task outcomes divided by the number of counted participants, with at least three participants. Compare that proportion with the [pre-session bar of 60%](../../quality-requirements/qr/QR-11.md#response-measure); the verdict goes in the testing plan, not in the results.
+- **`QR-11`'s measure:** the count of `Unaided` main-task outcomes divided by the number of counted participants, with at least three participants and the required language and experience groups represented. Compare `100 * Unaided / n` with the team's [pre-session 80% bar](../../quality-requirements/qr/QR-11.md#response-measure). Do not change it after seeing outcomes. The required count is `ceil(n * 0.8)`, without rounding the observed proportion up. Three counted participants require three Unaided outcomes; five require four. The verdict goes in the testing plan, not in the results.
 - **Thematic analysis:** the observations, the think-aloud remarks, and the post-test answers grouped into a small set of themes, each with the sessions it came from; a single participant's remark is not reported as a theme.
 - **Severity:** each finding rated `Critical`, `Major`, or `Minor` with its reason:
   - `Critical`: it stops a participant from reaching a task's end state, or it exposes another person's data or key;
   - `Major`: it causes an `Assisted` or `Failed` outcome, or a delay of more than a minute, for two or more participants;
   - `Minor`: friction that is observed or reported but does not change an outcome.
 - **Instrumentation comparison:** each session's events, filtered by its `participant_code` and `source=usability-test`, set against the observer's task times and outcomes; it reports where the two disagree, repeats [what the instrumentation cannot cover](#what-it-cannot-cover), and presents no test event as a product metric.
-- **Limitations:** the sample size, the participants' relation to the target user, the staging environment with the team observing, and what the team could not measure.
+- **Limitations:** the sample size, the participants' relation to the target user, the staging environment with the team observing, and what the team could not measure. Report coverage and descriptive outcomes by learning language and prior flashcard experience, including missing groups. The small groups do not support population claims or a claim that the two language texts have equivalent difficulty.
 
 ### Triage plan
 
@@ -192,10 +192,18 @@ A fix that lands in `SPRINT-08` ships in `REL-08`; a later fix moves to `SPRINT-
 
 ## Schedule
 
-The counted sessions are planned for [SPRINT-08](../../project-plan.md#sprint-08), from 16 to 20 November 2026, after the instrumentation is verified and the dry run is done.
+The counted sessions are planned for [SPRINT-08](../../project-plan.md#sprint-08), from 16 to 20 November 2026, after the instrumentation is verified, the dry run is done, and the pre-session design confirmations below are recorded.
 The team arranges each date with the participant as they are recruited, in person on the university campus and on the university network, and records the dates here; no date is fixed yet.
 A session may run in `SPRINT-07` once this design is merged; when the sessions straddle the two sprints, this section says which ran in which.
 The results are due with Submission 8 on 21 November 2026.
+
+### Pre-session design confirmations
+
+- **KaramKhaddour:** keep the reportedly [confirmed 80% bar, five-adult sample, 16–20 November session window, and 21 November results deadline](../../../reports/week-07/customer-follow-up.md#confirmed-questions) fixed before counted sessions. The follow-up did not set a separate Customer results-review appointment or exact Russian/German split.
+- **Byakko-san:** check sample coverage and freeze the printed scenario cards and matching Russian/German texts after the dry run.
+- **saleemasekrea000:** verify the staging seed, generation, instrumentation, and private instructor access before the first counted session.
+
+These are execution gates, not completed checks. The threshold is fixed, but the test remains Planned and its QRT remains Not verified until the dry run, live verification, recruitment, and counted sessions provide evidence; a teammate dry run is never counted.
 
 ## Roles
 
@@ -206,7 +214,7 @@ The results are due with Submission 8 on 21 November 2026.
 ## Environment
 
 - **Deployment:** the staging deployment on the university VM, reached from the university network on the team's laptop.
-- **Seed:** before each session the demo data is reset with `python -m app.seed --reset`, so the learner account starts with the seeded decks, including the Russian deck, and nothing from an earlier session.
+- **Seed:** before each session reset the demo data with `python -m app.seed --reset`. Prepare the [language-specific session setup](sessions/README.md#language-and-data-setup) on that synthetic account, including a matching Russian or German deck and at least three answerable cards for the study task. Use the same English interface and translation language in every session. The participant starts without the new weekend text or its cards, and no earlier participant data remains.
 - **Generation:** the staging deployment's configured model provider writes the sentences; the participant never enters an API key.
   The dry run confirms that generation works on staging before the first counted session, and a session does not start when it does not.
 - **Payment:** no real payment is made; the product takes no payment.

@@ -100,7 +100,7 @@ The Customer approved releasing the deployed version with the production Claude 
 
 ### SPRINT-07
 
-The `UT-01` usability test is designed and prepared, and the team's recruitment target is five representative participants for Week 8.
+The `UT-01` usability test is designed for Russian and German learners, including flashcard-app newcomers. The Customer reportedly confirmed the five-adult plan, QR-11's 80% unaided-completion bar, the 16–20 November session window, and results by 21 November in a [Telegram follow-up](../reports/week-07/customer-follow-up.md#confirmed-questions). The dry run and live staging instrumentation check remain prerequisites for counted sessions.
 
 - **Due:** 2026-11-15
 - **Sprint Backlog:** [SPRINT-07 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/5)
@@ -110,7 +110,7 @@ The `UT-01` usability test is designed and prepared, and the team's recruitment 
 
 ### SPRINT-08
 
-The usability sessions run, the results are analyzed, and the findings are triaged into the product backlog.
+The usability sessions are planned for 16–20 November with at least one Russian learner, one German learner, and one flashcard-app newcomer among at least three counted participants; results are due by 21 November, then the findings are triaged into the product backlog.
 
 - **Due:** 2026-11-21
 - **Sprint Backlog:** [SPRINT-08 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/6)
@@ -133,10 +133,10 @@ The tests themselves are in their requirements' files.
 
 | QR | QRT | Status | Checked | Planned for sprint | Evidence |
 | --- | --- | --- | --- | --- | --- |
-| [QR-03](quality-requirements/qr/QR-03.md) | [QR-03 QRT-01](quality-requirements/qr/QR-03.md#qrt-01) | Not verified | None | [SPRINT-07](#sprint-07) | Moved from SPRINT-06: the real-provider multilingual sample and reviewer verdicts were not available by the deadline. |
-| [QR-01](quality-requirements/qr/QR-01.md) | [QR-01 QRT-01](quality-requirements/qr/QR-01.md#qrt-01) | Not verified | None | [SPRINT-07](#sprint-07) | Moved from SPRINT-06: the deployed learner, teacher, and real-key isolation check was not run by the deadline. |
+| [QR-03](quality-requirements/qr/QR-03.md) | [QR-03 QRT-01](quality-requirements/qr/QR-03.md#qrt-01) | Not verified | None | [SPRINT-08](#sprint-08) | Moved from SPRINT-07: the 30 first-generated cards in each of Russian, English, and German and the reviewer and learner verdicts were not recorded by the deadline. The test also moved from SPRINT-06 for lack of the same evidence. |
+| [QR-01](quality-requirements/qr/QR-01.md) | [QR-01 QRT-01](quality-requirements/qr/QR-01.md#qrt-01) | Not verified | None | [SPRINT-08](#sprint-08) | Moved from SPRINT-07: the specified `backend/tests/test_confidentiality.py` CI test is absent, and the separate-account, real-key deployed isolation check has no recorded result. The deployed check also remained open after SPRINT-06. |
 | [QR-02](quality-requirements/qr/QR-02.md) | [QR-02 QRT-01](quality-requirements/qr/QR-02.md#qrt-01) | Passes | [SPRINT-06](#sprint-06) | [SPRINT-05](#sprint-05) | [2026-11-08 Product checks on main at `3cde59f`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/actions/runs/42501364765), CI: backend Test 15 s + frontend Type check 1 s + Build 2 s = 18 s, below 3 minutes; both jobs passed |
-| [QR-06](quality-requirements/qr/QR-06.md) | [QR-06 QRT-01](quality-requirements/qr/QR-06.md#qrt-01) | Not verified | None | [SPRINT-07](#sprint-07) | Moved from SPRINT-06: the complete phone-width workflow inspection was not recorded by the deadline. |
+| [QR-06](quality-requirements/qr/QR-06.md) | [QR-06 QRT-01](quality-requirements/qr/QR-06.md#qrt-01) | Not verified | None | [SPRINT-08](#sprint-08) | Moved from SPRINT-07: the specified `scripts/check-phone-layout.mjs` is absent, so the complete 360- and 390-pixel learner and teacher workflow check has no recorded result. It also moved from SPRINT-06 for lack of that evidence. |
 | [QR-07](quality-requirements/qr/QR-07.md) | [QR-07 QRT-01](quality-requirements/qr/QR-07.md#qrt-01) | Passes | [SPRINT-05](#sprint-05) | [SPRINT-05](#sprint-05) | [Staging run of `scripts/check-restart.sh` on `b904ab3`](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/blob/main/reports/week-05/README.md#qr-07-qrt-01-on-the-release-commit) |
 | [QR-10](quality-requirements/qr/QR-10.md) | [QR-10 QRT-01](quality-requirements/qr/QR-10.md#qrt-01) | Passes | [SPRINT-06](#sprint-06) | [SPRINT-06](#sprint-06) | [Late Week 6 staging core-task failure check on 2026-11-09](../reports/week-06/qr10-evidence.md): log 0.861 s, numeric SLI-01 P95 24.704 ms after 9.175 s. The 2026-11-08 run did not observe P95 within one minute; this pass occurred after the sprint deadline. |
 | [QR-11](quality-requirements/qr/QR-11.md) | [QR-11 QRT-01](quality-requirements/qr/QR-11.md#qrt-01) | Not verified | None | [SPRINT-08](#sprint-08) | None |

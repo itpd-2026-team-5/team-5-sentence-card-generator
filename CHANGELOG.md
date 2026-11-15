@@ -14,9 +14,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Fix QR-11's pre-session usability pass bar at 80%, record the Customer's reported confirmation and the planned session dates, and document the minimum Russian, German, and flashcard-newcomer sample.
 - Update the UT-01 schedule risk to distinguish merged instrumentation from staging verification.
 - Link the private UT-01 evidence repository from the public test record.
-- Add a dry-run readiness record to the UT-01 session sheet.
+- Record the UT-01 dry run and its readiness decision in the session sheet.
 
 ### Fixed
 
