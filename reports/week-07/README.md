@@ -4,7 +4,7 @@
 
 The team planned [SPRINT-07](../../docs/project-plan.md#sprint-07) and designed [UT-01](../../docs/usability-tests/ut-01/README.md) for first-time Russian and German learners, including people new to flashcard apps. The design target is five adults, with at least three counted sessions required. The Customer reportedly confirmed the [80% unaided main-task target and the 16–20 November session plan](customer-follow-up.md#confirmed-questions), with results due by 21 November. The [QR-11 manual test](../../docs/quality-requirements/qr/QR-11.md#qrt-01) remains `Not verified`; no participant result is claimed.
 
-The [Week 7 Customer review](meeting-report.md) and [sanitized transcript](meeting-transcript.md) record the product and test-design feedback. The three quality checks scheduled for SPRINT-07 were not completed and have been moved, with individual reasons, to SPRINT-08 in the [testing plan](../../docs/project-plan.md#quality-requirement-testing-plan). The sprint closed with an Actual Velocity of 0, recorded in the [SPRINT-07 retrospective](sprint-retrospective.md); `REL-07` and the final submission evidence remain to be completed separately.
+The [Week 7 Customer review](meeting-report.md) and [sanitized transcript](meeting-transcript.md) record the product and test-design feedback. The three quality checks scheduled for SPRINT-07 were not completed and have been moved, with individual reasons, to SPRINT-08 in the [testing plan](../../docs/project-plan.md#quality-requirement-testing-plan). The sprint closed with an Actual Velocity of 0, recorded in the [SPRINT-07 retrospective](sprint-retrospective.md). [REL-07 v0.7.0](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.7.0) was published on 2026-11-15; final submission evidence remains to be completed separately.
 
 ## Usability test
 
@@ -32,9 +32,9 @@ The public [consent template](../../docs/usability-tests/ut-01/consent.md) and [
 | Glossary and risk register | [Glossary](../../docs/glossary.md) and [risks](../../docs/risks.md) |
 | Week 6 follow-up | [Previous action outcomes](meeting-report.md#previous-action-points) and [previous question outcomes](meeting-report.md#previous-open-questions) |
 | Customer review | [Meeting report](meeting-report.md), [script](meeting-script.md), [transcript](meeting-transcript.md), and [Telegram follow-up record](customer-follow-up.md) |
-| REL-07 | [Release plan block](../../docs/project-plan.md#rel-07) is still empty; release not claimed |
+| REL-07 | [v0.7.0 release](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.7.0) on commit `014c6b18f4fe6061cc81b9b7f67b416edceefadc`; staging and production health checks passed after deployment on 2026-11-15. The earlier UI check was on the same application code but before the final documentation-only checkout; a new tagged-checkout generation/audio result and screenshot are not recorded. |
 | Sprint retrospective | [sprint-retrospective.md](sprint-retrospective.md) and [Actual Velocity](../../docs/project-plan.md#sprint-07) |
-| AI usage | [Open AI usage PR #277](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/277); not yet merged in this report's base commit |
+| AI usage | [Week 7 AI usage](ai-usage.md), merged in [PR #277](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/pull/277) |
 
 ## Deviations
 
