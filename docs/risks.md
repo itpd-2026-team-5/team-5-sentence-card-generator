@@ -100,16 +100,16 @@ A participant may withdraw or refuse the recording or the sanitized public resul
 
 ## RISK-07
 
-The private usability-data repository has been created, but instructor access to it and the recordings folder is not yet confirmed, so instructors may be unable to inspect the raw usability evidence, which would make the public results unverifiable.
+The private usability-data repository exists and instructor access to it and the recordings folder was reported, but neither opening check was independently observed. The recordings folder is in a personal My Drive because Shared drives are unavailable in that account, leaving the team-owned storage requirement unmet and future access dependent on one person's account.
 
 - **Status:** Open
 - **Impact:** Medium
   - Instructors could not check the consent records, raw notes, or recordings behind the public results, even though the repository itself exists.
 - **Likelihood:** Medium
-  - The private repository has been created and is linked from [UT-01's consent and data section](usability-tests/ut-01/README.md#consent-and-data). [DEC-159](decisions.md#dec-159) records discussion of the repository invitation and planned recordings-folder invitation, but neither invitation acceptance nor folder access was demonstrated. The [access checks](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/248) remain unconfirmed.
-- **Trigger:** An instructor reports that they cannot open the repository or the recordings folder, an invitation is pending, or either access check remains unconfirmed before the first counted session or at submission.
+  - The private repository is linked from [UT-01's consent and data section](usability-tests/ut-01/README.md#consent-and-data), and KaramKhaddour reported instructor access to both locations on 2026-11-15. The access reports were not independently tested here; the personal-My-Drive ownership deviation remains under [#248](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/248).
+- **Trigger:** An instructor reports that they cannot open the repository or the recordings folder, the personal account loses access, or either access check remains unconfirmed before the first counted session or at submission.
 - **Window:** SPRINT-07 and SPRINT-08, before the first counted session and before each submission.
-- **Mitigation:** Confirm that the existing repository is private and each instructor can read it. Confirm that the team-owned recordings folder exists, send or resend the required invitations, and obtain confirmation that each instructor can open both locations. Record the verification outcome and date; keep the folder link and access instructions in the private repository and Moodle wrapper, not in this register.
+- **Mitigation:** Confirm that the existing repository is private, the My Drive folder is restricted, and each instructor can open both locations. Record the verification outcome and date; keep the folder link and access instructions in the private repository and Moodle wrapper, not in this register. Look for a team-owned alternative before the Week 8 real participant sessions. If one is available, move the recordings there, update the private links, and recheck access. Otherwise, retain the restricted My Drive folder and the declared ownership deviation.
 - **Contingency:** Resolve failed invitations directly with the affected instructor before submission; if GitHub access is unavailable, provide the private text through a Moodle-only archive and declare that deviation, while retaining the recordings in an instructor-accessible private cloud folder.
 - **Owner:** saleemasekrea000, following the [Week 7 access action](../reports/week-07/meeting-report.md#action-points).
 
