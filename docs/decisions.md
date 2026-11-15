@@ -941,7 +941,7 @@ If card reordering is implemented, keep the user-defined order separate from car
 
 Postpone individual-card reordering rather than scheduling it as required work for the next sprint.
 
-- **Status:** Active
+- **Status:** Reversed by [DEC-137](#dec-137)
 - **Date:** 2026-10-31
 - **Made by:** Customer
 - **Source:** [the Week 5 validation meeting](../reports/week-05/meeting-report.md#decisions), with [transcript evidence](../reports/week-05/meeting-transcript.md).
@@ -1266,3 +1266,354 @@ Accept REL-06 with the production Claude API connection limitation stated and th
 - **Made by:** Customer
 - **Source:** [the supplemental written review](../reports/week-06/written-review-transcript.md#release-decision).
 - **Why:** The Customer answered yes to releasing the deployed version with production generation returning HTTP 502 while existing cards open. This approves release scope; it does not establish that the release tag, changelog, or final production verification has been completed.
+
+## DEC-127
+
+Guide first-time learners from empty views to adding a text and generating their first cards.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 00:02:19-00:03:40, the Customer proposed hints and a direct route to Add text because a learner with no cards or decks otherwise has to discover the starting action.
+
+## DEC-128
+
+Place clear word-selection instructions above search and visually separate the source text from the controls.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 00:06:52-00:09:56 and 00:23:06-00:23:17, the Customer prioritized the instructions over search, requested visible text boundaries, and asked for Learn, Ignore, and unselected-word behavior to be explained.
+
+## DEC-129
+
+Do not underline other occurrences of a selected word merely because their spelling matches.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 00:10:19-00:14:21, the Customer found repeated-word highlighting confusing and noted that the selection view had not established whether the occurrences shared a meaning.
+
+## DEC-130
+
+Avoid generating a second card for the same selected word from an identical source sentence.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 00:12:07-00:14:05, the Customer distinguished identical source sentences from different contexts and placed this duplicate check at generation time; different sentences are not treated as identical solely because the word repeats.
+
+## DEC-131
+
+Handle duplicate-word cards within the deck rather than warning during text-to-card creation.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 00:20:01-00:22:40, the Customer noted that editing can also create duplicate words and moved duplicate handling to the common destination, the deck. This settles the warning location; it does not explicitly remove the informational deck labels required by DEC-066.
+
+## DEC-132
+
+Validate generated card content so that a card contains one sentence.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 00:23:37-00:24:15, the Customer identified two full stops in one generated card and requested sentence-boundary validation, including question and exclamation marks.
+
+## DEC-133
+
+Explain regeneration as rewriting an unwanted sentence, with corrective feedback clearly optional.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 00:25:26-00:27:38, the Customer asked for wording tied to the learner's intention rather than only describing model instructions, and kept the What was wrong input optional.
+
+## DEC-134
+
+Explain which selected decks receive additional cards generated for a word.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 00:28:01-00:28:44, the Customer could not tell where an additional card would be added and requested wording that names the selected destination decks.
+
+## DEC-135
+
+Describe deletion as permanent removal rather than using the idiom for good.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 00:30:02-00:31:01, the Customer accepted learner Archive and Delete controls but found the idiom unclear for non-native English readers and requested an explicit distinction from archiving.
+
+## DEC-136
+
+Offer clear next-step guidance from generated cards to studying or editing their decks.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 00:31:44-00:32:04 and 00:37:28-00:38:57, the Customer found no clear continuation after generation and discussed links to Study and Decks so learners do not get stuck.
+
+## DEC-137
+
+Resume individual-card reordering work and align its study order and due dates with daily limits.
+
+- **Status:** Active
+- **Reverses:** [DEC-094](#dec-094)
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 00:34:11-00:37:09, the Customer reviewed dragging cards and requested investigation of how queue changes affect due dates; at 01:18:52-01:19:17, reordering was raised as part of the needed product scope. This reopens the work deferred by DEC-094; the complete scheduling algorithm still needs clarification.
+
+## DEC-138
+
+Use click or tap for opening a card and reserve select for checkbox-based group selection.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 00:40:06-00:42:42, the Customer distinguished opening an editor from selecting several cards and requested click or tap for opening, so a future selection checkbox does not make the instruction misleading.
+
+## DEC-139
+
+Provide group card actions above the card list while retaining frequent individual quick actions.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 00:46:15-00:48:47 and 00:53:40-00:54:25, the Customer preferred a predictable panel above the list, discussed archive, delete, rewrite and rewrite marking, and retained individual regeneration, listening, and archiving as frequent actions.
+
+## DEC-140
+
+Replace the separate To rewrite tab with a filter on the In study card list.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 00:55:05-00:58:31, the Customer wanted to inspect rewritten cards together without gaps and concluded that filtering the existing list would support this more directly than a separate tab.
+
+## DEC-141
+
+Give single-deck study its own statistics, deck-scoped session and limits, and return navigation without changing the Today deck selection.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 01:00:03-01:00:50, the Customer expected a single-deck session to return to that deck; at 01:07:00-01:08:40, the Customer preferred deck-page statistics and a deck-scoped session over silently changing the global selection. The exact interaction with global daily limits remains follow-up work.
+
+## DEC-142
+
+Keep learning progress when a card is regenerated and offer an explicit learner-controlled reset.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 01:11:45-01:13:01, the Customer noted that a replacement sentence does not erase the learner's knowledge of the word and proposed a reset action for cases where the learner wants to start again.
+
+## DEC-143
+
+Include people learning German in the usability sample rather than recruiting only learners of Russian.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 01:08:47-01:10:01, the Customer rejected the proposed Russian-only sample as insufficiently representative and offered a university German-learning chat as a recruitment channel; no language quota was agreed.
+
+## DEC-144
+
+Include learners without Anki experience and ask about flashcard familiarity during screening.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 01:13:26-01:15:49, the Customer wanted to learn whether newcomers understand cards and decks, while noting that inability to name the concepts in English need not make someone unsuitable.
+
+## DEC-145
+
+Allow the survey to be conducted in Russian when a teammate can conduct it in that language.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 01:15:55-01:16:12, the Customer accepted Russian-language surveying conditionally on the team's ability to administer it; this did not establish any particular participant's language proficiency.
+
+## DEC-146
+
+Replace the proposed 60% usability completion expectation with a target closer to 80-90%.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 01:16:17-01:17:04, the Customer explicitly found 60% completion unsatisfactory and requested a result closer to 80 or 90 percent. The meeting did not choose one exact QR-11 threshold or redefine its observer and assistance rules.
+
+## DEC-147
+
+Ask participants after the tasks about intuitiveness, sticking points, and improvement ideas.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 01:17:11-01:17:33, the Customer requested feedback on where task completion became difficult and what could improve the experience; no session result was reported.
+
+## DEC-148
+
+Extend the minimum usable product scenario beyond card creation to studying and returning for a later scheduled review.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 01:17:47-01:20:01, the Customer said the three creation stories were insufficient, raised review and ordering, and required the learner to return on another day and complete a new study plan. This is a scope decision, not a new criterion-by-criterion acceptance verdict.
+
+## DEC-149
+
+Keep placement-test guidance as sufficient help for a learner who does not know their level.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 01:20:16-01:20:31, the Customer said the placement test was enough and its score understandable, confirming that guidance direction without providing empirical validation of proficiency accuracy.
+
+## DEC-150
+
+Provide evidence that a learner's personal API key is not sent to the application server.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 01:21:05-01:21:26, the team described browser-only storage and the Customer requested proof that no code sends the key to the server, confirming the confidentiality direction; no security test was performed in the discussion.
+
+## DEC-151
+
+Evaluate changes to the application's LLM prompt with a controlled set of user prompts and expert judgment.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 01:22:02-01:29:19, the Customer explained why raw regeneration counts are ambiguous and proposed comparing generation with roughly 20-50 user prompts and an expert or oracle. An exact sample, metric, and evaluation protocol remain to be fixed.
+
+## DEC-152
+
+Treat at least 80% acceptable generated cards as the card-quality success target.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 01:30:02-01:30:37, the Customer selected 80% after describing defects in an earlier deck. This confirms the existing TOS-02 percentage, without replacing its per-language sample, first-generation rules, or acceptance checks and without reporting a measured result.
+
+## DEC-153
+
+Support Linux deployment within a 10 GB RAM budget.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 01:31:08-01:31:57, the Customer confirmed Linux deployment and set a 10 GB RAM ceiling; the unclear discussion of the current VM's memory does not establish a resource measurement or a required Linux version.
+
+## DEC-154
+
+Return ordinary application responses within one second.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 01:32:22-01:32:54, the Customer requested a one-second response target and the team identified external LLM latency as a separate case; the review did not specify a percentile, workload, or passing timing result.
+
+## DEC-155
+
+Include usable generated pronunciation audio in the minimum usable product.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 01:33:26-01:34:02, the Customer called Firefox browser speech quality inadequate and explicitly made audio generation essential for effective study; no synthesis provider, storage policy, or cache design was selected.
+
+## DEC-156
+
+Stop waiting for an LLM response after no more than one minute.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 01:34:12-01:34:35, the Customer accepted that generation may take longer than ordinary requests but required a bounded wait; no timeout test was shown.
+
+## DEC-157
+
+Preserve committed application data when the VM and all application services are restarted.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 01:34:49-01:35:26, the Customer required data to remain after shutting down and restarting the whole VM, confirming persistence expectations without a new restart check.
+
+## DEC-158
+
+Leave the backup strategy to the team while retaining the mandatory restart data-preservation guarantee.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 01:35:04-01:35:26, the Customer distinguished the required persistence outcome from the team's choice of whether and how to make backups.
+
+## DEC-159
+
+Keep usability consent forms in the private repository and recordings in a shared private folder.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Team, not contested
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 01:36:04-01:36:42, the team described the private repository invitation and planned recordings-folder invitation, and the Customer acknowledged the arrangement, confirming the existing separation of private evidence. Invitation acceptance and folder access were not demonstrated.
+
+## DEC-160
+
+Use the DeepSeek API for the demonstrated production generation path.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Team, not contested
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 00:00:28-00:01:38, KaramKhaddour identified the production VM, explained using DeepSeek instead of the restricted Claude connection, and demonstrated a generated card without objection. This records the demonstrated provider choice, not a named model's cross-language quality, cost, or security acceptance.
+
+## DEC-161
+
+Place deck-membership explanations next to the deck controls they describe.
+
+- **Status:** Active
+- **Date:** 2026-11-15
+- **Made by:** Customer
+- **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
+- **Why:** At 00:43:41-00:45:58, the Customer found the multi-deck/history explanation out of place above the card list and requested it in the editor's Decks section and relevant group actions.
