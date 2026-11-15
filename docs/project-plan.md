@@ -100,7 +100,7 @@ The Customer approved releasing the deployed version with the production Claude 
 
 ### SPRINT-07
 
-The `UT-01` usability test is designed for Russian and German learners, including flashcard-app newcomers, and the team's recruitment target is five representative participants for Week 8. The team set QR-11's 80% unaided-completion bar within the Customer's stated 80–90% range before counted sessions; this exact percentage was not separately confirmed by the Customer. The dry run and live staging instrumentation check remain prerequisites for counted sessions.
+The `UT-01` usability test is designed for Russian and German learners, including flashcard-app newcomers. The Customer reportedly confirmed the five-adult plan, QR-11's 80% unaided-completion bar, the 16–20 November session window, and results by 21 November in a [Telegram follow-up](../reports/week-07/customer-follow-up.md#confirmed-questions). The dry run and live staging instrumentation check remain prerequisites for counted sessions.
 
 - **Due:** 2026-11-15
 - **Sprint Backlog:** [SPRINT-07 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/5)
@@ -110,7 +110,7 @@ The `UT-01` usability test is designed for Russian and German learners, includin
 
 ### SPRINT-08
 
-The usability sessions run with at least one Russian learner, one German learner, and one flashcard-app newcomer among at least three counted participants; the results are analyzed, and the findings are triaged into the product backlog.
+The usability sessions are planned for 16–20 November with at least one Russian learner, one German learner, and one flashcard-app newcomer among at least three counted participants; results are due by 21 November, then the findings are triaged into the product backlog.
 
 - **Due:** 2026-11-21
 - **Sprint Backlog:** [SPRINT-08 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/6)

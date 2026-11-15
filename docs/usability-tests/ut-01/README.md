@@ -14,7 +14,7 @@ Assess whether a representative language learner can turn a word they chose from
 
 ## The Requirement
 
-The test serves [QR-11](../../quality-requirements/qr/QR-11.md), whose [manual QRT-01](../../quality-requirements/qr/QR-11.md#qrt-01) reads the main task's unaided-completion proportion against the team's [pre-session 80% threshold](../../quality-requirements/qr/QR-11.md#response-measure). [DEC-146](../../decisions.md#dec-146) rejects the former 60% bar and gives an 80–90% expectation; the team selected 80% within that range. The exact value was not separately confirmed by the Customer.
+The test serves [QR-11](../../quality-requirements/qr/QR-11.md), whose [manual QRT-01](../../quality-requirements/qr/QR-11.md#qrt-01) reads the main task's unaided-completion proportion against the [pre-session 80% threshold](../../quality-requirements/qr/QR-11.md#response-measure). [DEC-146](../../decisions.md#dec-146) rejects the former 60% bar and gives an 80–90% expectation; the Customer reportedly confirmed the exact 80% target in the [Telegram follow-up](../../../reports/week-07/customer-follow-up.md#confirmed-questions).
 
 ## Participant Profile
 
@@ -30,7 +30,7 @@ A session with someone outside the profile is exploratory: it is not counted, an
 ### Recruitment target
 
 - **Target:** five representative participants, the design target, and at least three completed counted sessions.
-- **How the team finds them:** the team asks university students and staff learning Russian or German through its contacts and learning-language chats, including the German-learning channel offered by the Customer. Screening does not require prior flashcard-app use. Byakko-san recruits across both languages and experience groups. The team requires at least one Russian learner, one German learner, and one flashcard-app newcomer among counted participants; one person can meet more than one condition. This allocation is the team's sampling choice, not a separately agreed Customer split. Record recruitment progress and any coverage shortfall without participant identity.
+- **How the team finds them:** the team asks university students and staff learning Russian or German through its contacts and learning-language chats, including the German-learning channel offered by the Customer. Screening does not require prior flashcard-app use. Byakko-san recruits across both languages and experience groups. The Customer reportedly accepted the five-adult plan including both languages and a flashcard-app newcomer in the [Telegram follow-up](../../../reports/week-07/customer-follow-up.md#confirmed-questions). The team requires at least one Russian learner, one German learner, and one flashcard-app newcomer among counted participants; one person can meet more than one condition. No exact language split was agreed. Record recruitment progress and any coverage shortfall without participant identity.
 - **Codes:** `P-01`, `P-02`, and so on, assigned in the order the sessions are arranged.
   A participant who withdraws, refuses the recording, or does not consent to the sanitized public results is not counted, the code is retired, and a replacement is recruited under the next free code.
 - **Public status:** only the count of arranged and completed sessions is public; names and contact details stay in the private usability-data repository.
@@ -199,7 +199,7 @@ The results are due with Submission 8 on 21 November 2026.
 
 ### Pre-session design confirmations
 
-- **KaramKhaddour:** check that the team's 80% bar and sample rule above are frozen before counted sessions, following [DEC-143](../../decisions.md#dec-143), [DEC-144](../../decisions.md#dec-144), and [DEC-146](../../decisions.md#dec-146). The 16–20 November session window and 21 November course-results deadline are the team's plan; the [meeting report](../../../reports/week-07/meeting-report.md#open-questions) did not record a Customer-confirmed results-review date.
+- **KaramKhaddour:** keep the reportedly [confirmed 80% bar, five-adult sample, 16–20 November session window, and 21 November results deadline](../../../reports/week-07/customer-follow-up.md#confirmed-questions) fixed before counted sessions. The follow-up did not set a separate Customer results-review appointment or exact Russian/German split.
 - **Byakko-san:** check sample coverage and freeze the printed scenario cards and matching Russian/German texts after the dry run.
 - **saleemasekrea000:** verify the staging seed, generation, instrumentation, and private instructor access before the first counted session.
 

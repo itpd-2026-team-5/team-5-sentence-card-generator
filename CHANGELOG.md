@@ -14,7 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
-- Fix QR-11's pre-session usability pass bar at the team's 80% choice within the Customer's stated range, and document the minimum Russian, German, and flashcard-newcomer sample.
+- Fix QR-11's pre-session usability pass bar at 80%, record the Customer's reported confirmation and the planned session dates, and document the minimum Russian, German, and flashcard-newcomer sample.
 - Update the UT-01 schedule risk to distinguish merged instrumentation from staging verification.
 - Link the private UT-01 evidence repository from the public test record.
 
