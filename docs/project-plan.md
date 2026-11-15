@@ -109,6 +109,11 @@ The `UT-01` usability test is designed for Russian and German learners, includin
 
 #### REL-07
 
+- **Released:** [v0.7.0](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.7.0) on 2026-11-15.
+- **Checked QRs:** None.
+
+  The [Quality Requirement Testing Plan](#quality-requirement-testing-plan) records the planned and unverified tests.
+
 ### SPRINT-08
 
 The usability sessions are planned for 16–20 November with at least one Russian learner, one German learner, and one flashcard-app newcomer among at least three counted participants; results are due by 21 November, then the findings are triaged into the product backlog.

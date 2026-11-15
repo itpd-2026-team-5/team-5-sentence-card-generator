@@ -6,18 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.7.0](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.7.0) - 2026-11-15
+
 ### Added
 
-- Prepare the UT-01 consent form for recorded, sanitized usability sessions.
 - Tag staging usability-test events with a participant code and keep them out of product metrics.
-- Define the UT-01 first-use usability requirement and its manual test before counted sessions.
-
-### Changed
-
-- Fix QR-11's pre-session usability pass bar at 80%, record the Customer's reported confirmation and the planned session dates, and document the minimum Russian, German, and flashcard-newcomer sample.
-- Update the UT-01 schedule risk to distinguish merged instrumentation from staging verification.
-- Link the private UT-01 evidence repository from the public test record.
-- Record the UT-01 dry run and its readiness decision in the session sheet.
 
 ### Fixed
 
