@@ -7,7 +7,7 @@ No counted session has run, and this directory carries no session note yet.
 
 ## Before each session
 
-- [ ] The exact QR-11 threshold is confirmed and recorded, and the [pre-session design confirmations](../README.md#pre-session-design-confirmations) are complete.
+- [ ] The team's 80% QR-11 threshold and sample rule are recorded, and the remaining [pre-session design checks](../README.md#pre-session-design-confirmations) are complete.
 - [ ] The participant's signed consent is in the private usability-data repository, covering the recording and the sanitized public results.
 - [ ] The instrumentation was verified before the first counted session, per [Instrumentation](../README.md#verification-before-the-first-counted-session).
 - [ ] The staging demo data is reset with `python -m app.seed --reset`, and the [language and data setup](#language-and-data-setup) matches this participant's screened learning language.
