@@ -105,6 +105,7 @@ The `UT-01` usability test is designed for Russian and German learners, includin
 - **Due:** 2026-11-15
 - **Sprint Backlog:** [SPRINT-07 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/5)
 - **Planned Velocity:** 8; the story points of the two stories scheduled here: [US-16](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/190) (3) and [US-17](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) (5).
+- **Actual Velocity:** 0 at the 2026-11-15 deadline: no story had a recorded Customer acceptance verdict, so [US-16](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/190) contributes 0 of 3 points and [US-17](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) 0 of 5. Both stories and every other open SPRINT-07 issue moved to [SPRINT-08](#sprint-08), and the retrospective is [reports/week-07/sprint-retrospective.md](../reports/week-07/sprint-retrospective.md).
 
 #### REL-07
 
