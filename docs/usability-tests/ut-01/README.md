@@ -14,7 +14,7 @@ Assess whether a representative language learner can turn a word they chose from
 
 ## The Requirement
 
-The test serves [QR-11](../../quality-requirements/qr/QR-11.md), whose [manual QRT-01](../../quality-requirements/qr/QR-11.md#qrt-01) reads the main task's unaided-completion proportion against the [pre-session threshold](../../quality-requirements/qr/QR-11.md#response-measure). [DEC-146](../../decisions.md#dec-146) rejects the former bar; the exact replacement within the Customer's 80-90% expectation is still awaiting confirmation. No counted session starts until that value is recorded in QR-11 and this record.
+The test serves [QR-11](../../quality-requirements/qr/QR-11.md), whose [manual QRT-01](../../quality-requirements/qr/QR-11.md#qrt-01) reads the main task's unaided-completion proportion against the team's [pre-session 80% threshold](../../quality-requirements/qr/QR-11.md#response-measure). [DEC-146](../../decisions.md#dec-146) rejects the former 60% bar and gives an 80–90% expectation; the team selected 80% within that range. The exact value was not separately confirmed by the Customer.
 
 ## Participant Profile
 
@@ -30,7 +30,7 @@ A session with someone outside the profile is exploratory: it is not counted, an
 ### Recruitment target
 
 - **Target:** five representative participants, the design target, and at least three completed counted sessions.
-- **How the team finds them:** the team asks university students and staff learning Russian or German through its contacts and learning-language chats, including the German-learning channel offered by the Customer. Screening does not require prior flashcard-app use. Byakko-san recruits across both languages and experience groups; KaramKhaddour confirms the language allocation with the Customer. No exact split is presented as agreed; recruitment progress and any coverage shortfall are recorded without participant identity.
+- **How the team finds them:** the team asks university students and staff learning Russian or German through its contacts and learning-language chats, including the German-learning channel offered by the Customer. Screening does not require prior flashcard-app use. Byakko-san recruits across both languages and experience groups. The team requires at least one Russian learner, one German learner, and one flashcard-app newcomer among counted participants; one person can meet more than one condition. This allocation is the team's sampling choice, not a separately agreed Customer split. Record recruitment progress and any coverage shortfall without participant identity.
 - **Codes:** `P-01`, `P-02`, and so on, assigned in the order the sessions are arranged.
   A participant who withdraws, refuses the recording, or does not consent to the sanitized public results is not counted, the code is retired, and a replacement is recruited under the next free code.
 - **Public status:** only the count of arranged and completed sessions is public; names and contact details stay in the private usability-data repository.
@@ -173,7 +173,7 @@ This plan is written before the first session, and no measure is added to it aft
 - **Main-task time:** the median time on the main task, with the minimum and maximum.
 - **SEQ:** the median SEQ for each task, the main task and the two secondary tasks.
 - **SUS:** the mean and the median, reported with `n=<count>`, because a small sample supports no claim about a population.
-- **`QR-11`'s measure:** the count of `Unaided` main-task outcomes divided by the number of counted participants, with at least three participants. Compare `100 * Unaided / n` with the single percentage `T` recorded in [QR-11](../../quality-requirements/qr/QR-11.md#response-measure) before the first counted session. `T` is pending Customer confirmation within the 80-90% expectation in [DEC-146](../../decisions.md#dec-146); do not use the rejected bar or choose a value after seeing outcomes. The required count is `ceil(n * T / 100)`, without rounding the observed proportion up. The verdict goes in the testing plan, not in the results; an unset threshold leaves it Not verified.
+- **`QR-11`'s measure:** the count of `Unaided` main-task outcomes divided by the number of counted participants, with at least three participants and the required language and experience groups represented. Compare `100 * Unaided / n` with the team's [pre-session 80% bar](../../quality-requirements/qr/QR-11.md#response-measure). Do not change it after seeing outcomes. The required count is `ceil(n * 0.8)`, without rounding the observed proportion up. Three counted participants require three Unaided outcomes; five require four. The verdict goes in the testing plan, not in the results.
 - **Thematic analysis:** the observations, the think-aloud remarks, and the post-test answers grouped into a small set of themes, each with the sessions it came from; a single participant's remark is not reported as a theme.
 - **Severity:** each finding rated `Critical`, `Major`, or `Minor` with its reason:
   - `Critical`: it stops a participant from reaching a task's end state, or it exposes another person's data or key;
@@ -199,11 +199,11 @@ The results are due with Submission 8 on 21 November 2026.
 
 ### Pre-session design confirmations
 
-- **KaramKhaddour:** confirm the exact QR-11 percentage with the Customer, its use of the main-task Unaided outcome, and the language allocation; record the confirmation source before counted sessions, following [DEC-143](../../decisions.md#dec-143), [DEC-144](../../decisions.md#dec-144), and [DEC-146](../../decisions.md#dec-146). The proposed Week 8 dates and results date are still to be confirmed with the Customer, as recorded in the [meeting report](../../../reports/week-07/meeting-report.md#open-questions).
+- **KaramKhaddour:** check that the team's 80% bar and sample rule above are frozen before counted sessions, following [DEC-143](../../decisions.md#dec-143), [DEC-144](../../decisions.md#dec-144), and [DEC-146](../../decisions.md#dec-146). The 16–20 November session window and 21 November course-results deadline are the team's plan; the [meeting report](../../../reports/week-07/meeting-report.md#open-questions) did not record a Customer-confirmed results-review date.
 - **Byakko-san:** check sample coverage and freeze the printed scenario cards and matching Russian/German texts after the dry run.
 - **saleemasekrea000:** verify the staging seed, generation, instrumentation, and private instructor access before the first counted session.
 
-These are execution gates, not completed checks. Until the exact threshold is confirmed, the test remains Planned and its QRT remains Not verified; a teammate dry run may proceed without being counted.
+These are execution gates, not completed checks. The threshold is fixed, but the test remains Planned and its QRT remains Not verified until the dry run, live verification, recruitment, and counted sessions provide evidence; a teammate dry run is never counted.
 
 ## Roles
 
