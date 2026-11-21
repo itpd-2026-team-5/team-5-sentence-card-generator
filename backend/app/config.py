@@ -16,6 +16,9 @@ class Settings(BaseSettings):
     anthropic_api_key: str = ""
     anthropic_auth_token: str = ""
     anthropic_base_url: str = ""
+    # Piper runs locally beside the API. No speech key or external request is required.
+    piper_url: str = "http://localhost:5000"
+    speech_cache_dir: str = "./data/speech"
     cors_origins: list[str] = ["http://localhost:5173"]
     # Where the app runs, for the link in the verification email.
     app_url: str = "http://localhost:5173"

@@ -2,7 +2,8 @@ import { t } from "../i18n";
 import { useCallback, useEffect, useState } from "react";
 import {
   api,
-  speak,
+  speakCard,
+  stopAudio,
   type Deck,
   type Language,
   type Rating,
@@ -83,11 +84,18 @@ export function Study({
   const cardId = study?.card?.id;
   useEffect(() => {
     if (autoplay && study?.card)
-      speak(study.card.sentence, cardLanguage, noAudio);
+      speakCard(
+        study.card.id,
+        "sentence",
+        study.card.sentence,
+        cardLanguage,
+        noAudio,
+      );
+    return () => stopAudio();
   }, [cardId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const toggleAutoplay = () => {
-    if (autoplay) speechSynthesis.cancel();
+    if (autoplay) stopAudio();
     setAutoplay(!autoplay);
   };
 
@@ -255,6 +263,9 @@ export function Study({
                   {card.word}
                   <Say
                     text={card.word_form || card.word}
+                    cardId={card.id}
+                    part="word"
+                    savedText={card.word_form}
                     language={cardLanguage}
                     label={t("the word")}
                     onFail={noAudio}
@@ -265,6 +276,9 @@ export function Study({
                     {card.word_translation}
                     <Say
                       text={card.word_translation}
+                      cardId={card.id}
+                      part="meaning"
+                      savedText={card.word_translation}
                       language={knownLanguage}
                       label={t("the word's translation")}
                       onFail={noAudio}
@@ -280,6 +294,9 @@ export function Study({
                 )}
                 <Say
                   text={card.sentence}
+                  cardId={card.id}
+                  part="sentence"
+                  savedText={card.sentence}
                   language={cardLanguage}
                   label={t("the sentence")}
                   onFail={noAudio}
@@ -291,6 +308,9 @@ export function Study({
                     {card.translation}
                     <Say
                       text={card.translation}
+                      cardId={card.id}
+                      part="translation"
+                      savedText={card.translation}
                       language={knownLanguage}
                       label={t("the translation")}
                       onFail={noAudio}

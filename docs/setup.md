@@ -50,6 +50,8 @@ Choose how sentences are written:
 | `LLM_PROVIDER=fake` | No key needed: every card gets a placeholder sentence, "This is a short practice sentence that uses … today." Use it to try the product or to run it offline. |
 | Leave `ANTHROPIC_API_KEY` empty | Each learner chooses *My own key* under Settings → Who writes the sentences, with Anthropic, a gateway that speaks its API, or an OpenAI-compatible provider such as OpenRouter. The key stays in their browser and goes straight to the provider; the server never sees it. |
 
+Pronunciation runs locally in a Piper container and needs no speech API key. Docker downloads the English, German, and Russian voice models when building that container (about 190 MB in total). On first play, Piper creates a WAV file; the backend saves it in the `speech-data` Docker volume and reuses it for later plays, including for an invited teacher. No card text is sent to an external speech provider. If Piper is unavailable, the browser tries its own voice. When a card's text changes, its next play generates new audio.
+
 Email: the sign-up confirmation goes to Mailpit, a local inbox that docker compose starts, so nothing leaves your computer.
 To send real email, set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, and `MAIL_FROM`, and set `APP_URL` to the address learners open, since the link in the email points there.
 
@@ -60,6 +62,7 @@ docker compose up --build
 ```
 
 The first start takes a few minutes while the images build; the backend applies the database migrations itself.
+If another local copy already uses the default ports, set `APP_HOST_PORT`, `API_HOST_PORT`, `MAILPIT_HOST_PORT`, `DB_HOST_PORT`, and `APP_URL` in `.env` before starting this copy. For example, ports 5174, 8001, 8026, and 5434 can run beside a copy on the defaults.
 When the frontend logs `Local: http://localhost:5173/`, open:
 
 | What | Address |

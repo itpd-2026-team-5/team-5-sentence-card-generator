@@ -16,6 +16,8 @@ services:
 
   backend:
     build: ./backend
+    volumes:
+      - speech-data:/data/speech
     env_file:
       - path: .env
         required: false
@@ -26,13 +28,17 @@ services:
       SMTP_PORT: ${SMTP_PORT:-1025}
       SMTP_STARTTLS: ${SMTP_STARTTLS:-false}
       APP_URL: ${APP_URL:-http://localhost:5173}
+      SPEECH_CACHE_DIR: /data/speech
+      PIPER_URL: http://piper:5000
     depends_on:
       db:
         condition: service_healthy
       mailpit:
         condition: service_started
+      piper:
+        condition: service_healthy
     ports:
-      - "8000:8000"
+      - "${API_HOST_PORT:-8000}:8000"
 
   frontend:
     image: node:22
@@ -44,7 +50,7 @@ services:
       - ./frontend:/app
       - /app/node_modules
     ports:
-      - "5173:5173"
+      - "${APP_HOST_PORT:-5173}:5173"
     depends_on:
       - backend
 
@@ -53,5 +59,9 @@ services:
     ports:
       - "${MAILPIT_HOST_PORT:-8025}:8025"
 
+  piper:
+    build: ./piper
+
 volumes:
   db-data:
+  speech-data:

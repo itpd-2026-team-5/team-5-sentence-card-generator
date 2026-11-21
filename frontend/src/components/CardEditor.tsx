@@ -1,6 +1,6 @@
 import { t } from "../i18n";
 import { useEffect, useId, useState } from "react";
-import { api, speak, type Card, type Deck, type Language } from "../api";
+import { api, speakCard, type Card, type Deck, type Language } from "../api";
 import { Icon } from "./Icon";
 import { Say } from "./Say";
 
@@ -144,7 +144,9 @@ export function CardEditor({
           <button
             className="ghost icon-btn push"
             aria-label={t("Listen")}
-            onClick={() => speak(card.sentence, language)}
+            onClick={() =>
+              speakCard(card.id, "sentence", card.sentence, language)
+            }
           >
             <Icon name="sound" />
           </button>
@@ -208,6 +210,9 @@ export function CardEditor({
           {teacher && (
             <Say
               text={draft.sentence}
+              cardId={card.id}
+              part="sentence"
+              savedText={card.sentence}
               language={language}
               label={t("the sentence")}
             />
@@ -229,6 +234,9 @@ export function CardEditor({
           {teacher && (
             <Say
               text={draft.translation}
+              cardId={card.id}
+              part="translation"
+              savedText={card.translation}
               language={knownLanguage}
               label={t("the translation")}
             />
@@ -253,6 +261,9 @@ export function CardEditor({
             {teacher && (
               <Say
                 text={draft.word_form}
+                cardId={card.id}
+                part="word"
+                savedText={card.word_form}
                 language={language}
                 label={t("the word")}
               />
@@ -275,6 +286,9 @@ export function CardEditor({
             {teacher && (
               <Say
                 text={draft.word_translation}
+                cardId={card.id}
+                part="meaning"
+                savedText={card.word_translation}
                 language={knownLanguage}
                 label={t("the meaning")}
               />

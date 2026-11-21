@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- Generate and store English, German, and Russian card pronunciation with a local Piper service, then reuse it for students and invited teachers without a speech API key; use browser speech when Piper is unavailable.
+
 ## [0.7.0](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/releases/tag/v0.7.0) - 2026-11-15
 
 ### Added
