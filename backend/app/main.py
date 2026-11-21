@@ -83,6 +83,7 @@ from app.schemas import (
     UserOut,
     VerifyIn,
 )
+from app.speech import SpeechError, audio_for
 from app.tokenize import find_sentences, tokenize
 
 # The schema is managed by Alembic: run `alembic upgrade head` before starting the server.
@@ -691,6 +692,35 @@ def reachable_card(card_id: int, db: Session, user: User) -> Card:
         ):
             return card
     raise HTTPException(404, "Card not found")
+
+
+@app.get("/api/cards/{card_id}/audio/{part}")
+def card_audio(
+    card_id: int,
+    part: str,
+    db: Session = Depends(get_db),
+    user: User = Depends(current_user),
+):
+    """Only a card owner or invited teacher can play its stored pronunciation."""
+    card = reachable_card(card_id, db, user)
+    fields = {
+        "word": "word_form",
+        "meaning": "word_translation",
+        "sentence": "sentence",
+        "translation": "translation",
+    }
+    if part not in fields:
+        raise HTTPException(404, "Audio part not found")
+    text = getattr(card, fields[part])
+    deck = card.decks[0] if card.decks else None
+    if deck is None:
+        raise HTTPException(404, "Card has no deck")
+    language = deck.known_language if part in ("meaning", "translation") else deck.target_language
+    try:
+        audio = audio_for(text, language)
+    except SpeechError as exc:
+        raise HTTPException(503, str(exc)) from exc
+    return Response(content=audio, media_type="audio/wav", headers={"Cache-Control": "no-store"})
 
 
 @app.get("/api/cards", response_model=list[CardOut])

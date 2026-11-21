@@ -390,9 +390,42 @@ const VOICES: Record<Language, string> = {
   ru: "ru-RU",
 };
 
+export type AudioPart = "word" | "meaning" | "sentence" | "translation";
+let playingAudio: HTMLAudioElement | null = null;
+
+export function stopAudio() {
+  playingAudio?.pause();
+  playingAudio = null;
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
+}
+
+/** Prefer a card's stored pronunciation; use the browser voice when speech is unavailable. */
+export function speakCard(
+  cardId: number,
+  part: AudioPart,
+  text: string,
+  language: Language,
+  onFail?: () => void,
+) {
+  stopAudio();
+  const audio = new Audio(`/api/cards/${cardId}/audio/${part}`);
+  playingAudio = audio;
+  let fellBack = false;
+  const fallback = () => {
+    if (fellBack || playingAudio !== audio) return;
+    fellBack = true;
+    playingAudio = null;
+    speak(text, language, onFail);
+  };
+  audio.onerror = fallback;
+  void audio.play().catch(fallback);
+}
+
 /** Read a sentence aloud with the browser's own voice; onFail runs when it cannot, such as when
  *  the browser has no voice for the language. */
 export function speak(text: string, language: Language, onFail?: () => void) {
+  playingAudio?.pause();
+  playingAudio = null;
   if (!("speechSynthesis" in window)) return onFail?.();
   const voices = speechSynthesis.getVoices();
   // An empty list means the voices are still loading, so only a full list without one is a failure.

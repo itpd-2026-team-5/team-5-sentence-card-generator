@@ -64,8 +64,9 @@ Each project has its own containers, its own database volume, its own email inbo
 | Staging    | `cards-staging` | `~/cards/staging.env` | 8081     | 8026             |
 | Production | `cards-prod`    | `~/cards/prod.env`    | 8080     | 8025             |
 
-Each deployment runs four containers: PostgreSQL, the backend, the frontend served by nginx (which passes `/api` to the backend), and a Mailpit inbox that receives the account verification emails.
+Each deployment runs five containers: PostgreSQL, the backend, the frontend served by nginx (which passes `/api` to the backend), a local Piper voice service, and a Mailpit inbox that receives the account verification emails.
 Open the inbox at the deployment's email port to click a verification link.
+The first Piper image build downloads about 190 MB of English, German, and Russian voice models from Hugging Face and its Python packages from PyPI; the VM must reach those hosts during the build. Generated audio remains in the deployment's `speech-data` Docker volume.
 
 ## Configuration
 
@@ -149,7 +150,7 @@ After each production deploy, do the [core task](setup.md#complete-the-core-task
 1. Create an account, and confirm it from the email in the inbox at `http://<university-vm-ipv4>:8025`.
 2. Set the languages and the level, add a text, mark two words to learn, and generate into a deck.
 3. Open the deck: there is one card for each marked word, with a new sentence and its translation.
-4. Play the card's word, meaning, sentence, and translation from the same client and network; check that the expected pronunciation is heard, per [DEC-101](decisions.md#dec-101).
+4. Play the card's word, meaning, sentence, and translation from the same client and network; check that the expected pronunciation is heard, per [DEC-101](decisions.md#dec-101). Check that Piper is healthy with `docker compose -p cards-prod --env-file ~/cards/prod.env -f compose.deploy.yml ps piper`, so this is a test of local synthesis rather than only the browser fallback.
 
 Record in the week's report the commit, the date, who checked, and what was seen, with a screenshot of the deck.
 Use the placeholder, not the real address, in the report.

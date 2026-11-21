@@ -47,9 +47,9 @@ A [learner](glossary.md#learner) can flag a sentence as too hard to guide future
 - **Stories:** [US-07](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/40)
 - **Behavior:** [FR-007](functional-requirements/fr/FR-007.md)
 
-## Listen to a sentence
+## Listen to a card
 
-A [learner](glossary.md#learner) can hear a [card](glossary.md#card)'s sentence spoken in the language they are learning.
+A [learner](glossary.md#learner) or invited teacher can hear a [card](glossary.md#card)'s word, meaning, sentence, and translation separately. Local Piper generates and stores the audio for later plays. If Piper is unavailable, the app uses the browser's voice.
 
 - **Stories:** [US-08](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/41)
 - **Behavior:** [FR-010](functional-requirements/fr/FR-010.md)

@@ -18,6 +18,8 @@ services:
   backend:
     build: ./backend
     restart: unless-stopped
+    volumes:
+      - speech-data:/data/speech
     environment:
       DATABASE_URL: postgresql+psycopg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
       LLM_PROVIDER: ${LLM_PROVIDER:-anthropic}
@@ -26,6 +28,8 @@ services:
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       ANTHROPIC_BASE_URL: ${ANTHROPIC_BASE_URL:-}
       ANTHROPIC_AUTH_TOKEN: ${ANTHROPIC_AUTH_TOKEN:-}
+      SPEECH_CACHE_DIR: /data/speech
+      PIPER_URL: http://piper:5000
       # Verification emails go to this deployment's own Mailpit inbox, on MAIL_PORT.
       SMTP_HOST: mailpit
       SMTP_PORT: 1025
@@ -43,6 +47,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      piper:
+        condition: service_healthy
 
   frontend:
     build: ./frontend
@@ -58,5 +64,10 @@ services:
     ports:
       - "${MAIL_PORT:?}:8025"
 
+  piper:
+    build: ./piper
+    restart: unless-stopped
+
 volumes:
   db-data:
+  speech-data:
