@@ -84,7 +84,13 @@ export function Study({
   const cardId = study?.card?.id;
   useEffect(() => {
     if (autoplay && study?.card)
-      speakCard(study.card.id, "sentence", study.card.sentence, cardLanguage, noAudio);
+      speakCard(
+        study.card.id,
+        "sentence",
+        study.card.sentence,
+        cardLanguage,
+        noAudio,
+      );
     return () => stopAudio();
   }, [cardId]); // eslint-disable-line react-hooks/exhaustive-deps
 

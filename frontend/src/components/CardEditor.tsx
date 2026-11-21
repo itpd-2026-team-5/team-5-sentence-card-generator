@@ -144,7 +144,9 @@ export function CardEditor({
           <button
             className="ghost icon-btn push"
             aria-label={t("Listen")}
-            onClick={() => speakCard(card.id, "sentence", card.sentence, language)}
+            onClick={() =>
+              speakCard(card.id, "sentence", card.sentence, language)
+            }
           >
             <Icon name="sound" />
           </button>
