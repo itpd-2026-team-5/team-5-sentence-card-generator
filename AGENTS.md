@@ -13,6 +13,8 @@ The course requirements are routed from [`SKILL.md`](https://github.com/inno-itp
 - `reports/week-NN/` holds each week's evidence: the report, the meeting script, report, and transcript, and the AI usage report.
 - `.github/` holds the workflows, the issue forms, the pull request template, and the Dependabot settings.
 - `docker-compose.yml` starts the database, the backend, the frontend, and a local mail inbox; `docs/setup.md` says how.
+- [`docs/configuration-plan.md`](docs/configuration-plan.md) is the inventory of the configuration: every workflow, setting, lockfile, environment, and entry point, `CFG-nn`, with what it connects to and what breaks when it changes.
+  Read it before changing a workflow, a lockfile, the compose files, `.env.example`, or this file, and update it in the same pull request when the change alters what it records.
 
 ## Checks
 
