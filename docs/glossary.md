@@ -259,3 +259,81 @@ The System Usability Scale: ten standard statements a participant rates from 1 t
 The Single Ease Question a participant answers after each task, rating how difficult or easy it was from 1, very difficult, to 7, very easy.
 
 **Defined by:** [`UT-01`'s surveys](usability-tests/ut-01/surveys.md#seq-after-each-task).
+
+## Configuration Management
+
+### Configuration
+
+The files, settings, and processes that build, check, store, and deliver this repository's product and documents, and that an agent reads to find them, as the configuration plan inventories them.
+
+**Defined by:** [the configuration plan](configuration-plan.md).
+
+### Configuration Management
+
+The team's practice of knowing what its configuration is, who keeps each part true, and what breaks when one part changes, so a change to one item is made with the others in view.
+
+**Defined by:** [the configuration plan](configuration-plan.md).
+
+### Configuration Review
+
+The Week 8 activity in which the team inventories its configuration and judges, goal by goal, whether its set of artifacts is the most convenient way to achieve what each is for.
+
+**Defined by:** [the Week 8 configuration evaluation](../reports/week-08/cm-evaluation.md).
+
+### Configuration Plan
+
+The maintained inventory of the configuration, `docs/configuration-plan.md`, which documents it as it is and is updated in the pull request that changes what it records.
+
+**Defined by:** [the configuration plan](configuration-plan.md).
+
+### Configuration Item
+
+One maintained file, setting, process, or dependency the project depends on, identified as `CFG-nn` in the configuration plan with its owner, its location, and its connections.
+
+**Defined by:** [the configuration plan](configuration-plan.md).
+
+### Configuration Evaluation
+
+The configuration review's written judgement, which names each local goal, what achieves it today, a more convenient way and its tradeoffs, and the one change the team would make first.
+
+**Defined by:** [the Week 8 configuration evaluation](../reports/week-08/cm-evaluation.md).
+
+### Baseline
+
+The identified, frozen state of the configuration at one commit or tag, which an evaluation names so a later reader can tell which state it judged.
+
+**Defined by:** [the Week 8 configuration evaluation's `**Baseline:**`](../reports/week-08/cm-evaluation.md).
+
+### Upkeep
+
+The work it takes to keep a configuration item true as the repository changes, which is the cost the configuration review weighs against what the item is for.
+
+### Reproducible Build
+
+A build that produces the same product from the same commit on any machine, CI, or the VM, because its dependencies and tools are pinned rather than resolved at build time.
+
+**Defined by:** [`CFG-15`](configuration-plan.md#cfg-15), [`CFG-16`](configuration-plan.md#cfg-16), and [`CFG-17`](configuration-plan.md#cfg-17).
+
+### Dependency Pinning
+
+Fixing a dependency to an exact version or commit, in a lockfile or a workflow's `uses:` line, so it changes only through a reviewed pull request.
+
+**Defined by:** [`CFG-14`](configuration-plan.md#cfg-14).
+
+### Secret
+
+A value that grants access, such as an LLM API key, a database password, or a telemetry credential, which lives only in an env file or the Moodle submission and never in a commit.
+
+**Defined by:** [`CFG-10`](configuration-plan.md#cfg-10).
+
+### Context Window
+
+The amount of text a coding agent can hold at once, which `AGENTS.md` and the files it links spend before the agent reads any code.
+
+**Defined by:** [`CFG-18`](configuration-plan.md#cfg-18).
+
+### Agent Instruction
+
+A file a coding agent reads before working in the repository, such as `AGENTS.md`, that states the layout, the checks, the conventions, and the files not to edit.
+
+**Defined by:** [`AGENTS.md`](../AGENTS.md) and [`CFG-18`](configuration-plan.md#cfg-18).

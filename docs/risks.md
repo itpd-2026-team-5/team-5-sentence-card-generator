@@ -9,8 +9,12 @@ The team reads this register during every Friday 15:00 weekly review. When evide
 | [RISK-03](#risk-03) | Open | High | Medium | The team has one semester and several cross-cutting product flows to build, so integration may take longer than planned, which would leave the MUP incomplete at its deadline. |
 | [RISK-05](#risk-05) | Open | High | Medium | The revised sample must include adult Russian and German learners and flashcard-app newcomers, so recruitment may miss the minimum of three counted participants or omit a required group by the end of SPRINT-08, which would leave `UT-01` without sufficient representative evidence for `QR-11`. |
 | [RISK-08](#risk-08) | Open | High | Medium | The sessions depend on staging card generation, verified instrumentation, and participants' dates in a one-week run sprint, so `UT-01` may not finish by 2026-11-21, which would leave its results and the `QR-11` verdict missing from Submission 8. |
+| [RISK-12](#risk-12) | Open | High | Medium | Staging and production run on a VM the team reaches only from campus and configures by hand, so the VM's env files and containers may drift from the runbook and from each other, which would make a deploy or a rollback behave differently from what was tested on staging. |
+| [RISK-09](#risk-09) | Open | High | Low | The LLM key, the database passwords, and the telemetry credentials are typed into env files and shells by hand, so one may be committed, pasted into a report, or shown in a screenshot, which would let anyone spend the team's LLM budget or read the deployments' data. |
+| [RISK-10](#risk-10) | Open | Medium | High | The configuration plan is edited by hand while the workflows, lockfiles, and documents it describes change every week, so it may describe an older repository than the one on `main`, which would send a member or an agent to a check, a file, or a rule that is no longer there. |
 | [RISK-04](#risk-04) | Open | Medium | Medium | Personal API-key handling and teacher regeneration are unresolved, so a learner's key may be exposed or unusable by the teacher, which would block safe shared-deck review. |
 | [RISK-07](#risk-07) | Open | Medium | Medium | The private usability-data repository has been created, but instructor access to it and the recordings folder is not yet confirmed, so instructors may be unable to inspect the raw usability evidence, which would make the public results unverifiable. |
+| [RISK-11](#risk-11) | Open | Medium | Medium | The backend, the frontend, the actions, and the container images update through Dependabot pull requests that the team reviews alongside sprint work, so one update may break the build or need a code change the team has no time for, which would leave that dependency pinned at an old version while the others move. |
 | [RISK-06](#risk-06) | Open | Medium | Low | A participant may withdraw or refuse the recording or the sanitized public results, so their session cannot be counted, which would reduce the counted sample and force its data to be removed. |
 
 ## RISK-01
@@ -126,3 +130,59 @@ The sessions depend on staging card generation, verified instrumentation, and pa
 - **Window:** SPRINT-08.
 - **Mitigation:** Verify the deployed instrumentation and complete the dry run before counted sessions, check staging generation before each session, and arrange the sessions early in SPRINT-08.
 - **Contingency:** Move the `QR-11` testing-plan row to SPRINT-09 with a reason, declare the open window in the weekly report, and claim no result.
+
+## RISK-09
+
+The LLM key, the database passwords, and the telemetry credentials are typed into env files and shells by hand, so one may be committed, pasted into a report, or shown in a screenshot, which would let anyone spend the team's LLM budget or read the deployments' data.
+
+- **Status:** Open
+- **Impact:** High
+  - A leaked LLM key is spent by strangers until it is revoked, and a leaked database or telemetry credential exposes learners' texts and events.
+- **Likelihood:** Low
+  - `.env` is ignored by Git and [`.env.example`](../.env.example) carries no values, per [`CFG-10`](configuration-plan.md#cfg-10), but the runbook's commands put passwords into the VM's shell, and every week's evidence includes screenshots of the deployments.
+- **Trigger:** a secret value appears in a commit, a pull request, an issue, a report, a screenshot, or an AI tool's shared transcript.
+- **Window:** until the course is graded and the deployments are shut down.
+- **Mitigation:** keep secrets only in the VM's env files and the Moodle submission, crop or blur every screenshot before committing it, and read the diff of every pull request for values before approving it.
+- **Contingency:** revoke or rotate the leaked secret, tell the instructor, clean it from the files and the Git history, and write the account of the incident privately, per [Sensitive-Data Incident Response](https://github.com/inno-itpd/itpd/blob/main/requirements/repository-requirements.md#sensitive-data-incident-response).
+
+## RISK-10
+
+The configuration plan is edited by hand while the workflows, lockfiles, and documents it describes change every week, so it may describe an older repository than the one on `main`, which would send a member or an agent to a check, a file, or a rule that is no longer there.
+
+- **Status:** Open
+- **Impact:** Medium
+  - A stale plan is believed: an agent that trusts it changes the wrong file or skips a check, and the next review starts from a wrong inventory.
+- **Likelihood:** High
+  - The 22 November 2026 review found copies of the configuration already stale on `main`: three check-command lists that omit two CI steps, a root `README.md` pointing at a past week's report, and a runbook env template for a dropped route, per the [Week 8 configuration evaluation](../reports/week-08/cm-evaluation.md).
+- **Trigger:** a pull request changes a workflow, a lockfile, a compose file, `.env.example`, `AGENTS.md`, or a maintained index without updating [the configuration plan](configuration-plan.md).
+- **Window:** until the course ends.
+- **Mitigation:** the reviewer checks, on every pull request that touches one of those files, that the plan still describes it, as [`AGENTS.md`](../AGENTS.md) asks.
+- **Contingency:** update the plan in the pull request that records the change, and treat a plan that describes an older repository as a defect with its own task issue.
+
+## RISK-11
+
+The backend, the frontend, the actions, and the container images update through Dependabot pull requests that the team reviews alongside sprint work, so one update may break the build or need a code change the team has no time for, which would leave that dependency pinned at an old version while the others move.
+
+- **Status:** Open
+- **Impact:** Medium
+  - A dependency left behind collects security fixes it does not get, and the longer it waits the larger the eventual update.
+- **Likelihood:** Medium
+  - Four ecosystems update weekly, per [`CFG-14`](configuration-plan.md#cfg-14), and a Node.js 26 image update for the compose file is pending while CI runs Node.js 22.
+- **Trigger:** a Dependabot pull request fails the product checks, or stays unmerged for more than one sprint.
+- **Window:** until the course ends.
+- **Mitigation:** review the Dependabot pull requests at the weekly review, merge the green ones in the same week, and keep CI's Node.js and Python versions in step with the images.
+- **Contingency:** pin the working version, record why in the pull request that closes the update, and open the task issue that removes the need for the pin.
+
+## RISK-12
+
+Staging and production run on a VM the team reaches only from campus and configures by hand, so the VM's env files and containers may drift from the runbook and from each other, which would make a deploy or a rollback behave differently from what was tested on staging.
+
+- **Status:** Open
+- **Impact:** High
+  - A production that differs from staging fails in front of the Customer, and a member who follows the runbook cannot tell why.
+- **Likelihood:** Medium
+  - The runbook's env-file template still configures the dropped direct Claude route, per [`CFG-11`](configuration-plan.md#cfg-11), while production runs another provider per [`DEC-160`](decisions.md#dec-160); the 2026-10-31 failed deploy was diagnosed on the VM by hand, per [the deployment log](deployment.md#failed-deploys).
+- **Trigger:** a deploy or a verification on production behaves differently from the same commit on staging, or a member changes an env file or a container on the VM outside the runbook.
+- **Window:** until the course is graded and the deployments are shut down.
+- **Mitigation:** deploy only the commit staging passed, keep the runbook current in the pull request that changes the deployment, and record every manual VM change in the runbook's failed-deploy log.
+- **Contingency:** deploy the commit staging passed, keep the runbook current, and redeploy from the repository rather than patching the VM by hand.

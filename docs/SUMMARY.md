@@ -5,6 +5,7 @@
 - [Set up and run](setup.md)
 - [Deployment](deployment.md)
 - [Definition of done](definition-of-done.md)
+- [Configuration plan](configuration-plan.md)
 - [Product vision](product-vision.md)
 - [Features](features.md)
 - [Product analytics](analytics.md)

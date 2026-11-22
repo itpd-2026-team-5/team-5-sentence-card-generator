@@ -22,6 +22,7 @@ Built by ITPD Team 5 for the IT Product Development course, autumn 2026; a work 
 ## How we work
 
 - [Definition of done](definition-of-done.md): what done means for a story, a task, and a pull request.
+- [Configuration plan](configuration-plan.md): the files, settings, and processes the product is built, checked, delivered, and understood by, `CFG-nn`, with what each connects to and what breaks.
 
 ## Around the project
 
