@@ -4,13 +4,14 @@ This is the session sheet for [UT-01](../README.md): the checklist before a sess
 The record's [protocol](../README.md#protocol), [tasks](../README.md#the-tasks), and [help rule](../README.md#help-rule) govern; this sheet is what the team holds during the session.
 
 No counted session has run, and this directory carries no session note yet.
+The teammate dry run and the [instrumentation verification](../README.md#verification-before-the-first-counted-session) were done on 2026-11-26; the dry run's only process fix is the seed reset command below.
 
 ## Before each session
 
 - [ ] The team's 80% QR-11 threshold and sample rule are recorded, and the remaining [pre-session design checks](../README.md#pre-session-design-confirmations) are complete.
 - [ ] The participant's signed consent is in the private usability-data repository, covering the recording and the sanitized public results.
 - [ ] The instrumentation was verified before the first counted session, per [Instrumentation](../README.md#verification-before-the-first-counted-session).
-- [ ] The staging demo data is reset with `python -m app.seed --reset`, and the [language and data setup](#language-and-data-setup) matches this participant's screened learning language.
+- [ ] The staging demo data is reset with `docker compose -p cards-staging --env-file ~/cards/staging.env -f compose.deploy.yml exec -T backend uv run --no-dev python -m app.seed --reset` on the VM, and the [language and data setup](#language-and-data-setup) matches this participant's screened learning language.
 - [ ] In the private staging browser window, set `localStorage.setItem("ut-01-code", "P-01")` in the console, using this session's code; a test action shows an event with `source=usability-test` and that code. Clear it and close the window after the session.
 - [ ] Card generation works on staging: a teammate generated one card after the reset and deleted it.
 - [ ] The team's laptop is on the university network, the browser shows the sign-in page in a private window, and the session account's sign-in is ready.

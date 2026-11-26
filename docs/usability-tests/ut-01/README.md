@@ -162,7 +162,15 @@ The `P-nn` code is the exception to the opaque-identifier rule; the mapping from
 
 Under [#254](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/254), a teammate runs the main task on staging with a test code, and the team confirms that the events reach the staging OpenPanel project with `source=usability-test`, that filtering by `participant_code` returns that run and nothing else, and that the production project received none.
 The date and the result are recorded here before the first counted session.
-Not yet verified.
+
+Verified on 2026-11-26, before the first counted session, on staging at commit `1a9bae1` from the university network; the evidence is on [#254](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/254).
+
+- **Run:** a teammate dry run of all three tasks with the test code `P-900`, from 15:53 to 15:59; it is not counted.
+- **Events:** `text_added`, `word_marked` (two), `generation_completed`, `llm_usage_recorded`, `study_review_completed`, and `card_regeneration_completed` reached the staging OpenPanel project with `source=usability-test`, `environment=staging`, and `participant_code=P-900`, at times inside the observer's task windows.
+- **Filter:** `participant_code=P-900` returned this run and an earlier `P-900` check from about 2026-11-22, and no other participant's events.
+- **Production:** the production OpenPanel project received no event during the run.
+- **Metrics:** the dashboard provisioning script and the [analytics plan](../../analytics.md#the-value-and-the-metrics) exclude `source=usability-test`; the deployed reports were not re-read during the run.
+- **Limitations:** Task 3 emitted `card_regeneration_completed` without `card_rewrite_requested`, so the instrumentation comparison reads that task from `card_regeneration_completed` and the observation sheet; the events' `language` property showed `of` rather than the deck's language, so the learning language comes from the observation sheet.
 
 ## Analysis Plan
 
@@ -214,7 +222,7 @@ These are execution gates, not completed checks. The threshold is fixed, but the
 ## Environment
 
 - **Deployment:** the staging deployment on the university VM, reached from the university network on the team's laptop.
-- **Seed:** before each session reset the demo data with `python -m app.seed --reset`. Prepare the [language-specific session setup](sessions/README.md#language-and-data-setup) on that synthetic account, including a matching Russian or German deck and at least three answerable cards for the study task. Use the same English interface and translation language in every session. The participant starts without the new weekend text or its cards, and no earlier participant data remains.
+- **Seed:** before each session reset the demo data with `uv run --no-dev python -m app.seed --reset` inside the staging backend container, as the [session checklist](sessions/README.md#before-each-session) gives in full. Prepare the [language-specific session setup](sessions/README.md#language-and-data-setup) on that synthetic account, including a matching Russian or German deck and at least three answerable cards for the study task. Use the same English interface and translation language in every session. The participant starts without the new weekend text or its cards, and no earlier participant data remains.
 - **Generation:** the staging deployment's configured model provider writes the sentences; the participant never enters an API key.
   The dry run confirms that generation works on staging before the first counted session, and a session does not start when it does not.
 - **Payment:** no real payment is made; the product takes no payment.
