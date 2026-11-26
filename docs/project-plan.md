@@ -116,17 +116,17 @@ The `UT-01` usability test is designed for Russian and German learners, includin
 
 ### SPRINT-08
 
-The usability sessions are planned for 16–20 November with at least one Russian learner, one German learner, and one flashcard-app newcomer among at least three counted participants; results are due by 21 November, then the findings are triaged into the product backlog.
+UT-01's evidence and QR-11 outcome are recorded and triaged, while the configuration evaluation produces an evidence-based first-change recommendation.
 
 - **Due:** 2026-11-21
 - **Sprint Backlog:** [SPRINT-08 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/6)
-- **Planned Velocity:** 0; the sprint carries usability tasks, not stories.
+- **Planned Velocity:** 8; [US-16](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/190) contributes 3 points and [US-17](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191) contributes 5.
 
 #### REL-08
 
 ### SPRINT-09
 
-Provisional: the product and repository are ready for the final pitch, handover, and course review.
+Provisional: the final repository and evidence are ready for handover and course review, with the seven-minute pitch deck and individual reflection complete.
 
 - **Due:** 2026-11-28
 
