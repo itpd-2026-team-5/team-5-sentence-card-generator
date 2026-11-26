@@ -1,2 +1,8 @@
 # Course materials are maintained and checked by the course repository.
 exclude_path = ["(^|/)\\.agents/skills/itpd(/|$)"]
+
+# GitHub answers 503 to automated requests for /blob/ pages, so check the
+# same file through raw.githubusercontent.com, which still fails on a missing file.
+remap = [
+  "^https://github\\.com/([^/]+)/([^/]+)/blob/(.*)$ https://raw.githubusercontent.com/$1/$2/$3",
+]
