@@ -59,7 +59,7 @@ services:
       - backend
 
   mailpit:
-    image: axllent/mailpit:v1.31.5
+    image: axllent/mailpit:v1.34.0
     restart: unless-stopped
     ports:
       - "${MAIL_PORT:?}:8025"
