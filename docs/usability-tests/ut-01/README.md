@@ -1,6 +1,6 @@
 # UT-01: Create A Sentence Card From A Chosen Text
 
-- **Status:** Planned
+- **Status:** Completed
 - **Design sprint:** [SPRINT-07](../../project-plan.md#sprint-07)
 - **Run sprint:** [SPRINT-08](../../project-plan.md#sprint-08)
 
