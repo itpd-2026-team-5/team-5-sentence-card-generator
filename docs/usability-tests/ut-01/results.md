@@ -86,7 +86,8 @@ A first-time learner does not know what the study ratings do and asks for first-
 - **Sample:** `n=3`, all Russian learners; the German group is missing until the fourth session, and one experienced user against two newcomers supports no comparison between the groups.
 - **Remote sessions:** the three sessions ran remotely on the participants' own computers and browsers, not in person on the team's laptop as [the design](README.md#participant-profile) requires; the device, the screen size, and the network differed between sessions, and the facilitator could not see the participant's hands.
 - **Protocol:** the scenarios were paraphrased rather than read verbatim; in `P-05`'s session the facilitator moved on to studying inside the main task's time, so secondary task 1 was judged from that earlier study; each help to `P-07` followed a question from the participant, as the help rule allows, and still makes that outcome `Assisted`.
-- **`P-07`'s familiarity:** the pre-test answer says `P-07` had used the product before, while in the session they said they had not; the session is counted on the session answer. `<confirm with the participant or remove from the count>`
+- **`P-07`'s familiarity:** the written pre-test recorded that `P-07` had used the product before; the participant confirmed this was an entry mistake, as they also said in the session, so the session is counted.
+- **Roles:** `KaramKhaddour` facilitated all three sessions and `saleemasekrea000` observed, rather than `saleemasekrea000` facilitating and `Byakko-san` observing as [the roles](README.md#roles) planned; the same facilitator ran every counted session.
 - **Environment:** the test account held seeded decks in both languages, which `P-05` and `P-07` mistook for their own; the team observed every session.
 - **What could not be measured:** which deck a study answer belonged to comes from the observation only, and the instrumentation comparison is listed above.
 
