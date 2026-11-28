@@ -134,8 +134,10 @@ UT-01's evidence and QR-11 outcome are recorded and triaged, while the configura
 ### SPRINT-09
 
 Provisional: the final repository and evidence are ready for handover and course review, with the seven-minute pitch deck and individual reflection complete.
+The Sprint 9 increment is the `UT-01` fixes in [#308](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/308), [#309](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/309), and [#310](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/310) on production, and at its review the team expects to check that a learner finds the new cards after generation and understands the study ratings, with the moved `QR-01`, `QR-03`, and `QR-06` rows run or declared.
 
-- **Due:** 2026-11-28
+- **Due:** 2026-11-29
+- **Sprint Backlog:** [SPRINT-09 GitHub milestone](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/milestone/7)
 
 #### REL-09
 
