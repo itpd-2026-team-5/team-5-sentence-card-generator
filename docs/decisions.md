@@ -1617,3 +1617,93 @@ Place deck-membership explanations next to the deck controls they describe.
 - **Made by:** Customer
 - **Source:** [the Week 7 validation meeting](../reports/week-07/meeting-report.md#decisions), with [transcript evidence](../reports/week-07/meeting-transcript.md).
 - **Why:** At 00:43:41-00:45:58, the Customer found the multi-deck/history explanation out of place above the card list and requested it in the editor's Decks section and relevant group actions.
+
+## DEC-162
+
+Guide first-time learners with a tutorial inside the main flow, from a text to a study session, rather than a separate About page.
+
+- **Status:** Active
+- **Date:** 2026-11-28
+- **Made by:** Customer
+- **Source:** [the Weeks 8 and 9 Customer review](../reports/week-08/meeting-report.md#decisions), with [transcript evidence](../reports/week-08/meeting-transcript.md).
+- **Why:** At 00:13:02-00:13:54, after hearing that participants missed which deck received their cards, the Customer judged that an About page would add switching between tabs and could confuse more, and that a tutorial following the main task would be more valuable.
+
+## DEC-163
+
+Keep the 80% unaided main-task bar for QR-11 and record 3 of 4 counted participants, 75%, as a failure at the review.
+
+- **Status:** Active
+- **Date:** 2026-11-28
+- **Made by:** Customer
+- **Source:** [the Weeks 8 and 9 Customer review](../reports/week-08/meeting-report.md#decisions), with [transcript evidence](../reports/week-08/meeting-transcript.md).
+- **Why:** At 00:14:48-00:15:14, the Customer said that a result below the established threshold is a failure with that number of participants, and that a further participant could bring the result to 80% and pass; this confirms the existing bar from [DEC-146](#dec-146). The fifth session, `P-02`, ran after the review, and the [results](usability-tests/ut-01/results.md#main-task) now record 4 of 5 under the same bar.
+
+## DEC-164
+
+Accept [US-16](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/190), recording product analytics events for the core task.
+
+- **Status:** Active
+- **Date:** 2026-11-28
+- **Made by:** Customer
+- **Source:** [the Weeks 8 and 9 Customer review](../reports/week-08/meeting-report.md#decisions), with [transcript evidence](../reports/week-08/meeting-transcript.md).
+- **Why:** At 00:15:51-00:19:23, the Customer watched events from a live staging run arrive in OpenPanel with their participant code and said "It works great." The verdict was given on 28 November, after the original Week 8 deadline.
+
+## DEC-165
+
+Accept [US-17](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/191), exposing runtime quality signals to the observability backend.
+
+- **Status:** Active
+- **Date:** 2026-11-28
+- **Made by:** Customer
+- **Source:** [the Weeks 8 and 9 Customer review](../reports/week-08/meeting-report.md#decisions), with [transcript evidence](../reports/week-08/meeting-transcript.md).
+- **Why:** At 00:20:44-00:20:57, the Customer saw the production response-time and error metrics, including P95, and confirmed the dashboard shows them; the meaning of the gloss request stayed a follow-up. The verdict was given on 28 November, after the original Week 8 deadline.
+
+## DEC-166
+
+Record [UAT-01](user-acceptance-tests.md#uat-01), turning words chosen from a text into cards, as passed on production.
+
+- **Status:** Active
+- **Date:** 2026-11-28
+- **Made by:** Customer
+- **Source:** [the Weeks 8 and 9 Customer review](../reports/week-08/meeting-report.md#decisions), with [transcript evidence](../reports/week-08/meeting-transcript.md).
+- **Why:** At 00:25:26-00:33:50, the Customer ran the journey on production themselves and, asked for a pass or a fail, said "it works as expected." The Customer first missed the destination link and met cross-deck duplicate behaviour, which the [review report](../reports/week-08/meeting-report.md#user-acceptance-tests) records.
+
+## DEC-167
+
+Record [UAT-02](user-acceptance-tests.md#uat-02), studying only a chosen deck, as passed on production.
+
+- **Status:** Active
+- **Date:** 2026-11-28
+- **Made by:** Customer
+- **Source:** [the Weeks 8 and 9 Customer review](../reports/week-08/meeting-report.md#decisions), with [transcript evidence](../reports/week-08/meeting-transcript.md).
+- **Why:** At 00:33:55-00:40:25, the Customer studied one chosen deck with word and sentence audio, rejected study events alone as proof that answers were saved, signed out and in, saw zero cards left to study, and said "this is a pass."
+
+## DEC-168
+
+Record [UAT-03](user-acceptance-tests.md#uat-03), sharing a deck with a teacher who corrects a card, as passed on production.
+
+- **Status:** Active
+- **Date:** 2026-11-28
+- **Made by:** Customer
+- **Source:** [the Weeks 8 and 9 Customer review](../reports/week-08/meeting-report.md#decisions), with [transcript evidence](../reports/week-08/meeting-transcript.md).
+- **Why:** At 00:40:27-00:47:42, the Customer shared a deck with a separate teacher account, changed a card as the teacher, refreshed the learner view, saw the same new sentence and the teacher-check status, and confirmed the pass. A direct check that the teacher cannot open an unshared deck was not shown.
+
+## DEC-169
+
+Report a quality check with no evidence as having no result, separately from a check that failed.
+
+- **Status:** Active
+- **Date:** 2026-11-28
+- **Made by:** Team, not contested
+- **Source:** [the Weeks 8 and 9 Customer review](../reports/week-08/meeting-report.md#decisions), with [transcript evidence](../reports/week-08/meeting-transcript.md).
+- **Why:** At 00:48:36-00:49:13, the team presented QR-01, QR-03, and QR-06 as having no result rather than failing, and the Customer did not object; this confirms how the [testing plan](project-plan.md#quality-requirement-testing-plan) already separates `Not verified` from `Fails`.
+
+## DEC-170
+
+Set TOS-01, TOS-02, and TOS-03 to Missed under their original measures and deadlines, rather than replace them at the end to claim success.
+
+- **Status:** Active
+- **Date:** 2026-11-28
+- **Made by:** Customer
+- **Source:** [the Weeks 8 and 9 Customer review](../reports/week-08/meeting-report.md#decisions), with [transcript evidence](../reports/week-08/meeting-transcript.md).
+- **Why:** At 00:56:46-00:59:14, the Customer said that the project succeeds only if every goal is achieved, that the team "missed your own goal" and so did not deliver on its goals, while calling the product "a pretty solid MVP" they were satisfied with, and advised setting realistic goals. Earlier talk at 00:52:08-00:53:06 of a later pilot or dropping a goal was exploratory and is not a decision.

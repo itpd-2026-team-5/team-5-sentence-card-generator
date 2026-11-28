@@ -7,9 +7,9 @@ Each test uses the synthetic seed data, a test account, and `<production-url>` f
 
 | Test              | Journey                                              | Status | SPRINT-09                 | SPRINT-10       |
 | ----------------- | ---------------------------------------------------- | ------ | ------------------------- | --------------- |
-| [UAT-01](#uat-01) | Turn words chosen from a text into cards in a deck   | Active | Not yet run               | Not yet defined |
-| [UAT-02](#uat-02) | Study only the deck the learner chooses              | Active | Not yet run               | Not yet defined |
-| [UAT-03](#uat-03) | Share a deck with a teacher who corrects a card      | Active | Not yet run               | Not yet defined |
+| [UAT-01](#uat-01) | Turn words chosen from a text into cards in a deck   | Active | Pass                      | Not yet defined |
+| [UAT-02](#uat-02) | Study only the deck the learner chooses              | Active | Pass                      | Not yet defined |
+| [UAT-03](#uat-03) | Share a deck with a teacher who corrects a card      | Active | Pass                      | Not yet defined |
 
 ## UAT-01
 
@@ -25,6 +25,7 @@ A learner turns two words they chose from a text into sentence cards in their de
 
 | Sprint | Date | Runner | Build | Result | Evidence | DEC-nnn |
 | ------ | ---- | ------ | ----- | ------ | -------- | ------- |
+| SPRINT-09 | 2026-11-28 | Customer | `462657a` | Pass | [Weeks 8 and 9 review](../reports/week-08/meeting-report.md#user-acceptance-tests) | [DEC-166](decisions.md#dec-166) |
 
 ## UAT-02
 
@@ -40,6 +41,7 @@ A learner studies only the deck they choose and their answers are saved.
 
 | Sprint | Date | Runner | Build | Result | Evidence | DEC-nnn |
 | ------ | ---- | ------ | ----- | ------ | -------- | ------- |
+| SPRINT-09 | 2026-11-28 | Customer | `462657a` | Pass | [Weeks 8 and 9 review](../reports/week-08/meeting-report.md#user-acceptance-tests) | [DEC-167](decisions.md#dec-167) |
 
 ## UAT-03
 
@@ -55,3 +57,4 @@ A learner shares one deck with a teacher, the teacher corrects a card, and the l
 
 | Sprint | Date | Runner | Build | Result | Evidence | DEC-nnn |
 | ------ | ---- | ------ | ----- | ------ | -------- | ------- |
+| SPRINT-09 | 2026-11-28 | Customer | `462657a` | Pass | [Weeks 8 and 9 review](../reports/week-08/meeting-report.md#user-acceptance-tests) | [DEC-168](decisions.md#dec-168) |
