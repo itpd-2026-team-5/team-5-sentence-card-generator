@@ -45,7 +45,16 @@ The analysis follows the [analysis plan](README.md#analysis-plan); the sanitized
 
 ### Instrumentation comparison
 
-`<fill in from the staging export filtered by participant_code P-05, P-06, and P-07 and source=usability-test: for each session, whether text_added, word_marked, generation_completed, study_review_completed, and card_regeneration_completed fall inside the observer's task windows, and where they disagree with the observed outcomes>`
+Each session's events were read in the staging OpenPanel project, filtered by its `participant_code` and `source=usability-test`, and set against the observer's task times; OpenPanel shows times to the minute, so an event within a minute of a task boundary is read as inside it.
+The filtered export is in the private repository.
+
+| Code | Main task (text, words, generation) | Secondary 1 (study answers) | Secondary 2 (rewrite) | Agrees with the observation? |
+| --- | --- | --- | --- | --- |
+| P-05 | `text_added` and two `word_marked` at 00:27, then `generation_completed`, inside 00:26:44–00:31:39 | 8 `study_review_completed`, the last at 00:33 | `card_rewrite_requested`, then `card_regeneration_completed` at 00:36, inside 00:35:19–00:36:05 | Partly: the study answers began inside the main task's window, as observed; the answer at 00:33 falls between the two tasks or at the start of secondary task 1, where the observer saw "Session complete" |
+| P-06 | `text_added` at 01:10, two `word_marked` and `generation_completed` (2 cards) at 01:11, inside 01:08:46–01:11:39 | 6 `study_review_completed`, one at 01:13, inside 01:12:38–01:14:01 | one `card_regeneration_completed` at 01:15, inside 01:14:54–01:15:24 | Yes |
+| P-07 | `text_added` at 01:45 and `generation_completed`, inside 01:43:05–01:46:35 | no `study_review_completed`; about a dozen `word_marked` events, learn and none, at about 01:50 | three `card_regeneration_completed` at 01:53, inside 01:52:18–01:54:07 | Yes: no study answer was saved, and the participant was toggling words in the reader while looking for the cards; the three regenerations match the press-again behaviour of [Finding 2](#finding-2) |
+
+The events' `language` property read `ru` in all three sessions, so the earlier verification's limitation on that property no longer applies.
 
 The instrumentation cannot show hesitation, detours, help, or which deck a study answer belonged to, per [what it cannot cover](README.md#what-it-cannot-cover); those come from the observation, and no test event is presented as a product metric.
 
@@ -57,9 +66,9 @@ After generating cards, a first-time learner cannot find the new cards or start 
 
 - **Severity:** Critical: it stopped `P-07` from reaching the end state of secondary task 1, which they gave up after four minutes.
 - **Tasks:** `UT-01 Task 2` and `UT-01 Task 3`, from `UT-01 P-07` and `UT-01 P-05`.
-- **Evidence:** `P-07` looked through the study screen and the deck list without finding the two cards and gave up ([P-07](sessions/P-07.md)); in the next task they found them only after help; `P-05` opened the seeded German deck first ([P-05](sessions/P-05.md)); see the [per-participant table](#per-participant-table).
+- **Evidence:** `P-07` looked through the study screen and the deck list without finding the two cards and gave up ([P-07](sessions/P-07.md)), and the telemetry shows no study answer and about a dozen word toggles in the reader during that task ([instrumentation comparison](#instrumentation-comparison)); in the next task they found them only after help; `P-05` opened the seeded German deck first ([P-05](sessions/P-05.md)); see the [per-participant table](#per-participant-table).
 - **Recommendation:** after generation, show which deck received the cards with a direct link to open that deck and to study the new cards; in the test account, keep only the decks the session needs.
-- **Task issue:** `<link the task issue>`
+- **Task issue:** [#308](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/308)
 
 ### Finding 2
 
@@ -67,9 +76,9 @@ The two rewrite icons on a card are mistaken for each other, and regeneration sh
 
 - **Severity:** Minor: `P-05` and `P-06` hesitated and `P-07` expected to press again, but no outcome changed because of it.
 - **Tasks:** `UT-01 Task 3`, from `UT-01 P-05`, `UT-01 P-06`, and `UT-01 P-07`.
-- **Evidence:** `P-06` took **Mark to rewrite with others** for regeneration and needed the hover text ([P-06](sessions/P-06.md)); `P-05` passed over it unsure what it does ([P-05](sessions/P-05.md)); `P-07` saw the new sentence only after a delay with no indicator ([P-07](sessions/P-07.md)).
+- **Evidence:** `P-06` took **Mark to rewrite with others** for regeneration and needed the hover text ([P-06](sessions/P-06.md)); `P-05` passed over it unsure what it does ([P-05](sessions/P-05.md)); `P-07` saw the new sentence only after a delay with no indicator ([P-07](sessions/P-07.md)); the telemetry records `P-05`'s press of **Mark to rewrite with others** and three regenerations by `P-07` within one minute ([instrumentation comparison](#instrumentation-comparison)).
 - **Recommendation:** label the two controls in words rather than icons alone, and show a progress state on the card while a sentence is regenerated.
-- **Task issue:** `<link the task issue, or None with the reason>`
+- **Task issue:** [#310](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/310)
 
 ### Finding 3
 
@@ -79,7 +88,7 @@ A first-time learner does not know what the study ratings do and asks for first-
 - **Tasks:** `UT-01 Task 2`, from `UT-01 P-05`, with the post-test answers of `UT-01 P-05`, `UT-01 P-06`, and `UT-01 P-07`.
 - **Evidence:** `P-05` asked whether **Hard**, **Good**, and **Easy** rate the sentence and was told they set how often the card returns ([P-05](sessions/P-05.md)); all three asked for a tutorial or introduction in the post-test ([theme 3](#thematic-analysis)).
 - **Recommendation:** explain the ratings on the study screen the first time a learner studies, such as a one-line hint under the buttons, and offer a short first-use walk-through.
-- **Task issue:** `<link the task issue>`
+- **Task issue:** [#309](https://github.com/itpd-2026-team-5/team-5-sentence-card-generator/issues/309)
 
 ## Limitations
 
@@ -89,7 +98,7 @@ A first-time learner does not know what the study ratings do and asks for first-
 - **`P-07`'s familiarity:** the written pre-test recorded that `P-07` had used the product before; the participant confirmed this was an entry mistake, as they also said in the session, so the session is counted.
 - **Roles:** `KaramKhaddour` facilitated all three sessions and `saleemasekrea000` observed, rather than `saleemasekrea000` facilitating and `Byakko-san` observing as [the roles](README.md#roles) planned; the same facilitator ran every counted session.
 - **Environment:** the test account held seeded decks in both languages, which `P-05` and `P-07` mistook for their own; the team observed every session.
-- **What could not be measured:** which deck a study answer belonged to comes from the observation only, and the instrumentation comparison is listed above.
+- **What could not be measured:** which deck a study answer belonged to comes from the observation only, and OpenPanel's minute-level times cannot place an event within a minute of a task boundary.
 
 ## Conclusion
 
