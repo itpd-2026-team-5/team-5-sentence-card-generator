@@ -56,6 +56,7 @@
   - [UT-01 consent template](usability-tests/ut-01/consent.md)
   - [UT-01 session record](usability-tests/ut-01/sessions/README.md)
   - [UT-01 results](usability-tests/ut-01/results.md)
+- [User acceptance tests](user-acceptance-tests.md)
 - [Research](research/index.md)
   - [Alternatives](research/alternatives.md)
   - [Comparison](research/comparison.md)
