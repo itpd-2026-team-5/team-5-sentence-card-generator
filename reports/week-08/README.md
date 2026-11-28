@@ -128,6 +128,7 @@ The team proposed no new measure: the Customer rejected replacing the goals at t
 - **Testing-plan rows:** `QR-01`, `QR-03`, and `QR-06` moved to SPRINT-09 with their reasons in the [testing plan](../../docs/project-plan.md#quality-requirement-testing-plan).
 - **Recordings folder:** the recordings folder is still in a personal Drive rather than a team-owned location, as declared in Week 7.
 - **Focus metric:** no production analytics value is shown, because the production OpenPanel view showed no data at the review.
+- **AI and usability material:** the agent was given the raw, identifying session material (the transcripts, the observer's times, the rating answers, and the event screenshots), not only the sanitized notes, as the [AI usage report](ai-usage.md#how-we-used-them) states. It kept every name out of the public files, and the raw files went to the private usability-data repository.
 
 ## Privacy
 
